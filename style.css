@@ -1,5 +1,5 @@
 :root {
-    --bg-gray: #D1D1D1;
+    --bg-gray: #f5f6f7;
     --bg-blue: #2B3647;
     --bg-white: #FFFFFF;
     --bg-urgent: #ff3D00;
@@ -49,13 +49,27 @@ header {
     z-index: 2;
 }
 
-main {
-    /* padding-top: 100px; */
-    background-color: var(--bg-gray);
+/* main { */
+/* padding-top: 100px; */
+/* background-color: var(--bg-gray);
     display: flex;
     align-items: center;
     flex-direction: column;
     flex: 1;
+} */
+
+main {
+    background-color: var(--bg-gray);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    margin-left: 232px;
+    /* Platz für Sidebar */
+    padding-top: 96px;
+    /* Platz für Header */
+
+    width: calc(100% - 232px);
 }
 
 a {
@@ -95,7 +109,7 @@ aside {
     height: 120px;
 }
 
-.aside-content{
+.aside-content {
     padding-top: 100px;
     padding-bottom: 100px;
     display: flex;
@@ -115,17 +129,24 @@ aside {
     gap: 10px;
 }
 
-.aside-content a:hover{
+.aside-content a:hover {
     transform: scale(1.2);
     color: var(--bg-white)
 }
 
-.main-content {
+/* .main-content {
     padding-top: 100px;
     max-width: 1440px;
+} */
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    padding: 48px;
+    width: 100%;
+    align-items: center;
 }
-
-
 
 @media(max-width: 1920px) {
     .header-content {
@@ -133,8 +154,8 @@ aside {
     }
 }
 
-@media(max-width: 1580px){
-    .header-content{
+@media(max-width: 1580px) {
+    .header-content {
         padding-left: 342px;
     }
 }

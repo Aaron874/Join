@@ -79,15 +79,15 @@
         <section class="main-content">
 
             <h1>Add Task</h1>
-            <div class="style-content">
-                <form class="style-form" action="">
+            <form class="style-content">
+                <div class="style-form" action="">
                     <p>Title*</p>
-                    <input type="text">
+                    <input required type="text" placeholder="Enter a title">
                     <p>Description</p>
-                    <input type="text">
+                    <input type="text" placeholder="Enter a description">
                     <p>Due Date*</p>
-                    <input type="date" name="" id="">
-                </form>
+                    <input required type="date" name="" id="">
+                </div>
                 <div class="content-divider"></div>
                 <div>
 
@@ -98,7 +98,7 @@
                         <p class="style-priorities">Low</p>
                     </div>
                     <p>Assigned to</p>
-                    <input list="contacts" name="contacts">
+                    <input list="contacts" name="contacts" placeholder="Select contacts to asign">
                     <datalist id="contacts">
                         <option value="Amelie Meyer">
                         <option value="Markus Schmidt">
@@ -106,7 +106,7 @@
                         <option value="Wilhelm Fischer">
                     </datalist>
                     <p>Category</p>
-                    <input list="categories" name="categories">
+                    <input list="categories" name="categories" placeholder="Select task category">
                     <datalist id="categories">
                         <option value="Development">
                         <option value="Design">
@@ -114,17 +114,14 @@
                         <option value="Documentation">
                     </datalist>
                     <p>Subtasks</p>
-                    <input type="text">
+                    <input type="text" placeholder="Add new subtask">
 
                 </div>
-            </div>
-            <div class="style-div-buttons">
-                <button class="style-buttons">Clear X</button>
-                <button class="style-buttons">Create Task</button>
-            </div>
-            </div>
-            </div>
-            </div>
+                <div class="style-div-buttons">
+                    <button class="style-buttons">Clear X</button>
+                    <button class="style-buttons">Create Task</button>
+                </div>
+            </form>
         </section>
     </main>
 </body>

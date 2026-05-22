@@ -12,10 +12,15 @@
     flex-direction: column;
 }
 
-.style-content {
+/* .style-content {
     display: flex;
     justify-content: center;
     gap: 16px;
+} */
+
+.style-content {
+    display: flex;
+    gap: 48px;
 }
 
 .content-divider {
@@ -40,9 +45,9 @@ input {
 
 .style-div-buttons {
     display: flex;
-    position: relative;
-    right: -250px;
-    width: 256px;
+    position: fixed;
+    bottom: 32px;
+    right: 48px;
     gap: 8px;
 }
 
