@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./add_task.css">
+</head>
+
+<body>
+    <div class="layout">
+        <div>
+            <p>Seitenleiste</p>
+        </div>
+        <div class="style-header-content">
+            <header>Kanban Project Management Tool</header>
+            <h1>Add Task</h1>
+            <div class="style-content">
+                <form class="style-form" action="">
+                    <p>Title*</p>
+                    <input type="text">
+                    <p>Description</p>
+                    <input type="text">
+                    <p>Due Date*</p>
+                    <input type="date" name="" id="">
+                </form>
+                <div class="content-divider"></div>
+                <div>
+
+                    <p>Priority</p>
+                    <div class="style-priority">
+                        <p class="style-priorities">Urgent</p>
+                        <p class="style-priorities">Medium</p>
+                        <p class="style-priorities">Low</p>
+                    </div>
+                    <p>Assigned to</p>
+                    <input list="contacts" name="contacts">
+                    <datalist id="contacts">
+                        <option value="Amelie Meyer">
+                        <option value="Markus Schmidt">
+                        <option value="Jörg Schneider">
+                        <option value="Wilhelm Fischer">
+                    </datalist>
+                    <p>Category</p>
+                    <input list="categories" name="categories">
+                    <datalist id="categories">
+                        <option value="Development">
+                        <option value="Design">
+                        <option value="Testing">
+                        <option value="Documentation">
+                    </datalist>
+                    <p>Subtasks</p>
+                    <input type="text">
+
+                </div>
+            </div>
+            <div class="style-div-buttons">
+                <button class="style-buttons">Clear X</button>
+                <button class="style-buttons">Create Task</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
