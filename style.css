@@ -5,11 +5,13 @@
     --bg-urgent: #ff3D00;
 
     --color-blue: #28ABE2;
+    --color-gray: #CDCDCD;
     --color-black: #000000;
 
     --fs-h1: clamp(40px, 61px, 82px); 
     --fs-h2: clamp(20px, 27px, 34px);   
     --fs-standard: clamp(16px, 20px, 24px);
+    --fs-options: clamp(16px, 18px, 20px);
 
 
 }
@@ -68,6 +70,7 @@ button {
 
 aside {
     background-color: var(--bg-blue);
+    position: fixed;
     min-height: 100dvh;
     width: 232px;
     padding-top: 64px;
@@ -79,12 +82,17 @@ aside {
 
 .header-content {
     width: 100%;
-    padding-left: 348px;
     max-width: 1440px;
     font-family: "inter";
     font-size: var(--fs-standard);
     font-weight: 400;
-    display: flex;
+    display: flex; 
+}
+
+@media(max-width: 1920px){
+    .header-content{
+        padding-left: 342px;
+    }
 }
 
 .logo {
@@ -92,6 +100,25 @@ aside {
     height: 120px;
 }
 
+.options {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.options a {
+    padding-bottom: 40px;    
+    font-family: "inter";
+    font-size: var(--fs-options);
+    color: var(--color-gray);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .main-content {
+    padding-top: 100px;
     max-width: 1440px;
 }
