@@ -89,12 +89,6 @@ aside {
     display: flex;
 }
 
-@media(max-width: 1920px) {
-    .header-content {
-        padding-left: 342px;
-    }
-}
-
 .logo {
     width: 100px;
     height: 120px;
@@ -126,4 +120,18 @@ aside {
 .main-content {
     padding-top: 100px;
     max-width: 1440px;
+}
+
+
+
+@media(max-width: 1920px) {
+    .header-content {
+        padding-left: 170px;
+    }
+}
+
+@media(max-width: 1580px){
+    .header-content{
+        padding-left: 342px;
+    }
 }
