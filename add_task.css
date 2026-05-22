@@ -52,3 +52,7 @@ input {
     padding-right: 8px;
     border-radius: 10%;
 }
+
+.padding-content_to_header {
+    padding-top: 150px;
+}
