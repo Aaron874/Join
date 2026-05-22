@@ -1,0 +1,58 @@
+.layout {
+    display: flex;
+}
+
+.style-header-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.style-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.style-content {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.content-divider {
+    width: 1px;
+    height: auto;
+    background-color: black;
+}
+
+p {
+    margin: 0;
+}
+
+input {
+    margin-bottom: 16px;
+}
+
+.style-priority {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.style-div-buttons {
+    display: flex;
+    position: relative;
+    right: -250px;
+    width: 256px;
+    gap: 8px;
+}
+
+.style-priorities {
+    border: 1px solid #ccc;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 10%;
+}
+
+.padding-content_to_header {
+    padding-top: 150px;
+}
