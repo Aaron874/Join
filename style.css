@@ -8,8 +8,8 @@
     --color-gray: #CDCDCD;
     --color-black: #000000;
 
-    --fs-h1: clamp(40px, 61px, 82px); 
-    --fs-h2: clamp(20px, 27px, 34px);   
+    --fs-h1: clamp(40px, 61px, 82px);
+    --fs-h2: clamp(20px, 27px, 34px);
     --fs-standard: clamp(16px, 20px, 24px);
     --fs-options: clamp(16px, 18px, 20px);
 
@@ -86,11 +86,11 @@ aside {
     font-family: "inter";
     font-size: var(--fs-standard);
     font-weight: 400;
-    display: flex; 
+    display: flex;
 }
 
-@media(max-width: 1920px){
-    .header-content{
+@media(max-width: 1920px) {
+    .header-content {
         padding-left: 342px;
     }
 }
@@ -109,13 +109,18 @@ aside {
 }
 
 .options a {
-    padding-bottom: 40px;    
+    padding-bottom: 40px;
     font-family: "inter";
     font-size: var(--fs-options);
     color: var(--color-gray);
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.options a:hover{
+    transform: scale(1.2);
+    color: var(--bg-white)
 }
 
 .main-content {
