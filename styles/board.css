@@ -1,0 +1,65 @@
+* {
+    font-family: "Inter";
+}
+
+.board-head h1{
+    font-size: var(--fs-h1);
+}
+
+.board-head {
+    width: 100%;
+    height: 232px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.search-wrapper:focus-within {
+  border-color: var(--color-blue);
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: var(--color-black);
+}
+
+.search-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #ccc;
+}
+
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.search-button:hover {
+  color: #007bff;
+}
+
+.search-button:active {
+    transform: scale(0.8);
+}
