@@ -131,6 +131,10 @@ aside {
     align-items: center;
 }
 
+.hidden {
+    display: none;
+}
+
 .btn-filled {
     font-size: var(--fs-standard);
     display: flex;
