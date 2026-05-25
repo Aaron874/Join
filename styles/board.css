@@ -4,6 +4,7 @@
 
 .board-head h1{
     font-size: var(--fs-h1);
+    font-weight: bold;
 }
 
 .board-head {
@@ -12,15 +13,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 64px 0 64px;
+}
+
+.head-right {
+  font-size: var(--fs-standard);
+  display: flex;
+  flex-direction: row;
+
 }
 
 .search-wrapper {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   border: 2px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: #fff;
   overflow: hidden;
   transition: border-color 0.3s ease;
@@ -53,11 +62,11 @@
   background-color: transparent;
   padding: 10px 15px;
   cursor: pointer;
-  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .search-button:hover {
   color: #007bff;
+  transform: scale(1.2)
 }
 
 .search-button:active {
