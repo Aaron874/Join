@@ -32,7 +32,6 @@
   border-radius: 10px;
   background-color: #fff;
   overflow: hidden;
-  transition: border-color 0.3s ease;
 }
 
 .search-wrapper:focus-within {
@@ -71,4 +70,52 @@
 
 .search-button:active {
     transform: scale(0.8);
+}
+
+.board {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 64px;
+  font-size: var(--fs-standard);
+  font-weight: bold;
+}
+
+.status {
+  max-width: 252px;
+  margin: 16px;
+  flex: 1;
+}
+
+.status-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-black);
+  border-radius: 8px;
+}
+
+.task-queue {
+  margin-top: 24px;
+}
+
+.notask {
+  width: 252px;
+  height: 48px;
+  color: var(--color-notices);
+  border: 1px dashed var(--color-notices);
+  border-radius: 10px;
+  background-color: var(--color-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
