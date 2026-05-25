@@ -15,6 +15,7 @@
     min-height: calc(100dvh - 96px);
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 .contacts_list_container {
