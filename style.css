@@ -119,12 +119,12 @@ aside {
 }
 
 .main-content {
-  display: flex;
-  flex-direction: column;
-  max-width: 1440px;
-  padding: 48px;
-  width: 100%;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 1440px;
+    padding: 48px;
+    width: 100%;
+    /* align-items: center; */
 }
 
 .hidden {
