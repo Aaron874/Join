@@ -30,7 +30,7 @@
 .contacts_single_view_header {
     display: flex;
     gap: 10px;
-    margin: 30px 0 30px 0;
+    margin: 30px 0 30px 30px;
     height: 100px;
     align-items: center;
 }
@@ -64,4 +64,41 @@ margin: 16px 0 16px 0;
     font-size: 21px;
     font-weight: 700;
     color: white;
+}
+
+.contacts_single_view_content {
+    margin: 0 0 0 30px;
+}
+
+.contacts_icon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #FF7A00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 47px;
+}
+
+.contacts_single_view_content_header {
+    display: flex;
+    gap: 45px;
+    align-items: center;
+}
+
+.contacts_single_view_name {
+    font-weight: 500;
+    font-size: 47px;
+}
+
+.contacts_single_view_actions button {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.contacts_single_view_actions button img {
+    width: 18.28px;
+    margin-right: 8px;
 }
