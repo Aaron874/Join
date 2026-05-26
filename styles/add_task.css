@@ -1,10 +1,17 @@
+body {
+    font-family: "Inter", sans-serif;
+}
+
+h1
+
 .layout {
     display: flex;
 }
 
 .add_task-h1 {
     padding-bottom: 48px;
-    font-size: 64px;
+    font-size: 61px;
+    font-weight: 700;
 }
 
 .main-add_task {
@@ -45,6 +52,7 @@
 p {
     margin: 0;
     padding-bottom: 8px;
+    font-size: 20px;
 }
 
 input {
@@ -52,10 +60,11 @@ input {
     border-style: solid;
     border-width: 1px;
     border-color: #d9d9d9;
+    font-size: 20px;
 }
 
 input::placeholder {
-    font-family: Inter, sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -66,7 +75,7 @@ input::placeholder {
 }
 
 .date-input {
-    font-family: Inter, sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 12px;
     font-weight: 400;
     color: #d9d9d9;
@@ -92,6 +101,7 @@ input::placeholder {
 
 .style-priorities-p {
     padding-bottom: inherit;
+    font-size: 20px;
 }
 
 .style-priorities {
@@ -128,7 +138,7 @@ input::placeholder {
 }
 
 .input-description {
-    height: 114px;
+    height: 120px;
     border-radius: 10px;
 }
 
