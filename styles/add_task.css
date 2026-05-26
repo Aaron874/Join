@@ -2,9 +2,7 @@ body {
     font-family: "Inter", sans-serif;
 }
 
-h1
-
-.layout {
+h1 .layout {
     display: flex;
 }
 
@@ -61,17 +59,16 @@ input {
     border-width: 1px;
     border-color: #d9d9d9;
     font-size: 20px;
+    padding-left: 16px;
 }
 
 input::placeholder {
     font-family: "Inter", sans-serif;
-    font-size: 14px;
     font-weight: 400;
     line-height: 20px;
     color: #d9d9d9;
     letter-spacing: 0;
     opacity: 1;
-    padding-left: 16px;
 }
 
 .date-input {
@@ -114,6 +111,7 @@ input::placeholder {
     height: 52px;
     width: 128px;
     justify-content: space-around;
+    background-color: #ffffff;
 }
 
 .urgent-icon {
@@ -137,10 +135,28 @@ input::placeholder {
     border-radius: 10px;
 }
 
-.input-description {
+.textarea-description {
     height: 120px;
     border-radius: 10px;
+    font-size: 20px;
+    padding-left: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d9d9d9;
 }
+
+.textarea-description::placeholder {
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #d9d9d9;
+    letter-spacing: 0;
+    opacity: 1;
+}
+
 
 .input-right {
     height: 45px;
@@ -158,4 +174,12 @@ input::placeholder {
 .bt-right {
     background-color: #2a3647;
     color: white;
+}
+
+.div-star {
+    display: flex;
+}
+
+.star-style {
+    color: #ff8291;
 }
