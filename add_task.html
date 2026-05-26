@@ -75,30 +75,52 @@
             </div>
         </section>
     </aside>
-    <main>
+    <main class="main-add_task">
         <section class="main-content">
 
-            <h1>Add Task</h1>
+            <h1 class="add_task-h1">Add Task</h1>
             <form class="style-content">
-                <div class="style-form" action="">
+                <div class="style-form-left" action="">
                     <p>Title*</p>
-                    <input required type="text" placeholder="Enter a title">
+                    <input class="input-left" required type="text" placeholder="Enter a title">
                     <p>Description</p>
-                    <input type="text" placeholder="Enter a description">
+                    <input class="input-description" type="text" placeholder="Enter a description">
                     <p>Due Date*</p>
-                    <input required type="date" name="" id="">
+                    <input class="input-left date-input" required type="date" name="" id="">
                 </div>
                 <div class="content-divider"></div>
-                <div>
+                <div class="style-form-right">
 
                     <p>Priority</p>
                     <div class="style-priority">
-                        <p class="style-priorities">Urgent</p>
-                        <p class="style-priorities">Medium</p>
-                        <p class="style-priorities">Low</p>
+                        <div class="style-priorities">
+                            <p class="style-priorities-p">Urgent</p>
+                            <svg class="urgent-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="style-priorities">
+                            <p class="style-priorities-p">Medium</p>
+                            <svg class="medium-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <div class="style-priorities">
+                            <p class="style-priorities-p">Low</p>
+                            <svg class="low-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
                     </div>
                     <p>Assigned to</p>
-                    <input list="contacts" name="contacts" placeholder="Select contacts to asign">
+                    <input class="input-right" list="contacts" name="contacts" placeholder="Select contacts to asign">
                     <datalist id="contacts">
                         <option value="Amelie Meyer">
                         <option value="Markus Schmidt">
@@ -106,7 +128,7 @@
                         <option value="Wilhelm Fischer">
                     </datalist>
                     <p>Category</p>
-                    <input list="categories" name="categories" placeholder="Select task category">
+                    <input class="input-right" list="categories" name="categories" placeholder="Select task category">
                     <datalist id="categories">
                         <option value="Development">
                         <option value="Design">
@@ -114,12 +136,12 @@
                         <option value="Documentation">
                     </datalist>
                     <p>Subtasks</p>
-                    <input type="text" placeholder="Add new subtask">
+                    <input class="input-right" type="text" placeholder="Add new subtask">
 
                 </div>
                 <div class="style-div-buttons">
                     <button class="style-buttons">Clear X</button>
-                    <button class="style-buttons">Create Task</button>
+                    <button class="style-buttons bt-right">Create Task</button>
                 </div>
             </form>
         </section>
