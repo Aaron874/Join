@@ -7,6 +7,7 @@
     padding-top: 96px;
     width: calc(100% - 232px);
     flex-direction: row;
+    font-family: 'Inter', sans-serif;
 }
 
 .contacts_single_view_container {
@@ -14,7 +15,6 @@
     border: 2px solid red;
     min-height: calc(100dvh - 96px);
     display: flex;
-    justify-content: center;
     flex-direction: column;
 }
 
@@ -30,7 +30,7 @@
 .contacts_single_view_header {
     display: flex;
     gap: 10px;
-    margin: 30px 0 30px 30px;
+    margin: 80px 0 30px 50px;
     height: 100px;
     align-items: center;
 }
@@ -46,6 +46,7 @@
     font-size: 27px;
     margin-left: 30px;
     font-weight: 400;
+    color: #2A3647;
 }
 
 .contacts_list_header{
@@ -67,7 +68,7 @@ margin: 16px 0 16px 0;
 }
 
 .contacts_single_view_content {
-    margin: 0 0 0 30px;
+    margin: 0 0 0 50px;
 }
 
 .contacts_icon {
@@ -93,12 +94,52 @@ margin: 16px 0 16px 0;
     font-size: 47px;
 }
 
+.contacts_single_view_actions {
+    display: flex;
+    margin: 10px 0 0 0;
+}
+
 .contacts_single_view_actions button {
     font-size: 16px;
     font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    color: #2A3647;
+    display: flex;
+    align-items: center;
 }
 
 .contacts_single_view_actions button img {
-    width: 18.28px;
+    width: 24px;
     margin-right: 8px;
 }
+
+.contacts_single_view_information_header {
+    font-weight: 400;
+    font-size: 20px;
+    margin: 30px 0 30px 0;
+}
+
+.contacts_single_view_content_information h4{
+    font-size: 16px;
+    font-weight: 700;
+
+}
+
+
+.contacts_single_view_email {
+    font-size: 16px;
+    font-weight: 400;
+    
+    margin: 15px 0 15px 0;
+}
+
+.contacts_single_view_email a {
+    color: #007CEE;
+}
+
+.contacts_single_view_phone {
+    font: 16px;
+    font-weight: 400;
+    margin: 15px 0 15px 0;
+}
+
