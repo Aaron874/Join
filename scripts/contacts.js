@@ -1,15 +1,17 @@
 // Beispiel Kontakte für Testzwecke //
-
+const contactsListContainer = document.querySelector('.contacts_list_container');
+let firstLetterList = [];
 let contactsList = [
+    {
+        name: "ben Schneider",
+        email: "ben.schneider@yahoo.de",
+        phone: "+49 152 34567892",
+
+    },
     {
         name: "Anna Müller",
         email: "anna.mueller@gmail.com",
         phone: "+49 151 23456781",
-    },
-    {
-        name: "Ben Schneider",
-        email: "ben.schneider@yahoo.de",
-        phone: "+49 152 34567892",
     },
     {
         name: "Clara Fischer",
@@ -178,6 +180,38 @@ let contactsList = [
         name: "Tobias Engel",
         email: "tobias.engel@gmx.net",
         phone: "+49 201 67890125",
+    },
+    {
+        name: "Öliver Engel",
+        email: "tobias.engel@gmx.net",
+        phone: "+49 201 67890125",
+    },
+    {
+        name: "1liver Engel",
+        email: "tobias.engel@gmx.net",
+        phone: "+49 201 67890125",
     }
 ];
 
+
+
+function letterSeperatorContactsList() {
+    for (let index = 0; index < contactsList.length; index++) {
+        if (/^[a-zA-ZäöüÄÖÜß]$/.test(contactsList[index].name[0])) {
+        let firstLetter = contactsList[index].name[0].toUpperCase();
+        firstLetterList.push(firstLetter);
+    }}
+    sortContactsList();
+}
+
+function sortContactsList() {
+    firstLetterList = [...new Set(firstLetterList)];
+    firstLetterList.sort((a, b) => a.localeCompare(b, 'de'));
+    addContactsList();
+}
+
+function addContactsList() {
+    for (let index = 0; index < firstLetterList.length; index++) {
+        contactsListContainer.innerHTML += renderContactsList(firstLetterList[index]);
+    }
+}
