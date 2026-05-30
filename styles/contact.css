@@ -67,6 +67,17 @@ margin: 16px 0 16px 0;
     color: white;
 }
 
+.contacts_list_letter_seperator {
+    height: 60px;
+    width: calc(100% - 16px);
+    border-bottom: 1px solid #D1D1D1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
 .contacts_single_view_content {
     margin: 0 0 0 50px;
 }
