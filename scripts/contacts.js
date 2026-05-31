@@ -215,3 +215,14 @@ function addContactsList() {
         contactsListContainer.innerHTML += renderContactsList(firstLetterList[index]);
     }
 }
+
+
+// Funktion zum Rendern von Personen -- shortName, Person, Email
+
+
+function contactListInitials(contactListName) {
+    let initials = contactListName.split(' ')
+                                    .map(word => word[0]
+                                    .toUpperCase()).join('');
+    return initials;
+}
