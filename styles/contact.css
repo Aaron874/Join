@@ -10,6 +10,47 @@
     font-family: 'Inter', sans-serif;
 }
 
+.contacts_list_items_container {
+    width: calc(100% - 16px);
+    display: flex;
+    padding: 15px 24px 15px 24px;
+    background-color: bisque;
+    border-radius: 5px;
+    gap: 20px;
+}
+
+.contacts_list_items_container:hover {
+    background-color: #2A3647;
+}
+
+.contacts_list_items_container h4 {
+    text-align: left;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.contacts_list_items_container:hover h4 {
+    color: #FFFFFF;
+}
+
+.contacts_list_items_container p {
+    font-weight: 400;
+    font-size: 16px;
+    color: #007CEE;
+}
+
+.contacts_list_name_symbol {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #FF7A00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 2px solid white;
+}
+
 .contacts_single_view_container {
     width: 70%;
     border: 2px solid red;
