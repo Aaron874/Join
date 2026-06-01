@@ -112,7 +112,7 @@
   width: 252px;
   height: 48px;
   color: var(--color-notices);
-  border: 1px dashed var(--color-notices);
+  border: 2px dashed  var(--color-notices);
   border-radius: 10px;
   background-color: var(--color-gray);
   display: flex;
