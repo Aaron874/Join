@@ -260,3 +260,28 @@ input::placeholder {
 .orange {
     background: #ff7a00;
 }
+
+.dropdown_contacts {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: white;
+    flex-direction: column;
+    max-height: calc(3 * 46px);
+    overflow-y: auto;
+}
+
+.contacts_div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.3rem 0.5rem;
+}
+
+.contacts_input {
+    margin-bottom: 0;
+}

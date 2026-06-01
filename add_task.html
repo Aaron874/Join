@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
+    <script src="./scripts/add_task.js"></script>
 </head>
 
 <body>
@@ -137,24 +138,9 @@
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
                             Select contacts to assign
-                            <span>⌄</span>
+                            <span onclick="dropdownContacts()">⌄</span>
                         </button>
-
-                        <!-- <div class="assigned-menu"> -->
-                        <!-- <input type="text" class="assigned-search" /> -->
-
-                        <!-- <label class="assigned-option">
-                                <span class="avatar blue">AM</span>
-                                <span>Amelie Meyer</span>
-                                <input type="checkbox" />
-                            </label>
-
-                            <label class="assigned-option">
-                                <span class="avatar orange">MS</span>
-                                <span>Markus Schmidt</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div> -->
+                        <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
 
                     <!-- <input class="input-right" list="contacts" name="contacts" placeholder="Select contacts to asign">
