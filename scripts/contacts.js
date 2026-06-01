@@ -187,7 +187,7 @@ let contactsList = [
         phone: "+49 201 67890125",
     },
     {
-        name: "1liver Engel",
+        name: "Uliver Engel",
         email: "tobias.engel@gmx.net",
         phone: "+49 201 67890125",
     }
@@ -207,17 +207,29 @@ function letterSeperatorContactsList() {
 function sortContactsList() {
     firstLetterList = [...new Set(firstLetterList)];
     firstLetterList.sort((a, b) => a.localeCompare(b, 'de'));
-    addContactsList();
+    createContactsList();
 }
 
-function addContactsList() {
+function createContactsList() {
     for (let index = 0; index < firstLetterList.length; index++) {
         contactsListContainer.innerHTML += renderContactsList(firstLetterList[index]);
     }
+        createContactListItems();
 }
 
 
 // Funktion zum Rendern von Personen -- shortName, Person, Email
+function createContactListItems() {
+    for (let index = 0; index < contactsList.length; index++) {
+        let shortName = contactListInitials(contactsList[index].name);
+        let person = contactsList[index].name;
+        let email = contactsList[index].email;
+        let firstLetter = contactsList[index].name[0].toUpperCase();
+        let targetElement = document.querySelector(`[data-letter="${firstLetter}"]`);
+        targetElement.after(renderContactsListItems(shortName, person, email));
+        // contactsListContainer.innerHTML += renderContactsListItems(shortName, person, email);        
+    }
+}
 
 
 function contactListInitials(contactListName) {
@@ -226,3 +238,4 @@ function contactListInitials(contactListName) {
                                     .toUpperCase()).join('');
     return initials;
 }
+

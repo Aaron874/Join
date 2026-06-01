@@ -14,7 +14,6 @@
     width: calc(100% - 16px);
     display: flex;
     padding: 15px 24px 15px 24px;
-    background-color: bisque;
     border-radius: 5px;
     gap: 20px;
 }
