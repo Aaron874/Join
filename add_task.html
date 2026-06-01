@@ -104,7 +104,7 @@
                 <div class="content-divider"></div>
                 <div class="style-form-right">
 
-                    <p>Priority</p>
+                    <p style="color: #000000" ;>Priority</p>
                     <div class="style-priority">
                         <div class="style-priorities">
                             <p class="style-priorities-p">Urgent</p>
@@ -133,21 +133,69 @@
                         </div>
                     </div>
                     <p>Assigned to</p>
-                    <input class="input-right" list="contacts" name="contacts" placeholder="Select contacts to asign">
+
+                    <div class="assigned-dropdown">
+                        <button type="button" class="assigned-trigger">
+                            Select contacts to assign
+                            <span>⌄</span>
+                        </button>
+
+                        <!-- <div class="assigned-menu"> -->
+                        <!-- <input type="text" class="assigned-search" /> -->
+
+                        <!-- <label class="assigned-option">
+                                <span class="avatar blue">AM</span>
+                                <span>Amelie Meyer</span>
+                                <input type="checkbox" />
+                            </label>
+
+                            <label class="assigned-option">
+                                <span class="avatar orange">MS</span>
+                                <span>Markus Schmidt</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div> -->
+                    </div>
+
+                    <!-- <input class="input-right" list="contacts" name="contacts" placeholder="Select contacts to asign">
                     <datalist id="contacts">
                         <option value="Amelie Meyer">
                         <option value="Markus Schmidt">
                         <option value="Jörg Schneider">
                         <option value="Wilhelm Fischer">
-                    </datalist>
+                    </datalist> -->
                     <p>Category</p>
-                    <input class="input-right" list="categories" name="categories" placeholder="Select task category">
+
+                    <div class="assigned-dropdown">
+                        <button type="button" class="assigned-trigger">
+                            Select task category
+                            <span>⌄</span>
+                        </button>
+
+                        <!-- <div class="assigned-menu"> -->
+                        <!-- <input type="text" class="assigned-search" /> -->
+
+                        <!-- <label class="assigned-option">
+                                <span class="avatar blue">AM</span>
+                                <span>Amelie Meyer</span>
+                                <input type="checkbox" />
+                            </label>
+
+                            <label class="assigned-option">
+                                <span class="avatar orange">MS</span>
+                                <span>Markus Schmidt</span>
+                                <input type="checkbox" />
+                            </label>
+                        </div> -->
+                    </div>
+
+                    <!-- <input class="input-right" list="categories" name="categories" placeholder="Select task category">
                     <datalist id="categories">
                         <option value="Development">
                         <option value="Design">
                         <option value="Testing">
                         <option value="Documentation">
-                    </datalist>
+                    </datalist> -->
                     <p>Subtasks</p>
                     <input class="input-right" type="text" placeholder="Add new subtask">
 
