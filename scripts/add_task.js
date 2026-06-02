@@ -191,13 +191,25 @@ let contactsList = [
 ];
 
 
-function dropdownContacts () {
+function dropdownContactsDown () {
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
+    document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
+    document.getElementById('assigned-trigger').style.marginBottom = '0';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = 'flex';
     for (let index = 0; index < contactsList.length; index++) {
         dropdown.innerHTML += contactsTemplate(contactsList[index].name);
         
     }
+
+}
+
+function dropdownContactsUp() {
+    document.getElementById('symbole_down_dropdown_contacts').style.display = '';
+    document.getElementById('symbole_up_dropdown_contacts').style.display = '';
+    document.getElementById('assigned-trigger').style.marginBottom = '';
+    const dropdown = document.getElementById('dropdown_contacts');
+    dropdown.style.display = '';
 }
 
 function contactsTemplate(name) {

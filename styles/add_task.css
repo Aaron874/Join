@@ -204,7 +204,6 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
 }
 
 .assigned-menu {
@@ -284,4 +283,16 @@ input::placeholder {
 
 .contacts_input {
     margin-bottom: 0;
+}
+
+.symbole_up_dropdown_contacts {
+    display: none;
+}
+
+.symbole_down_dropdown_contacts {
+    display: flex;
+}
+
+.padding-top {
+    padding-top: 32px;
 }

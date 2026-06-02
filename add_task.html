@@ -136,9 +136,10 @@
                     <p>Assigned to</p>
 
                     <div class="assigned-dropdown">
-                        <button type="button" class="assigned-trigger">
+                        <button type="button" id="assigned-trigger" class="assigned-trigger">
                             Select contacts to assign
-                            <span onclick="dropdownContacts()">⌄</span>
+                            <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts" onclick="dropdownContactsDown()">⌄</span>
+                            <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts" onclick="dropdownContactsUp()">⌃</span>
                         </button>
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
@@ -150,7 +151,7 @@
                         <option value="Jörg Schneider">
                         <option value="Wilhelm Fischer">
                     </datalist> -->
-                    <p>Category</p>
+                    <p class="padding-top">Category</p>
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
@@ -182,7 +183,7 @@
                         <option value="Testing">
                         <option value="Documentation">
                     </datalist> -->
-                    <p>Subtasks</p>
+                    <p class="padding-top">Subtasks</p>
                     <input class="input-right" type="text" placeholder="Add new subtask">
 
                 </div>
