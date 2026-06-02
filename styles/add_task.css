@@ -296,3 +296,11 @@ input::placeholder {
 .padding-top {
     padding-top: 32px;
 }
+
+.symbole_up_dropdown_category {
+    display: none;
+}
+
+.symbole_down_dropdown_category {
+    display: flex;
+}

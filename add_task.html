@@ -143,46 +143,15 @@
                         </button>
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
-
-                    <!-- <input class="input-right" list="contacts" name="contacts" placeholder="Select contacts to asign">
-                    <datalist id="contacts">
-                        <option value="Amelie Meyer">
-                        <option value="Markus Schmidt">
-                        <option value="Jörg Schneider">
-                        <option value="Wilhelm Fischer">
-                    </datalist> -->
                     <p class="padding-top">Category</p>
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
                             Select task category
-                            <span>⌄</span>
+                            <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category" onclick="dropdownCategoryDown()">⌄</span>
+                            <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category" onclick="dropdownCategoryUp()">⌃</span>
                         </button>
-
-                        <!-- <div class="assigned-menu"> -->
-                        <!-- <input type="text" class="assigned-search" /> -->
-
-                        <!-- <label class="assigned-option">
-                                <span class="avatar blue">AM</span>
-                                <span>Amelie Meyer</span>
-                                <input type="checkbox" />
-                            </label>
-
-                            <label class="assigned-option">
-                                <span class="avatar orange">MS</span>
-                                <span>Markus Schmidt</span>
-                                <input type="checkbox" />
-                            </label>
-                        </div> -->
-                    </div>
-
-                    <!-- <input class="input-right" list="categories" name="categories" placeholder="Select task category">
-                    <datalist id="categories">
-                        <option value="Development">
-                        <option value="Design">
-                        <option value="Testing">
-                        <option value="Documentation">
-                    </datalist> -->
+                        <div class="dropdown_category" id="dropdown_category"></div>
                     <p class="padding-top">Subtasks</p>
                     <input class="input-right" type="text" placeholder="Add new subtask">
 

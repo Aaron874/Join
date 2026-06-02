@@ -191,32 +191,64 @@ let contactsList = [
 ];
 
 
+let categoriesList = [
+    'Technical Task',
+    'User Story',
+];
+
+
 function dropdownContactsDown () {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
-    document.getElementById('assigned-trigger').style.marginBottom = '0';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = 'flex';
     for (let index = 0; index < contactsList.length; index++) {
         dropdown.innerHTML += contactsTemplate(contactsList[index].name);
-        
     }
-
 }
+
 
 function dropdownContactsUp() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = '';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
-    document.getElementById('assigned-trigger').style.marginBottom = '';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = '';
 }
+
+
+function dropdownCategoryDown () {
+    document.getElementById('symbole_down_dropdown_category').style.display = 'none';
+    document.getElementById('symbole_up_dropdown_category').style.display = 'flex';
+    const dropdown = document.getElementById('dropdown_category');
+    dropdown.style.display = 'flex';
+    for (let index = 0; index < categoriesList.length; index++) {
+        dropdown.innerHTML += categoryTemplate(categoriesList[index]);
+    }
+}
+
+
+function dropdownCategoryUp() {
+    document.getElementById('symbole_down_dropdown_category').style.display = '';
+    document.getElementById('symbole_up_dropdown_category').style.display = '';
+    const dropdown = document.getElementById('dropdown_category');
+    dropdown.style.display = '';
+}
+
 
 function contactsTemplate(name) {
     return `
             <div class="contacts_div">
                 <span>${name}</span>
                 <input class="contacts_input" type="checkbox" />
+            </div>
+    `;
+}
+
+
+function categoryTemplate(category) {
+    return `
+            <div class="category_div">
+                <span>${category}</span>
             </div>
     `;
 }
