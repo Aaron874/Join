@@ -2,6 +2,15 @@
     font-family: "Inter";
 }
 
+dialog{
+  width: 1116px;
+  height: 870px;
+}
+
+dialog::backdrop{
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .board-head h1{
     font-size: var(--fs-h1);
     font-weight: bold;
@@ -118,4 +127,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.add-dialog {
+  border-radius: 16px;
+  position: fixed;
+  border: 1px solid var(--bg-white);;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 }
