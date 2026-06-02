@@ -42,7 +42,7 @@
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #FF7A00;
+    background-color: var(--contact-color);
     display: flex;
     align-items: center;
     justify-content: center;
