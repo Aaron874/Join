@@ -202,6 +202,7 @@ function dropdownContactsDown () {
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = 'flex';
+    dropdown.innerHTML = "";
     for (let index = 0; index < contactsList.length; index++) {
         dropdown.innerHTML += contactsTemplate(contactsList[index].name);
     }
@@ -221,6 +222,7 @@ function dropdownCategoryDown () {
     document.getElementById('symbole_up_dropdown_category').style.display = 'flex';
     const dropdown = document.getElementById('dropdown_category');
     dropdown.style.display = 'flex';
+    dropdown.innerHTML = "";
     for (let index = 0; index < categoriesList.length; index++) {
         dropdown.innerHTML += categoryTemplate(categoriesList[index]);
     }

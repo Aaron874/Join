@@ -190,6 +190,7 @@ input::placeholder {
 .assigned-dropdown {
     position: relative;
     width: 100%;
+    height: 46px;
 }
 
 .assigned-trigger {
@@ -303,4 +304,25 @@ input::placeholder {
 
 .symbole_down_dropdown_category {
     display: flex;
+}
+
+.dropdown_category {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: white;
+    flex-direction: column;
+    max-height: calc(3 * 46px);
+    overflow-y: auto;
+}
+
+.category_div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.3rem 0.5rem;
 }
