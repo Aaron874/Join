@@ -326,3 +326,27 @@ input::placeholder {
     min-height: 46px;
     padding: 0.3rem 0.5rem;
 }
+
+.style-priorities-red {
+    background-color: #ff3c00;
+}
+
+.style-priorities-orange {
+    background-color: #ffaa00;
+}
+
+.style-priorities-green {
+    background-color: #79e329;
+}
+
+.color-urgent {
+    color: #ffffff;
+}
+
+.color-medium {
+    color: #ffffff;
+}
+
+.color-low {
+    color: #ffffff;
+}
