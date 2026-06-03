@@ -1,5 +1,6 @@
 // Beispiel Kontakte für Testzwecke //
 const contactsListContainer = document.querySelector('.contacts_list_container');
+const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 let firstLetterList = [];
 let contactsList = [
     {
@@ -256,11 +257,12 @@ function createContactListItems() {
     for (let index = 0; index < contactsList.length; index++) {
         let shortName = contactListInitials(contactsList[index].name);
         let person = contactsList[index].name;
+        let phone = contactsList[index].phone;
         let email = contactsList[index].email;
         let firstLetter = contactsList[index].name[0].toUpperCase();
         let color = contactsList[index].color;
         let targetElement = document.querySelector(`[data-letter="${firstLetter}"]`);
-        targetElement.after(renderContactsListItems(shortName, person, email, color));
+        targetElement.after(renderContactsListItems(shortName, person, email, color,phone));
     }
 }
 
@@ -272,3 +274,9 @@ function contactListInitials(contactListName) {
     return initials;
 }
 
+
+function openSingleViewContact(shortName, person, email, color, phone) {
+    console.log(shortName, person, email, color, phone);
+    contactsSingleViewContainer.innerHTML = "";
+    contactsSingleViewContainer.appendChild(renderSingleContactView(shortName, person, email, color, phone));
+}

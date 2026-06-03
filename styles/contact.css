@@ -129,7 +129,7 @@ margin: 16px 0 16px 0;
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #FF7A00;
+    background-color: var(--contact-color);
     display: flex;
     align-items: center;
     justify-content: center;
