@@ -197,7 +197,7 @@ let categoriesList = [
 ];
 
 
-function dropdownContactsDown () {
+function dropdownContactsDown() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
     const dropdown = document.getElementById('dropdown_contacts');
@@ -217,7 +217,7 @@ function dropdownContactsUp() {
 }
 
 
-function dropdownCategoryDown () {
+function dropdownCategoryDown() {
     document.getElementById('symbole_down_dropdown_category').style.display = 'none';
     document.getElementById('symbole_up_dropdown_category').style.display = 'flex';
     const dropdown = document.getElementById('dropdown_category');
@@ -253,4 +253,47 @@ function categoryTemplate(category) {
                 <span>${category}</span>
             </div>
     `;
+}
+
+function colorChangePriority(element) {
+    const urgent = document.getElementById('priority-urgent');
+    const urgentFont = document.getElementById('urgent-font');
+    const urgentIcon = document.getElementById('urgent-icon');
+    const medium = document.getElementById('priority-medium');
+    const mediumFont = document.getElementById('medium-font');
+    const mediumIcon = document.getElementById('medium-icon');
+    const low = document.getElementById('priority-low');
+    const lowFont = document.getElementById('low-font');
+    const lowIcon = document.getElementById('low-icon');
+    if (element === urgent) {
+        element.classList.add("style-priorities-red");
+        urgentFont.classList.add("color-urgent");
+        urgentIcon.classList.add("color-urgent");
+        medium.classList.remove("style-priorities-orange")
+        mediumFont.classList.remove("color-medium")
+        mediumIcon.classList.remove("color-medium")
+        low.classList.remove("style-priorities-green")
+        lowFont.classList.remove("color-low")
+        lowIcon.classList.remove("color-low")
+    } else if (element === medium) {
+        element.classList.add("style-priorities-orange");
+        mediumFont.classList.add("color-medium");
+        mediumIcon.classList.add("color-medium");
+        urgent.classList.remove("style-priorities-red")
+        urgentFont.classList.remove("color-urgent")
+        urgentIcon.classList.remove("color-urgent")
+        low.classList.remove("style-priorities-green")
+        lowFont.classList.remove("color-low")
+        lowIcon.classList.remove("color-low")
+    } else {
+        element.classList.add("style-priorities-green");
+        lowFont.classList.add("color-low");
+        lowIcon.classList.add("color-low");
+        urgent.classList.remove("style-priorities-red")
+        urgentFont.classList.remove("color-urgent")
+        urgentIcon.classList.remove("color-urgent")
+        medium.classList.remove("style-priorities-orange")
+        mediumFont.classList.remove("color-medium")
+        mediumIcon.classList.remove("color-low")
+    }
 }

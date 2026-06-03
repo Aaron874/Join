@@ -114,6 +114,7 @@ input::placeholder {
     width: 128px;
     justify-content: space-around;
     background-color: #ffffff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .urgent-icon {
@@ -325,4 +326,32 @@ input::placeholder {
     align-items: center;
     min-height: 46px;
     padding: 0.3rem 0.5rem;
+}
+
+.style-priorities-red {
+    background-color: #ff3c00;
+}
+
+.style-priorities-orange {
+    background-color: #ffaa00;
+}
+
+.style-priorities-green {
+    background-color: #79e329;
+}
+
+.color-urgent {
+    color: #ffffff;
+}
+
+.color-medium {
+    color: #ffffff;
+}
+
+.color-low {
+    color: #ffffff;
+}
+
+.style-priorities:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
