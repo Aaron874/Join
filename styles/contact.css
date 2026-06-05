@@ -26,6 +26,7 @@
     text-align: left;
     font-weight: 400;
     font-size: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .contacts_list_items_container:hover h4 {
@@ -36,6 +37,7 @@
     font-weight: 400;
     font-size: 16px;
     color: #007CEE;
+    font-family: 'Inter', sans-serif;
 }
 
 .contacts_list_name_symbol {
@@ -48,6 +50,9 @@
     justify-content: center;
     color: white;
     border: 2px solid white;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 .contacts_single_view_container {
@@ -106,7 +111,7 @@ margin: 16px 0 16px 0;
 .contacts_list_header h3 {
     font-size: 21px;
     font-weight: 700;
-    color: white;
+    color: #FFFFFF;
 }
 
 .contacts_list_letter_seperator {
