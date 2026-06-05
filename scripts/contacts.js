@@ -276,7 +276,6 @@ function contactListInitials(contactListName) {
 
 
 function openSingleViewContact(shortName, person, email, color, phone) {
-    console.log(shortName, person, email, color, phone);
     contactsSingleViewContainer.innerHTML = "";
     contactsSingleViewContainer.appendChild(renderSingleContactView(shortName, person, email, color, phone));
 }
