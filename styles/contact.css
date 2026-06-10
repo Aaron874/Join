@@ -308,3 +308,45 @@ dialog::backdrop {
     right: 12px;
     pointer-events: none;
   }
+
+  .add_contact_btn_container {
+    display: flex;
+    gap: 20px;
+  }
+
+  .add_contact_btn_submit {
+    background-color: #2A3647;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 21px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    gap: 5px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .add_contact_btn_submit span {
+    width: 24px;
+    height: 24px;
+  }
+
+  .add_contact_btn_cancel {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #2A3647;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: #2A3647 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .add_contact_btn_cancel span {
+    width: 24px;
+    height: 24px;
+  }
