@@ -109,7 +109,8 @@
                     <div class="style-priority">
                         <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
                             <p id="urgent-font" class="style-priorities-p">Urgent</p>
-                            <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                            <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18"
+                                fill="none">
                                 <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -118,7 +119,8 @@
                         </div>
                         <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
                             <p id="medium-font" class="style-priorities-p">Medium</p>
-                            <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                            <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18"
+                                fill="none">
                                 <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                 <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
@@ -138,8 +140,10 @@
                     <div class="assigned-dropdown">
                         <button type="button" id="assigned-trigger" class="assigned-trigger">
                             Select contacts to assign
-                            <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts" onclick="dropdownContactsDown()">⌄</span>
-                            <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts" onclick="dropdownContactsUp()">⌃</span>
+                            <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
+                                onclick="dropdownContactsDown()">⌄</span>
+                            <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
+                                onclick="dropdownContactsUp()">⌃</span>
                         </button>
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
@@ -148,18 +152,38 @@
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
                             Select task category
-                            <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category" onclick="dropdownCategoryDown()">⌄</span>
-                            <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category" onclick="dropdownCategoryUp()">⌃</span>
+                            <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
+                                onclick="dropdownCategoryDown()">⌄</span>
+                            <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
+                                onclick="dropdownCategoryUp()">⌃</span>
                         </button>
                         <div class="dropdown_category" id="dropdown_category"></div>
-                    <p class="padding-top">Subtasks</p>
-                    <input class="input-right" type="text" placeholder="Add new subtask">
+                        <p class="padding-top">Subtasks</p>
+                        <input class="input-right" type="text" placeholder="Add new subtask">
 
-                </div>
-                <div class="style-div-buttons">
-                    <button class="style-buttons">Clear X</button>
-                    <button class="style-buttons bt-right">Create Task</button>
-                </div>
+                    </div>
+                    <div class="style-div-buttons">
+                        <button class="style-buttons bt-left">
+                            <span>Clear</span>
+                            <span class="close-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    aria-hidden="true">
+                                    <path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </span>
+                        </button>
+                        <button class="style-buttons bt-right">
+                            <span>Create Task</span>
+                            <span class="checkmark">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
+                                    viewBox="0 0 15.49 11.22" aria-hidden="true">
+                                    <path d="M1 5.61L5.28 10.22L14.49 1" fill="none" stroke="#FFFFFF" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
             </form>
         </section>
     </main>
