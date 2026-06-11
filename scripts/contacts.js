@@ -2,6 +2,8 @@
 const contactsListContainer = document.querySelector('.contacts_list_container');
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 const addContactDialog = document.getElementById('add_contact_dialog_id');
+const form = document.getElementById('add_contact_form_id');
+form.addEventListener('submit', addNewContact);
 let firstLetterList = [];
 let contactsList = [
     {
@@ -288,4 +290,27 @@ function openAddContactDialog() {
 
 function closeAddContactDialog() {
     addContactDialog.close();
+}
+
+function addNewContact(event) {
+    event.preventDefault();
+    let name = document.getElementById("add_contact_name_id").value;
+    let email = document.getElementById("add_contact_email_id").value;
+    let phone = document.getElementById("add_contact_phone_id").value;
+    let color = document.getElementById("add_contact_color_picker_id").value;
+    // contactsList.push({name, email, phone, color});
+    // contactsListContainer.innerHTML = "";
+    console.log(name, email, phone, color);
+    deleteInputValues();
+    
+    // firstLetterList = [];
+    // letterSeperatorContactsList();
+    // closeAddContactDialog();
+}
+
+function deleteInputValues() {
+    document.getElementById("add_contact_name_id").value = "";
+    document.getElementById("add_contact_email_id").value = "";
+    document.getElementById("add_contact_phone_id").value = "";
+    document.getElementById("add_contact_color_picker_id").value = "#D1D1D1";
 }
