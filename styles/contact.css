@@ -10,6 +10,13 @@
     font-family: 'Inter', sans-serif;
 }
 
+.dialog_container {
+    display: flex;
+    width: 90dvw;
+    height: 40dvh;
+
+}
+
 .font_inter {
     font-family: 'Inter', sans-serif;
 }
@@ -207,13 +214,11 @@ margin: 16px 0 16px 0;
 }
 
 .add_contact_dialog {
-    display: flex;
+    /* display: flex; */
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90dvw;
-    height: 40dvh;
     z-index: 5;
     border: none;
     padding: 0;
@@ -257,6 +262,10 @@ dialog::backdrop {
     width: 90px;
     border-bottom: 3px solid #29ABE2;
   }
+
+.add_contact_text_left {
+    height: 280px;
+}
 
   .add_contact_form_section {
     width: 55%;

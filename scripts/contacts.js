@@ -1,6 +1,7 @@
 // Beispiel Kontakte für Testzwecke //
 const contactsListContainer = document.querySelector('.contacts_list_container');
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
+const addContactDialog = document.getElementById('add_contact_dialog_id');
 let firstLetterList = [];
 let contactsList = [
     {
@@ -278,4 +279,13 @@ function contactListInitials(contactListName) {
 function openSingleViewContact(shortName, person, email, color, phone) {
     contactsSingleViewContainer.innerHTML = "";
     contactsSingleViewContainer.appendChild(renderSingleContactView(shortName, person, email, color, phone));
+}
+
+
+function openAddContactDialog() {
+    addContactDialog.showModal();
+}
+
+function closeAddContactDialog() {
+    addContactDialog.close();
 }
