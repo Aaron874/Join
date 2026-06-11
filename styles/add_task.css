@@ -178,6 +178,36 @@ input::placeholder {
 .bt-right {
     background-color: #2a3647;
     color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 21px;
+    font-weight: bold;
+    width: 183px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.bt-left {
+    font-size: 21px;
+    color: #2a3647;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bt-left svg {
+    vertical-align: -6px;
+}
+
+.bt-right:hover {
+    background-color: #29abe2;
+}
+
+.bt-left:hover {
+    color: #29abe2;
 }
 
 .div-star {
