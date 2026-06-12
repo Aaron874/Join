@@ -367,7 +367,7 @@ dialog::backdrop {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #D1D1D1;
+    background-color: var(--contact-color, #D1D1D1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -384,5 +384,12 @@ dialog::backdrop {
 
   .add_contact_color_picker input[type="color"] {
     display: none;
+  }
+
+  .person_initials {
+    -webkit-text-stroke: 0.4px;
+    -webkit-text-stroke-color: black;
+    color: white;
+    font-size: 43px;
   }
 

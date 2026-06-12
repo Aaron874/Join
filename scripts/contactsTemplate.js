@@ -55,4 +55,11 @@ function renderSingleContactView(shortName, person, email, color = "#BDBDBD", ph
     return newSingleView;
 }
 
+function renderPersonInitialsForAddContact(initials) {
+  let personInitials = document.createElement("span");
+  personInitials.classList.add("person_initials");
+  personInitials.id = "person_initials_id";
+  personInitials.textContent = initials;
+  return personInitials;
+}
 

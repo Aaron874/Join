@@ -280,6 +280,7 @@ function createContactListItems() {
 function contactListInitials(contactListName) {
   let initials = contactListName
     .split(" ")
+    .splice(0, 2)
     .map((word) => word[0].toUpperCase())
     .join("");
   return initials;
@@ -294,10 +295,51 @@ function openSingleViewContact(shortName, person, email, color, phone) {
 
 function openAddContactDialog() {
   addContactDialog.showModal();
+    startEventListenersAddContactDialog();
+}
+
+function startEventListenersAddContactDialog() {
+    document.getElementById("add_contact_color_picker_id").addEventListener("input", (event) => {
+        document.documentElement.style.setProperty("--contact-color", event.target.value);
+      });
+      document.getElementById("add_contact_name_id").addEventListener("blur", (event) => {
+        if (event.target.value != "") {
+        let showFirstLetters = contactListInitials(event.target.value);
+        console.log(showFirstLetters);
+        changeImgToInitials(showFirstLetters);
+        }
+        else {
+            resetPersonInitials();
+        }
+      });
+}
+
+function changeImgToInitials(initials) {    
+    let imgElement = document.getElementById("person_icon_id");
+    if (imgElement === null) {
+        document.getElementById("person_initials_id").textContent = initials;
+        return;
+    }
+    let initialsElement = renderPersonInitialsForAddContact(initials);
+    imgElement.replaceWith(initialsElement);
+}
+
+function resetPersonInitials() {
+    let initialsElement = document.getElementById("person_initials_id");
+    if (initialsElement === null) {
+        return;
+    }
+    let imgElement = document.createElement("img");
+    imgElement.id = "person_icon_id";
+    imgElement.src = "assets/img/person64x64.webp";
+    imgElement.alt = "Person Icon";
+    initialsElement.replaceWith(imgElement);
 }
 
 function closeAddContactDialog() {
   addContactDialog.close();
+    document.documentElement.style.setProperty("--contact-color", "#D1D1D1");
+    resetPersonInitials();
 }
 
 function addNewContact(event) {
