@@ -13,7 +13,9 @@
 .dialog_container {
     display: flex;
     width: 90dvw;
+    max-width: 1065px;
     height: 40dvh;
+    max-height: 580px;
 
 }
 
@@ -281,14 +283,14 @@ dialog::backdrop {
 
   .add_contact_closing_btn {
     position: absolute;
-    top: 20px;
-    right: 50px;
+    top: 32px;
+    right: 48px;
     background: none;
     border: none;
     cursor: pointer;
     color: #FFFFFF;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
   }
 
   .add_contact_input_wrapper {
@@ -355,6 +357,20 @@ dialog::backdrop {
     gap: 5px;
     border: #2A3647 1px solid;
     padding: 10px;
+    border-radius: 10px;
+  }
+
+  .edit_contact_btn_cancel {
+    font-family: 'Inter', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    color: #2A3647;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: #2A3647 1px solid;
+    padding: 10px 17.5px 10px 17.5px;
     border-radius: 10px;
   }
 

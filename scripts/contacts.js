@@ -6,6 +6,8 @@ const contactsSingleViewContainer = document.querySelector(
   "#contacts_single_view_content_id"
 );
 const addContactDialog = document.getElementById("add_contact_dialog_id");
+const editContactDialog = document.getElementById("edit_contact_dialog_id");
+const editContactInputContainer = document.getElementById("edit_contact_form_section_id");
 const form = document.getElementById("add_contact_form_id");
 form.addEventListener("submit", addNewContact);
 let firstLetterList = [];
@@ -305,7 +307,6 @@ function startEventListenersAddContactDialog() {
       document.getElementById("add_contact_name_id").addEventListener("blur", (event) => {
         if (event.target.value != "") {
         let showFirstLetters = contactListInitials(event.target.value);
-        console.log(showFirstLetters);
         changeImgToInitials(showFirstLetters);
         }
         else {
@@ -339,6 +340,7 @@ function resetPersonInitials() {
 function closeAddContactDialog() {
   addContactDialog.close();
     document.documentElement.style.setProperty("--contact-color", "#D1D1D1");
+    deleteInputValues();
     resetPersonInitials();
 }
 
@@ -363,3 +365,19 @@ function deleteInputValues() {
   document.getElementById("add_contact_phone_id").value = "";
   document.getElementById("add_contact_color_picker_id").value = "#D1D1D1";
 }
+
+function openEditContactDialog(shortName, person, email, color, phone) {
+    editContactDialog.showModal();
+    openEditInput(shortName, person, email, color, phone);
+
+}
+
+function closeEditContactDialog() {
+    editContactDialog.close();
+}
+
+function openEditInput(shortName, person, email, color, phone) {
+    editContactInputContainer.appendChild(
+        renderEditContactInput(shortName, person, email, color, phone)
+    );
+  }
