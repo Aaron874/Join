@@ -377,6 +377,10 @@ function closeEditContactDialog() {
 }
 
 function openEditInput(shortName, person, email, color, phone) {
+    const existingInput = document.getElementById("edit_contact_input_id");
+    if (existingInput) {
+        existingInput.remove();
+    }
     editContactInputContainer.appendChild(
         renderEditContactInput(shortName, person, email, color, phone)
     );

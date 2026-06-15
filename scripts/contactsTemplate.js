@@ -66,6 +66,7 @@ function renderPersonInitialsForAddContact(initials) {
 function renderEditContactInput(shortName, person, email, color, phone) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("add_contact_form_container");
+  editContactInput.id = "edit_contact_input_id";
   editContactInput.innerHTML = `
             <label class="add_contact_color_picker" style="--contact-color: ${color};">
               <input
