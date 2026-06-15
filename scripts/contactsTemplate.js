@@ -75,7 +75,7 @@ function renderEditContactInput(shortName, person, email, color, phone) {
                 id="edit_contact_color_picker_id"
                 value="${color}"
               />
-              <img id="person_icon_id" src="assets/img/person64x64.webp" alt="Person Icon" />
+              <span class="person_initials" id="person_initials_id">${shortName}</span>
             </label>
             <form action="" method="post" id="add_contact_form_id">
               <div class="add_contact_input_wrapper">
