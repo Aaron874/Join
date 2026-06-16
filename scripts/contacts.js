@@ -5,7 +5,8 @@ const contactsListContainer = document.querySelector(
 const contactsSingleViewContainer = document.querySelector(
   "#contacts_single_view_content_id"
 );
-const addContactDialog = document.getElementById("add_contact_dialog_id");
+const contactDialog = document.getElementById("contact_dialog_id");
+const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById("edit_contact_form_section_id");
 const form = document.getElementById("add_contact_form_id");
@@ -296,9 +297,13 @@ function openSingleViewContact(shortName, person, email, color, phone) {
 }
 
 function openAddContactDialog() {
-  addContactDialog.showModal();
+  contactDialog.showModal();
+  contactDialogHeader.appendChild(renderAddOrEditContactDialog());
+  contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
     startEventListenersAddContactDialog();
 }
+
+
 
 function startEventListenersAddContactDialog() {
     document.getElementById("add_contact_color_picker_id").addEventListener("input", (event) => {
@@ -338,7 +343,7 @@ function resetPersonInitials() {
 }
 
 function closeAddContactDialog() {
-  addContactDialog.close();
+  contactDialog.close();
     document.documentElement.style.setProperty("--contact-color", "#D1D1D1");
     deleteInputValues();
     resetPersonInitials();
@@ -367,13 +372,19 @@ function deleteInputValues() {
 }
 
 function openEditContactDialog(shortName, person, email, color, phone) {
-    editContactDialog.showModal();
+    contactDialog.showModal();
+    contactDialogHeaderSwitch(true);
     openEditInput(shortName, person, email, color, phone);
 
 }
 
+function contactDialogHeaderSwitch(state) {
+    contactDialogHeader.innerHTML = "";
+    contactDialogHeader.appendChild(renderAddOrEditContactDialog(state));
+}
+
 function closeEditContactDialog() {
-    editContactDialog.close();
+    contactDialog.close();
 }
 
 function openEditInput(shortName, person, email, color, phone) {

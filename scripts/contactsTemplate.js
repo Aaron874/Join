@@ -20,6 +20,22 @@ function renderContactsListItems(shortName, person, email, color = "#BDBDBD", ph
         return newContact;
 }
 
+function renderAddOrEditContactDialog(isEditMode = false) {
+  let addContactDialogContent = document.createElement("h3");
+  if (isEditMode) {
+    addContactDialogContent.textContent = "Edit Contact";
+  } else {
+    addContactDialogContent.textContent = "Add Contact";
+  }
+  return addContactDialogContent;
+}
+
+function renderUnderlineHeaderContactDialog() {
+  let contactDialogUnderline = document.createElement("p");
+  contactDialogUnderline.textContent = "Tasks are better with a team!";
+  return contactDialogUnderline;
+}
+
 
 function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number") {
     let newSingleView = document.createElement("div");
