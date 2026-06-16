@@ -8,9 +8,8 @@ const contactsSingleViewContainer = document.querySelector(
 const contactDialog = document.getElementById("contact_dialog_id");
 const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
-const editContactInputContainer = document.getElementById("edit_contact_form_section_id");
-const form = document.getElementById("add_contact_form_id");
-form.addEventListener("submit", addNewContact);
+const editContactInputContainer = document.getElementById("contact_form_section_id");
+
 let firstLetterList = [];
 let contactsList = [
   {
@@ -298,15 +297,18 @@ function openSingleViewContact(shortName, person, email, color, phone) {
 
 function openAddContactDialog() {
   contactDialog.showModal();
-  contactDialogHeader.appendChild(renderAddOrEditContactDialog());
+  contactDialogHeaderSwitch();
   contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
+  openEditInput();
+  const form = document.getElementById("add_contact_form_id");
+form.addEventListener("submit", addNewContact);
     startEventListenersAddContactDialog();
 }
 
 
 
 function startEventListenersAddContactDialog() {
-    document.getElementById("add_contact_color_picker_id").addEventListener("input", (event) => {
+    document.getElementById("contact_color_picker_id").addEventListener("input", (event) => {
         document.documentElement.style.setProperty("--contact-color", event.target.value);
       });
       document.getElementById("add_contact_name_id").addEventListener("blur", (event) => {
@@ -354,7 +356,7 @@ function addNewContact(event) {
   let name = document.getElementById("add_contact_name_id").value;
   let email = document.getElementById("add_contact_email_id").value;
   let phone = document.getElementById("add_contact_phone_id").value;
-  let color = document.getElementById("add_contact_color_picker_id").value;
+  let color = document.getElementById("contact_color_picker_id").value;
   // contactsList.push({name, email, phone, color});
   // contactsListContainer.innerHTML = "";
   console.log(name, email, phone, color);
@@ -368,7 +370,7 @@ function deleteInputValues() {
   document.getElementById("add_contact_name_id").value = "";
   document.getElementById("add_contact_email_id").value = "";
   document.getElementById("add_contact_phone_id").value = "";
-  document.getElementById("add_contact_color_picker_id").value = "#D1D1D1";
+  document.getElementById("contact_color_picker_id").value = "#D1D1D1";
 }
 
 function openEditContactDialog(shortName, person, email, color, phone) {
@@ -388,7 +390,7 @@ function closeEditContactDialog() {
 }
 
 function openEditInput(shortName, person, email, color, phone) {
-    const existingInput = document.getElementById("edit_contact_input_id");
+    const existingInput = document.getElementById("contact_input_id");
     if (existingInput) {
         existingInput.remove();
     }

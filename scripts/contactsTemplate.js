@@ -82,23 +82,23 @@ function renderPersonInitialsForAddContact(initials) {
 function renderEditContactInput(shortName, person, email, color, phone) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("add_contact_form_container");
-  editContactInput.id = "edit_contact_input_id";
+  editContactInput.id = "contact_input_id";
   editContactInput.innerHTML = `
-            <label class="add_contact_color_picker" style="--contact-color: ${color};">
+            <label class="add_contact_color_picker" style="--contact-color: ${color ?? "#D1D1D1"};">
               <input
                 type="color"
                 name="background_color"
-                id="edit_contact_color_picker_id"
-                value="${color}"
+                id="contact_color_picker_id"
+                value="${color ?? "#D1D1D1"}"
               />
-              <span class="person_initials" id="person_initials_id">${shortName}</span>
+              <span class="person_initials" id="person_initials_id">${shortName ?? ""}</span>
             </label>
             <form action="" method="post" id="add_contact_form_id">
               <div class="add_contact_input_wrapper">
                 <input
                   class="add_contact_input"
                   type="text"
-                  value="${person}"
+                  value="${person ?? ""}"
                   name="name"
                   id="add_contact_name_id"
                   placeholder="Name"
@@ -107,11 +107,11 @@ function renderEditContactInput(shortName, person, email, color, phone) {
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
               </div>
               <div class="add_contact_input_wrapper">
-                <input type="text" name="email" id="add_contact_email_id" placeholder="E-Mail" value="${email}" required/>
+                <input type="text" name="email" id="add_contact_email_id" placeholder="E-Mail" value="${email ?? ""}" required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
               <div class="add_contact_input_wrapper">
-                <input type="text" name="phone" id="add_contact_phone_id" placeholder="Phone" value="${phone}" required/>
+                <input type="text" name="phone" id="add_contact_phone_id" placeholder="Phone" value="${phone ?? ""}" required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
               <div class="add_contact_btn_container">
