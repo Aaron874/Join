@@ -131,7 +131,7 @@
                 <div class="status-head">
                     In progress
                     <button class="add-btn" title="add new in progress task">
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                             <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                         </svg>
@@ -170,22 +170,8 @@
         </aritcle>
         <dialog class="add-dialog" id="add-task-dialog">
             <section class="main-content">
-                <div class="dialog-head">
-                    <h1 class="add_task-h1">Add Task</h1>
-                    <button onclick="closeDialog('add-task-dialog')" title="close"><svg width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0_472483_2056" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
-                                width="24" height="24">
-                                <rect width="24" height="24" fill="#D9D9D9" />
-                            </mask>
-                            <g mask="url(#mask0_472483_2056)">
-                                <path
-                                    d="M12 13.4L7.1 18.3C6.91667 18.4834 6.68333 18.575 6.4 18.575C6.11667 18.575 5.88333 18.4834 5.7 18.3C5.51667 18.1167 5.425 17.8834 5.425 17.6C5.425 17.3167 5.51667 17.0834 5.7 16.9L10.6 12L5.7 7.10005C5.51667 6.91672 5.425 6.68338 5.425 6.40005C5.425 6.11672 5.51667 5.88338 5.7 5.70005C5.88333 5.51672 6.11667 5.42505 6.4 5.42505C6.68333 5.42505 6.91667 5.51672 7.1 5.70005L12 10.6L16.9 5.70005C17.0833 5.51672 17.3167 5.42505 17.6 5.42505C17.8833 5.42505 18.1167 5.51672 18.3 5.70005C18.4833 5.88338 18.575 6.11672 18.575 6.40005C18.575 6.68338 18.4833 6.91672 18.3 7.10005L13.4 12L18.3 16.9C18.4833 17.0834 18.575 17.3167 18.575 17.6C18.575 17.8834 18.4833 18.1167 18.3 18.3C18.1167 18.4834 17.8833 18.575 17.6 18.575C17.3167 18.575 17.0833 18.4834 16.9 18.3L12 13.4Z"
-                                    fill="#2A3647" />
-                            </g>
-                        </svg>
-                    </button>
-                </div>
+
+                <h1 class="add_task-h1">Add Task</h1>
                 <form class="style-content">
                     <div class="style-form-left" action="">
                         <div class="div-star">
@@ -194,7 +180,7 @@
                             </p>
                         </div>
                         <input class="input-left" required type="text" placeholder="Enter a title">
-                        <p>Description</p>
+                        <p class="padding-top">Description</p>
                         <textarea class="textarea-description" placeholder="Enter a description"></textarea>
                         <div class="div-star">
                             <p>Due Date
@@ -208,25 +194,28 @@
 
                         <p style="color: #000000" ;>Priority</p>
                         <div class="style-priority">
-                            <div class="style-priorities">
-                                <p class="style-priorities-p">Urgent</p>
-                                <svg class="urgent-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                            <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="urgent-font" class="style-priorities-p">Urgent</p>
+                                <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
                                     <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
-                            <div class="style-priorities">
-                                <p class="style-priorities-p">Medium</p>
-                                <svg class="medium-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                            <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="medium-font" class="style-priorities-p">Medium</p>
+                                <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
                                     <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                     <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                 </svg>
                             </div>
-                            <div class="style-priorities">
-                                <p class="style-priorities-p">Low</p>
-                                <svg class="low-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
+                            <div id="priority-low" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="low-font" class="style-priorities-p">Low</p>
+                                <svg id="low-icon" class="low-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
                                     <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                     <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2"
@@ -246,11 +235,8 @@
                             </button>
                             <div class="dropdown_contacts" id="dropdown_contacts"></div>
                         </div>
-                        <div class="div-star padding-top">
-                            <p>Category
-                            <p class="star-style">*</p>
-                            </p>
-                        </div>
+                        <p class="padding-top">Category</p>
+
                         <div class="assigned-dropdown">
                             <button type="button" class="assigned-trigger">
                                 Select task category
@@ -265,8 +251,26 @@
 
                         </div>
                         <div class="style-div-buttons">
-                            <button class="style-buttons" onclick="closeDialog('add-task-dialog')" title="cancel and close">Cancel X</button>
-                            <button class="style-buttons bt-right">Create Task</button>
+                            <button class="style-buttons bt-left">
+                                <span>Clear</span>
+                                <span class="close-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                            </button>
+                            <button class="style-buttons bt-right">
+                                <span>Create Task</span>
+                                <span class="checkmark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
+                                        viewBox="0 0 15.49 11.22" aria-hidden="true">
+                                        <path d="M1 5.61L5.28 10.22L14.49 1" fill="none" stroke="#FFFFFF"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                            </button>
                         </div>
                 </form>
             </section>
