@@ -300,10 +300,11 @@ function openAddContactDialog() {
   contactDialogHeaderSwitch();
   contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
   openEditInput();
+  startEventListenerColorPicker()
+  startEventListenersAddContactDialog();
   const form = document.getElementById("add_contact_form_id");
 form.addEventListener("submit", addNewContact);
-    startEventListenerColorPicker()
-    startEventListenersAddContactDialog();
+
 }
 
 
@@ -380,7 +381,7 @@ function deleteInputValues() {
 function openEditContactDialog(shortName, person, email, color, phone) {
     contactDialog.showModal();
     contactDialogHeaderSwitch(true);
-    openEditInput(shortName, person, email, color, phone);
+    openEditInput(shortName, person, email, color, phone, mode = "edit");
     startEventListenerColorPicker();
 
 }
@@ -394,12 +395,12 @@ function closeEditContactDialog() {
     contactDialog.close();
 }
 
-function openEditInput(shortName, person, email, color, phone) {
+function openEditInput(shortName, person, email, color, phone, mode) {
     const existingInput = document.getElementById("contact_input_id");
     if (existingInput) {
         existingInput.remove();
     }
     editContactInputContainer.appendChild(
-        renderEditContactInput(shortName, person, email, color, phone)
+        renderEditContactInput(shortName, person, email, color, phone, mode)
     );
   }

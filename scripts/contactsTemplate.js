@@ -79,7 +79,7 @@ function renderPersonInitialsForAddContact(initials) {
   return personInitials;
 }
 
-function renderEditContactInput(shortName, person, email, color, phone) {
+function renderEditContactInput(shortName, person, email, color, phone, mode) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("add_contact_form_container");
   editContactInput.id = "contact_input_id";
@@ -114,22 +114,55 @@ function renderEditContactInput(shortName, person, email, color, phone) {
                 <input type="text" name="phone" id="add_contact_phone_id" placeholder="Phone" value="${phone ?? ""}" required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
+              ${renderButtons(mode)}
+            </form>
+`
+return editContactInput;
+}
+
+
+
+function renderButtons(mode) {
+  if (mode === "edit") {
+    return `
+    <div class="add_contact_btn_container" >
+      <button
+        class="edit_contact_btn_cancel"
+        type="reset"
+        onclick="closeEditContactDialog()">
+        Delete
+      </button>
+      <button class="add_contact_btn_submit" type="submit">
+        Save
+        <span>
+          <img src="assets/img/check.webp" alt="Check Icon" />
+        </span>
+      </button>
+      </div>
+    `
+
+  } else {
+
+    return `
               <div class="add_contact_btn_container">
                 <button
-                  class="edit_contact_btn_cancel"
+                  class="add_contact_btn_cancel"
                   type="reset"
-                  onclick="closeEditContactDialog()"
+                  onclick="closeAddContactDialog()"
                 >
-                  Delete
+                  Cancel
+                  <span
+                    ><img
+                      src="assets/img/iconoir_cancel.webp"
+                      alt="Delete Icon"
+                  /></span>
                 </button>
                 <button class="add_contact_btn_submit" type="submit">
-                  Save
+                  Create contact
                   <span
                     ><img src="assets/img/check.webp" alt="Check Icon"
                   /></span>
                 </button>
               </div>
-            </form>
-`
-return editContactInput;
+`}
 }
