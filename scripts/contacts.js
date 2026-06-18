@@ -302,15 +302,13 @@ function openAddContactDialog() {
   openEditInput();
   const form = document.getElementById("add_contact_form_id");
 form.addEventListener("submit", addNewContact);
+    startEventListenerColorPicker()
     startEventListenersAddContactDialog();
 }
 
 
 
 function startEventListenersAddContactDialog() {
-    document.getElementById("contact_color_picker_id").addEventListener("input", (event) => {
-        document.documentElement.style.setProperty("--contact-color", event.target.value);
-      });
       document.getElementById("add_contact_name_id").addEventListener("blur", (event) => {
         if (event.target.value != "") {
         let showFirstLetters = contactListInitials(event.target.value);
@@ -319,6 +317,12 @@ function startEventListenersAddContactDialog() {
         else {
             resetPersonInitials();
         }
+      });
+}
+
+function startEventListenerColorPicker() {
+    document.getElementById("contact_color_picker_id").addEventListener("input", (event) => {
+        event.target.parentElement.style.setProperty("--contact-color", event.target.value);
       });
 }
 
@@ -377,6 +381,7 @@ function openEditContactDialog(shortName, person, email, color, phone) {
     contactDialog.showModal();
     contactDialogHeaderSwitch(true);
     openEditInput(shortName, person, email, color, phone);
+    startEventListenerColorPicker();
 
 }
 
