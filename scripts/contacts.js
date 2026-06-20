@@ -302,7 +302,7 @@ function openAddContactDialog() {
   openEditInput();
   startEventListenerColorPicker()
   startEventListenersAddContactDialog();
-  const form = document.getElementById("add_contact_form_id");
+  const form = document.getElementById("contact_form_id");
 form.addEventListener("submit", addNewContact);
 
 }
@@ -310,7 +310,7 @@ form.addEventListener("submit", addNewContact);
 
 
 function startEventListenersAddContactDialog() {
-      document.getElementById("add_contact_name_id").addEventListener("blur", (event) => {
+      document.getElementById("contact_name_id").addEventListener("blur", (event) => {
         if (event.target.value != "") {
         let showFirstLetters = contactListInitials(event.target.value);
         changeImgToInitials(showFirstLetters);
@@ -358,9 +358,9 @@ function closeAddContactDialog() {
 
 function addNewContact(event) {
   event.preventDefault();
-  let name = document.getElementById("add_contact_name_id").value;
-  let email = document.getElementById("add_contact_email_id").value;
-  let phone = document.getElementById("add_contact_phone_id").value;
+  let name = document.getElementById("contact_name_id").value;
+  let email = document.getElementById("contact_email_id").value;
+  let phone = document.getElementById("contact_phone_id").value;
   let color = document.getElementById("contact_color_picker_id").value;
   // contactsList.push({name, email, phone, color});
   // contactsListContainer.innerHTML = "";
@@ -372,9 +372,9 @@ function addNewContact(event) {
 }
 
 function deleteInputValues() {
-  document.getElementById("add_contact_name_id").value = "";
-  document.getElementById("add_contact_email_id").value = "";
-  document.getElementById("add_contact_phone_id").value = "";
+  document.getElementById("contact_name_id").value = "";
+  document.getElementById("contact_email_id").value = "";
+  document.getElementById("contact_phone_id").value = "";
   document.getElementById("contact_color_picker_id").value = "#D1D1D1";
 }
 
@@ -401,6 +401,6 @@ function openEditInput(shortName, person, email, color, phone, mode) {
         existingInput.remove();
     }
     editContactInputContainer.appendChild(
-        renderEditContactInput(shortName, person, email, color, phone, mode)
+        renderContactInput(shortName, person, email, color, phone, mode)
     );
   }

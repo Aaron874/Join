@@ -276,7 +276,7 @@ dialog::backdrop {
     justify-content: center;
   }
 
-  .add_contact_form_container {
+  .contact_form_container {
     display: flex;
     width: 100%;
   }
@@ -293,7 +293,7 @@ dialog::backdrop {
     height: 32px;
   }
 
-  .add_contact_input_wrapper {
+  .contact_input_wrapper {
     display: flex;
     align-items: center;
     width: 350px;
@@ -303,7 +303,7 @@ dialog::backdrop {
     margin-bottom: 32px;
   }
 
-  .add_contact_input_wrapper input {
+  .contact_input_wrapper input {
     width: 100%;
     border: none;
     font-family: 'Inter';
@@ -313,22 +313,22 @@ dialog::backdrop {
     padding: 10px 10px 10px 15px;
   }
 
-  .add_contact_input_wrapper input::placeholder {
+  .contact_input_wrapper input::placeholder {
     color: #D1D1D1;
   }
 
-  .add_contact_input_wrapper img {
+  .contact_input_wrapper img {
     position: absolute;
     right: 12px;
     pointer-events: none;
   }
 
-  .add_contact_btn_container {
+  .contact_btn_container {
     display: flex;
     gap: 20px;
   }
 
-  .add_contact_btn_submit {
+  .contact_btn_submit {
     background-color: #2A3647;
     padding: 10px;
     color: #FFFFFF;
@@ -341,7 +341,7 @@ dialog::backdrop {
     font-family: 'Inter', sans-serif;
   }
 
-  .add_contact_btn_submit span {
+  .contact_btn_submit span {
     width: 24px;
     height: 24px;
   }
@@ -379,7 +379,7 @@ dialog::backdrop {
     height: 24px;
   }
 
-  .add_contact_color_picker {
+  .contact_color_picker {
     width: 120px;
     height: 120px;
     border-radius: 50%;
@@ -392,13 +392,13 @@ dialog::backdrop {
     margin: 50px 30px 0 30px;
   }
 
-  .add_contact_color_picker img {
+  .contact_color_picker img {
     width: 64px;
     height: 64px;
     pointer-events: none;
   }
 
-  .add_contact_color_picker input[type="color"] {
+  .contact_color_picker input[type="color"] {
     display: none;
   }
 

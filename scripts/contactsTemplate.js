@@ -79,12 +79,12 @@ function renderPersonInitialsForAddContact(initials) {
   return personInitials;
 }
 
-function renderEditContactInput(shortName, person, email, color, phone, mode) {
+function renderContactInput(shortName, person, email, color, phone, mode) {
   let editContactInput = document.createElement("div");
-  editContactInput.classList.add("add_contact_form_container");
+  editContactInput.classList.add("contact_form_container");
   editContactInput.id = "contact_input_id";
   editContactInput.innerHTML = `
-            <label class="add_contact_color_picker" style="--contact-color: ${color ?? "#D1D1D1"};">
+            <label class="contact_color_picker" style="--contact-color: ${color ?? "#D1D1D1"};">
               <input
                 type="color"
                 name="background_color"
@@ -93,25 +93,24 @@ function renderEditContactInput(shortName, person, email, color, phone, mode) {
               />
               <span class="person_initials" id="person_initials_id">${shortName ?? ""}</span>
             </label>
-            <form action="" method="post" id="add_contact_form_id">
-              <div class="add_contact_input_wrapper">
+            <form action="" method="post" id="contact_form_id">
+              <div class="contact_input_wrapper">
                 <input
-                  class="add_contact_input"
                   type="text"
                   value="${person ?? ""}"
                   name="name"
-                  id="add_contact_name_id"
+                  id="contact_name_id"
                   placeholder="Name"
                   required
                 />
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
               </div>
-              <div class="add_contact_input_wrapper">
-                <input type="text" name="email" id="add_contact_email_id" placeholder="E-Mail" value="${email ?? ""}" required/>
+              <div class="contact_input_wrapper">
+                <input type="text" name="email" id="contact_email_id" placeholder="E-Mail" value="${email ?? ""}" required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
-              <div class="add_contact_input_wrapper">
-                <input type="text" name="phone" id="add_contact_phone_id" placeholder="Phone" value="${phone ?? ""}" required/>
+              <div class="contact_input_wrapper">
+                <input type="text" name="phone" id="contact_phone_id" placeholder="Phone" value="${phone ?? ""}" required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
               ${renderButtons(mode)}
@@ -125,14 +124,14 @@ return editContactInput;
 function renderButtons(mode) {
   if (mode === "edit") {
     return `
-    <div class="add_contact_btn_container" >
+    <div class="contact_btn_container" >
       <button
         class="edit_contact_btn_cancel"
         type="reset"
         onclick="closeEditContactDialog()">
         Delete
       </button>
-      <button class="add_contact_btn_submit" type="submit">
+      <button class="contact_btn_submit" type="submit">
         Save
         <span>
           <img src="assets/img/check.webp" alt="Check Icon" />
@@ -144,7 +143,7 @@ function renderButtons(mode) {
   } else {
 
     return `
-              <div class="add_contact_btn_container">
+              <div class="contact_btn_container">
                 <button
                   class="add_contact_btn_cancel"
                   type="reset"
@@ -157,7 +156,7 @@ function renderButtons(mode) {
                       alt="Delete Icon"
                   /></span>
                 </button>
-                <button class="add_contact_btn_submit" type="submit">
+                <button class="contact_btn_submit" type="submit">
                   Create contact
                   <span
                     ><img src="assets/img/check.webp" alt="Check Icon"
