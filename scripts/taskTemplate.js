@@ -1,3 +1,3 @@
-function getTaskTemplate(){
+function getTaskTemplate(task) {
     return ``
 }
