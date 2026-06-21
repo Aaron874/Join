@@ -2,10 +2,11 @@ window.addEventListener('DOMContentLoaded', init);
 
 // const BASE_URL = 'https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/';
 
-let fetchedTasks
+let fetchedTasks = [];
 
-function init() {
-    fetchTasks();
+async function init() {
+    await fetchTasks();
+    renderBoard();
 }
 
 function openDialog(id) {
@@ -22,11 +23,17 @@ async function fetchTasks(path = "tasks") {
         if (!response.ok) {
             throw new Error(`HTTP-Fehler! Status: ${response.status}`);
         }
-        let taskData = await response.json();
-        fetchedTasks = taskData
+        const taskData = await response.json();
+        fetchedTasks = Object.entries(taskData || {}).map(
+            ([id, task]) => ({
+                id,
+                ...task
+            })
+        )
         console.log(fetchedTasks);
     } catch (error) {
         console.error('Fehler beim Abrufen', error.message);
+        fetchedTasks = [];
     } finally {
         if (!fetchedTasks || !fetchedTasks.length) {
             return
@@ -35,10 +42,14 @@ async function fetchTasks(path = "tasks") {
 }
 
 function renderColumn(status, taskContainer) {
-    taskContainer.innerText = fetchedTasks
-        .filter(task => task.status === status)
-        .map(task => getTaskTemplate(task))
-        .join("")
+    taskContainer.replaceChildren();
+    fetchedTasks
+    .filter(task => task.status === status)
+    .forEach(task => {
+        taskContainer.appendChild(
+            getTaskTemplate(task)
+        );
+    });
 }
 
 function renderBoard() {
