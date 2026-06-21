@@ -34,9 +34,17 @@ async function fetchTasks(path="tasks") {
     }
 }
 
-// function renderTasks(){
-//     const taskContainer = dokument.getElementById('task-Cards');
-//     taskContainer.innerText = fetchedTasks
-//     .map(getTaskTemplate)
-//     .join("")
-// }
+function renderColumn(status, taskContainer){
+    const taskContainer = dokument.getElementById('task-Cards');
+    taskContainer.innerText = fetchedTasks
+    .filter(tasks => task.status === status)
+    .map(task => getTaskTemplate(task))
+    .join("")
+}
+
+function renderBoard() {
+    renderColumn('todo', todoContainer);
+    renderColumn('inProgress', progressContainer);
+    renderColumn('awaitFeedback', feedbackContainer);
+    renderColumn('done', doneContainer);
+}
