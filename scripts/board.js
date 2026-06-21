@@ -16,15 +16,13 @@ function closeDialog(id) {
     document.getElementById(id).close();
 }
 
-async function fetchTasks() {
-    let response;
-    let taskData;
+async function fetchTasks(path="tasks") {
     try {
-        response = await fetch(BASE_URL + ".json");
+        let response = await fetch(BASE_URL + path + ".json");
         if (!response.ok) {
             throw new Error(`HTTP-Fehler! Status: ${response.status}`);
         }
-        taskData = await response.json();
+        let taskData = await response.json();
         fetchedTasks = taskData
         console.log(fetchedTasks);
     } catch (error) {
@@ -33,6 +31,12 @@ async function fetchTasks() {
         if (!fetchedTasks || !fetchedTasks.length) {
             return
         }
-
     }
 }
+
+// function renderTasks(){
+//     const taskContainer = dokument.getElementById('task-Cards');
+//     taskContainer.innerText = fetchedTasks
+//     .map(getTaskTemplate)
+//     .join("")
+// }
