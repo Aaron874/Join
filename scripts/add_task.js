@@ -191,14 +191,7 @@ let contactsList = [
 ];
 
 
-let categoriesList = [
-    'Technical Task',
-    'User Story',
-];
-
-
 let priority = [
-
 ];
 
 
@@ -234,10 +227,6 @@ function dropdownCategoryDown() {
     document.getElementById('symbole_up_dropdown_category').style.display = 'flex';
     const dropdown = document.getElementById('dropdown_category');
     dropdown.style.display = 'flex';
-    dropdown.innerHTML = "";
-    for (let index = 0; index < categoriesList.length; index++) {
-        dropdown.innerHTML += categoryTemplate(categoriesList[index]);
-    }
 }
 
 
@@ -259,13 +248,12 @@ function contactsTemplate(name) {
 }
 
 
-function categoryTemplate(category) {
-    return `
-            <div class="category_div">
-                <span>${category}</span>
-            </div>
-    `;
+function selectedCatgeory(element) {
+    document.getElementById("selected_category_text").textContent =
+        element.innerText;
+    dropdownCategoryUp();
 }
+
 
 function colorChangePriority(element) {
     const urgent = document.getElementById('priority-urgent');
@@ -320,6 +308,7 @@ async function createTask(element) {
     const taskDate = document.getElementById("task-date").value;
     const taskSubtasks = document.getElementById("task-subtasks").value;
     const taskPriority = priority[0];
+    const taskCategory = document.getElementById('selected_category_text').textContent;
     // const taskAssigned = 
 
     const task = {
@@ -328,7 +317,7 @@ async function createTask(element) {
         date: taskDate,
         priority: taskPriority,
         // assignedTo: taskAssigned,
-        // category: taskCategory,
+        category: taskCategory,
         subtasks: taskSubtasks,
         status: element
     };
@@ -337,7 +326,7 @@ async function createTask(element) {
 
     await addTaskToFirebase(task);
     priority = [];
-    removeColorPriorities();
+    clearTaskform();
     console.log(tasks);
 }
 
@@ -347,10 +336,12 @@ function clearTaskform() {
     const taskDescription = document.getElementById("task-description");
     const taskDate = document.getElementById("task-date");
     const taskSubtasks = document.getElementById("task-subtasks");
+    const taskCategory = document.getElementById('selected_category_text');
 
     taskTitle.value = "";
     taskDescription.value = "";
     taskDate.value = "";
+    taskCategory.textContent = "Select Task Category";
     taskSubtasks.value = "";
 
     removeColorPriorities();
@@ -381,6 +372,6 @@ async function postData(path = "", data = {}) {
 }
 
 
-async function addTaskToFirebase(task={}) {
+async function addTaskToFirebase(task = {}) {
     postData('tasks', task);
 }
