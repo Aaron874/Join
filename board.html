@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="svg/xml">
     <link rel="stylesheet" href="style.css">
     <script src="./scripts/add_task.js"></script>
+    <script src="./scripts/taskTemplate.js"></script>
     <script src="./scripts/board.js"></script>
     <link rel="stylesheet" href="./styles/board.css">
     <link rel="stylesheet" href="./styles/add_task.css">
@@ -113,7 +114,7 @@
             </section>
         </article>
         <aritcle class="board">
-            <section class="status" id="todo-container">
+            <section class="status">
                 <div class="status-head">To do
                     <button class="add-btn" onclick="openDialog('add-task-dialog')" title="add new to do task">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,12 +123,12 @@
                         </svg>
                     </button>
                 </div>
-                <div class="task-queue">
+                <div class="task-queue" id="todo-container">
                     <div class="notask">
                         No tasks To do
                     </div>
             </section>
-            <section class="status" id="progress-container">
+            <section class="status">
                 <div class="status-head">
                     In progress
                     <button class="add-btn" title="add new in progress task">
@@ -137,12 +138,12 @@
                         </svg>
                     </button>
                 </div>
-                <div class="task-queue">
+                <div class="task-queue" id="progress-container">
                     <div class="notask">
                         No tasks in progress
                     </div>
             </section>
-            <section class="status" id="feedback-container">
+            <section class="status">
                 <div class="status-head">
                     Await feedback
                     <button class="add-btn" title="add new await feedback task">
@@ -152,16 +153,16 @@
                         </svg>
                     </button>
                 </div>
-                <div class="task-queue">
+                <div class="task-queue" id="feedback-container">
                     <div class="notask">
                         No tasks await feedback
                     </div>
             </section>
-            <section class="status" id="done-conatiner">
+            <section class="status">
                 <div class="status-head">
                     Done
                 </div>
-                <div class="task-queue">
+                <div class="task-queue" id="done-conatiner">
                     <div class="notask">
                         No tasks done
                     </div>
