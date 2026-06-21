@@ -153,14 +153,14 @@ async function createTask(element) {
     const taskSubtasks = document.getElementById("task-subtasks").value;
     const taskPriority = priority[0];
     const taskCategory = document.getElementById('selected_category_text').textContent;
-    // const taskAssigned = 
+    const taskAssigned = document.getElementById('div_contacts_initials').textContent;
 
     const task = {
         title: taskTitle,
         description: taskDescription,
         date: taskDate,
         priority: taskPriority,
-        // assignedTo: taskAssigned,
+        assignedTo: taskAssigned,
         category: taskCategory,
         subtasks: taskSubtasks,
         status: element
@@ -181,11 +181,13 @@ function clearTaskform() {
     const taskDate = document.getElementById("task-date");
     const taskSubtasks = document.getElementById("task-subtasks");
     const taskCategory = document.getElementById('selected_category_text');
+    const taskAssigned = document.getElementById('div_contacts_initials');
 
     taskTitle.value = "";
     taskDescription.value = "";
     taskDate.value = "";
     taskCategory.textContent = "Select Task Category";
+    taskAssigned.style.display = "";
     taskSubtasks.value = "";
 
     removeColorPriorities();
