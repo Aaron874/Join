@@ -16,7 +16,7 @@ function closeDialog(id) {
     document.getElementById(id).close();
 }
 
-async function fetchTasks(path="tasks") {
+async function fetchTasks(path = "tasks") {
     try {
         let response = await fetch(BASE_URL + path + ".json");
         if (!response.ok) {
@@ -34,17 +34,16 @@ async function fetchTasks(path="tasks") {
     }
 }
 
-function renderColumn(status, taskContainer){
-    const taskContainer = dokument.getElementById('task-Cards');
+function renderColumn(status, taskContainer) {
     taskContainer.innerText = fetchedTasks
-    .filter(tasks => task.status === status)
-    .map(task => getTaskTemplate(task))
-    .join("")
+        .filter(task => task.status === status)
+        .map(task => getTaskTemplate(task))
+        .join("")
 }
 
 function renderBoard() {
-    renderColumn('todo', todoContainer);
-    renderColumn('inProgress', progressContainer);
-    renderColumn('awaitFeedback', feedbackContainer);
-    renderColumn('done', doneContainer);
+    renderColumn('todo', document.getElementById('todo-container'));
+    renderColumn('inProgress', document.getElementById('progress-container'));
+    renderColumn('awaitFeedback', document.getElementById('feedback-container'));
+    renderColumn('done', document.getElementById('done-container'));
 }
