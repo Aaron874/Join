@@ -197,6 +197,18 @@ let categoriesList = [
 ];
 
 
+let priority = [
+
+];
+
+
+let tasks = [
+];
+
+
+const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
 function dropdownContactsDown() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
@@ -296,4 +308,79 @@ function colorChangePriority(element) {
         mediumFont.classList.remove("color-medium")
         mediumIcon.classList.remove("color-low")
     }
+    const priorities = element.id.split("-")[1];
+
+    priority.push(priorities);
+}
+
+
+async function createTask(element) {
+    const taskTitle = document.getElementById("task-title").value;
+    const taskDescription = document.getElementById("task-description").value;
+    const taskDate = document.getElementById("task-date").value;
+    const taskSubtasks = document.getElementById("task-subtasks").value;
+    const taskPriority = priority[0];
+    // const taskAssigned = 
+
+    const task = {
+        title: taskTitle,
+        description: taskDescription,
+        date: taskDate,
+        priority: taskPriority,
+        // assignedTo: taskAssigned,
+        // category: taskCategory,
+        subtasks: taskSubtasks,
+        status: element
+    };
+
+    tasks.push(task);
+
+    await addTaskToFirebase(task);
+    priority = [];
+    removeColorPriorities();
+    console.log(tasks);
+}
+
+
+function clearTaskform() {
+    const taskTitle = document.getElementById("task-title");
+    const taskDescription = document.getElementById("task-description");
+    const taskDate = document.getElementById("task-date");
+    const taskSubtasks = document.getElementById("task-subtasks");
+
+    taskTitle.value = "";
+    taskDescription.value = "";
+    taskDate.value = "";
+    taskSubtasks.value = "";
+
+    removeColorPriorities();
+}
+
+function removeColorPriorities() {
+    document.getElementById('priority-urgent').classList.remove("style-priorities-red")
+    document.getElementById('urgent-font').classList.remove("color-urgent")
+    document.getElementById('urgent-icon').classList.remove("color-urgent")
+    document.getElementById('priority-medium').classList.remove("style-priorities-orange")
+    document.getElementById('medium-font').classList.remove("color-medium")
+    document.getElementById('medium-icon').classList.remove("color-low")
+    document.getElementById('priority-low').classList.remove("style-priorities-green")
+    document.getElementById('low-font').classList.remove("color-low")
+    document.getElementById('low-icon').classList.remove("color-low")
+}
+
+
+async function postData(path = "", data = {}) {
+    let response = await fetch(BASE_URL + path + ".json", {
+        method: "POST",
+        header: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    });
+    return responseToJson = await response.json();
+}
+
+
+async function addTaskToFirebase(task={}) {
+    postData('tasks', task);
 }
