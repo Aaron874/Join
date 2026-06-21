@@ -313,6 +313,10 @@ input::placeholder {
     padding: 0.3rem 0.5rem;
 }
 
+.div_contacts_initials {
+    display: none;
+}
+
 .contacts_input {
     margin-bottom: 0;
 }
