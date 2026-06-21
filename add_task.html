@@ -94,7 +94,8 @@
                     </div>
                     <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
                     <p class="padding-top">Description</p>
-                    <textarea id="task-description" class="textarea-description" placeholder="Enter a description"></textarea>
+                    <textarea id="task-description" class="textarea-description"
+                        placeholder="Enter a description"></textarea>
                     <div class="div-star">
                         <p>Due Date
                         <p class="star-style">*</p>
@@ -151,13 +152,20 @@
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
-                            Select task category
+                            <span id="selected_category_text">Select task category</span>
                             <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
                                 onclick="dropdownCategoryDown()">⌄</span>
                             <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
                                 onclick="dropdownCategoryUp()">⌃</span>
                         </button>
-                        <div class="dropdown_category" id="dropdown_category"></div>
+                        <div class="dropdown_category" id="dropdown_category">
+                            <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
+                                <span>Technical Task</span>
+                            </div>
+                            <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
+                                <span>User Story</span>
+                            </div>
+                        </div>
                         <p class="padding-top">Subtasks</p>
                         <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
 
