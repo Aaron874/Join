@@ -25,10 +25,7 @@ async function fetchTasks(path = "tasks") {
         }
         const taskData = await response.json();
         fetchedTasks = Object.entries(taskData || {}).map(
-            ([id, task]) => ({
-                id,
-                ...task
-            })
+            ([id, task]) => ({id, ...task})
         )
         console.log(fetchedTasks);
     } catch (error) {
