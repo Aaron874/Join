@@ -146,3 +146,11 @@ dialog::backdrop{
   align-items: flex-start;
   width: 100%;
 }
+
+.task-card {
+  background-color: var(--bg-white);
+  border: 2px solid red;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 5px;
+}

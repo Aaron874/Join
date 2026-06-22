@@ -38,6 +38,8 @@ async function fetchTasks(path = "tasks") {
     }
 }
 
+
+
 function renderColumn(status, taskContainer) {
     taskContainer.replaceChildren();
     fetchedTasks
@@ -46,6 +48,8 @@ function renderColumn(status, taskContainer) {
         taskContainer.appendChild(
             getTaskTemplate(task)
         );
+        console.log(task);
+        
     });
 }
 
@@ -55,3 +59,4 @@ function renderBoard() {
     renderColumn('awaitFeedback', document.getElementById('feedback-container'));
     renderColumn('done', document.getElementById('done-container'));
 }
+
