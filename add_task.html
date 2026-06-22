@@ -13,7 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-    <script src="./scripts/add_task.js"></script>
+    <script src="./scripts/add_task.js" defer></script>
 </head>
 
 <body>
@@ -92,15 +92,16 @@
                         <p class="star-style">*</p>
                         </p>
                     </div>
-                    <input class="input-left" required type="text" placeholder="Enter a title">
+                    <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
                     <p class="padding-top">Description</p>
-                    <textarea class="textarea-description" placeholder="Enter a description"></textarea>
+                    <textarea id="task-description" class="textarea-description"
+                        placeholder="Enter a description"></textarea>
                     <div class="div-star">
                         <p>Due Date
                         <p class="star-style">*</p>
                         </p>
                     </div>
-                    <input class="input-left date-input" required type="date" name="" id="">
+                    <input id="task-date" class="input-left date-input" required type="date" name="" id="">
                 </div>
                 <div class="content-divider"></div>
                 <div class="style-form-right">
@@ -139,7 +140,7 @@
 
                     <div class="assigned-dropdown">
                         <button type="button" id="assigned-trigger" class="assigned-trigger">
-                            Select contacts to assign
+                            <span id="selected_contacts">Select contacts to assign</span>
                             <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
                                 onclick="dropdownContactsDown()">⌄</span>
                             <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
@@ -147,23 +148,31 @@
                         </button>
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
+                    <div class="div_contacts_initials" id="div_contacts_initials"></div>
                     <p class="padding-top">Category</p>
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
-                            Select task category
+                            <span id="selected_category_text">Select task category</span>
                             <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
                                 onclick="dropdownCategoryDown()">⌄</span>
                             <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
                                 onclick="dropdownCategoryUp()">⌃</span>
                         </button>
-                        <div class="dropdown_category" id="dropdown_category"></div>
+                        <div class="dropdown_category" id="dropdown_category">
+                            <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
+                                <span>Technical Task</span>
+                            </div>
+                            <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
+                                <span>User Story</span>
+                            </div>
+                        </div>
                         <p class="padding-top">Subtasks</p>
-                        <input class="input-right" type="text" placeholder="Add new subtask">
+                        <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
 
                     </div>
                     <div class="style-div-buttons">
-                        <button class="style-buttons bt-left">
+                        <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
                             <span>Clear</span>
                             <span class="close-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -173,7 +182,7 @@
                                 </svg>
                             </span>
                         </button>
-                        <button class="style-buttons bt-right">
+                        <button onclick="createTask('todo')" type="button" class="style-buttons bt-right">
                             <span>Create Task</span>
                             <span class="checkmark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
