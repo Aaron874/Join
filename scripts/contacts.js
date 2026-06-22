@@ -1,3 +1,17 @@
+import { auth } from "../firebase/firebase-config.js";
+console.log(auth);
+
+// import { getContacts } from "../firebase/firebase-config.js" 
+
+// async function initContacts() {
+//     const contactsPart = await getContacts();
+//     console.log(contactsPart);
+    
+// }
+console.log("AUTH:", auth);
+
+
+
 // Beispiel Kontakte für Testzwecke //
 const contactsListContainer = document.querySelector(
   ".contacts_list_container"
@@ -9,6 +23,11 @@ const contactDialog = document.getElementById("contact_dialog_id");
 const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById("contact_form_section_id");
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     initContacts()
+// });
+
 
 let firstLetterList = [];
 let contactsList = [
