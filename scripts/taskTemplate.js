@@ -1,4 +1,4 @@
-function getTaskTemplate(task,status) {
+function getTaskTemplate(task) {
 
     const card = document.createElement('div');
     card.classList.add('task-card');
@@ -20,7 +20,7 @@ function getTaskTemplate(task,status) {
     card.appendChild(description);
 
     const subTask = document.createElement('p');
-    subTask.textContent = task.subTask;
+    subTask.textContent = task.subtasks;
     card.appendChild(subTask);
 
     const collaborators = document.createElement('span');
