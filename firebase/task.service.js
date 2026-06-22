@@ -7,9 +7,9 @@ import {
 import { db }
     from "./firebase.config.js";
 
-export function createContact(contact) {
+export function createTask(task) {
     return push(
-        ref(db, "contacts"),
-        contact
+        ref(db, "tasks"),
+        task
     );
 }

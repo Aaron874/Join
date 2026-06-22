@@ -1,24 +1,15 @@
-import {
-    auth
-} from '../../firebase/firebase-config.js';
+import { auth }
+    from "./firebase.config.js";
 
 import {
-    signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
-} from
-'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-
-export async function login(email, password) {
-    return signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-    );
+    signInAnonymously
 }
+    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-export async function signup(email, password) {
+export function registerUser(email, password) {
     return createUserWithEmailAndPassword(
         auth,
         email,
@@ -26,13 +17,17 @@ export async function signup(email, password) {
     );
 }
 
-export async function logout() {
-    return signOut(auth);
+export function loginUser(email, password) {
+    return signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+    );
 }
 
-export function observeAuth(callback) {
-    return onAuthStateChanged(
-        auth,
-        callback
-    );
+export function logoutUser() {
+    return signOut(auth);
+}
+export async function loginGuest() {
+    return await signInAnonymously(auth);
 }
