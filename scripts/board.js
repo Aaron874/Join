@@ -19,7 +19,7 @@ function closeDialog(id) {
 
 async function fetchTasks(path = "tasks") {
     try {
-        let response = await fetch(BASE_URL + path + ".json");
+        let response = await fetch(BASE_URL + '?auth=' + path + ".json");
         if (!response.ok) {
             throw new Error(`HTTP-Fehler! Status: ${response.status}`);
         }

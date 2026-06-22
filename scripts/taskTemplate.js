@@ -4,6 +4,7 @@ function getTaskTemplate(task) {
     card.classList.add('task-card');
 
     const category = document.createElement('span')
+    category.classList.add('card-head')
     category.textContent = task.category;
     card.appendChild(category);
 
@@ -11,11 +12,8 @@ function getTaskTemplate(task) {
     title.textContent = task.title;
     card.appendChild(title);
 
-    const dueDate = document.createElement('p');
-    dueDate.textContent = task.date;
-    card.appendChild(dueDate);
-
-    const description = document.createElement('p')
+    const description = document.createElement('p');
+    description.classList.add('task-description')
     description.textContent = task.description;
     card.appendChild(description);
 
