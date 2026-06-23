@@ -176,7 +176,7 @@
             <section class="main-content">
 
                 <h1 class="add_task-h1">Add Task</h1>
-                <form class="style-content">
+                <form class="style-content" onsubmit="createTask('todo')">
                     <div class="style-form-left" action="">
                         <div class="div-star">
                             <p>Title
@@ -239,8 +239,10 @@
                             </button>
                             <div class="dropdown_contacts" id="dropdown_contacts"></div>
                         </div>
-                        <p class="padding-top">Category</p>
-
+                        <div class="div-star">
+                            <p class="padding-top">Category</p>
+                            <p class="star-style padding-top">*</p>
+                        </div>
                         <div class="assigned-dropdown">
                             <button type="button" class="assigned-trigger">
                                 Select task category
@@ -255,7 +257,7 @@
 
                         </div>
                         <div class="style-div-buttons">
-                            <button class="style-buttons bt-left">
+                            <button class="style-buttons bt-left" onclick="clearTaskform()">
                                 <span>Clear</span>
                                 <span class="close-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
