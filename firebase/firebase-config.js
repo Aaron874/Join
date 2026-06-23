@@ -1,14 +1,14 @@
 import { initializeApp } from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
-import { getAuth } from
+import { getAuth, signInAnonymously } from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-// import { getFirestore } from
-// 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getFirestore,collection, getDocs } from
+'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-import { getDatabase } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+// import { getDatabase } 
+// from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUkUOHWuTh0X6H96PID37QCQJHEdrHQFQ",
@@ -21,12 +21,19 @@ const firebaseConfig = {
   databaseURL: "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 
-export const auth = null;
-// getAuth(app);
+export const db = getFirestore(app);
 
-// export const db = getFirestore(app);
+export const auth = getAuth(app);
 
-export const db = getDatabase(app);
-console.log("DB URL:", db.app.options.databaseURL);
+export {signInAnonymously};
+
+export { collection, getDocs };
+// export const auth = null;
+// // getAuth(app);
+
+// export const db = getDatabase(app);
+// console.log("DB URL:", db.app.options.databaseURL);
+
+

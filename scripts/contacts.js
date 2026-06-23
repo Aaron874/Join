@@ -1,14 +1,31 @@
-import { auth } from "../firebase/firebase-config.js";
+import { app, db, auth, signInAnonymously, collection, getDocs } from "../firebase/firebase-config.js"
+
+console.log(app);
+console.log(db);
 console.log(auth);
 
-// import { getContacts } from "../firebase/firebase-config.js" 
+async function initContacts() {
+  const result = await signInAnonymously(auth);
+  console.log("UID:", result.user.uid);
+  console.log("Anonym:", result.user.isAnonymous);
 
-// async function initContacts() {
-//     const contactsPart = await getContacts();
-//     console.log(contactsPart);
+  const snapshot = await getDocs(collection(db, "demoContacts"));
+
+  snapshot.forEach(doc => {
+    console.log(doc.id);
+    console.log(doc.data());
     
-// }
-console.log("AUTH:", auth);
+    
+    
+  });
+}
+initContacts();
+
+
+
+
+
+
 
 
 
