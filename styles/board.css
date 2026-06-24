@@ -163,6 +163,20 @@ dialog::backdrop {
   cursor: grab;
 }
 
+.task-card h3{
+  margin-bottom: 20px;
+}
+
+.task-card p {
+  font-size: var(--fs-options);
+  font-weight: 400;
+}
+
+.task-card span{
+  font-size: var(--fs-options);
+  font-weight: 400;
+}
+
 .task-card:active {
   cursor: grabbing;
   transform: rotate(20deg);
