@@ -157,6 +157,10 @@ dialog::backdrop{
   width: 100%;
 }
 
+.task-card:hover{
+  cursor: move;
+}
+
 .task-card h3{
   margin: 10px;
   font-size: var(--fs-options);
