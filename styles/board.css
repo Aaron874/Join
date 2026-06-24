@@ -159,13 +159,25 @@ dialog::backdrop{
 
 .task-card h3{
   margin: 10px;
+  font-size: var(--fs-options);
+}
+
+.task-card p{
+  margin: 10px;
+  font-size: var(--fs-options);
+  font-weight: 400;
+}
+
+.task-card span{
+  margin: 10px;
+  font-size: var(--fs-options);
 }
 
 .card-head{
-  margin: 10px;
+  font-weight: 400;
 }
 
 .task-description{
+
   color: var(--color-gray);
-  margin: 10px;
 }
