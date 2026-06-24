@@ -22,18 +22,13 @@ function closeDialog(id) {
 async function fetchTasks(path = 'tasks') {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`);
-
         if (!response.ok) {
             throw new Error(`HTTP-Fehler: ${response.status}`);
         }
-
         const data = await response.json();
-
         fetchedTasks = Object.entries(data ?? {}).map(([id, task]) => ({
-            ...task,
-            id,
+            ...task, id,
         }));
-
         return fetchedTasks;
     } catch (error) {
         console.error('Fehler beim Abrufen:', error);
@@ -47,7 +42,6 @@ function renderColumn(status, container) {
         .filter(task => task.status === status)
         .map(getTaskTemplate)
         .join('');
-
     container.innerHTML = tasks || getEmptyColumnTemplate(status);
 }
 
@@ -58,7 +52,6 @@ function renderBoard() {
         awaitFeedback: 'feedback-container',
         done: 'done-container',
     };
-
     Object.entries(columns).forEach(([status, containerId]) => {
         renderColumn(status, document.getElementById(containerId));
     });
@@ -71,11 +64,10 @@ function initDragAndDrop() {
     });
 }
 
-function handleDragStart(event){
+function handleDragStart(event) {
     const card = event.currentTarget;
     draggedTaskId = card.dataset.taskId;
     dragPreview = createDragPreview(card);
-
     document.body.appendChild(dragPreview);
     event.dataTransfer.setDragImage(
         dragPreview,
@@ -84,14 +76,14 @@ function handleDragStart(event){
     );
 }
 
-function handleDragEnd(event){
+function handleDragEnd(event) {
     event.currentTarget.classList.remove('dragging');
     draggedTaskId = null;
     dragPreview?.remove();
     dragPreview = null;
 }
 
-function createDragPreview(card){
+function createDragPreview(card) {
     const preview = card.cloneNode(true);
     preview.classList.add('drag-preview');
     preview.style.rotate = '5deg';
@@ -104,24 +96,18 @@ function handleDragOver(event) {
 
 async function handleDrop(event) {
     event.preventDefault();
-
     const column = event.currentTarget;
     const newStatus = column.dataset.status;
     const task = getDraggedTask();
-
     console.log('draggedTaskId:', draggedTaskId);
     console.log('newStatus:', newStatus);
     console.log('task:', task);
     console.log('updateUrl:', `${BASE_URL}tasks/${draggedTaskId}.json`);
-
     if (!task || task.status === newStatus) return;
-
     try {
         await updateTaskStatus(task.id, newStatus);
         await fetchTasks();
-
         console.log('afterFetch:', fetchedTasks);
-
         renderBoard();
     } catch (error) {
         console.error('Drop fehlgeschlagen:', error);
