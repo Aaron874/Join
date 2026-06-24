@@ -148,40 +148,56 @@ dialog::backdrop{
 }
 
 .task-card {
-  background-color: var(--bg-white);
-  /* border: 2px solid red; */
-  border-radius: 24px;
-  margin-bottom: 16px;
-  font-size: var(--fs-options);
-  padding: 10px;
-  width: 100%;
+    width: 100%;
+    background-color: var(--bg-white);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    cursor: grab;
 }
 
-.task-card:hover{
-  cursor: move;
+.task-card:active {
+    cursor: grabbing;
+    transform: rotate(20deg);
 }
 
-.task-card h3{
-  margin: 10px;
-  font-size: var(--fs-options);
+.task-card.dragging {
+    opacity: 0.35;
 }
 
-.task-card p{
-  margin: 10px;
-  font-size: var(--fs-options);
-  font-weight: 400;
+.card-head {
+    display: inline-block;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 24px;
+    margin-bottom: 24px;
+    font-size: var(--fs-options);
+    font-weight: 400;
 }
 
-.task-card span{
-  margin: 10px;
-  font-size: var(--fs-options);
+.card-head.technical-task {
+    background-color: #1fd7c1;
 }
 
-.card-head{
-  font-weight: 400;
+.card-head.user-story {
+    background-color: #0038ff;
 }
 
-.task-description{
+.task-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-  color: var(--color-gray);
+.priority-icon.urgent {
+    color: #ff3d00;
+}
+
+.priority-icon.medium {
+    color: #ffa800;
+}
+
+.priority-icon.low {
+    color: #7ae229;
 }
