@@ -1,18 +1,22 @@
-import { loginGuest }
-    from "../firebase/auth.service.js";
+import { login } from "./auth.js";
 
-document
-    .getElementById("guest-login-btn")
-    .addEventListener("click", handleGuestLogin);
+async function handleLogin() {
 
-async function handleGuestLogin() {
-    try {
-        await loginGuest();
+    const email =
+        document.getElementById("email").value;
 
-        window.location.href =
-            "./pages/summary.html";
+    const password =
+        document.getElementById("password").value;
 
-    } catch (error) {
-        console.error(error);
-    }
+    await login(email, password);
+
+    window.location.href = "board.html";
 }
+import { guestLogin } from "./auth.js";
+
+window.guestAccess = async () => {
+
+    await guestLogin();
+
+    window.location.href = "board.html";
+};
