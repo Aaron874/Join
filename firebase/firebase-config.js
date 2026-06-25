@@ -1,14 +1,14 @@
 import { initializeApp } from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
-import { getAuth, signInAnonymously } from
+import { getAuth, signInAnonymously, onAuthStateChanged } from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-import { getFirestore,collection, getDocs } from
-'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+// import { getFirestore,collection, getDocs } from
+// 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-// import { getDatabase } 
-// from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, set, get } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAUkUOHWuTh0X6H96PID37QCQJHEdrHQFQ",
@@ -23,17 +23,16 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+export const db = getDatabase(app);
 
 export const auth = getAuth(app);
 
-export {signInAnonymously};
+export { onAuthStateChanged };
 
-export { collection, getDocs };
-// export const auth = null;
-// // getAuth(app);
+export { ref, set, get };
 
-// export const db = getDatabase(app);
-// console.log("DB URL:", db.app.options.databaseURL);
+export async function loginAsGuest() {
+  return signInAnonymously(auth)
+};
 
 

@@ -9,20 +9,20 @@ import { getContacts }
 //     // renderContacts(contacts);
 // }
 
-async function initContacts() {
+// async function initContacts() {
 
-    const contacts = await getContacts();
+//     const contacts = await getContacts();
 
-    console.log("TYPE:", typeof contacts);
+//     console.log("TYPE:", typeof contacts);
 
-    console.log("DATA:", contacts);
+//     console.log("DATA:", contacts);
 
-    for (const id in contacts) {
+//     for (const id in contacts) {
 
-        console.log(id, contacts[id]);
+//         console.log(id, contacts[id]);
 
-    }
+//     }
 
-}
+// }
 
-initContacts();
+// initContacts();
