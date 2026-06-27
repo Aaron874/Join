@@ -22,6 +22,8 @@ const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.
 function dropdownContactsDown() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
+    let inputPlaceholder = document.getElementById('selected_contacts');
+    inputPlaceholder.textContent = '';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = 'flex';
     dropdown.innerHTML = "";
@@ -34,10 +36,22 @@ function dropdownContactsDown() {
 function dropdownContactsUp() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = '';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
+    let input = document.getElementById('assigned-trigger');
+    input.value = '';
+    let inputPlaceholder = document.getElementById('selected_contacts');
+    inputPlaceholder.textContent = 'Select contacts to assign';
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = '';
     showSelectedContacts();
     selectedContacts = [];
+}
+
+
+function clearInput() {
+    let input = document.getElementById('assigned-trigger');
+    input.value = '';
+    let inputPlaceholder = document.getElementById('selected_contacts');
+    inputPlaceholder.textContent = '';
 }
 
 
@@ -182,6 +196,10 @@ function clearTaskform() {
     const taskSubtasks = document.getElementById("task-subtasks");
     const taskCategory = document.getElementById('selected_category_text');
     const taskAssigned = document.getElementById('div_contacts_initials');
+    let input = document.getElementById('assigned-trigger');
+    input.value = '';
+    let inputPlaceholder = document.getElementById('selected_contacts');
+    inputPlaceholder.textContent = 'Select contacts to assign';
 
     taskTitle.value = "";
     taskDescription.value = "";
@@ -209,7 +227,7 @@ function removeColorPriorities() {
 async function postData(path = "", data = {}) {
     let response = await fetch(BASE_URL + path + ".json", {
         method: "POST",
-        header: {
+        headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data)

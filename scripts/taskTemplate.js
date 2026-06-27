@@ -1,33 +1,55 @@
+const categoryStyles = {
+    'Technical Task': 'technical-task',
+    'User Story': 'user-story',
+};
+
+const priorityIcons = {
+    urgent: `
+        <svg class="priority-icon urgent" width="20" height="15" viewBox="0 0 18 18" fill="none">
+            <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    `,
+    medium: `
+        <svg class="priority-icon medium" width="20" height="15" viewBox="0 0 26 18" fill="none">
+            <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    `,
+    low: `
+        <svg class="priority-icon low" width="20" height="15" viewBox="0 0 18 18" fill="none">
+            <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    `,
+};
+
 function getTaskTemplate(task) {
+    const categoryClass = categoryStyles[task.category] ?? '';
+    const priorityIcon = priorityIcons[task.priority] ?? '';
 
-    const card = document.createElement('div');
-    card.classList.add('task-card');
+    return `
+        <article
+            class="task-card"
+            draggable="true"
+            data-task-id="${task.id}"
+            ondragstart="handleDragStart(event)"
+            ondragend="handleDragEnd(event)"
+        >
+            <span class="card-head ${categoryClass}">
+                ${task.category}
+            </span>
 
-    const category = document.createElement('span')
-    category.classList.add('card-head')
-    category.textContent = task.category;
-    card.appendChild(category);
+            <h3>${task.title}</h3>
 
-    const title = document.createElement('h3');
-    title.textContent = task.title;
-    card.appendChild(title);
+            <p class="task-description">
+                ${task.description}
+            </p>
 
-    const description = document.createElement('p');
-    description.classList.add('task-description')
-    description.textContent = task.description;
-    card.appendChild(description);
-
-    const subTask = document.createElement('p');
-    subTask.textContent = task.subtasks;
-    card.appendChild(subTask);
-
-    const collaborators = document.createElement('span');
-    collaborators.textContent = task.assignedTo;
-    card.appendChild(collaborators);
-
-    const priority = document.createElement('span');
-    priority.textContent = task.priority;
-    card.appendChild(priority);
-    
-    return card;
+            <div class="task-card-bottom">
+                <span>${task.assignedTo}</span>
+                ${priorityIcon}
+            </div>
+        </article>
+    `;
 }
