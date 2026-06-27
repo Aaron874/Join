@@ -17,12 +17,9 @@ const firebaseConfig = {
   messagingSenderId: "707693553539",
   appId: "1:707693553539:web:c01dff2bd425a39cb578b6",
   measurementId: "G-5DJKC4GC7C",
-  databaseURL: "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/"
 };
 
-export const app = initializeApp(firebaseConfig);
-
-export const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
