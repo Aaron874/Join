@@ -323,10 +323,18 @@ input::placeholder {
 
 .symbole_up_dropdown_contacts {
     display: none;
+    position: absolute;
+    top: 12px;
+    left: 439px;
+    cursor: pointer;
 }
 
 .symbole_down_dropdown_contacts {
     display: flex;
+    position: absolute;
+    top: 12px;
+    left: 439px;
+    cursor: pointer;
 }
 
 .padding-top {
@@ -389,4 +397,12 @@ input::placeholder {
 
 .style-priorities:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.span_selected_contacts {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 20px;
+    color: #000000;
 }
