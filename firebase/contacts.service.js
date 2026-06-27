@@ -1,15 +1,19 @@
 import {
     ref,
     push
-}
-    from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-import { db }
-    from "./firebase.config.js";
+import {
+    db,
+    auth
+} from "./firebase.config.js";
 
 export function createContact(contact) {
+
+    const uid = auth.currentUser.uid;
+
     return push(
-        ref(db, "contacts"),
+        ref(db, `contacts/${uid}`),
         contact
     );
 }
