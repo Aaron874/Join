@@ -9,7 +9,7 @@ import {
 import {
     db,
     auth
-} from "./firebase.config.js";
+} from "./firebase-config.js";
 
 /**
  * Gibt die UID des aktuell angemeldeten Benutzers zurück.
@@ -45,6 +45,7 @@ export async function createContact(contact) {
  */
 export async function getContacts() {
     const uid = getUserId();
+    
 
     const snapshot = await get(
         ref(db, `contacts/${uid}`)

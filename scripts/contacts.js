@@ -1,39 +1,40 @@
-import { app, db, auth, onAuthStateChanged, ref, set, get } from "../firebase/firebase-config.js"
-import { loginAsGuest } from "../firebase/firebase-config.js";
-window.contactsList = [];
+import { db, auth } from "../firebase/firebase-config.js"
+import { guestLogin } from "../firebase/auth.js";
+import { getContact } from "../firebase/contacts.service.js";
+window.contactsList = getContact();;
 
 
-console.log(app);
 console.log(db);
 console.log(auth);
+console.log(contactsList);
 
-window.result = await loginAsGuest();
+window.result = await guestLogin();
 
 if (result.user.isAnonymous) {
     console.log("Gastlogin erfolgreich");
 }
 
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-      console.log("Kein Benutzer angemeldet");
-    return;
-  }
-  const contactsPath = user.isAnonymous
-      ? "contacts/guest"
-      : `contacts/${user.uid}`;
-  const snapshot = await get(
-     ref(db, contactsPath)
-  );
-  if (snapshot.exists()) {
-      contactsList = snapshot.val();
-      console.log(contactsList);
-      letterSeperatorContactsList()
+// onAuthStateChanged(auth, async (user) => {
+//   if (!user) {
+//       console.log("Kein Benutzer angemeldet");
+//     return;
+//   }
+//   const contactsPath = user.isAnonymous
+//       ? "contacts/guest"
+//       : `contacts/${user.uid}`;
+//   const snapshot = await get(
+//      ref(db, contactsPath)
+//   );
+//   if (snapshot.exists()) {
+//       contactsList = snapshot.val();
+//       console.log(contactsList);
+//       letterSeperatorContactsList()
       
-  } else {
-      console.log("Keine Kontakte gefunden");
-  }
+//   } else {
+//       console.log("Keine Kontakte gefunden");
+//   }
 
-});
+// });
 
 
 
