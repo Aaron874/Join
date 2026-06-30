@@ -168,3 +168,7 @@ function openTaskDetails(taskId) {
     dialog.innerHTML = getTaskDialogTemplate(task);
     dialog.showModal();
 }
+
+function closeTaskDialog() {
+    document.getElementById('task-dialog').close();
+}

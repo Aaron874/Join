@@ -221,3 +221,106 @@ dialog::backdrop {
 .priority-icon.low {
   color: #7ae229;
 }
+
+.task-dialog {
+    width: min(525px, calc(100vw - 32px));
+    max-height: calc(100dvh - 64px);
+    border: none;
+    border-radius: 30px;
+    padding: 0;
+    overflow: auto;
+    position: relative;
+}
+
+.task-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.task-dialog-content {
+    position: relative;
+    padding: 48px;
+    background-color: var(--bg-white);
+}
+
+.task-dialog-close {
+    position: absolute;
+    top: 48px;
+    right: 48px;
+    border: none;
+    background: transparent;
+    color: var(--color-darkblue);
+    font-size: 40px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.task-dialog-content .card-head {
+    margin-bottom: 40px;
+    font-size: 24px;
+}
+
+.task-dialog-content h2 {
+    margin: 0 0 24px;
+    color: var(--color-black);
+    font-size: 56px;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+.task-dialog-description {
+    margin: 0 0 28px;
+    font-size: 20px;
+    line-height: 1.35;
+}
+
+.task-dialog-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+    font-size: 20px;
+}
+
+.task-dialog-row span:first-child,
+.task-dialog-section h3 {
+    margin: 0;
+    color: var(--color-darkblue);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.task-dialog-priority {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.task-dialog-section {
+    margin-bottom: 28px;
+}
+
+.task-dialog-section p {
+    margin: 16px 0 0;
+    font-size: 20px;
+}
+
+.task-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+}
+
+.task-dialog-footer span {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d1d1;
+}
+
+.task-dialog-footer button {
+    border: none;
+    background: transparent;
+    color: var(--color-darkblue);
+    font-size: 20px;
+    cursor: pointer;
+}
