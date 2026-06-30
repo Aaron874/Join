@@ -1,18 +1,31 @@
 import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
-import { getContact } from "../firebase/contacts.service.js";
-window.contactsList = getContact();;
+import { getContacts } from "../firebase/contacts.service.js";
+let contactsList = [];
 
 
 console.log(db);
 console.log(auth);
-console.log(contactsList);
+console.log("Datei geladen");
+
+
 
 window.result = await guestLogin();
 
-if (result.user.isAnonymous) {
-    console.log("Gastlogin erfolgreich");
+loadContacts();
+
+async function loadContacts () {
+  contactsList = await getContacts();
+  console.log("funktion wird gestartet");
+  letterSeperatorContactsList();
+  
+  console.log(contactsList);
+  
 }
+
+// if (result.user.isAnonymous) {
+//     console.log("Gastlogin erfolgreich");
+// }
 
 // onAuthStateChanged(auth, async (user) => {
 //   if (!user) {
@@ -55,9 +68,7 @@ const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById("contact_form_section_id");
 
-// document.addEventListener("DOMContentLoaded", () => {
-//     initContacts()
-// });
+
 
 
 let firstLetterList = [];
@@ -287,7 +298,7 @@ let firstLetterList = [];
 // ];
 
 function letterSeperatorContactsList() {
-  for (let index = 1; index < contactsList.length; index++) {
+  for (let index = 0; index < contactsList.length; index++) {
     if (/^[a-zA-ZäöüÄÖÜß]$/.test(contactsList[index].name[0])) {
       let firstLetter = contactsList[index].name[0].toUpperCase();
       firstLetterList.push(firstLetter);
@@ -313,7 +324,7 @@ function createContactsList() {
 
 // Funktion zum Rendern von Personen -- shortName, Person, Email
 function createContactListItems() {
-  for (let index = 1; index < contactsList.length; index++) {
+  for (let index = 0; index < contactsList.length; index++) {
     let shortName = contactListInitials(contactsList[index].name);
     let person = contactsList[index].name;
     let phone = contactsList[index].phone;
