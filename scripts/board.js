@@ -73,6 +73,15 @@ function getPreviewText(text, maxLength = 20) {
     return `${text.slice(0, maxLength).trim()}...`
 }
 
+function openTaskDetails(taskId){
+    const task = fetchedTasks.find(
+        task => task.id === taskId
+    );
+    if (!task) return
+    console.log(task);
+    
+}
+
 function initDragAndDrop() {
     document.querySelectorAll('.task-queue').forEach(column => {
         column.addEventListener('dragover', handleDragOver);

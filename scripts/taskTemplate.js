@@ -34,6 +34,7 @@ function getTaskTemplate(task) {
             class="task-card"
             draggable="true"
             data-task-id="${task.id}"
+            onclick="openTaskDetails('${task.id}')"
             ondragstart="handleDragStart(event)"
             ondragend="handleDragEnd(event)"
         >
