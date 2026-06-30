@@ -27,6 +27,7 @@ const priorityIcons = {
 function getTaskTemplate(task) {
     const categoryClass = categoryStyles[task.category] ?? '';
     const priorityIcon = priorityIcons[task.priority] ?? '';
+    const previewText = getPreviewText(task.description);
 
     return `
         <article
@@ -43,7 +44,7 @@ function getTaskTemplate(task) {
             <h3>${task.title}</h3>
 
             <p class="task-description">
-                ${task.description}
+                ${previewText}
             </p>
 
             <div class="task-card-bottom">

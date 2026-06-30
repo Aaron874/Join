@@ -1,4 +1,11 @@
-
+//Progressbar für Subtasks, mit Wert wievele Subtasks sind erledigt von gesamter Subtask-Liste. Subtasks nach fetch in ein array oder muss schon beim post in ein Array gepackt werden?
+//Icons für Zugewiesene Kontakte
+//Task description in Vorschautext umbauen
+//Dialog mit Taskdetails. (Ohne mit ganzen Task-description text und Subtasks als Text)
+//Close-Button in beide dialogs einbauen.
+//Add-Task für die jeweiligen Status-Columns einbauen, damit auch ein Task z.B. in Await feedback hinzugefügt werden kann.
+//style.css und board.css responsive machen. Ab einer bestimmten Breite soll die Sidebar verschwinden und über ein Burger-Menü im Footer aufrufbar sein. Bisheriges Styling sieht bei Auflösung 3008x1692 super aus. Responsive-Darstellung soll bis 320x480 super aussehen.
+//Suchfunktion bauen. Inputfeld und Button existieren schon. es müssen aber mindestens 3 Zeichen im Suchfeld sein, bevor die Suche ausgeführt werden darf.
 
 window.addEventListener('DOMContentLoaded', init);
 
@@ -29,6 +36,8 @@ async function fetchTasks(path = 'tasks') {
         fetchedTasks = Object.entries(data ?? {}).map(([id, task]) => ({
             ...task, id,
         }));
+        console.log(fetchedTasks);
+        
         return fetchedTasks;
     } catch (error) {
         console.error('Fehler beim Abrufen:', error);
@@ -55,6 +64,13 @@ function renderBoard() {
     Object.entries(columns).forEach(([status, containerId]) => {
         renderColumn(status, document.getElementById(containerId));
     });
+}
+
+function getPreviewText(text, maxLength = 20) {
+    if (!text || text.length <= maxLength) {
+        return text ?? '';
+    }
+    return `${text.slice(0, maxLength).trim()}...`
 }
 
 function initDragAndDrop() {
