@@ -18,14 +18,6 @@ async function init() {
     initDragAndDrop();
 }
 
-function openDialog(id) {
-    document.getElementById(id).showModal();
-}
-
-function closeDialog(id) {
-    document.getElementById(id).close();
-}
-
 async function fetchTasks(path = 'tasks') {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`);
@@ -71,15 +63,6 @@ function getPreviewText(text, maxLength = 20) {
         return text ?? '';
     }
     return `${text.slice(0, maxLength).trim()}...`
-}
-
-function openTaskDetails(taskId){
-    const task = fetchedTasks.find(
-        task => task.id === taskId
-    );
-    if (!task) return
-    console.log(task);
-    
 }
 
 function initDragAndDrop() {
@@ -166,4 +149,22 @@ function getEmptyColumnTemplate(status) {
         done: 'No tasks done',
     };
     return `<div class="notask">${texts[status]}</div>`;
+}
+
+function openDialog(id) {
+    document.getElementById(id).showModal();
+}
+
+function closeDialog(id) {
+    document.getElementById(id).close();
+}
+
+function openTaskDetails(taskId) {
+    const task = fetchedTasks.find(
+        task => task.id === taskId
+    );
+    if (!task) return;
+    const dialog = document.getElementById('task-dialog');
+    dialog.innerHTML = getTaskDialogTemplate(task);
+    dialog.showModal();
 }
