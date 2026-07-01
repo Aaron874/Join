@@ -67,6 +67,20 @@ const contactDialog = document.getElementById("contact_dialog_id");
 const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById("contact_form_section_id");
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-action]");
+  console.log("click registerd");
+  if (!el) return;
+  const action = el.dataset.action;
+  if (action === "open_dialog_contact") {
+      openAddContactDialog();
+      console.log("hier");
+      
+  }
+  if (action === "close_dialog_contact") {
+    closeAddContactDialog();
+  }
+});
 
 
 

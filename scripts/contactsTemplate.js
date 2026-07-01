@@ -147,7 +147,7 @@ function renderButtons(mode) {
                 <button
                   class="add_contact_btn_cancel"
                   type="reset"
-                  onclick="closeAddContactDialog()"
+                  data-action="close_dialog_contact"
                 >
                   Cancel
                   <span

@@ -124,7 +124,7 @@
     </aside>
     <main class="main_contacts">
       <section class="contacts_list_container">
-        <button class="contacts_list_header" onclick="openAddContactDialog()">
+        <button class="contacts_list_header" data-action="open_dialog_contact">
           <h3>Add new contact</h3>
           <img src="assets/img/person_add.webp" alt="Add new Person" />
         </button>
@@ -181,7 +181,7 @@
         </section>
         <section class="add_contact_form_section" id="contact_form_section_id">
           <div class="add_contact_closing_btn">
-            <button onclick="closeAddContactDialog()">
+            <button data-action="close_dialog_contact">
               <img src="assets/img/close.webp" alt="close Icon" />
             </button>
           </div>  
