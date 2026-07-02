@@ -2,7 +2,7 @@
   font-family: "Inter";
 }
 
-dialog {
+.add-dialog {
   width: 1116px;
   height: 870px;
 }
@@ -224,12 +224,13 @@ dialog::backdrop {
 
 .task-dialog {
     width: min(525px, calc(100vw - 32px));
-    max-height: calc(100dvh - 64px);
+    /* max-height: calc(100dvh - 64px); */
     border: none;
     border-radius: 30px;
     padding: 0;
-    overflow: auto;
+    overflow-y: auto;
     position: relative;
+    margin: auto;
 }
 
 .task-dialog::backdrop {
@@ -244,12 +245,14 @@ dialog::backdrop {
 
 .task-dialog-close {
     position: absolute;
+    width: 32px;
+    height: 32px;
     top: 48px;
     right: 48px;
     border: none;
     background: transparent;
     color: var(--color-darkblue);
-    font-size: 40px;
+    font-size: 24px;
     line-height: 1;
     cursor: pointer;
 }
@@ -262,7 +265,7 @@ dialog::backdrop {
 .task-dialog-content h2 {
     margin: 0 0 24px;
     color: var(--color-black);
-    font-size: 56px;
+    font-size: var(--fs-h2);
     line-height: 1.15;
     font-weight: 700;
 }
