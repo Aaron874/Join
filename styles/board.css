@@ -134,14 +134,24 @@
 
 .add-dialog {
   border-radius: 16px;
-  position: fixed;
+  position: relative;
   border: 1px solid var(--bg-white);
-  ;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-close-btn {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    border: none;
+    background: transparent;
+    color: var(--color-darkblue);
+    font-size: 40px;
+    line-height: 1;
 }
 
 .dialog-head {

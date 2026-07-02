@@ -42,7 +42,7 @@ return `
     </div>
 
     <div class="task-dialog-footer">
-        <button class="delete-edit">
+        <button class="delete-edit" onclick="deleteTask('${task.id}')">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_479519_5079" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">

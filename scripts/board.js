@@ -172,3 +172,29 @@ function openTaskDetails(taskId) {
 function closeTaskDialog() {
     document.getElementById('task-dialog').close();
 }
+
+async function deleteTask(taskId){
+    try {
+        await deleteTaskFromFirebase(taskId);
+        await fetchTasks();
+        renderBoard();
+        closeTaskDialog();
+    } catch (error) {
+        console.error('Task konnte nicht gelöscht werden', error);
+    }
+}
+
+async function deleteTaskFromFirebase(taskId){
+    const response = await fetch(
+        `${BASE_URL}tasks/${taskId}.json`,
+        {
+            method: 'DELETE'
+        }
+        );
+        if(!response.ok){
+            throw new Error(
+                `HTTP-Fehler: ${response.status}`
+            );
+        }
+    
+}
