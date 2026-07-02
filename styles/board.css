@@ -7,7 +7,7 @@
   height: 870px;
 }
 
-dialog::backdrop {
+.add-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -326,4 +326,18 @@ dialog::backdrop {
     color: var(--color-darkblue);
     font-size: 20px;
     cursor: pointer;
+}
+
+.delete-edit{
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  text-align: center;
+  gap: 5px;
+}
+
+.seperator{
+  height: 24px;
+  width: 1px;
+  background-color: var(--color-gray);
 }
