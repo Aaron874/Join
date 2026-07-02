@@ -131,7 +131,7 @@ function renderButtons(mode) {
         onclick="closeEditContactDialog()">
         Delete
       </button>
-      <button class="contact_btn_submit" type="submit">
+      <button class="contact_btn_submit" type="submit" data-action="update_contact">
         Save
         <span>
           <img src="assets/img/check.webp" alt="Check Icon" />
@@ -156,7 +156,7 @@ function renderButtons(mode) {
                       alt="Delete Icon"
                   /></span>
                 </button>
-                <button class="contact_btn_submit" type="submit">
+                <button class="contact_btn_submit" type="submit" data-action="create_contact">
                   Create contact
                   <span
                     ><img src="assets/img/check.webp" alt="Check Icon"

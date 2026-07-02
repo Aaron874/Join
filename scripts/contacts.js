@@ -1,5 +1,6 @@
 import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
+import { createContact } from "../firebase/contacts.service.js";
 import { getContacts } from "../firebase/contacts.service.js";
 let contactsList = [];
 
@@ -75,10 +76,26 @@ document.addEventListener("click", (e) => {
   if (action === "open_dialog_contact") {
       openAddContactDialog();
       console.log("hier");
-      
   }
   if (action === "close_dialog_contact") {
     closeAddContactDialog();
+  }
+});
+
+document.addEventListener("submit", (event) => {
+  console.log("🔥 SUBMIT EVENT");
+  console.log("valid:", event.target.checkValidity());
+  console.log("submitter:", event.submitter);
+  if (!event.target.matches("#contact_form_id")) return;
+  event.preventDefault();
+  switch (event.submitter.dataset.action) {
+      case "create_contact":
+          console.log("neuer Kontakt wird erstellt");
+          addNewContact();
+          break;
+      case "update_contact":
+          console.log("Kontakt wird bearbeitet");
+          break;
   }
 });
 
@@ -377,9 +394,6 @@ function openAddContactDialog() {
   openEditInput();
   startEventListenerColorPicker()
   startEventListenersAddContactDialog();
-  const form = document.getElementById("contact_form_id");
-form.addEventListener("submit", addNewContact);
-
 }
 
 
@@ -431,20 +445,30 @@ function closeAddContactDialog() {
     resetPersonInitials();
 }
 
-function addNewContact(event) {
-  event.preventDefault();
-  let name = document.getElementById("contact_name_id").value;
-  let email = document.getElementById("contact_email_id").value;
-  let phone = document.getElementById("contact_phone_id").value;
-  let color = document.getElementById("contact_color_picker_id").value;
-  // contactsList.push({name, email, phone, color});
-  // contactsListContainer.innerHTML = "";
-  console.log(name, email, phone, color);
-  deleteInputValues();
-  // firstLetterList = [];
-  // letterSeperatorContactsList();
-  // closeAddContactDialog();
+function addNewContact() {
+  let contact = {
+    name: document.getElementById("contact_name_id").value,
+    email: document.getElementById("contact_email_id").value,
+    phone: document.getElementById("contact_phone_id").value,
+    color: document.getElementById("contact_color_picker_id").value,
+  };
+  console.log(contact);
+  writeNewContact(contact);
 }
+
+async function writeNewContact(contact) {
+  try {
+    await createContact(contact);
+    showSuccessDialog();
+    deleteInputValues();
+} catch (error) {
+    console.error("Fehler beim Speichern:", error);
+}
+}
+function showSuccessDialog() {
+  console.log("Kontakt erfolgreich gespeichert!");
+}
+  
 
 function deleteInputValues() {
   document.getElementById("contact_name_id").value = "";
