@@ -38,6 +38,13 @@ async function fetchTasks(path = 'tasks') {
     }
 }
 
+function getAssignedToText(assignedTo){
+    if (Array.isArray(assignedTo)) {
+        return assignedTo.join('')
+    }
+    return assignedTo ?? '';
+}
+
 function renderColumn(status, container) {
     const tasks = fetchedTasks
         .filter(task => task.status === status)
@@ -211,6 +218,7 @@ function openEditTask(taskId){
     fillTaskForm(task);
     openDialog('add-task-dialog');
     console.log(task.assignedTo);
+    console.log(Array.isArray(task.assignedTo));
     
 }
 
@@ -224,10 +232,9 @@ function fillTaskForm(task){
     setInputValue('task-date', task.date);
     setInputValue('task-subtasks', task.subtasks);
 
-    selecktPriority(task.priority);
-    setTextContent('task-assigned-to',task.assignedTo)
-    setAssignedTo('div_contacts_initials', task.assignedTo)
+    selectPriority(task.priority);
     setTextContent('selected_category_text', task.category);
+    setAssignedContacts(task.assignedTo);
 }
 
 function setInputValue(id, value){
@@ -242,16 +249,26 @@ function setTextContent(id, value){
     element.textContent = value ?? '';
 }
 
-function selecktPriority(priorityValue){
+function selectPriority(priorityValue){
     const priorityElement = document.getElementById(`priority-${priorityValue}`);
     if (!priorityElement) return;
     colorChangePriority(priorityElement);
 }
 
-function setAssignedTo(assignedTo){
-    const value = Array.isArray(assignedTo)
-    ? assignedTo.join('')
-    : assignedTo ?? '';
-    setTextContent('selected_contacts', value);
-    setTextContent('div_contacts_initials', value);
+function setAssignedContacts(assignedTo) {
+    selectedContacts = normalizeContacts(assignedTo);
+
+    showSelectedContacts();
+}
+
+function normalizeContacts(assignedTo) {
+    if (Array.isArray(assignedTo)) {
+        return assignedTo;
+    }
+
+    if (!assignedTo) {
+        return [];
+    }
+
+    return [assignedTo];
 }

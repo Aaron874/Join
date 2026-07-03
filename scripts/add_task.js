@@ -71,21 +71,55 @@ function dropdownCategoryUp() {
 }
 
 
+// function contactsTemplate(contactName) {
+//     const checked = selectedContacts.includes(contactName);
+
+//     return `
+//         <div class="contacts_div">
+//             <span>${contactName}</span>
+
+//             <input
+//                 class="contacts_input"
+//                 type="checkbox"
+//                 ${checked ? 'checked' : ''}
+//                 onchange="toggleContact('${contactName}')"
+//             />
+//         </div>
+//     `;
+// }
+
 function contactsTemplate(contactName) {
+    const checked = selectedContacts
+        .map(contact => contact.trim())
+        .includes(contactName.trim());
+
     return `
-            <div class="contacts_div">
-                <span>${contactName}</span>
-                <input onclick="selectContact('${contactName}')" class="contacts_input" type="checkbox" />
-            </div>
+        <div class="contacts_div">
+            <span>${contactName}</span>
+
+            <input
+                class="contacts_input"
+                type="checkbox"
+                ${checked ? 'checked' : ''}
+                onchange="toggleContact('${contactName}')"
+            />
+        </div>
     `;
 }
 
 
-function selectContact(contactName) {
-    selectedContacts.push(contactName);
+function toggleContact(contactName) {
+    if (selectedContacts.includes(contactName)) {
+        selectedContacts = selectedContacts.filter(
+            contact => contact !== contactName
+        );
 
-    console.log(contactName);
-    console.log(selectedContacts);
+        showSelectedContacts();
+        return;
+    }
+
+    selectedContacts.push(contactName);
+    showSelectedContacts();
 }
 
 function showSelectedContacts() {
@@ -167,14 +201,14 @@ async function createTask(element) {
     const taskSubtasks = document.getElementById("task-subtasks").value;
     const taskPriority = priority[0];
     const taskCategory = document.getElementById('selected_category_text').textContent;
-    const taskAssigned = document.getElementById('div_contacts_initials').textContent;
+    // const taskAssigned = document.getElementById('div_contacts_initials').textContent;
 
     const task = {
         title: taskTitle,
         description: taskDescription,
         date: taskDate,
         priority: taskPriority,
-        assignedTo: taskAssigned,
+        assignedTo: [...selectedContacts],
         category: taskCategory,
         subtasks: taskSubtasks,
         status: element

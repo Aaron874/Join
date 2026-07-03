@@ -28,6 +28,7 @@ function getTaskTemplate(task) {
     const categoryClass = categoryStyles[task.category] ?? '';
     const priorityIcon = priorityIcons[task.priority] ?? '';
     const previewText = getPreviewText(task.description);
+    const assignedTo = getAssignedToText(task.assignedTo);
 
     return `
         <article
@@ -49,7 +50,7 @@ function getTaskTemplate(task) {
             </p>
 
             <div class="task-card-bottom">
-                <span>${task.assignedTo}</span>
+                <span>${assignedTo}</span>
                 ${priorityIcon}
             </div>
         </article>
