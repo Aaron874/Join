@@ -174,6 +174,11 @@ function closeTaskDialog() {
 }
 
 async function deleteTask(taskId){
+    const shouldDelete = confirm(
+        'Are you sure you want to delete this task?'
+    );
+    if (!shouldDelete) return;
+
     try {
         await deleteTaskFromFirebase(taskId);
         await fetchTasks();
@@ -197,4 +202,56 @@ async function deleteTaskFromFirebase(taskId){
             );
         }
     
+}
+
+function openEditTask(taskId){
+    const task = getTaskById(taskId);
+    if (!task) return;
+    closeTaskDialog();
+    fillTaskForm(task);
+    openDialog('add-task-dialog');
+    console.log(task.assignedTo);
+    
+}
+
+function getTaskById(taskId){
+    return fetchedTasks.find(task => task.id === taskId);
+}
+
+function fillTaskForm(task){
+    setInputValue('task-title', task.title);
+    setInputValue('task-description', task.description);
+    setInputValue('task-date', task.date);
+    setInputValue('task-subtasks', task.subtasks);
+
+    selecktPriority(task.priority);
+    setTextContent('task-assigned-to',task.assignedTo)
+    setAssignedTo('div_contacts_initials', task.assignedTo)
+    setTextContent('selected_category_text', task.category);
+}
+
+function setInputValue(id, value){
+    const element = document.getElementById(id);
+    if (!element) return;
+    element.value = value ?? '';
+}
+
+function setTextContent(id, value){
+    const element = document.getElementById(id)
+    if (!element) return;
+    element.textContent = value ?? '';
+}
+
+function selecktPriority(priorityValue){
+    const priorityElement = document.getElementById(`priority-${priorityValue}`);
+    if (!priorityElement) return;
+    colorChangePriority(priorityElement);
+}
+
+function setAssignedTo(assignedTo){
+    const value = Array.isArray(assignedTo)
+    ? assignedTo.join('')
+    : assignedTo ?? '';
+    setTextContent('selected_contacts', value);
+    setTextContent('div_contacts_initials', value);
 }

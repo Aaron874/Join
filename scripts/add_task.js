@@ -184,6 +184,7 @@ async function createTask(element) {
 
     await addTaskToFirebase(task);
     priority = [];
+    selectedContacts = [];
     clearTaskform();
     console.log(tasks);
 }
