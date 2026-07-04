@@ -455,17 +455,12 @@ function addNewContact() {
 async function writeNewContact(contact) {
   try {
     await createContact(contact);
-    showSuccessDialog();
-    resetPersonInitials();
-    deleteInputValues();
+    closeAddContactDialog()
+    contactSuccessDialog();
 } catch (error) {
     console.error("Fehler beim Speichern:", error);
 }
-}
-function showSuccessDialog() {
-  console.log("Kontakt erfolgreich gespeichert!");
-}
-  
+}  
 
 function deleteInputValues() {
   document.getElementById("contact_name_id").value = "";
@@ -499,3 +494,11 @@ function openEditInput(shortName, person, email, color, phone, mode) {
         renderContactInput(shortName, person, email, color, phone, mode)
     );
   }
+
+function contactSuccessDialog() {
+    const successDialog = document.getElementById("contact_dialog_success_id");
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+    }, 2000);
+};

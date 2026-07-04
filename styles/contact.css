@@ -409,3 +409,16 @@ dialog::backdrop {
     font-size: 43px;
   }
 
+  .contact_dialog_success {
+    font-size: 20px;
+    position: absolute;
+    top: 96px;
+    left: 50%;
+    z-index: 2;
+    background-color: #2A3647;
+    color: white;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
+  }
+
