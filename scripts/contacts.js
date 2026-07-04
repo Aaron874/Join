@@ -4,12 +4,11 @@ import { createContact } from "../firebase/contacts.service.js";
 import { getContacts } from "../firebase/contacts.service.js";
 let contactsList = [];
 
-
+// Testausgabe der Firebase-Instanzen
 console.log(db);
 console.log(auth);
 console.log("Datei geladen");
-
-
+// ******************************
 
 window.result = await guestLogin();
 
@@ -17,11 +16,7 @@ loadContacts();
 
 async function loadContacts () {
   contactsList = await getContacts();
-  console.log("funktion wird gestartet");
-  letterSeperatorContactsList();
-  
-  console.log(contactsList);
-  
+  letterSeperatorContactsList();  
 }
 
 // if (result.user.isAnonymous) {
@@ -68,6 +63,7 @@ const contactDialog = document.getElementById("contact_dialog_id");
 const contactDialogHeader = document.getElementById("contact_dialog_header_id");
 const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById("contact_form_section_id");
+
 document.addEventListener("click", (e) => {
   const el = e.target.closest("[data-action]");
   console.log("click registerd");
@@ -460,6 +456,7 @@ async function writeNewContact(contact) {
   try {
     await createContact(contact);
     showSuccessDialog();
+    resetPersonInitials();
     deleteInputValues();
 } catch (error) {
     console.error("Fehler beim Speichern:", error);
@@ -474,8 +471,7 @@ function deleteInputValues() {
   document.getElementById("contact_name_id").value = "";
   document.getElementById("contact_email_id").value = "";
   document.getElementById("contact_phone_id").value = "";
-  document.getElementById("contact_color_picker_id").value = "#D1D1D1";
-}
+  document.documentElement.style.setProperty("--contact-color", "#D1D1D1");}
 
 function openEditContactDialog(shortName, person, email, color, phone) {
     contactDialog.showModal();
