@@ -444,15 +444,15 @@ function deleteInputValues() {
   document.getElementById("contact_phone_id").value = "";
   document.documentElement.style.setProperty("--contact-color", "#D1D1D1");}
 
-function openEditContactDialog(shortName, person, email, color, phone) {
+export function openEditContactDialog(shortName, person, email, color, phone) {
     contactDialog.showModal();
     contactDialogHeaderSwitch(true);
-    openEditInput(shortName, person, email, color, phone, mode = "edit");
+    openEditInput(shortName, person, email, color, phone,"edit");
     startEventListenerColorPicker();
 
 }
 
-function contactDialogHeaderSwitch(state) {
+export function contactDialogHeaderSwitch(state) {
     contactDialogHeader.innerHTML = "";
     contactDialogHeader.appendChild(renderAddOrEditContactDialog(state));
 }

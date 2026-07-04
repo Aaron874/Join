@@ -1,4 +1,4 @@
-import { openSingleViewContact } from "./contacts.js";
+import { openSingleViewContact, openEditContactDialog } from "./contacts.js";
 
 export function renderContactsList(Letter) {
     return `
@@ -46,7 +46,7 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               <div>
                 <h3 class="contacts_single_view_name">${person}</h3>
                 <div class="contacts_single_view_actions">
-                  <button onclick="openEditContactDialog('${shortName}', '${person}', '${email}', '${color}', '${phone}')">
+                  <button >
                     <img src="assets/img/edit.webp" alt="Edit Contact" />Edit
                   </button>
                   <button>
@@ -69,6 +69,9 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               </div>
             </div>
             `
+            newSingleView.addEventListener("click", () => {
+              openEditContactDialog(shortName, person, email, color, phone);
+            });
     return newSingleView;
 }
 
