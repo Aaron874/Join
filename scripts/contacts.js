@@ -2,6 +2,15 @@ import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
 import { createContact } from "../firebase/contacts.service.js";
 import { getContacts } from "../firebase/contacts.service.js";
+import {
+  renderContactsList,
+  renderContactsListItems,
+  renderSingleContactView,
+  renderAddOrEditContactDialog,
+  renderUnderlineHeaderContactDialog,
+  renderPersonInitialsForAddContact,
+  renderContactInput
+} from "./contactsTemplate.js";
 let contactsList = [];
 
 // Testausgabe der Firebase-Instanzen
@@ -18,39 +27,6 @@ async function loadContacts () {
   contactsList = await getContacts();
   letterSeperatorContactsList();  
 }
-
-// if (result.user.isAnonymous) {
-//     console.log("Gastlogin erfolgreich");
-// }
-
-// onAuthStateChanged(auth, async (user) => {
-//   if (!user) {
-//       console.log("Kein Benutzer angemeldet");
-//     return;
-//   }
-//   const contactsPath = user.isAnonymous
-//       ? "contacts/guest"
-//       : `contacts/${user.uid}`;
-//   const snapshot = await get(
-//      ref(db, contactsPath)
-//   );
-//   if (snapshot.exists()) {
-//       contactsList = snapshot.val();
-//       console.log(contactsList);
-//       letterSeperatorContactsList()
-      
-//   } else {
-//       console.log("Keine Kontakte gefunden");
-//   }
-
-// });
-
-
-
-
-
-
-
 
 // Beispiel Kontakte für Testzwecke //
 const contactsListContainer = document.querySelector(
@@ -376,7 +352,7 @@ function contactListInitials(contactListName) {
   return initials;
 }
 
-function openSingleViewContact(shortName, person, email, color, phone) {
+export function openSingleViewContact(shortName, person, email, color, phone) {
   contactsSingleViewContainer.innerHTML = "";
   contactsSingleViewContainer.appendChild(
     renderSingleContactView(shortName, person, email, color, phone)

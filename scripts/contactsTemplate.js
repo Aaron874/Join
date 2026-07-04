@@ -1,17 +1,18 @@
+import { openSingleViewContact } from "./contacts.js";
 
-function renderContactsList(Letter) {
+export function renderContactsList(Letter) {
     return `
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`
 }
 
-function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone) {
+export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone) {
     let newContact = document.createElement("button");
     newContact.classList.add("contacts_list_items_container");
     newContact.innerHTML = `
           <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
           <div>
             <h4>${person}</h4>
-            <p><a href="mailto:${email}"></a>${email}</p>
+            <p><a href="mailto:${email}">${email}</a></p>
           </div>
           `;
           newContact.addEventListener("click", () => {
@@ -20,7 +21,7 @@ function renderContactsListItems(shortName, person, email, color = "#BDBDBD", ph
         return newContact;
 }
 
-function renderAddOrEditContactDialog(isEditMode = false) {
+export function renderAddOrEditContactDialog(isEditMode = false) {
   let addContactDialogContent = document.createElement("h3");
   if (isEditMode) {
     addContactDialogContent.textContent = "Edit Contact";
@@ -30,14 +31,14 @@ function renderAddOrEditContactDialog(isEditMode = false) {
   return addContactDialogContent;
 }
 
-function renderUnderlineHeaderContactDialog() {
+export function renderUnderlineHeaderContactDialog() {
   let contactDialogUnderline = document.createElement("p");
   contactDialogUnderline.textContent = "Tasks are better with a team!";
   return contactDialogUnderline;
 }
 
 
-function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number") {
+export function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number") {
     let newSingleView = document.createElement("div");
     newSingleView.innerHTML = `
             <div class="contacts_single_view_content_header">
@@ -71,7 +72,7 @@ function renderSingleContactView(shortName, person, email, color = "#BDBDBD", ph
     return newSingleView;
 }
 
-function renderPersonInitialsForAddContact(initials) {
+export function renderPersonInitialsForAddContact(initials) {
   let personInitials = document.createElement("span");
   personInitials.classList.add("person_initials");
   personInitials.id = "person_initials_id";
@@ -79,7 +80,7 @@ function renderPersonInitialsForAddContact(initials) {
   return personInitials;
 }
 
-function renderContactInput(shortName, person, email, color, phone, mode) {
+export function renderContactInput(shortName, person, email, color, phone, mode) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("contact_form_container");
   editContactInput.id = "contact_input_id";
