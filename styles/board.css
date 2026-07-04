@@ -2,12 +2,12 @@
   font-family: "Inter";
 }
 
-dialog {
+.add-dialog {
   width: 1116px;
   height: 870px;
 }
 
-dialog::backdrop {
+.add-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -134,14 +134,24 @@ dialog::backdrop {
 
 .add-dialog {
   border-radius: 16px;
-  position: fixed;
+  position: relative;
   border: 1px solid var(--bg-white);
-  ;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-close-btn {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    border: none;
+    background: transparent;
+    color: var(--color-darkblue);
+    font-size: 40px;
+    line-height: 1;
 }
 
 .dialog-head {
@@ -224,12 +234,13 @@ dialog::backdrop {
 
 .task-dialog {
     width: min(525px, calc(100vw - 32px));
-    max-height: calc(100dvh - 64px);
+    /* max-height: calc(100dvh - 64px); */
     border: none;
     border-radius: 30px;
     padding: 0;
-    overflow: auto;
+    overflow-y: auto;
     position: relative;
+    margin: auto;
 }
 
 .task-dialog::backdrop {
@@ -244,12 +255,14 @@ dialog::backdrop {
 
 .task-dialog-close {
     position: absolute;
+    width: 32px;
+    height: 32px;
     top: 48px;
     right: 48px;
     border: none;
     background: transparent;
     color: var(--color-darkblue);
-    font-size: 40px;
+    font-size: 24px;
     line-height: 1;
     cursor: pointer;
 }
@@ -262,7 +275,7 @@ dialog::backdrop {
 .task-dialog-content h2 {
     margin: 0 0 24px;
     color: var(--color-black);
-    font-size: 56px;
+    font-size: var(--fs-h2);
     line-height: 1.15;
     font-weight: 700;
 }
@@ -323,4 +336,18 @@ dialog::backdrop {
     color: var(--color-darkblue);
     font-size: 20px;
     cursor: pointer;
+}
+
+.delete-edit{
+  display: flex;
+  justify-content: center;
+  height: 32px;
+  text-align: center;
+  gap: 5px;
+}
+
+.seperator{
+  height: 24px;
+  width: 1px;
+  background-color: var(--color-gray);
 }

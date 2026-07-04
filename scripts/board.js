@@ -38,6 +38,13 @@ async function fetchTasks(path = 'tasks') {
     }
 }
 
+function getAssignedToText(assignedTo){
+    if (Array.isArray(assignedTo)) {
+        return assignedTo.join('')
+    }
+    return assignedTo ?? '';
+}
+
 function renderColumn(status, container) {
     const tasks = fetchedTasks
         .filter(task => task.status === status)
@@ -171,4 +178,97 @@ function openTaskDetails(taskId) {
 
 function closeTaskDialog() {
     document.getElementById('task-dialog').close();
+}
+
+async function deleteTask(taskId){
+    const shouldDelete = confirm(
+        'Are you sure you want to delete this task?'
+    );
+    if (!shouldDelete) return;
+
+    try {
+        await deleteTaskFromFirebase(taskId);
+        await fetchTasks();
+        renderBoard();
+        closeTaskDialog();
+    } catch (error) {
+        console.error('Task konnte nicht gelöscht werden', error);
+    }
+}
+
+async function deleteTaskFromFirebase(taskId){
+    const response = await fetch(
+        `${BASE_URL}tasks/${taskId}.json`,
+        {
+            method: 'DELETE'
+        }
+        );
+        if(!response.ok){
+            throw new Error(
+                `HTTP-Fehler: ${response.status}`
+            );
+        }
+    
+}
+
+function openEditTask(taskId){
+    const task = getTaskById(taskId);
+    if (!task) return;
+    closeTaskDialog();
+    fillTaskForm(task);
+    openDialog('add-task-dialog');
+    console.log(task.assignedTo);
+    console.log(Array.isArray(task.assignedTo));
+    
+}
+
+function getTaskById(taskId){
+    return fetchedTasks.find(task => task.id === taskId);
+}
+
+function fillTaskForm(task){
+    setInputValue('task-title', task.title);
+    setInputValue('task-description', task.description);
+    setInputValue('task-date', task.date);
+    setInputValue('task-subtasks', task.subtasks);
+
+    selectPriority(task.priority);
+    setTextContent('selected_category_text', task.category);
+    setAssignedContacts(task.assignedTo);
+}
+
+function setInputValue(id, value){
+    const element = document.getElementById(id);
+    if (!element) return;
+    element.value = value ?? '';
+}
+
+function setTextContent(id, value){
+    const element = document.getElementById(id)
+    if (!element) return;
+    element.textContent = value ?? '';
+}
+
+function selectPriority(priorityValue){
+    const priorityElement = document.getElementById(`priority-${priorityValue}`);
+    if (!priorityElement) return;
+    colorChangePriority(priorityElement);
+}
+
+function setAssignedContacts(assignedTo) {
+    selectedContacts = normalizeContacts(assignedTo);
+
+    showSelectedContacts();
+}
+
+function normalizeContacts(assignedTo) {
+    if (Array.isArray(assignedTo)) {
+        return assignedTo;
+    }
+
+    if (!assignedTo) {
+        return [];
+    }
+
+    return [assignedTo];
 }
