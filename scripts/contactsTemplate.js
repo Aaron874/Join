@@ -46,10 +46,10 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               <div>
                 <h3 class="contacts_single_view_name">${person}</h3>
                 <div class="contacts_single_view_actions">
-                  <button >
+                  <button id="edit_btn_id">
                     <img src="assets/img/edit.webp" alt="Edit Contact" />Edit
                   </button>
-                  <button>
+                  <button id="delete_btn_id">
                     <img
                       src="assets/img/delete.webp"
                       alt="Delete Contact"
@@ -69,9 +69,15 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               </div>
             </div>
             `
-            newSingleView.addEventListener("click", () => {
+            const editButton = newSingleView.querySelector("#edit_btn_id");
+            editButton.addEventListener("click", () => {
               openEditContactDialog(shortName, person, email, color, phone);
             });
+            const deleteButton = newSingleView.querySelector("#delete_btn_id");
+            deleteButton.addEventListener("click", () => {
+              console.log(`Delete contact: ${person} (${email})`);
+            });
+              
     return newSingleView;
 }
 
