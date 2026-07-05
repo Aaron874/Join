@@ -324,16 +324,18 @@ input::placeholder {
 .symbole_up_dropdown_contacts {
     display: none;
     position: absolute;
-    top: 12px;
-    left: 439px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
     cursor: pointer;
 }
 
 .symbole_down_dropdown_contacts {
     display: flex;
     position: absolute;
-    top: 12px;
-    left: 439px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
     cursor: pointer;
 }
 
@@ -405,4 +407,10 @@ input::placeholder {
     left: 16px;
     font-size: 20px;
     color: #000000;
+}
+
+.contacts_dropdown_initials-plus-name_style {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
