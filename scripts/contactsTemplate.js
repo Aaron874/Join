@@ -1,11 +1,12 @@
-import { openSingleViewContact, openEditContactDialog } from "./contacts.js";
+import { openSingleViewContact, openEditContactDialog,updateContactInList } from "./contacts.js";
+
 
 export function renderContactsList(Letter) {
     return `
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`
 }
 
-export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone) {
+export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone, id) {
     let newContact = document.createElement("button");
     newContact.classList.add("contacts_list_items_container");
     newContact.innerHTML = `
@@ -16,7 +17,7 @@ export function renderContactsListItems(shortName, person, email, color = "#BDBD
           </div>
           `;
           newContact.addEventListener("click", () => {
-            openSingleViewContact(shortName, person, email, color, phone);
+            openSingleViewContact(shortName, person, email, color, phone, id);
           });
         return newContact;
 }
@@ -38,7 +39,7 @@ export function renderUnderlineHeaderContactDialog() {
 }
 
 
-export function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number") {
+export function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number", id) {
     let newSingleView = document.createElement("div");
     newSingleView.innerHTML = `
             <div class="contacts_single_view_content_header">
@@ -71,11 +72,11 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
             `
             const editButton = newSingleView.querySelector("#edit_btn_id");
             editButton.addEventListener("click", () => {
-              openEditContactDialog(shortName, person, email, color, phone);
+              openEditContactDialog(shortName, person, email, color, phone, id);
             });
             const deleteButton = newSingleView.querySelector("#delete_btn_id");
             deleteButton.addEventListener("click", () => {
-              console.log(`Delete contact: ${person} (${email})`);
+              console.log(`Delete contact: ${person} (${email}) with ID: ${id}`);
             });
               
     return newSingleView;
@@ -89,7 +90,7 @@ export function renderPersonInitialsForAddContact(initials) {
   return personInitials;
 }
 
-export function renderContactInput(shortName, person, email, color, phone, mode) {
+export function renderContactInput(shortName, person, email, color, phone, mode, id) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("contact_form_container");
   editContactInput.id = "contact_input_id";
@@ -126,6 +127,20 @@ export function renderContactInput(shortName, person, email, color, phone, mode)
               ${renderButtons(mode)}
             </form>
 `
+const changeBtn = editContactInput.querySelector("#change_contact_btn_id");
+if (changeBtn) {
+  changeBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    let contactId = id;
+    const updatedContact = {
+      name: document.getElementById("contact_name_id").value,
+      email: document.getElementById("contact_email_id").value,
+      phone: document.getElementById("contact_phone_id").value,
+      color: document.getElementById("contact_color_picker_id").value,
+    };
+    updateContactInList(contactId, updatedContact);
+  });
+}
 return editContactInput;
 }
 
@@ -141,7 +156,7 @@ function renderButtons(mode) {
         onclick="closeEditContactDialog()">
         Delete
       </button>
-      <button class="contact_btn_submit" type="submit" data-action="update_contact">
+      <button class="contact_btn_submit" type="submit" id="change_contact_btn_id">
         Save
         <span>
           <img src="assets/img/check.webp" alt="Check Icon" />

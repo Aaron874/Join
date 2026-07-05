@@ -1,7 +1,7 @@
 import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
 import { createContact } from "../firebase/contacts.service.js";
-import { getContacts } from "../firebase/contacts.service.js";
+import { getContacts, updateContact } from "../firebase/contacts.service.js";
 import {
   renderContactsList,
   renderContactsListItems,
@@ -11,7 +11,11 @@ import {
   renderPersonInitialsForAddContact,
   renderContactInput
 } from "./contactsTemplate.js";
-let contactsList = [];
+
+
+// ****************************** Ändern bevor es life geht ******************************
+globalThis.contactsList = [];
+// ******************************
 
 // Testausgabe der Firebase-Instanzen
 console.log(db);
@@ -67,6 +71,7 @@ document.addEventListener("submit", (event) => {
           break;
       case "update_contact":
           console.log("Kontakt wird bearbeitet");
+
           break;
   }
 });
@@ -334,11 +339,12 @@ function createContactListItems() {
     let email = contactsList[index].email;
     let firstLetter = contactsList[index].name[0].toUpperCase();
     let color = contactsList[index].color;
+    let id = contactsList[index].id;
     let targetElement = document.querySelector(
       `[data-letter="${firstLetter}"]`
     );
     targetElement.after(
-      renderContactsListItems(shortName, person, email, color, phone)
+      renderContactsListItems(shortName, person, email, color, phone, id)
     );
   }
 }
@@ -352,10 +358,10 @@ function contactListInitials(contactListName) {
   return initials;
 }
 
-export function openSingleViewContact(shortName, person, email, color, phone) {
+export function openSingleViewContact(shortName, person, email, color, phone, id) {
   contactsSingleViewContainer.innerHTML = "";
   contactsSingleViewContainer.appendChild(
-    renderSingleContactView(shortName, person, email, color, phone)
+    renderSingleContactView(shortName, person, email, color, phone, id)
   );
 }
 
@@ -444,10 +450,10 @@ function deleteInputValues() {
   document.getElementById("contact_phone_id").value = "";
   document.documentElement.style.setProperty("--contact-color", "#D1D1D1");}
 
-export function openEditContactDialog(shortName, person, email, color, phone) {
+export function openEditContactDialog(shortName, person, email, color, phone, id) {
     contactDialog.showModal();
     contactDialogHeaderSwitch(true);
-    openEditInput(shortName, person, email, color, phone,"edit");
+    openEditInput(shortName, person, email, color, phone,"edit", id);
     startEventListenerColorPicker();
 
 }
@@ -461,13 +467,13 @@ function closeEditContactDialog() {
     contactDialog.close();
 }
 
-function openEditInput(shortName, person, email, color, phone, mode) {
+function openEditInput(shortName, person, email, color, phone, mode, id) {
     const existingInput = document.getElementById("contact_input_id");
     if (existingInput) {
         existingInput.remove();
     }
     editContactInputContainer.appendChild(
-        renderContactInput(shortName, person, email, color, phone, mode)
+        renderContactInput(shortName, person, email, color, phone, mode, id)
     );
   }
 
@@ -478,3 +484,9 @@ function contactSuccessDialog() {
         successDialog.close();
     }, 2000);
 };
+
+export async function updateContactInList(contactId, updatedContact) {
+  await updateContact(contactId, updatedContact)
+  closeAddContactDialog();
+  loadContacts();
+}
