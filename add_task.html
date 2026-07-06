@@ -23,8 +23,8 @@
     <header>
         <section class="header-content">Kanban Project Management Tool</section>
     </header>
-    <aside>
-        <div class="logo">
+    <aside class="aside-width">
+        <div class="logo aside-width">
             <svg width="101" height="122" viewBox="0 0 101 122" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M71.6721 0H49.5143V25.4923H71.6721V0Z" fill="white" />
                 <path
@@ -40,7 +40,7 @@
                     fill="white" />
             </svg>
         </div>
-        <section class="aside-content">
+        <section class="aside-content aside-width">
             <div class="options">
                 <a href="summary.html">
                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@
         </section>
     </aside>
     <main class="main-add_task">
-        <section class="main-content">
+        <section class="main-content main-content-padding-bottom">
 
             <h1 class="add_task-h1">Add Task</h1>
             <form class="style-content">
@@ -149,7 +149,7 @@
                     <div class="assigned-dropdown">
                         <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
                             class="assigned-trigger">
-                        <span class="span_selected_contacts" id="selected_contacts">Select contacts to assign</span>
+                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to assign</span>
 
                         <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
                             onclick="dropdownContactsDown()">
@@ -178,7 +178,7 @@
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
-                            <span id="selected_category_text">Select task category</span>
+                            <span class="font-size" id="selected_category_text">Select task category</span>
 
                             <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_category"
                                 onclick="dropdownCategoryDown()">
@@ -202,10 +202,10 @@
                         </button>
                         <div class="dropdown_category" id="dropdown_category">
                             <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
-                                <span>Technical Task</span>
+                                <span class="font-size">Technical Task</span>
                             </div>
                             <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
-                                <span>User Story</span>
+                                <span class="font-size">User Story</span>
                             </div>
                         </div>
                         <p class="padding-top">Subtasks</p>
@@ -214,7 +214,7 @@
                     </div>
                     <div class="style-div-buttons">
                         <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
-                            <span>Clear</span>
+                            <span class="font-size-buttons">Clear</span>
                             <span class="close-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     aria-hidden="true">
@@ -224,7 +224,7 @@
                             </span>
                         </button>
                         <button onclick="createTask('todo')" type="submit" class="style-buttons bt-right">
-                            <span>Create Task</span>
+                            <span class="font-size-buttons">Create Task</span>
                             <span class="checkmark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
                                     viewBox="0 0 15.49 11.22" aria-hidden="true">
