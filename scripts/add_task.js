@@ -13,6 +13,10 @@ let tasks = [
 ];
 
 
+document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+
+
 const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
@@ -27,7 +31,7 @@ const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.
 
 //         for (let index = 0; index < results.length; index++) {
 //             const element = array[index];
-            
+
 //         }
 // }
 
@@ -74,7 +78,7 @@ function dropdownContactsDown() {
 
 function dropdownContactsUp() {
 
-    document.getElementById('symbole_down_dropdown_contacts').style.display = '';
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
     let input = document.getElementById('assigned-trigger');
     input.value = '';
@@ -103,7 +107,7 @@ function dropdownCategoryDown() {
 
 
 function dropdownCategoryUp() {
-    document.getElementById('symbole_down_dropdown_category').style.display = '';
+    document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_category').style.display = '';
     const dropdown = document.getElementById('dropdown_category');
     dropdown.style.display = '';
@@ -228,35 +232,81 @@ function colorChangePriority(element) {
 }
 
 
+// async function createTask(element) {
+//     const taskTitle = document.getElementById("task-title").value;
+//     const taskDescription = document.getElementById("task-description").value;
+//     const taskDate = document.getElementById("task-date").value;
+//     const taskSubtasks = document.getElementById("task-subtasks").value;
+//     const taskPriority = priority[0];
+//     const taskCategory = document.getElementById('selected_category_text').textContent;
+//     const taskAssigned = selectedContacts
+//         .map(contact => contact.name)
+//         .join(", ");
+
+//     const task = {
+//         title: taskTitle,
+//         description: taskDescription,
+//         date: taskDate,
+//         priority: taskPriority,
+//         assignedTo: taskAssigned,
+//         category: taskCategory,
+//         subtasks: taskSubtasks,
+//         status: element
+//     };
+
+//     if (taskTitle > 0 || taskDescription > 0 || taskSubtasks > 0 || taskCategory > 0) {
+//         tasks.push(task);
+
+//         await addTaskToFirebase(task);
+//         priority = [];
+//         selectedContacts = [];
+//         clearTaskform();
+//         console.log(tasks);
+//     }
+// }
+
+
+
 async function createTask(element) {
-    const taskTitle = document.getElementById("task-title").value;
-    const taskDescription = document.getElementById("task-description").value;
-    const taskDate = document.getElementById("task-date").value;
-    const taskSubtasks = document.getElementById("task-subtasks").value;
+    const taskTitle = document.getElementById("task-title").value.trim();
+    const taskDescription = document.getElementById("task-description").value.trim();
+    const taskDate = document.getElementById("task-date").value.trim();
+    const taskSubtasks = document.getElementById("task-subtasks").value.trim();
     const taskPriority = priority[0];
-    const taskCategory = document.getElementById('selected_category_text').textContent;
+    const taskCategory = document.getElementById('selected_category_text').textContent.trim();
     const taskAssigned = selectedContacts
         .map(contact => contact.name)
         .join(", ");
 
-    const task = {
-        title: taskTitle,
-        description: taskDescription,
-        date: taskDate,
-        priority: taskPriority,
-        assignedTo: taskAssigned,
-        category: taskCategory,
-        subtasks: taskSubtasks,
-        status: element
-    };
+    if (
+        taskTitle.length > 0 &&
+        taskDescription.length > 0 &&
+        taskDate.length > 0 &&
+        taskSubtasks.length > 0 &&
+        taskPriority.length > 0 &&
+        taskCategory.length > 0 &&
+        taskCategory !== "Select task category" &&
+        selectedContacts.length > 0
+    ) {
+        const task = {
+            title: taskTitle,
+            description: taskDescription,
+            date: taskDate,
+            priority: taskPriority,
+            assignedTo: taskAssigned,
+            category: taskCategory,
+            subtasks: taskSubtasks,
+            status: element
+        };
 
-    tasks.push(task);
+        tasks.push(task);
 
-    await addTaskToFirebase(task);
-    priority = [];
-    selectedContacts = [];
-    clearTaskform();
-    console.log(tasks);
+        await addTaskToFirebase(task);
+        priority = [];
+        selectedContacts = [];
+        clearTaskform();
+        console.log(tasks);
+    }
 }
 
 
