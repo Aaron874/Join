@@ -142,7 +142,7 @@
                     <p>Assigned to</p>
 
                     <div class="assigned-dropdown">
-                        <input onclick="clearInput()" type="text" id="assigned-trigger" class="assigned-trigger">
+                        <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger" class="assigned-trigger">
                         <span class="span_selected_contacts" id="selected_contacts">Select contacts to assign</span>
                         <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
                             onclick="dropdownContactsDown()">⌄</span>
