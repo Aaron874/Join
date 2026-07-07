@@ -1,7 +1,7 @@
 import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
 import { createContact } from "../firebase/contacts.service.js";
-import { getContacts, updateContact } from "../firebase/contacts.service.js";
+import { getContacts, updateContact, getContact } from "../firebase/contacts.service.js";
 import {
   renderContactsList,
   renderContactsListItems,
@@ -333,7 +333,7 @@ function createContactsList() {
 // Funktion zum Rendern von Personen -- shortName, Person, Email
 function createContactListItems() {
   for (let index = 0; index < contactsList.length; index++) {
-    let shortName = contactListInitials(contactsList[index].name);
+    let shortName = contactsList[index].shortName;
     let person = contactsList[index].name;
     let phone = contactsList[index].phone;
     let email = contactsList[index].email;
@@ -358,10 +358,12 @@ function contactListInitials(contactListName) {
   return initials;
 }
 
-export function openSingleViewContact(shortName, person, email, color, phone, id) {
+export function openSingleViewContact(id) {
+  const contactIndex = searchIndex(id);
+  const contact = contactsList[contactIndex];
   contactsSingleViewContainer.innerHTML = "";
   contactsSingleViewContainer.appendChild(
-    renderSingleContactView(shortName, person, email, color, phone, id)
+    renderSingleContactView(contact.shortName, contact.name, contact.email, contact.color, contact.phone, contact.id)
   );
 }
 
@@ -429,6 +431,7 @@ function addNewContact() {
     email: document.getElementById("contact_email_id").value,
     phone: document.getElementById("contact_phone_id").value,
     color: document.getElementById("contact_color_picker_id").value,
+    shortName: contactListInitials(document.getElementById("contact_name_id").value),
   };
   console.log(contact);
   writeNewContact(contact);
@@ -487,6 +490,29 @@ function contactSuccessDialog() {
 
 export async function updateContactInList(contactId, updatedContact) {
   await updateContact(contactId, updatedContact)
+  let contactIndex = searchIndex(contactId);
+  let changedContact = await getContact(contactId);
+  contactsList[contactIndex] = changedContact;
+  console.log("contactIndex", contactIndex, changedContact);
+  changeContactInDom(contactId, changedContact)
   closeAddContactDialog();
-  loadContacts();
+  openSingleViewContact(contactId)
+
+}
+
+function searchIndex(contactId) {
+  for (let index = 0; index < contactsList.length; index++) {
+    if (contactsList[index].id === contactId) {
+      return index;
+    }
+  }
+}
+
+function changeContactInDom(contactId, changedContact) {
+  const button = document.getElementById("contact_id_" + contactId); 
+  button.querySelector("h4").textContent = changedContact.name;
+  button.querySelector("p").textContent = changedContact.email;
+  button.querySelector(".contacts_list_name_symbol").textContent = changedContact.shortName;
+  button.querySelector(".contacts_list_name_symbol").style.setProperty("--contact-color", changedContact.color);
+
 }

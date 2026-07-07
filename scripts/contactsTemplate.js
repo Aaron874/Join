@@ -9,6 +9,7 @@ export function renderContactsList(Letter) {
 export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone, id) {
     let newContact = document.createElement("button");
     newContact.classList.add("contacts_list_items_container");
+    newContact.id = ("contact_id_" + id);
     newContact.innerHTML = `
           <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
           <div>
@@ -17,7 +18,7 @@ export function renderContactsListItems(shortName, person, email, color = "#BDBD
           </div>
           `;
           newContact.addEventListener("click", () => {
-            openSingleViewContact(shortName, person, email, color, phone, id);
+            openSingleViewContact(id);
           });
         return newContact;
 }
@@ -164,7 +165,6 @@ function renderButtons(mode) {
       </button>
       </div>
     `
-
   } else {
 
     return `
