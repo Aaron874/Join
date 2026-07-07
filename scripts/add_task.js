@@ -14,9 +14,9 @@ let tasks = [
 
 window.addEventListener('DOMContentLoaded', initAddTask);
 
-function initAddTask(){
-document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
-document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+function initAddTask() {
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+    document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
 }
 
 
@@ -271,9 +271,11 @@ function colorChangePriority(element) {
 
 
 async function createTask(element) {
+    // if (!validateForm()) return;
+    formRequired();
     const taskTitle = document.getElementById("task-title").value.trim();
     const taskDescription = document.getElementById("task-description").value.trim();
-    const taskDate = document.getElementById("task-date").value.trim();
+    const taskDate = document.getElementById("dateDisplay").value.trim();
     const taskSubtasks = document.getElementById("task-subtasks").value.trim();
     const taskPriority = priority[0];
     const taskCategory = document.getElementById('selected_category_text').textContent.trim();
@@ -314,9 +316,17 @@ async function createTask(element) {
 
 
 function clearTaskform() {
+    titleInput.value = "";
+    titleInput.classList.remove("error");
+    titleError.classList.remove("show");
+
+    dateDisplay.value = "";
+    dateInput.value = "";
+    dateDisplay.classList.remove("error");
+    dateError.classList.remove("show");
     const taskTitle = document.getElementById("task-title");
     const taskDescription = document.getElementById("task-description");
-    const taskDate = document.getElementById("task-date");
+    const taskDate = document.getElementById("dateDisplay");
     const taskSubtasks = document.getElementById("task-subtasks");
     const taskCategory = document.getElementById('selected_category_text');
     const taskAssigned = document.getElementById('div_contacts_initials');
@@ -366,4 +376,69 @@ async function postData(path = "", data = {}) {
 
 async function addTaskToFirebase(task = {}) {
     postData('tasks', task);
+}
+
+const titleInput = document.getElementById("task-title");
+const titleError = document.getElementById("titleError");
+
+const dateDisplay = document.getElementById("dateDisplay");
+const dateInput = document.getElementById("dateInput");
+const dateError = document.getElementById("dateError");
+
+dateDisplay.addEventListener("click", openDatePicker);
+
+dateInput.addEventListener("change", () => {
+    const selectedDate = new Date(dateInput.value);
+
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const year = selectedDate.getFullYear();
+
+    dateDisplay.value = `${day}/${month}/${year}`;
+});
+
+function openDatePicker() {
+    if (dateInput.showPicker) {
+        dateInput.showPicker();
+    } else {
+        dateInput.click();
+    }
+}
+
+
+function formRequired() {
+    let formIsValid = true;
+
+    if (titleInput.value.trim() === "") {
+        titleInput.classList.add("error");
+        titleError.classList.add("show");
+        formIsValid = false;
+    } else {
+        titleInput.classList.remove("error");
+        // titleError.style.display = "none";
+    }
+
+    if (dateDisplay.value.trim() === "") {
+        dateDisplay.classList.add("error");
+        dateError.classList.add("show");
+        formIsValid = false;
+    } else {
+        dateDisplay.classList.remove("error");
+        // dateError.style.display = "none";
+    }
+
+    if (!formIsValid) return;
+}
+
+
+function validateForm() {
+    let valid = true;
+
+    if (dateDisplay.value === "") {
+        dateDisplay.classList.add("error");
+        dateError.style.display = "block";
+        valid = false;
+    }
+
+    return valid;
 }

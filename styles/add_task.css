@@ -460,31 +460,166 @@ input::placeholder {
     font-size: 16px;
 }
 
+.date-field {
+    position: relative;
+    width: 100%;
+}
+
+.date-display {
+    width: 100%;
+    height: 48px;
+    padding: 12px 48px 12px 16px;
+
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    color: #2a3647;
+
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+.date-display::placeholder {
+    color: #d1d1d1;
+}
+
+.real-date-input {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+
+    width: 20px;
+    height: 20px;
+
+    transform: translateY(-50%);
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.error-message {
+    height: 18px;
+    /* oder 16–20px, je nach Schriftgröße */
+    font-size: 12px;
+    color: #ff8190;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition: opacity 150ms ease;
+}
+
+.error-message.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.description-padding {
+    padding-top: 16px !important;
+}
+
+
+.error {
+    border: 1px solid #ff8190 !important;
+}
+
+
+.footer {
+    display: none;
+}
+
+.footer-link-icons {
+    height: 76px;
+    width: 80px;
+    border-radius: 16px;
+}
+
+.footer-link-icons:hover {
+    background-color: #19202b;
+}
+
+.mobile-joinLogo {
+    display: none;
+}
+
+.header-content {
+    padding-left: 163px !important;
+    width: calc(100% - 232px) !important;
+}
+
 @media (max-width: 1135px) {
     .style-content {
         flex-direction: column;
     }
 
     .main-content-padding-bottom {
-        padding-bottom: 300px !important;
+        padding-bottom: 380px !important;
     }
 
     .div-text-required {
         position: relative;
-        bottom: -560px;
+        bottom: -470px;
     }
 
     .style-div-buttons {
         bottom: 0;
         justify-content: flex-end;
         background-color: #f5f6f7;
-        width: 100%;
-        padding-top: 16px;
-        padding-bottom: 16px;
+        width: auto;
+        padding-right: 48px;
+        left: 0;
+        right: 0;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .style-form-right {
+        margin-top: -60px;
+    }
+
+    .content-divider {
+        display: none;
     }
 }
 
 @media (max-width: 755px) {
+
+    .header-content {
+        display: none !important;
+    }
+
+    .mobile-joinLogo {
+        display: flex;
+        position: fixed;
+        left: 48px;
+    }
+
+    .footer {
+        display: flex;
+        position: fixed;
+        background-color: #2a3647;
+        justify-content: space-around;
+        padding: 2px 0 2px 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
     .aside-width {
         display: none;
     }
@@ -497,9 +632,26 @@ input::placeholder {
     .header-content {
         padding-left: 48px !important;
     }
+
+    .style-form-right {
+        margin-top: -60px;
+    }
+
+    .content-divider {
+        display: none;
+    }
+
+    .style-div-buttons {
+        bottom: 80px;
+    }
 }
 
 @media (max-width: 520px) {
+
+    .mobile-joinLogo {
+        left: 24px;
+    }
+
     p {
         font-size: 16px !important;
     }
@@ -514,19 +666,36 @@ input::placeholder {
 
     .div-text-required {
         position: relative;
-        bottom: -540px;
+        bottom: -445px;
     }
 
     .main-content {
-        padding: 24px 24px 300px 24px !important;
+        padding: 24px 24px 380px 24px !important;
     }
 
     .bt-right {
         width: 150px;
     }
+
+    .style-form-right {
+        margin-top: -60px;
+    }
+
+    .content-divider {
+        display: none;
+    }
+
+    .style-div-buttons {
+        bottom: 80px;
+    }
 }
 
 @media (max-width: 450px) {
+
+    .mobile-joinLogo {
+        left: 16px;
+    }
+
     .style-priorities-p {
         font-size: 8px !important;
     }
@@ -552,7 +721,7 @@ input::placeholder {
     }
 
     .main-content {
-        padding: 16px 16px 300px 16px !important;
+        padding: 16px 16px 380px 16px !important;
     }
 
     .bt-right {
@@ -565,10 +734,24 @@ input::placeholder {
 
     .div-text-required {
         position: relative;
-        bottom: -530px;
+        bottom: -425px;
     }
 
     .text-required {
         font-size: 12px !important;
+    }
+
+    .style-form-right {
+        margin-top: -60px;
+    }
+
+    .content-divider {
+        display: none;
+    }
+
+    .style-div-buttons {
+        justify-content: center;
+        padding-right: 0;
+        bottom: 80px;
     }
 }
