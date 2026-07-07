@@ -422,3 +422,47 @@ dialog::backdrop {
     font-weight: 400;
   }
 
+  .contact_dialog_delete {
+    position: absolute;
+    top: 96px;
+    left: 50%;
+    z-index: 2;
+    background-color: #2A3647;
+    color: white;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-weight: 400;
+
+  }
+
+  .dialog_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .dialog_wrapper p {
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .delete_btn_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .delete_btn_container button {
+    font-family: 'Inter', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    padding: 8px;
+    font-size: 18px;
+    background-color: white;
+    border-radius: 10px;
+  }
+

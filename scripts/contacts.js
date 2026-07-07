@@ -1,7 +1,7 @@
 import { db, auth } from "../firebase/firebase-config.js"
 import { guestLogin } from "../firebase/auth.js";
 import { createContact } from "../firebase/contacts.service.js";
-import { getContacts, updateContact, getContact } from "../firebase/contacts.service.js";
+import { getContacts, updateContact, getContact, deleteContact } from "../firebase/contacts.service.js";
 import {
   renderContactsList,
   renderContactsListItems,
@@ -440,8 +440,12 @@ function addNewContact() {
 async function writeNewContact(contact) {
   try {
     await createContact(contact);
+    contactsList.push(contact);
+    removeContactListfromDom();
+    letterSeperatorContactsList();
     closeAddContactDialog()
     contactSuccessDialog();
+    openSingleViewContact(contact.id)
 } catch (error) {
     console.error("Fehler beim Speichern:", error);
 }
@@ -515,4 +519,49 @@ function changeContactInDom(contactId, changedContact) {
   button.querySelector(".contacts_list_name_symbol").textContent = changedContact.shortName;
   button.querySelector(".contacts_list_name_symbol").style.setProperty("--contact-color", changedContact.color);
 
+}
+
+export function deleteContactDialog(contactId, person) {
+  const deleteDialog = document.getElementById("contact_dialog_delete_id");
+  deleteDialog.showModal();
+  const userNameSpan = deleteDialog.querySelector("#user_name_id");
+  userNameSpan.textContent = "";
+  userNameSpan.textContent = person;
+  const deleteButton = deleteDialog.querySelector("button:first-of-type");
+  const cancelButton = deleteDialog.querySelector("button:last-of-type");
+  eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog);
+};
+
+function eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog) {
+  deleteButton.addEventListener("click", async () => {
+    await deleteContact(contactId);
+    removeContactFromDom(contactId);
+    deleteDialog.close();
+  });
+  cancelButton.addEventListener("click", () => {
+    deleteDialog.close();
+  });
+};
+
+function removeContactFromDom(contactId) {
+ const indexContact = searchIndex(contactId);
+ contactsList.splice(indexContact, 1);
+ removeContactListfromDom();
+ letterSeperatorContactsList();
+ const firstContactListItem = seperatIdFromContactList();
+ openSingleViewContact(firstContactListItem);
+
+}
+
+function removeContactListfromDom() {
+  const contactListElements = document.querySelectorAll(".contacts_list_items_container, .contacts_list_letter_seperator" );
+  contactListElements.forEach((element) => {
+    element.remove();
+  });
+};
+
+function seperatIdFromContactList() {
+  const firstContactListItem = document.querySelector(".contacts_list_items_container");
+  const contactId = firstContactListItem.id.split("_")[2];
+  return contactId;
 }

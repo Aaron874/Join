@@ -1,4 +1,4 @@
-import { openSingleViewContact, openEditContactDialog,updateContactInList } from "./contacts.js";
+import { openSingleViewContact, openEditContactDialog, updateContactInList, deleteContactDialog } from "./contacts.js";
 
 
 export function renderContactsList(Letter) {
@@ -78,6 +78,7 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
             const deleteButton = newSingleView.querySelector("#delete_btn_id");
             deleteButton.addEventListener("click", () => {
               console.log(`Delete contact: ${person} (${email}) with ID: ${id}`);
+              deleteContactDialog(id, person);
             });
               
     return newSingleView;
