@@ -8,20 +8,23 @@
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="svg/xml">
     <link rel="stylesheet" href="./styles/add_task.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/contact.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
     <script src="./scripts/add_task.js" defer></script>
+    <script src="./scripts/contacts.js"></script>
+    <script src="./scripts/contactsTemplate.js"></script>
 </head>
 
 <body>
     <header>
         <section class="header-content">Kanban Project Management Tool</section>
     </header>
-    <aside>
-        <div class="logo">
+    <aside class="aside-width">
+        <div class="logo aside-width">
             <svg width="101" height="122" viewBox="0 0 101 122" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M71.6721 0H49.5143V25.4923H71.6721V0Z" fill="white" />
                 <path
@@ -37,7 +40,7 @@
                     fill="white" />
             </svg>
         </div>
-        <section class="aside-content">
+        <section class="aside-content aside-width">
             <div class="options">
                 <a href="summary.html">
                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +85,7 @@
         </section>
     </aside>
     <main class="main-add_task">
-        <section class="main-content">
+        <section class="main-content main-content-padding-bottom">
 
             <h1 class="add_task-h1">Add Task</h1>
             <form class="style-content">
@@ -102,6 +105,11 @@
                         </p>
                     </div>
                     <input id="task-date" class="input-left date-input" required type="date" name="" id="">
+                    <div class="div-star div-text-required">
+                        <p class="star-style">*
+                        <p class="text-required">This field is required</p>
+                        </p>
+                    </div>
                 </div>
                 <div class="content-divider"></div>
                 <div class="style-form-right">
@@ -139,13 +147,30 @@
                     <p>Assigned to</p>
 
                     <div class="assigned-dropdown">
-                        <input onclick="clearInput()" type="text" id="assigned-trigger" class="assigned-trigger">
-                        <span class="span_selected_contacts" id="selected_contacts">Select contacts to assign</span>
-                        <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
-                            onclick="dropdownContactsDown()">⌄</span>
-                        <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
-                            onclick="dropdownContactsUp()">⌃</span>
-                        <!-- </button> -->
+                        <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
+                            class="assigned-trigger">
+                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to assign</span>
+
+                        <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
+                            onclick="dropdownContactsDown()">
+                            <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
+                            </svg>
+                        </button>
+
+                        <!-- <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
+                            onclick="dropdownContactsDown()">⌄</span> -->
+
+                        <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_contacts"
+                            onclick="dropdownContactsUp()">
+                            <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                <path d="M4 0L8 5H0L4 0Z" fill="#2A3647" />
+                            </svg>
+                        </button>
+
+                        <!-- <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
+                            onclick="dropdownContactsUp()">⌃</span> -->
+
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
                     <div class="div_contacts_initials" id="div_contacts_initials"></div>
@@ -153,18 +178,34 @@
 
                     <div class="assigned-dropdown">
                         <button type="button" class="assigned-trigger">
-                            <span id="selected_category_text">Select task category</span>
-                            <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
-                                onclick="dropdownCategoryDown()">⌄</span>
-                            <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
-                                onclick="dropdownCategoryUp()">⌃</span>
+                            <span class="font-size" id="selected_category_text">Select task category</span>
+
+                            <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_category"
+                                onclick="dropdownCategoryDown()">
+                                <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                    <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
+                                </svg>
+                            </button>
+
+                            <!-- <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
+                                onclick="dropdownCategoryDown()">⌄</span> -->
+
+                            <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_category"
+                                onclick="dropdownCategoryUp()">
+                                <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                    <path d="M4 0L8 5H0L4 0Z" fill="#2A3647" />
+                                </svg>
+                            </button>
+
+                            <!-- <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
+                                onclick="dropdownCategoryUp()">⌃</span> -->
                         </button>
                         <div class="dropdown_category" id="dropdown_category">
                             <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
-                                <span>Technical Task</span>
+                                <span class="font-size">Technical Task</span>
                             </div>
                             <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
-                                <span>User Story</span>
+                                <span class="font-size">User Story</span>
                             </div>
                         </div>
                         <p class="padding-top">Subtasks</p>
@@ -173,7 +214,7 @@
                     </div>
                     <div class="style-div-buttons">
                         <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
-                            <span>Clear</span>
+                            <span class="font-size-buttons">Clear</span>
                             <span class="close-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     aria-hidden="true">
@@ -182,8 +223,8 @@
                                 </svg>
                             </span>
                         </button>
-                        <button onclick="createTask('todo')" type="button" class="style-buttons bt-right">
-                            <span>Create Task</span>
+                        <button onclick="createTask('todo')" type="submit" class="style-buttons bt-right">
+                            <span class="font-size-buttons">Create Task</span>
                             <span class="checkmark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
                                     viewBox="0 0 15.49 11.22" aria-hidden="true">

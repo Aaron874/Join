@@ -1,12 +1,9 @@
-let contactsList = [
-    "Ben Schneider",
-    "Anna Müller",
-    "Clara Fischer",
-    "David Wagner"
-];
-
 let selectedContacts = [
 ];
+
+
+let searchedContactsArray = [];
+
 
 let priority = [
 ];
@@ -16,7 +13,49 @@ let tasks = [
 ];
 
 
+document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+
+
 const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
+// function searchContacts() {
+//     searchedContactsArray = [];
+//     const searchedContacts = document.getElementById('dropdown_contacts');
+//     searchedContacts.style.display = "flex";
+//     searchedContacts.innerHTML = '';
+//     let input = document.getElementById('input_field').value.toLowerCase();
+//     let results = contactsList.filter(name =>
+//         name.toLowerCase().includes(input));
+
+//         for (let index = 0; index < results.length; index++) {
+//             const element = array[index];
+
+//         }
+// }
+
+
+function searchContacts() {
+    const searchedContacts = document.getElementById('dropdown_contacts');
+    const input = document.getElementById('assigned-trigger').value.toLowerCase().trim();
+    searchedContacts.innerHTML = '';
+    if (input.length < 3) {
+        searchedContacts.style.display = 'none';
+        return;
+    }
+    const results = contactsList.filter(contact =>
+        contact.name.toLowerCase().includes(input)
+    );
+    searchedContacts.style.display = 'flex';
+
+    for (let index = 0; index < results.length; index++) {
+        let shortName = contactListInitials(results[index].name);
+        let searchedContactName = results[index].name[0].toUpperCase() +
+            results[index].name.slice(1);
+        searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);
+    }
+}
 
 
 function dropdownContactsDown() {
@@ -28,13 +67,18 @@ function dropdownContactsDown() {
     dropdown.style.display = 'flex';
     dropdown.innerHTML = "";
     for (let index = 0; index < contactsList.length; index++) {
-        dropdown.innerHTML += contactsTemplate(contactsList[index]);
+        let shortName = contactListInitials(contactsList[index].name);
+        let person = contactsList[index].name[0].toUpperCase() +
+            contactsList[index].name.slice(1);
+        let color = contactsList[index].color;
+        dropdown.innerHTML += contactsTemplate(person, color, shortName);
     }
 }
 
 
 function dropdownContactsUp() {
-    document.getElementById('symbole_down_dropdown_contacts').style.display = '';
+
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
     let input = document.getElementById('assigned-trigger');
     input.value = '';
@@ -43,7 +87,6 @@ function dropdownContactsUp() {
     const dropdown = document.getElementById('dropdown_contacts');
     dropdown.style.display = '';
     showSelectedContacts();
-    selectedContacts = [];
 }
 
 
@@ -64,63 +107,56 @@ function dropdownCategoryDown() {
 
 
 function dropdownCategoryUp() {
-    document.getElementById('symbole_down_dropdown_category').style.display = '';
+    document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_category').style.display = '';
     const dropdown = document.getElementById('dropdown_category');
     dropdown.style.display = '';
 }
 
-
-// function contactsTemplate(contactName) {
-//     const checked = selectedContacts.includes(contactName);
-
-//     return `
-//         <div class="contacts_div">
-//             <span>${contactName}</span>
-
-//             <input
-//                 class="contacts_input"
-//                 type="checkbox"
-//                 ${checked ? 'checked' : ''}
-//                 onchange="toggleContact('${contactName}')"
-//             />
-//         </div>
-//     `;
-// }
-
-function contactsTemplate(contactName) {
-    const checked = selectedContacts
-        .map(contact => contact.trim())
-        .includes(contactName.trim());
-
+function contactsTemplate(contactName, color, shortName) {
+    const checked = selectedContacts.some(
+        contact => contact.name.trim() === contactName.trim()
+    );
     return `
         <div class="contacts_div">
-            <span>${contactName}</span>
-
+            <div class="contacts_dropdown_initials-plus-name_style">
+                <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
+                <span>${contactName}</span>
+            </div>
             <input
                 class="contacts_input"
                 type="checkbox"
                 ${checked ? 'checked' : ''}
-                onchange="toggleContact('${contactName}')"
+                onchange="toggleContact('${contactName}', '${shortName}', '${color}')"
             />
         </div>
     `;
 }
 
 
-function toggleContact(contactName) {
-    if (selectedContacts.includes(contactName)) {
+function toggleContact(contactName, shortName, color) {
+    const contactExists = selectedContacts.some(
+        contact => contact.name === contactName
+    );
+
+    if (contactExists) {
         selectedContacts = selectedContacts.filter(
-            contact => contact !== contactName
+            contact => contact.name !== contactName
         );
 
         showSelectedContacts();
         return;
     }
 
-    selectedContacts.push(contactName);
+    selectedContacts.push({
+        name: contactName,
+        shortName: shortName,
+        color: color
+    });
+
     showSelectedContacts();
 }
+
 
 function showSelectedContacts() {
     const contactsDiv = document.getElementById('div_contacts_initials');
@@ -128,13 +164,15 @@ function showSelectedContacts() {
     contactsDiv.innerHTML = '';
 
     for (let index = 0; index < selectedContacts.length; index++) {
-        contactsDiv.innerHTML += templateSelectedContacts(selectedContacts[index]);
+        contactsDiv.innerHTML += templateSelectedContacts(selectedContacts[index].shortName, selectedContacts[index].color);
+
     }
 }
 
-function templateSelectedContacts(selectedContact) {
+function templateSelectedContacts(shortName, color) {
+
     return `<div>
-        <span>${selectedContact}</span>
+        <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
     </div>
     `;
 }
@@ -194,33 +232,81 @@ function colorChangePriority(element) {
 }
 
 
+// async function createTask(element) {
+//     const taskTitle = document.getElementById("task-title").value;
+//     const taskDescription = document.getElementById("task-description").value;
+//     const taskDate = document.getElementById("task-date").value;
+//     const taskSubtasks = document.getElementById("task-subtasks").value;
+//     const taskPriority = priority[0];
+//     const taskCategory = document.getElementById('selected_category_text').textContent;
+//     const taskAssigned = selectedContacts
+//         .map(contact => contact.name)
+//         .join(", ");
+
+//     const task = {
+//         title: taskTitle,
+//         description: taskDescription,
+//         date: taskDate,
+//         priority: taskPriority,
+//         assignedTo: taskAssigned,
+//         category: taskCategory,
+//         subtasks: taskSubtasks,
+//         status: element
+//     };
+
+//     if (taskTitle > 0 || taskDescription > 0 || taskSubtasks > 0 || taskCategory > 0) {
+//         tasks.push(task);
+
+//         await addTaskToFirebase(task);
+//         priority = [];
+//         selectedContacts = [];
+//         clearTaskform();
+//         console.log(tasks);
+//     }
+// }
+
+
+
 async function createTask(element) {
-    const taskTitle = document.getElementById("task-title").value;
-    const taskDescription = document.getElementById("task-description").value;
-    const taskDate = document.getElementById("task-date").value;
-    const taskSubtasks = document.getElementById("task-subtasks").value;
+    const taskTitle = document.getElementById("task-title").value.trim();
+    const taskDescription = document.getElementById("task-description").value.trim();
+    const taskDate = document.getElementById("task-date").value.trim();
+    const taskSubtasks = document.getElementById("task-subtasks").value.trim();
     const taskPriority = priority[0];
-    const taskCategory = document.getElementById('selected_category_text').textContent;
-    // const taskAssigned = document.getElementById('div_contacts_initials').textContent;
+    const taskCategory = document.getElementById('selected_category_text').textContent.trim();
+    const taskAssigned = selectedContacts
+        .map(contact => contact.name)
+        .join(", ");
 
-    const task = {
-        title: taskTitle,
-        description: taskDescription,
-        date: taskDate,
-        priority: taskPriority,
-        assignedTo: [...selectedContacts],
-        category: taskCategory,
-        subtasks: taskSubtasks,
-        status: element
-    };
+    if (
+        taskTitle.length > 0 &&
+        taskDescription.length > 0 &&
+        taskDate.length > 0 &&
+        taskSubtasks.length > 0 &&
+        taskPriority.length > 0 &&
+        taskCategory.length > 0 &&
+        taskCategory !== "Select task category" &&
+        selectedContacts.length > 0
+    ) {
+        const task = {
+            title: taskTitle,
+            description: taskDescription,
+            date: taskDate,
+            priority: taskPriority,
+            assignedTo: taskAssigned,
+            category: taskCategory,
+            subtasks: taskSubtasks,
+            status: element
+        };
 
-    tasks.push(task);
+        tasks.push(task);
 
-    await addTaskToFirebase(task);
-    priority = [];
-    selectedContacts = [];
-    clearTaskform();
-    console.log(tasks);
+        await addTaskToFirebase(task);
+        priority = [];
+        selectedContacts = [];
+        clearTaskform();
+        console.log(tasks);
+    }
 }
 
 
@@ -236,6 +322,7 @@ function clearTaskform() {
     let inputPlaceholder = document.getElementById('selected_contacts');
     inputPlaceholder.textContent = 'Select contacts to assign';
 
+
     taskTitle.value = "";
     taskDescription.value = "";
     taskDate.value = "";
@@ -243,7 +330,10 @@ function clearTaskform() {
     taskAssigned.style.display = "";
     taskSubtasks.value = "";
 
+    selectedContacts = [];
     removeColorPriorities();
+    dropdownCategoryDown();
+    dropdownCategoryUp();
 }
 
 function removeColorPriorities() {

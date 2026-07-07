@@ -165,6 +165,11 @@ input::placeholder {
 .input-right {
     height: 45px;
     border-radius: 10px;
+    border: 1px solid #d1d1d1;
+}
+
+.input-right:hover {
+    border: none;
 }
 
 .style-buttons {
@@ -236,6 +241,10 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.assigned-trigger:hover {
+    border: none;
 }
 
 .assigned-menu {
@@ -321,19 +330,48 @@ input::placeholder {
     margin-bottom: 0;
 }
 
-.symbole_up_dropdown_contacts {
+/* .symbole_up_dropdown_contacts {
     display: none;
     position: absolute;
-    top: 12px;
-    left: 439px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
     cursor: pointer;
+} */
+
+.dropdown-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.dropdown-arrow:hover {
+    background-color: #eeeeee;
+}
+
+.dropdown-arrow svg {
+    pointer-events: none;
 }
 
 .symbole_down_dropdown_contacts {
     display: flex;
     position: absolute;
-    top: 12px;
-    left: 439px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
     cursor: pointer;
 }
 
@@ -405,4 +443,132 @@ input::placeholder {
     left: 16px;
     font-size: 20px;
     color: #000000;
+}
+
+.contacts_dropdown_initials-plus-name_style {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.div-text-required {
+    position: absolute;
+    bottom: 50px;
+}
+
+.text-required {
+    font-size: 16px;
+}
+
+@media (max-width: 1135px) {
+    .style-content {
+        flex-direction: column;
+    }
+
+    .main-content-padding-bottom {
+        padding-bottom: 300px !important;
+    }
+
+    .div-text-required {
+        position: relative;
+        bottom: -560px;
+    }
+
+    .style-div-buttons {
+        bottom: 0;
+        justify-content: flex-end;
+        background-color: #f5f6f7;
+        width: 100%;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+}
+
+@media (max-width: 755px) {
+    .aside-width {
+        display: none;
+    }
+
+    .main-add_task {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .header-content {
+        padding-left: 48px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    p {
+        font-size: 16px !important;
+    }
+
+    .font-size {
+        font-size: 16px !important;
+    }
+
+    .font-size-buttons {
+        font-size: 16px !important;
+    }
+
+    .div-text-required {
+        position: relative;
+        bottom: -540px;
+    }
+
+    .main-content {
+        padding: 24px 24px 300px 24px !important;
+    }
+
+    .bt-right {
+        width: 150px;
+    }
+}
+
+@media (max-width: 450px) {
+    .style-priorities-p {
+        font-size: 8px !important;
+    }
+
+    .font-size {
+        font-size: 12px !important;
+    }
+
+    .add_task-h1 {
+        font-size: 48px;
+    }
+
+    .style-priorities {
+        height: 44px;
+    }
+
+    .input-right {
+        font-size: 12px;
+    }
+
+    .div-text-required {
+        bottom: -90px;
+    }
+
+    .main-content {
+        padding: 16px 16px 300px 16px !important;
+    }
+
+    .bt-right {
+        width: 135px;
+    }
+
+    .bt-left {
+        width: 85px !important;
+    }
+
+    .div-text-required {
+        position: relative;
+        bottom: -530px;
+    }
+
+    .text-required {
+        font-size: 12px !important;
+    }
 }
