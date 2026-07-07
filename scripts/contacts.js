@@ -306,6 +306,7 @@ let firstLetterList = [];
 // ];
 
 function letterSeperatorContactsList() {
+  firstLetterList = [];
   for (let index = 0; index < contactsList.length; index++) {
     if (/^[a-zA-ZäöüÄÖÜß]$/.test(contactsList[index].name[0])) {
       let firstLetter = contactsList[index].name[0].toUpperCase();
@@ -537,6 +538,9 @@ function eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton,
     await deleteContact(contactId);
     removeContactFromDom(contactId);
     deleteDialog.close();
+    if (contactDialog.open) {
+      contactDialog.close();
+    }
   });
   cancelButton.addEventListener("click", () => {
     deleteDialog.close();

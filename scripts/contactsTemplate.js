@@ -77,7 +77,6 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
             });
             const deleteButton = newSingleView.querySelector("#delete_btn_id");
             deleteButton.addEventListener("click", () => {
-              console.log(`Delete contact: ${person} (${email}) with ID: ${id}`);
               deleteContactDialog(id, person);
             });
               
@@ -143,6 +142,13 @@ if (changeBtn) {
     updateContactInList(contactId, updatedContact);
   });
 }
+const deleteBtn = editContactInput.querySelector("#edit_contact_btn_delete_id");
+if (deleteBtn) {
+  deleteBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    deleteContactDialog(id, person);
+  });
+}
 return editContactInput;
 }
 
@@ -154,8 +160,7 @@ function renderButtons(mode) {
     <div class="contact_btn_container" >
       <button
         class="edit_contact_btn_cancel"
-        type="reset"
-        onclick="closeEditContactDialog()">
+        id="edit_contact_btn_delete_id">
         Delete
       </button>
       <button class="contact_btn_submit" type="submit" id="change_contact_btn_id">
