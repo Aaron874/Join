@@ -39,8 +39,9 @@ async function fetchTasks(path = 'tasks') {
 }
 
 function getAssignedToText(assignedTo){
-    if (Array.isArray(assignedTo)) {
-        return assignedTo.join('')
+    if (Array.isArray(assignedTo)){
+        return assignedTo.map(contact => contact.name ?? contact)
+        .join(', ');
     }
     return assignedTo ?? '';
 }
@@ -251,24 +252,39 @@ function setTextContent(id, value){
 
 function selectPriority(priorityValue){
     const priorityElement = document.getElementById(`priority-${priorityValue}`);
-    if (!priorityElement) return;
+    if(!priorityElement) return;
+    priority = [];
     colorChangePriority(priorityElement);
 }
 
-function setAssignedContacts(assignedTo) {
+function setAssignedContacts(assignedTo){
     selectedContacts = normalizeContacts(assignedTo);
-
     showSelectedContacts();
 }
 
-function normalizeContacts(assignedTo) {
-    if (Array.isArray(assignedTo)) {
-        return assignedTo;
+function normalizeContacts(assignedTo){
+    if (!assignedTo) return [];
+    if (Array.isArray(assignedTo)){
+        return assignedTo.map(getContactObject);
     }
-
-    if (!assignedTo) {
-        return [];
-    }
-
-    return [assignedTo];
+    return assignedTo
+    .split(', ')
+    .map(contact => contact.trim())
+    .filter(Boolean)
+    .map(getContactObject);
 }
+
+function getContactObject(contactName){
+    if (typeof contactName === 'object'){
+        return contactName
+    }
+    const contact = contactList.find(contact => 
+        contact.name.toLowerCase() === contactName.toLowerCase());
+    return {
+        name: contactName,
+        shortName: contact ? contactListInitials(contact.name)
+        : contactName.slice(0, 2).toUpperCase(),
+        color: contact?.color ?? '#2A3647'
+    }
+}
+

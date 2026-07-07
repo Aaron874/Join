@@ -12,9 +12,12 @@ let priority = [
 let tasks = [
 ];
 
+window.addEventListener('DOMContentLoaded', initAddTask);
 
+function initAddTask(){
 document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
 document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+}
 
 
 const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -283,7 +286,7 @@ async function createTask(element) {
         taskDescription.length > 0 &&
         taskDate.length > 0 &&
         taskSubtasks.length > 0 &&
-        taskPriority.length > 0 &&
+        taskPriority.length &&
         taskCategory.length > 0 &&
         taskCategory !== "Select task category" &&
         selectedContacts.length > 0
