@@ -113,16 +113,36 @@ export function renderContactInput(shortName, person, email, color, phone, mode,
                   name="name"
                   id="contact_name_id"
                   placeholder="Name"
+                  minlength="2"
+                  maxlength="50"
+                  pattern="[\\p{L}' \\-]{2,100}""
+                  title="Der Name darf nur Buchstaben, Leerzeichen, Apostrophe und Bindestriche enthalten."
                   required
                 />
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
               </div>
               <div class="contact_input_wrapper">
-                <input type="text" name="email" id="contact_email_id" placeholder="E-Mail" value="${email ?? ""}" required/>
+                <input 
+                  type="email" 
+                  name="email" 
+                  id="contact_email_id" 
+                  placeholder="E-Mail" 
+                  value="${email ?? ""}" 
+                  required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
               <div class="contact_input_wrapper">
-                <input type="text" name="phone" id="contact_phone_id" placeholder="Phone" value="${phone ?? ""}" required/>
+                <input 
+                  type="tel" 
+                  name="phone" 
+                  id="contact_phone_id" 
+                  placeholder="+49 12345678910"
+                  minlength="6"
+                  maxlength="20"
+                  pattern="\\+?[0-9 ]{6,20}"
+                  title= "Bitte geben Sie eine gültige Telefonnummer ein, z. B. +49 171 1234567."
+                  value="${phone ?? ""}" 
+                  required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
               ${renderButtons(mode)}
