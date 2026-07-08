@@ -22,6 +22,7 @@
 <body>
     <header>
         <section class="header-content">Kanban Project Management Tool</section>
+        <img class="mobile-joinLogo" src="./assets/img/mobile-joinLogo.png" alt="">
     </header>
     <aside class="aside-width">
         <div class="logo aside-width">
@@ -95,8 +96,11 @@
                         <p class="star-style">*</p>
                         </p>
                     </div>
-                    <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
-                    <p class="padding-top">Description</p>
+                    <input id="task-title" class="input-left" type="text" placeholder="Enter a title">
+                    <div id="titleError" class="error-message">
+                        This field is required
+                    </div>
+                    <p class="padding-top description-padding">Description</p>
                     <textarea id="task-description" class="textarea-description"
                         placeholder="Enter a description"></textarea>
                     <div class="div-star">
@@ -104,7 +108,22 @@
                         <p class="star-style">*</p>
                         </p>
                     </div>
-                    <input id="task-date" class="input-left date-input" required type="date" name="" id="">
+
+                    <div class="date-field">
+                        <input id="dateDisplay" class="date-display" type="text" placeholder="dd/mm/yyyy" readonly>
+
+                        <input id="dateInput" class="real-date-input" type="date">
+
+                        <img src="./assets/img/calender.png" class="calendar-icon" alt="">
+                    </div>
+                    <div id="dateError" class="error-message">
+                        This field is required
+                    </div>
+
+
+                    <!-- <input id="task-date" class="input-left date-input" required type="date" name="" id=""> -->
+
+
                     <div class="div-star div-text-required">
                         <p class="star-style">*
                         <p class="text-required">This field is required</p>
@@ -149,7 +168,8 @@
                     <div class="assigned-dropdown">
                         <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
                             class="assigned-trigger">
-                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to assign</span>
+                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to
+                            assign</span>
 
                         <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
                             onclick="dropdownContactsDown()">
@@ -223,7 +243,7 @@
                                 </svg>
                             </span>
                         </button>
-                        <button onclick="createTask('todo')" type="submit" class="style-buttons bt-right">
+                        <button onclick="createTask('todo')" type="button" class="style-buttons bt-right">
                             <span class="font-size-buttons">Create Task</span>
                             <span class="checkmark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
@@ -234,6 +254,13 @@
                             </span>
                         </button>
                     </div>
+                    <footer class="footer">
+                        <a class="footer-link-icons" href="summary.html"><img src="./assets/img/mobile-summary.png" alt=""></a>
+                        <a class="footer-link-icons" href="add_task.html"><img src="./assets/img/mobile-addTask.png" alt=""></a>
+                        <a class="footer-link-icons" href="board.html"><img src="./assets/img/mobile-board.png" alt=""></a>
+                        <a class="footer-link-icons" href="contacts.html"><img src="./assets/img/mobile-contacts.png" alt=""></a>
+
+                    </footer>
             </form>
         </section>
     </main>

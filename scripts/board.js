@@ -278,7 +278,7 @@ function getContactObject(contactName){
     if (typeof contactName === 'object'){
         return contactName
     }
-    const contact = contactList.find(contact => 
+    const contact = contactsList.find(contact => 
         contact.name.toLowerCase() === contactName.toLowerCase());
     return {
         name: contactName,
