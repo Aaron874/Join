@@ -1,39 +1,49 @@
-let selectedContacts = [
-];
+let selectedContacts = [];
 
 
 let searchedContactsArray = [];
 
 
-let priority = [
-];
+let priority = [];
 
 
-let tasks = [
-];
-
-
-document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
-document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+let tasks = [];
 
 
 const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
-// function searchContacts() {
-//     searchedContactsArray = [];
-//     const searchedContacts = document.getElementById('dropdown_contacts');
-//     searchedContacts.style.display = "flex";
-//     searchedContacts.innerHTML = '';
-//     let input = document.getElementById('input_field').value.toLowerCase();
-//     let results = contactsList.filter(name =>
-//         name.toLowerCase().includes(input));
+const priorityConfig = {
+  urgent: {
+    button: 'priority-urgent',
+    font: 'urgent-font',
+    icon: 'urgent-icon',
+    buttonClass: 'style-priorities-red',
+    colorClass: 'color-urgent'
+  },
+  medium: {
+    button: 'priority-medium',
+    font: 'medium-font',
+    icon: 'medium-icon',
+    buttonClass: 'style-priorities-orange',
+    colorClass: 'color-medium'
+  },
+  low: {
+    button: 'priority-low',
+    font: 'low-font',
+    icon: 'low-icon',
+    buttonClass: 'style-priorities-green',
+    colorClass: 'color-low'
+  }
+};
 
-//         for (let index = 0; index < results.length; index++) {
-//             const element = array[index];
 
-//         }
-// }
+window.addEventListener('DOMContentLoaded', initAddTask);
+
+function initAddTask() {
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+    document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+}
 
 
 function searchContacts() {
@@ -42,19 +52,13 @@ function searchContacts() {
     searchedContacts.innerHTML = '';
     if (input.length < 3) {
         searchedContacts.style.display = 'none';
-        return;
-    }
-    const results = contactsList.filter(contact =>
-        contact.name.toLowerCase().includes(input)
-    );
+        return;}
+    const results = contactsList.filter(contact => contact.name.toLowerCase().includes(input));
     searchedContacts.style.display = 'flex';
-
     for (let index = 0; index < results.length; index++) {
         let shortName = contactListInitials(results[index].name);
-        let searchedContactName = results[index].name[0].toUpperCase() +
-            results[index].name.slice(1);
-        searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);
-    }
+        let searchedContactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
+        searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);}
 }
 
 
@@ -68,16 +72,13 @@ function dropdownContactsDown() {
     dropdown.innerHTML = "";
     for (let index = 0; index < contactsList.length; index++) {
         let shortName = contactListInitials(contactsList[index].name);
-        let person = contactsList[index].name[0].toUpperCase() +
-            contactsList[index].name.slice(1);
+        let person = contactsList[index].name[0].toUpperCase() + contactsList[index].name.slice(1);
         let color = contactsList[index].color;
-        dropdown.innerHTML += contactsTemplate(person, color, shortName);
-    }
+        dropdown.innerHTML += contactsTemplate(person, color, shortName);}
 }
 
 
 function dropdownContactsUp() {
-
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
     let input = document.getElementById('assigned-trigger');
@@ -114,46 +115,30 @@ function dropdownCategoryUp() {
 }
 
 function contactsTemplate(contactName, color, shortName) {
-    const checked = selectedContacts.some(
-        contact => contact.name.trim() === contactName.trim()
-    );
+    const checked = selectedContacts.some(contact => contact.name.trim() === contactName.trim());
     return `
         <div class="contacts_div">
             <div class="contacts_dropdown_initials-plus-name_style">
                 <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
                 <span>${contactName}</span>
             </div>
-            <input
-                class="contacts_input"
-                type="checkbox"
-                ${checked ? 'checked' : ''}
-                onchange="toggleContact('${contactName}', '${shortName}', '${color}')"
-            />
-        </div>
-    `;
+            <input class="contacts_input" type="checkbox" ${checked ? 'checked' : ''} onchange="toggleContact('${contactName}', '${shortName}', '${color}')"/>
+        </div>`;
 }
 
 
 function toggleContact(contactName, shortName, color) {
     const contactExists = selectedContacts.some(
-        contact => contact.name === contactName
-    );
-
+        contact => contact.name === contactName);
     if (contactExists) {
         selectedContacts = selectedContacts.filter(
-            contact => contact.name !== contactName
-        );
-
+            contact => contact.name !== contactName);
         showSelectedContacts();
-        return;
-    }
-
+        return;}
     selectedContacts.push({
         name: contactName,
         shortName: shortName,
-        color: color
-    });
-
+        color: color});
     showSelectedContacts();
 }
 
@@ -172,9 +157,8 @@ function showSelectedContacts() {
 function templateSelectedContacts(shortName, color) {
 
     return `<div>
-        <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
-    </div>
-    `;
+                <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
+            </div>`;
 }
 
 
@@ -185,167 +169,111 @@ function selectedCatgeory(element) {
 }
 
 
-function colorChangePriority(element) {
-    const urgent = document.getElementById('priority-urgent');
-    const urgentFont = document.getElementById('urgent-font');
-    const urgentIcon = document.getElementById('urgent-icon');
-    const medium = document.getElementById('priority-medium');
-    const mediumFont = document.getElementById('medium-font');
-    const mediumIcon = document.getElementById('medium-icon');
-    const low = document.getElementById('priority-low');
-    const lowFont = document.getElementById('low-font');
-    const lowIcon = document.getElementById('low-icon');
-    if (element === urgent) {
-        element.classList.add("style-priorities-red");
-        urgentFont.classList.add("color-urgent");
-        urgentIcon.classList.add("color-urgent");
-        medium.classList.remove("style-priorities-orange")
-        mediumFont.classList.remove("color-medium")
-        mediumIcon.classList.remove("color-medium")
-        low.classList.remove("style-priorities-green")
-        lowFont.classList.remove("color-low")
-        lowIcon.classList.remove("color-low")
-    } else if (element === medium) {
-        element.classList.add("style-priorities-orange");
-        mediumFont.classList.add("color-medium");
-        mediumIcon.classList.add("color-medium");
-        urgent.classList.remove("style-priorities-red")
-        urgentFont.classList.remove("color-urgent")
-        urgentIcon.classList.remove("color-urgent")
-        low.classList.remove("style-priorities-green")
-        lowFont.classList.remove("color-low")
-        lowIcon.classList.remove("color-low")
-    } else {
-        element.classList.add("style-priorities-green");
-        lowFont.classList.add("color-low");
-        lowIcon.classList.add("color-low");
-        urgent.classList.remove("style-priorities-red")
-        urgentFont.classList.remove("color-urgent")
-        urgentIcon.classList.remove("color-urgent")
-        medium.classList.remove("style-priorities-orange")
-        mediumFont.classList.remove("color-medium")
-        mediumIcon.classList.remove("color-low")
-    }
-    const priorities = element.id.split("-")[1];
+function getPriorityElements(config) {
+  return {
+    button: document.getElementById(config.button),
+    font: document.getElementById(config.font),
+    icon: document.getElementById(config.icon)
+  };
+}
 
-    priority.push(priorities);
+function resetPriorityStyles() {
+  Object.values(priorityConfig).forEach(config => {
+    const elements = getPriorityElements(config);
+    elements.button.classList.remove(config.buttonClass);
+    elements.font.classList.remove(config.colorClass);
+    elements.icon.classList.remove(config.colorClass);
+  });
+}
+
+function colorChangePriority(element) {
+  resetPriorityStyles();
+
+  const priorityName = element.id.split("-")[1];
+  const config = priorityConfig[priorityName];
+  const elements = getPriorityElements(config);
+
+  elements.button.classList.add(config.buttonClass);
+  elements.font.classList.add(config.colorClass);
+  elements.icon.classList.add(config.colorClass);
+
+  priority.push(priorityName);
 }
 
 
-// async function createTask(element) {
-//     const taskTitle = document.getElementById("task-title").value;
-//     const taskDescription = document.getElementById("task-description").value;
-//     const taskDate = document.getElementById("task-date").value;
-//     const taskSubtasks = document.getElementById("task-subtasks").value;
-//     const taskPriority = priority[0];
-//     const taskCategory = document.getElementById('selected_category_text').textContent;
-//     const taskAssigned = selectedContacts
-//         .map(contact => contact.name)
-//         .join(", ");
+function getTaskData(element) {
+  return {
+    title: document.getElementById("task-title").value.trim(),
+    description: document.getElementById("task-description").value.trim(),
+    date: document.getElementById("dateDisplay").value.trim(),
+    subtasks: document.getElementById("task-subtasks").value.trim(),
+    priority: priority[0],
+    assignedTo: selectedContacts.map(c => c.name).join(", "),
+    category: document.getElementById("selected_category_text").textContent.trim(),
+    status: element
+  };
+}
 
-//     const task = {
-//         title: taskTitle,
-//         description: taskDescription,
-//         date: taskDate,
-//         priority: taskPriority,
-//         assignedTo: taskAssigned,
-//         category: taskCategory,
-//         subtasks: taskSubtasks,
-//         status: element
-//     };
 
-//     if (taskTitle > 0 || taskDescription > 0 || taskSubtasks > 0 || taskCategory > 0) {
-//         tasks.push(task);
-
-//         await addTaskToFirebase(task);
-//         priority = [];
-//         selectedContacts = [];
-//         clearTaskform();
-//         console.log(tasks);
-//     }
-// }
-
+function isTaskValid(task) {
+  return task.title &&
+         task.description &&
+         task.date &&
+         task.subtasks &&
+         task.priority &&
+         task.category !== "Select task category" &&
+         task.category &&
+         selectedContacts.length > 0;
+}
 
 
 async function createTask(element) {
-    const taskTitle = document.getElementById("task-title").value.trim();
-    const taskDescription = document.getElementById("task-description").value.trim();
-    const taskDate = document.getElementById("task-date").value.trim();
-    const taskSubtasks = document.getElementById("task-subtasks").value.trim();
-    const taskPriority = priority[0];
-    const taskCategory = document.getElementById('selected_category_text').textContent.trim();
-    const taskAssigned = selectedContacts
-        .map(contact => contact.name)
-        .join(", ");
+  formRequired();
+  const task = getTaskData(element);
 
-    if (
-        taskTitle.length > 0 &&
-        taskDescription.length > 0 &&
-        taskDate.length > 0 &&
-        taskSubtasks.length > 0 &&
-        taskPriority.length > 0 &&
-        taskCategory.length > 0 &&
-        taskCategory !== "Select task category" &&
-        selectedContacts.length > 0
-    ) {
-        const task = {
-            title: taskTitle,
-            description: taskDescription,
-            date: taskDate,
-            priority: taskPriority,
-            assignedTo: taskAssigned,
-            category: taskCategory,
-            subtasks: taskSubtasks,
-            status: element
-        };
+  if (!isTaskValid(task)) return;
 
-        tasks.push(task);
+  tasks.push(task);
+  await addTaskToFirebase(task);
+  priority = [];
+  selectedContacts = [];
+  clearTaskform();
+  console.log(tasks);
+}
 
-        await addTaskToFirebase(task);
-        priority = [];
-        selectedContacts = [];
-        clearTaskform();
-        console.log(tasks);
-    }
+
+function resetInputErrors() {
+  titleInput.classList.remove("error");
+  titleError.classList.remove("show");
+  dateDisplay.classList.remove("error");
+  dateError.classList.remove("show");
+}
+
+
+function resetTaskFields() {
+  document.getElementById("task-title").value = "";
+  document.getElementById("task-description").value = "";
+  document.getElementById("dateDisplay").value = "";
+  document.getElementById("task-subtasks").value = "";
+  document.getElementById("assigned-trigger").value = "";
+  document.getElementById("selected_contacts").textContent = "Select contacts to assign";
+  document.getElementById("selected_category_text").textContent = "Select task category";
+  document.getElementById("div_contacts_initials").style.display = "";
+}
+
+
+function resetTaskUI() {
+  selectedContacts = [];
+  resetPriorityStyles();
+  dropdownCategoryDown();
+  dropdownCategoryUp();
 }
 
 
 function clearTaskform() {
-    const taskTitle = document.getElementById("task-title");
-    const taskDescription = document.getElementById("task-description");
-    const taskDate = document.getElementById("task-date");
-    const taskSubtasks = document.getElementById("task-subtasks");
-    const taskCategory = document.getElementById('selected_category_text');
-    const taskAssigned = document.getElementById('div_contacts_initials');
-    let input = document.getElementById('assigned-trigger');
-    input.value = '';
-    let inputPlaceholder = document.getElementById('selected_contacts');
-    inputPlaceholder.textContent = 'Select contacts to assign';
-
-
-    taskTitle.value = "";
-    taskDescription.value = "";
-    taskDate.value = "";
-    taskCategory.textContent = "Select Task Category";
-    taskAssigned.style.display = "";
-    taskSubtasks.value = "";
-
-    selectedContacts = [];
-    removeColorPriorities();
-    dropdownCategoryDown();
-    dropdownCategoryUp();
-}
-
-function removeColorPriorities() {
-    document.getElementById('priority-urgent').classList.remove("style-priorities-red")
-    document.getElementById('urgent-font').classList.remove("color-urgent")
-    document.getElementById('urgent-icon').classList.remove("color-urgent")
-    document.getElementById('priority-medium').classList.remove("style-priorities-orange")
-    document.getElementById('medium-font').classList.remove("color-medium")
-    document.getElementById('medium-icon').classList.remove("color-low")
-    document.getElementById('priority-low').classList.remove("style-priorities-green")
-    document.getElementById('low-font').classList.remove("color-low")
-    document.getElementById('low-icon').classList.remove("color-low")
+  resetInputErrors();
+  resetTaskFields();
+  resetTaskUI();
 }
 
 
@@ -363,4 +291,48 @@ async function postData(path = "", data = {}) {
 
 async function addTaskToFirebase(task = {}) {
     postData('tasks', task);
+}
+
+const titleInput = document.getElementById("task-title");
+const titleError = document.getElementById("titleError");
+
+const dateDisplay = document.getElementById("dateDisplay");
+const dateInput = document.getElementById("dateInput");
+const dateError = document.getElementById("dateError");
+
+dateDisplay.addEventListener("click", openDatePicker);
+
+dateInput.addEventListener("change", () => {
+    const selectedDate = new Date(dateInput.value);
+
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const year = selectedDate.getFullYear();
+
+    dateDisplay.value = `${day}/${month}/${year}`;
+});
+
+function openDatePicker() {
+    if (dateInput.showPicker) {
+        dateInput.showPicker();
+    } else {
+        dateInput.click();
+    }
+}
+
+
+function formRequired() {
+    let formIsValid = true;
+    if (titleInput.value.trim() === "") {
+        titleInput.classList.add("error");
+        titleError.classList.add("show");
+        formIsValid = false;} else {
+        titleInput.classList.remove("error");}
+    if (dateDisplay.value.trim() === "") {
+        dateDisplay.classList.add("error");
+        dateError.classList.add("show");
+        formIsValid = false;
+    } else {
+        dateDisplay.classList.remove("error");}
+    if (!formIsValid) return;
 }
