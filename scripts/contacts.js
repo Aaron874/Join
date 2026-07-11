@@ -17,7 +17,7 @@ import {
   renderContactInput,
 } from "./contactsTemplate.js";
 
-let contactsList = [];
+export let contactsList = [];
 let firstLetterList = [];
 const contactsListContainer = document.querySelector(
   ".contacts_list_container"
@@ -27,7 +27,6 @@ const contactsSingleViewContainer = document.querySelector(
 );
 const contactDialog = document.getElementById("contact_dialog_id");
 const contactDialogHeader = document.getElementById("contact_dialog_header_id");
-const editContactDialog = document.getElementById("edit_contact_dialog_id");
 const editContactInputContainer = document.getElementById(
   "contact_form_section_id"
 );
@@ -96,18 +95,21 @@ function createContactListItems() {
   for (let index = 0; index < contactsList.length; index++) {
     let shortName = contactsList[index].shortName;
     let person = contactsList[index].name;
-    let phone = contactsList[index].phone;
     let email = contactsList[index].email;
     let firstLetter = contactsList[index].name[0].toUpperCase();
     let color = contactsList[index].color;
     let id = contactsList[index].id;
-    let targetElement = document.querySelector(
-      `[data-letter="${firstLetter}"]`
-    );
+    let targetElement = document.querySelector(`[data-letter="${firstLetter}"]`);
     targetElement.after(
-      renderContactsListItems(shortName, person, email, color, phone, id)
+      renderContactsListItems(shortName, person, email, color, id)
     );
   }
+}
+
+export function createListenerForContactInList(newContact, id) {
+  newContact.addEventListener("click", () => {
+    openSingleViewContact(id);
+  });
 }
 
 function contactListInitials(contactListName) {
@@ -133,6 +135,13 @@ export function openSingleViewContact(id) {
       contact.id
     )
   );
+}
+
+export function openEditDialogBtnListener(newSingleView, id){
+  const editButton = newSingleView.querySelector("#edit_btn_id");
+  editButton.addEventListener("click", () => {
+    openEditContactDialog(id);
+  });
 }
 
 function openAddContactDialog() {
@@ -232,16 +241,16 @@ function deleteInputValues() {
 }
 
 export function openEditContactDialog(
-  shortName,
-  person,
-  email,
-  color,
-  phone,
+  // shortName,
+  // person,
+  // email,
+  // color,
+  // phone,
   id
 ) {
   contactDialog.showModal();
   contactDialogHeaderSwitch(true);
-  openEditInput(shortName, person, email, color, phone, "edit", id);
+  openEditInput("edit", id);
   startEventListenerColorPicker();
 }
 
@@ -251,14 +260,14 @@ export function contactDialogHeaderSwitch(state) {
 }
 
 
-function openEditInput(shortName, person, email, color, phone, mode, id) {
+function openEditInput(mode, id) {
   const existingInput = document.getElementById("contact_input_id");
   if (existingInput) {
     existingInput.remove();
   }
+  let contactId = searchIndex(id);
   editContactInputContainer.appendChild(
-    renderContactInput(shortName, person, email, color, phone, mode, id)
-  );
+    renderContactInput(mode, contactId));
 }
 
 function contactSuccessDialog() {

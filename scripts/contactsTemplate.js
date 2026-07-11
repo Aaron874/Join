@@ -1,4 +1,4 @@
-import { openSingleViewContact, openEditContactDialog, updateContactInList, deleteContactDialog } from "./contacts.js";
+import { openSingleViewContact, openEditContactDialog, updateContactInList, deleteContactDialog, createListenerForContactInList, openEditDialogBtnListener, contactsList } from "./contacts.js";
 
 
 export function renderContactsList(Letter) {
@@ -6,7 +6,7 @@ export function renderContactsList(Letter) {
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`
 }
 
-export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", phone, id) {
+export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", id) {
     let newContact = document.createElement("button");
     newContact.classList.add("contacts_list_items_container");
     newContact.id = ("contact_id_" + id);
@@ -17,9 +17,7 @@ export function renderContactsListItems(shortName, person, email, color = "#BDBD
             <p><a href="mailto:${email}">${email}</a></p>
           </div>
           `;
-          newContact.addEventListener("click", () => {
-            openSingleViewContact(id);
-          });
+          createListenerForContactInList(newContact, id);
         return newContact;
 }
 
@@ -71,10 +69,11 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               </div>
             </div>
             `
-            const editButton = newSingleView.querySelector("#edit_btn_id");
-            editButton.addEventListener("click", () => {
-              openEditContactDialog(shortName, person, email, color, phone, id);
-            });
+            openEditDialogBtnListener(newSingleView, id)
+            // const editButton = newSingleView.querySelector("#edit_btn_id");
+            // editButton.addEventListener("click", () => {
+            //   openEditContactDialog(shortName, person, email, color, phone, id);
+            // });
             const deleteButton = newSingleView.querySelector("#delete_btn_id");
             deleteButton.addEventListener("click", () => {
               deleteContactDialog(id, person);
@@ -91,25 +90,25 @@ export function renderPersonInitialsForAddContact(initials) {
   return personInitials;
 }
 
-export function renderContactInput(shortName, person, email, color, phone, mode, id) {
+export function renderContactInput(mode, contactId) {
   let editContactInput = document.createElement("div");
   editContactInput.classList.add("contact_form_container");
   editContactInput.id = "contact_input_id";
   editContactInput.innerHTML = `
-            <label class="contact_color_picker" style="--contact-color: ${color ?? "#D1D1D1"};">
+            <label class="contact_color_picker" style="--contact-color: ${contactsList[contactId].color ?? "#D1D1D1"};">
               <input
                 type="color"
                 name="background_color"
                 id="contact_color_picker_id"
-                value="${color ?? "#D1D1D1"}"
+                value="${contactsList[contactId].color ?? "#D1D1D1"}"
               />
-              <span class="person_initials" id="person_initials_id">${shortName ?? ""}</span>
+              <span class="person_initials" id="person_initials_id">${contactsList[contactId].shortName ?? ""}</span>
             </label>
             <form action="" method="post" id="contact_form_id">
               <div class="contact_input_wrapper">
                 <input
                   type="text"
-                  value="${person ?? ""}"
+                  value="${contactsList[contactId].name ?? ""}"
                   name="name"
                   id="contact_name_id"
                   placeholder="Name"
@@ -127,7 +126,7 @@ export function renderContactInput(shortName, person, email, color, phone, mode,
                   name="email" 
                   id="contact_email_id" 
                   placeholder="E-Mail" 
-                  value="${email ?? ""}" 
+                  value="${contactsList[contactId].email ?? ""}" 
                   required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
@@ -141,7 +140,7 @@ export function renderContactInput(shortName, person, email, color, phone, mode,
                   maxlength="20"
                   pattern="\\+?[0-9 ]{6,20}"
                   title= "Bitte geben Sie eine gültige Telefonnummer ein, z. B. +49 171 1234567."
-                  value="${phone ?? ""}" 
+                  value="${contactsList[contactId].phone ?? ""}" 
                   required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
