@@ -1,4 +1,4 @@
-import { openSingleViewContact, openEditContactDialog, updateContactInList, deleteContactDialog, createListenerForContactInList, openEditDialogBtnListener, contactsList } from "./contacts.js";
+import { openSingleViewContact, openEditContactDialog, deleteContactDialog, createListenerForContactInList, openEditDialogBtnListener, contactsList,openDeleteDialogBtnListener, updateContactBtnListener, deleteBtnListener } from "./contacts.js";
 
 
 export function renderContactsList(Letter) {
@@ -69,16 +69,8 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
               </div>
             </div>
             `
-            openEditDialogBtnListener(newSingleView, id)
-            // const editButton = newSingleView.querySelector("#edit_btn_id");
-            // editButton.addEventListener("click", () => {
-            //   openEditContactDialog(shortName, person, email, color, phone, id);
-            // });
-            const deleteButton = newSingleView.querySelector("#delete_btn_id");
-            deleteButton.addEventListener("click", () => {
-              deleteContactDialog(id, person);
-            });
-              
+            openEditDialogBtnListener(newSingleView, id);
+            openDeleteDialogBtnListener(newSingleView, id, person);              
     return newSingleView;
 }
 
@@ -95,20 +87,20 @@ export function renderContactInput(mode, contactId) {
   editContactInput.classList.add("contact_form_container");
   editContactInput.id = "contact_input_id";
   editContactInput.innerHTML = `
-            <label class="contact_color_picker" style="--contact-color: ${contactsList[contactId].color ?? "#D1D1D1"};">
+            <label class="contact_color_picker" style="--contact-color: ${contactsList[contactId]?.color ?? "#D1D1D1"};">
               <input
                 type="color"
                 name="background_color"
                 id="contact_color_picker_id"
-                value="${contactsList[contactId].color ?? "#D1D1D1"}"
+                value="${contactsList[contactId]?.color ?? "#D1D1D1"}"
               />
-              <span class="person_initials" id="person_initials_id">${contactsList[contactId].shortName ?? ""}</span>
+              <span class="person_initials" id="person_initials_id">${contactsList[contactId]?.shortName ?? ""}</span>
             </label>
             <form action="" method="post" id="contact_form_id">
               <div class="contact_input_wrapper">
                 <input
                   type="text"
-                  value="${contactsList[contactId].name ?? ""}"
+                  value="${contactsList[contactId]?.name ?? ""}"
                   name="name"
                   id="contact_name_id"
                   placeholder="Name"
@@ -126,7 +118,7 @@ export function renderContactInput(mode, contactId) {
                   name="email" 
                   id="contact_email_id" 
                   placeholder="E-Mail" 
-                  value="${contactsList[contactId].email ?? ""}" 
+                  value="${contactsList[contactId]?.email ?? ""}" 
                   required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
@@ -140,34 +132,23 @@ export function renderContactInput(mode, contactId) {
                   maxlength="20"
                   pattern="\\+?[0-9 ]{6,20}"
                   title= "Bitte geben Sie eine gültige Telefonnummer ein, z. B. +49 171 1234567."
-                  value="${contactsList[contactId].phone ?? ""}" 
+                  value="${contactsList[contactId]?.phone ?? ""}" 
                   required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
               ${renderButtons(mode)}
             </form>
 `
-const changeBtn = editContactInput.querySelector("#change_contact_btn_id");
-if (changeBtn) {
-  changeBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    let contactId = id;
-    const updatedContact = {
-      name: document.getElementById("contact_name_id").value,
-      email: document.getElementById("contact_email_id").value,
-      phone: document.getElementById("contact_phone_id").value,
-      color: document.getElementById("contact_color_picker_id").value,
-    };
-    updateContactInList(contactId, updatedContact);
-  });
-}
-const deleteBtn = editContactInput.querySelector("#edit_contact_btn_delete_id");
-if (deleteBtn) {
-  deleteBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    deleteContactDialog(id, person);
-  });
-}
+updateContactBtnListener(editContactInput, contactId);
+deleteBtnListener(contactId, contactsList[contactId]?.name, editContactInput);
+
+// const deleteBtn = editContactInput.querySelector("#edit_contact_btn_delete_id");
+// if (deleteBtn) {
+//   deleteBtn.addEventListener("click", (event) => {
+//     event.preventDefault();
+//     deleteContactDialog(id, person);
+//   });
+// }
 return editContactInput;
 }
 

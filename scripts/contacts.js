@@ -144,6 +144,41 @@ export function openEditDialogBtnListener(newSingleView, id){
   });
 }
 
+export function openDeleteDialogBtnListener(newSingleView, id, person){
+  const deleteButton = newSingleView.querySelector("#delete_btn_id");
+  deleteButton.addEventListener("click", () => {
+    deleteContactDialog(id, person);
+  });
+}
+
+export function updateContactBtnListener(editContactInput, contactId) {
+  const changeBtn = editContactInput.querySelector("#change_contact_btn_id");
+if (changeBtn) {
+  let contactIdent = contactsList[contactId].id
+  changeBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    const updatedContact = {
+      name: document.getElementById("contact_name_id").value,
+      email: document.getElementById("contact_email_id").value,
+      phone: document.getElementById("contact_phone_id").value,
+      color: document.getElementById("contact_color_picker_id").value,
+    };
+    updateContactInList(contactIdent, updatedContact);
+  });
+}};
+
+export function deleteBtnListener(contactId, person, editContactInput) {
+  const deleteBtn = editContactInput.querySelector("#edit_contact_btn_delete_id");
+  if (deleteBtn) {
+  let contactIdent = contactsList[contactId].id
+  deleteBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    deleteContactDialog(contactIdent, person);
+  });
+}
+}
+
+
 function openAddContactDialog() {
   contactDialog.showModal();
   contactDialogHeaderSwitch();
@@ -278,11 +313,11 @@ function contactSuccessDialog() {
   }, 2000);
 }
 
-export async function updateContactInList(contactId, updatedContact) {
+async function updateContactInList(contactId, updatedContact) {
   await updateContact(contactId, updatedContact);
-  let contactIndex = searchIndex(contactId);
+  const contactNumber = searchIndex(contactId);
   let changedContact = await getContact(contactId);
-  contactsList[contactIndex] = changedContact;
+  contactsList[contactNumber] = changedContact;
   changeContactInDom(contactId, changedContact);
   closeAddContactDialog();
   openSingleViewContact(contactId);
@@ -315,12 +350,7 @@ export function deleteContactDialog(contactId, person) {
   userNameSpan.textContent = person;
   const deleteButton = deleteDialog.querySelector("button:first-of-type");
   const cancelButton = deleteDialog.querySelector("button:last-of-type");
-  eventListenerDeleteContactDialog(
-    contactId,
-    deleteButton,
-    cancelButton,
-    deleteDialog
-  );
+  eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog);
 }
 
 function eventListenerDeleteContactDialog(
@@ -364,6 +394,6 @@ function seperatIdFromContactList() {
   const firstContactListItem = document.querySelector(
     ".contacts_list_items_container"
   );
-  const contactId = firstContactListItem.id.split("_")[2];
+  const contactId = firstContactListItem.id.replace("contact_id_", "");
   return contactId;
 }
