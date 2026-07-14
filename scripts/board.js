@@ -45,8 +45,7 @@ async function fetchTasks(path = 'tasks') {
         }
         const data = await response.json();
         fetchedTasks = Object.entries(data ?? {}).map(([id, task]) => ({
-            ...task,
-            id,
+            ...task, id,
         }));
         return fetchedTasks;
     } catch (error) {
@@ -277,28 +276,51 @@ function normalizeContacts(assignedTo) {
 }
 
 function getContactObject(contact) {
-    if (typeof contact === 'object' && contact.name) {
-        return {
-            name: contact.name,
-            shortName:
-                contact.shortName ??
-                contact.shortname ??
-                contactListInitials(contact.name),
-            color: contact.color ?? '#2A3647',
-        };
-    }
+    return isContactObject(contact)
+        ? normalizeContactObject(contact)
+        : createContactObject(contact);
+}
+
+function isContactObject(contact) {
+    return typeof contact === 'object' && contact?.name;
+}
+
+function normalizeContactObject(contact) {
+    return {
+        name: contact.name,
+        shortName: getContactShortName(contact),
+        color: contact.color ?? '#2A3647',
+    };
+}
+
+function createContactObject(contact) {
     const contactName = String(contact).trim();
     if (!contactName) return null;
-    const contactData = contactsList.find(item =>
-        item.name.toLowerCase() === contactName.toLowerCase()
-    );
+    const contactData = findContactByName(contactName);
     return {
         name: contactName,
-        shortName: contactData
-            ? contactListInitials(contactData.name)
-            : contactName.slice(0, 2).toUpperCase(),
+        shortName: getInitials(contactName, contactData),
         color: contactData?.color ?? '#2A3647',
     };
+}
+
+function getContactShortName(contact) {
+    return contact.shortName
+        ?? contact.shortname
+        ?? contactListInitials(contact.name);
+}
+
+function findContactByName(contactName) {
+    return contactsList.find(
+        contact =>
+            contact.name.toLowerCase() === contactName.toLowerCase()
+    );
+}
+
+function getInitials(contactName, contactData) {
+    return contactData
+        ? contactListInitials(contactData.name)
+        : contactName.slice(0, 2).toUpperCase();
 }
 
 function setTaskFormMode(mode) {
