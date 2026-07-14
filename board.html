@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="./styles/board.css">
     <link rel="stylesheet" href="./styles/add_task.css">
     <link rel="stylesheet" href="./styles/contact.css">
-    <script src="./scripts/add_task.js"></script>
-    <script src="./scripts/contacts.js"></script>
-    <script src="./scripts/contactsTemplate.js"></script>
-    <script src="./scripts/taskTemplate.js"></script>
-    <script src="./scripts/dialogTemplate.js"></script>
-    <script src="./scripts/board.js"></script>
+    <script defer src="./scripts/contacts.js"></script>
+    <script defer src="./scripts/contactsTemplate.js"></script>
+    <script defer src="./scripts/add_task.js"></script>
+    <script defer src="./scripts/taskTemplate.js"></script>
+    <script defer src="./scripts/dialogTemplate.js"></script>
+    <script defer src="./scripts/board.js"></script>
     <title>Join-Board</title>
 </head>
 
@@ -100,7 +100,7 @@
                         </svg>
                     </button>
                 </div>
-                <button class="btn-filled" onclick="openDialog('add-task-dialog')" title="add new task">
+                <button class="btn-filled" onclick="openCreateTaskDialog('todo')" title="add new task">
                     Add Task
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_470624_4406" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
@@ -120,7 +120,7 @@
         <article class="board">
             <section class="status">
                 <div class="status-head">To do
-                    <button class="add-btn" onclick="openDialog('add-task-dialog')" title="add new to do task">
+                    <button class="add-btn" onclick="openCreateTaskDialog('todo')" title="add new to do task">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                             <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
@@ -136,7 +136,8 @@
             <section class="status">
                 <div class="status-head">
                     In progress
-                    <button class="add-btn" title="add new in progress task">
+                    <button class="add-btn" onclick="openCreateTaskDialog('inProgress')"
+                        title="add new in progress task">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                             <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
@@ -152,7 +153,8 @@
             <section class="status">
                 <div class="status-head">
                     Await feedback
-                    <button class="add-btn" title="add new await feedback task">
+                    <button class="add-btn" onclick="openCreateTaskDialog('awaitFeedback')"
+                        title="add new await feedback task">
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5 1V9" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
                             <path d="M9 5.07544L1 5.07544" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
@@ -186,25 +188,32 @@
                 <form class="style-content">
                     <div class="style-form-left" action="">
                         <div class="div-star">
-                            <p>Title
+                            <p>Title</p>
                             <p class="star-style">*</p>
-                            </p>
                         </div>
                         <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
+
+                        <p id="titleError" class="input-error">
+                            This field is required
+                        </p>
                         <p class="padding-top">Description</p>
                         <textarea id="task-description" class="textarea-description"
                             placeholder="Enter a description"></textarea>
                         <div class="div-star">
-                            <p>Due Date
+                            <p>Due Date</p>
                             <p class="star-style">*</p>
-                            </p>
                         </div>
-                        <input id="task-date" class="input-left date-input" required type="date" name="" id="">
-                        <div class="div-star div-text-required">
-                            <p class="star-style">*
-                            <p class="text-required">This field is required</p>
-                            </p>
+
+                        <div class="date-wrapper">
+                            <input id="dateDisplay" class="input-left date-input" type="text" placeholder="dd/mm/yyyy"
+                                readonly>
+
+                            <input id="dateInput" type="date" hidden>
                         </div>
+
+                        <p id="dateError" class="input-error">
+                            This field is required
+                        </p>
                     </div>
                     <div class="content-divider"></div>
                     <div class="style-form-right">
@@ -320,8 +329,8 @@
                                     </svg>
                                 </span>
                             </button>
-                            <button id="save-task-button" type="button" onclick="saveTask('todo')"
-                                class="style-buttons bt-right">
+                            <button id="save-task-button" type="button" onclick="saveTask(
+        document.getElementById('add-task-dialog').dataset.status || 'todo')" class="style-buttons bt-right">
                                 <span class="font-size-buttons">Create Task</span>
 
                                 <span class="checkmark">
