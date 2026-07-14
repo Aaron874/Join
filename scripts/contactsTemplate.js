@@ -1,15 +1,21 @@
-import { openSingleViewContact, openEditContactDialog, deleteContactDialog, createListenerForContactInList, openEditDialogBtnListener, contactsList,openDeleteDialogBtnListener, updateContactBtnListener, deleteBtnListener } from "./contacts.js";
-
+import {
+    createListenerForContactInList,
+    openEditDialogBtnListener,
+    contactsList,
+    openDeleteDialogBtnListener,
+    updateContactBtnListener,
+    deleteBtnListener,
+} from './contacts.js';
 
 export function renderContactsList(Letter) {
     return `
-     <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`
+     <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`;
 }
 
-export function renderContactsListItems(shortName, person, email, color = "#BDBDBD", id) {
-    let newContact = document.createElement("button");
-    newContact.classList.add("contacts_list_items_container");
-    newContact.id = ("contact_id_" + id);
+export function renderContactsListItems(shortName, person, email, color = '#BDBDBD', id) {
+    let newContact = document.createElement('button');
+    newContact.classList.add('contacts_list_items_container');
+    newContact.id = 'contact_id_' + id;
     newContact.innerHTML = `
           <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
           <div>
@@ -17,29 +23,35 @@ export function renderContactsListItems(shortName, person, email, color = "#BDBD
             <p><a href="mailto:${email}">${email}</a></p>
           </div>
           `;
-          createListenerForContactInList(newContact, id);
-        return newContact;
+    createListenerForContactInList(newContact, id);
+    return newContact;
 }
 
 export function renderAddOrEditContactDialog(isEditMode = false) {
-  let addContactDialogContent = document.createElement("h3");
-  if (isEditMode) {
-    addContactDialogContent.textContent = "Edit Contact";
-  } else {
-    addContactDialogContent.textContent = "Add Contact";
-  }
-  return addContactDialogContent;
+    let addContactDialogContent = document.createElement('h3');
+    if (isEditMode) {
+        addContactDialogContent.textContent = 'Edit Contact';
+    } else {
+        addContactDialogContent.textContent = 'Add Contact';
+    }
+    return addContactDialogContent;
 }
 
 export function renderUnderlineHeaderContactDialog() {
-  let contactDialogUnderline = document.createElement("p");
-  contactDialogUnderline.textContent = "Tasks are better with a team!";
-  return contactDialogUnderline;
+    let contactDialogUnderline = document.createElement('p');
+    contactDialogUnderline.textContent = 'Tasks are better with a team!';
+    return contactDialogUnderline;
 }
 
-
-export function renderSingleContactView(shortName, person, email, color = "#BDBDBD", phone = "No phone number", id) {
-    let newSingleView = document.createElement("div");
+export function renderSingleContactView(
+    shortName,
+    person,
+    email,
+    color = '#BDBDBD',
+    phone = 'No phone number',
+    id
+) {
+    let newSingleView = document.createElement('div');
     newSingleView.innerHTML = `
             <div class="contacts_single_view_content_header">
               <div class="contacts_icon" style="--contact-color: ${color};" >${shortName}</div>
@@ -68,39 +80,43 @@ export function renderSingleContactView(shortName, person, email, color = "#BDBD
                 <p class="contacts_single_view_phone" >${phone}</p>
               </div>
             </div>
-            `
-            openEditDialogBtnListener(newSingleView, id);
-            openDeleteDialogBtnListener(newSingleView, id, person);              
+            `;
+    openEditDialogBtnListener(newSingleView, id);
+    openDeleteDialogBtnListener(newSingleView, id, person);
     return newSingleView;
 }
 
 export function renderPersonInitialsForAddContact(initials) {
-  let personInitials = document.createElement("span");
-  personInitials.classList.add("person_initials");
-  personInitials.id = "person_initials_id";
-  personInitials.textContent = initials;
-  return personInitials;
+    let personInitials = document.createElement('span');
+    personInitials.classList.add('person_initials');
+    personInitials.id = 'person_initials_id';
+    personInitials.textContent = initials;
+    return personInitials;
 }
 
 export function renderContactInput(mode, contactId) {
-  let editContactInput = document.createElement("div");
-  editContactInput.classList.add("contact_form_container");
-  editContactInput.id = "contact_input_id";
-  editContactInput.innerHTML = `
-            <label class="contact_color_picker" style="--contact-color: ${contactsList[contactId]?.color ?? "#D1D1D1"};">
+    let editContactInput = document.createElement('div');
+    editContactInput.classList.add('contact_form_container');
+    editContactInput.id = 'contact_input_id';
+    editContactInput.innerHTML = `
+            <label class="contact_color_picker" style="--contact-color: ${
+                contactsList[contactId]?.color ?? '#D1D1D1'
+            };">
               <input
                 type="color"
                 name="background_color"
                 id="contact_color_picker_id"
-                value="${contactsList[contactId]?.color ?? "#D1D1D1"}"
+                value="${contactsList[contactId]?.color ?? '#D1D1D1'}"
               />
-              <span class="person_initials" id="person_initials_id">${contactsList[contactId]?.shortName ?? ""}</span>
+              <span class="person_initials" id="person_initials_id">${
+                  contactsList[contactId]?.shortName ?? ''
+              }</span>
             </label>
             <form action="" method="post" id="contact_form_id">
               <div class="contact_input_wrapper">
                 <input
                   type="text"
-                  value="${contactsList[contactId]?.name ?? ""}"
+                  value="${contactsList[contactId]?.name ?? ''}"
                   name="name"
                   id="contact_name_id"
                   placeholder="Name"
@@ -118,7 +134,7 @@ export function renderContactInput(mode, contactId) {
                   name="email" 
                   id="contact_email_id" 
                   placeholder="E-Mail" 
-                  value="${contactsList[contactId]?.email ?? ""}" 
+                  value="${contactsList[contactId]?.email ?? ''}" 
                   required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
@@ -132,31 +148,21 @@ export function renderContactInput(mode, contactId) {
                   maxlength="20"
                   pattern="\\+?[0-9 ]{6,20}"
                   title= "Bitte geben Sie eine gültige Telefonnummer ein, z. B. +49 171 1234567."
-                  value="${contactsList[contactId]?.phone ?? ""}" 
+                  value="${contactsList[contactId]?.phone ?? ''}" 
                   required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
               ${renderButtons(mode)}
             </form>
-`
-updateContactBtnListener(editContactInput, contactId);
-deleteBtnListener(contactId, contactsList[contactId]?.name, editContactInput);
-
-// const deleteBtn = editContactInput.querySelector("#edit_contact_btn_delete_id");
-// if (deleteBtn) {
-//   deleteBtn.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     deleteContactDialog(id, person);
-//   });
-// }
-return editContactInput;
+`;
+    updateContactBtnListener(editContactInput, contactId);
+    deleteBtnListener(contactId, contactsList[contactId]?.name, editContactInput);
+    return editContactInput;
 }
 
-
-
 function renderButtons(mode) {
-  if (mode === "edit") {
-    return `
+    if (mode === 'edit') {
+        return `
     <div class="contact_btn_container" >
       <button
         class="edit_contact_btn_cancel"
@@ -170,10 +176,9 @@ function renderButtons(mode) {
         </span>
       </button>
       </div>
-    `
-  } else {
-
-    return `
+    `;
+    } else {
+        return `
               <div class="contact_btn_container">
                 <button
                   class="add_contact_btn_cancel"
@@ -194,5 +199,6 @@ function renderButtons(mode) {
                   /></span>
                 </button>
               </div>
-`}
+`;
+    }
 }
