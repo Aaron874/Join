@@ -35,9 +35,9 @@ async function loadContacts() {
 }
 
 document.addEventListener('click', (e) => {
-    const el = e.target.closest('[data-action]');
-    if (!el) return;
-    const action = el.dataset.action;
+    const element = e.target.closest('[data-action]');
+    if (!element) return;
+    const action = element.dataset.action;
     if (action === 'open_dialog_contact') {
         openAddContactDialog();
     }
