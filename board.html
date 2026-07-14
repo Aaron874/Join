@@ -182,155 +182,159 @@
             </button>
             <section class="main-content main-content-padding-bottom">
 
-            <h1 class="add_task-h1">Add Task</h1>
-            <form class="style-content">
-                <div class="style-form-left" action="">
-                    <div class="div-star">
-                        <p>Title
-                        <p class="star-style">*</p>
-                        </p>
-                    </div>
-                    <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
-                    <p class="padding-top">Description</p>
-                    <textarea id="task-description" class="textarea-description"
-                        placeholder="Enter a description"></textarea>
-                    <div class="div-star">
-                        <p>Due Date
-                        <p class="star-style">*</p>
-                        </p>
-                    </div>
-                    <input id="task-date" class="input-left date-input" required type="date" name="" id="">
-                    <div class="div-star div-text-required">
-                        <p class="star-style">*
-                        <p class="text-required">This field is required</p>
-                        </p>
-                    </div>
-                </div>
-                <div class="content-divider"></div>
-                <div class="style-form-right">
-
-                    <p style="color: #000000" ;>Priority</p>
-                    <div class="style-priority">
-                        <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
-                            <p id="urgent-font" class="style-priorities-p">Urgent</p>
-                            <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18"
-                                fill="none">
-                                <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
+                <h1 class="add_task-h1">Add Task</h1>
+                <form class="style-content">
+                    <div class="style-form-left" action="">
+                        <div class="div-star">
+                            <p>Title
+                            <p class="star-style">*</p>
+                            </p>
                         </div>
-                        <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
-                            <p id="medium-font" class="style-priorities-p">Medium</p>
-                            <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18"
-                                fill="none">
-                                <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
+                        <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
+                        <p class="padding-top">Description</p>
+                        <textarea id="task-description" class="textarea-description"
+                            placeholder="Enter a description"></textarea>
+                        <div class="div-star">
+                            <p>Due Date
+                            <p class="star-style">*</p>
+                            </p>
                         </div>
-                        <div id="priority-low" onclick="colorChangePriority(this)" class="style-priorities">
-                            <p id="low-font" class="style-priorities-p">Low</p>
-                            <svg id="low-icon" class="low-icon" width="30" height="18" viewBox="0 0 18 18" fill="none">
-                                <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
+                        <input id="task-date" class="input-left date-input" required type="date" name="" id="">
+                        <div class="div-star div-text-required">
+                            <p class="star-style">*
+                            <p class="text-required">This field is required</p>
+                            </p>
                         </div>
                     </div>
-                    <p>Assigned to</p>
+                    <div class="content-divider"></div>
+                    <div class="style-form-right">
 
-                    <div class="assigned-dropdown">
-                        <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
-                            class="assigned-trigger">
-                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to assign</span>
+                        <p style="color: #000000" ;>Priority</p>
+                        <div class="style-priority">
+                            <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="urgent-font" class="style-priorities-p">Urgent</p>
+                                <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="medium-font" class="style-priorities-p">Medium</p>
+                                <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div id="priority-low" onclick="colorChangePriority(this)" class="style-priorities">
+                                <p id="low-font" class="style-priorities-p">Low</p>
+                                <svg id="low-icon" class="low-icon" width="30" height="18" viewBox="0 0 18 18"
+                                    fill="none">
+                                    <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p>Assigned to</p>
 
-                        <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
-                            onclick="dropdownContactsDown()">
-                            <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
-                                <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
-                            </svg>
-                        </button>
+                        <div class="assigned-dropdown">
+                            <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
+                                class="assigned-trigger">
+                            <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to
+                                assign</span>
 
-                        <!-- <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
-                            onclick="dropdownContactsDown()">⌄</span> -->
-
-                        <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_contacts"
-                            onclick="dropdownContactsUp()">
-                            <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
-                                <path d="M4 0L8 5H0L4 0Z" fill="#2A3647" />
-                            </svg>
-                        </button>
-
-                        <!-- <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
-                            onclick="dropdownContactsUp()">⌃</span> -->
-
-                        <div class="dropdown_contacts" id="dropdown_contacts"></div>
-                    </div>
-                    <div class="div_contacts_initials" id="div_contacts_initials"></div>
-                    <p class="padding-top">Category</p>
-
-                    <div class="assigned-dropdown">
-                        <button type="button" class="assigned-trigger">
-                            <span class="font-size" id="selected_category_text">Select task category</span>
-
-                            <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_category"
-                                onclick="dropdownCategoryDown()">
+                            <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
+                                onclick="dropdownContactsDown()">
                                 <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
                                     <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
                                 </svg>
                             </button>
 
-                            <!-- <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
-                                onclick="dropdownCategoryDown()">⌄</span> -->
+                            <!-- <span class="symbole_down_dropdown_contacts" id="symbole_down_dropdown_contacts"
+                            onclick="dropdownContactsDown()">⌄</span> -->
 
-                            <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_category"
-                                onclick="dropdownCategoryUp()">
+                            <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_contacts"
+                                onclick="dropdownContactsUp()">
                                 <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
                                     <path d="M4 0L8 5H0L4 0Z" fill="#2A3647" />
                                 </svg>
                             </button>
 
-                            <!-- <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
-                                onclick="dropdownCategoryUp()">⌃</span> -->
-                        </button>
-                        <div class="dropdown_category" id="dropdown_category">
-                            <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
-                                <span class="font-size">Technical Task</span>
-                            </div>
-                            <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
-                                <span class="font-size">User Story</span>
-                            </div>
-                        </div>
-                        <p class="padding-top">Subtasks</p>
-                        <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
+                            <!-- <span class="symbole_up_dropdown_contacts" id="symbole_up_dropdown_contacts"
+                            onclick="dropdownContactsUp()">⌃</span> -->
 
-                    </div>
-                    <div class="style-div-buttons">
-                        <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
-                            <span class="font-size-buttons">Clear</span>
-                            <span class="close-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    aria-hidden="true">
-                                    <path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" />
-                                </svg>
-                            </span>
-                        </button>
-                        <button onclick="createTask('todo')" type="submit" class="style-buttons bt-right">
-                            <span class="font-size-buttons">Create Task</span>
-                            <span class="checkmark">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
-                                    viewBox="0 0 15.49 11.22" aria-hidden="true">
-                                    <path d="M1 5.61L5.28 10.22L14.49 1" fill="none" stroke="#FFFFFF" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </button>
-                    </div>
-            </form>
-        </section>
+                            <div class="dropdown_contacts" id="dropdown_contacts"></div>
+                        </div>
+                        <div class="div_contacts_initials" id="div_contacts_initials"></div>
+                        <p class="padding-top">Category</p>
+
+                        <div class="assigned-dropdown">
+                            <button type="button" class="assigned-trigger">
+                                <span class="font-size" id="selected_category_text">Select task category</span>
+
+                                <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_category"
+                                    onclick="dropdownCategoryDown()">
+                                    <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                        <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
+                                    </svg>
+                                </button>
+
+                                <!-- <span class="symbole_down_dropdown_category" id="symbole_down_dropdown_category"
+                                onclick="dropdownCategoryDown()">⌄</span> -->
+
+                                <button type="button" class="dropdown-arrow" id="symbole_up_dropdown_category"
+                                    onclick="dropdownCategoryUp()">
+                                    <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
+                                        <path d="M4 0L8 5H0L4 0Z" fill="#2A3647" />
+                                    </svg>
+                                </button>
+
+                                <!-- <span class="symbole_up_dropdown_category" id="symbole_up_dropdown_category"
+                                onclick="dropdownCategoryUp()">⌃</span> -->
+                            </button>
+                            <div class="dropdown_category" id="dropdown_category">
+                                <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
+                                    <span class="font-size">Technical Task</span>
+                                </div>
+                                <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
+                                    <span class="font-size">User Story</span>
+                                </div>
+                            </div>
+                            <p class="padding-top">Subtasks</p>
+                            <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
+
+                        </div>
+                        <div class="style-div-buttons">
+                            <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
+                                <span class="font-size-buttons">Clear</span>
+                                <span class="close-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </span>
+                            </button>
+                            <button id="save-task-button" type="button" onclick="saveTask('todo')"
+                                class="style-buttons bt-right">
+                                <span class="font-size-buttons">Create Task</span>
+
+                                <span class="checkmark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
+                                        viewBox="0 0 15.49 11.22" aria-hidden="true">
+                                        <path d="M1 5.61L5.28 10.22L14.49 1" fill="none" stroke="#FFFFFF"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                </form>
+            </section>
         </dialog>
         <dialog id="task-dialog" class="task-dialog"></dialog>
     </main>

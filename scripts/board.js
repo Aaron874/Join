@@ -10,7 +10,8 @@
 window.addEventListener('DOMContentLoaded', init);
 
 let fetchedTasks = [];
-let draggedTaskId = null;
+let draggedTaskId;
+let editingTaskId;
 
 async function init() {
     await fetchTasks();
@@ -215,8 +216,10 @@ async function deleteTaskFromFirebase(taskId){
 function openEditTask(taskId){
     const task = getTaskById(taskId);
     if (!task) return;
+    editingTaskId = taskId;
     closeTaskDialog();
     fillTaskForm(task);
+    setTaskFormMode('edit')
     openDialog('add-task-dialog');
     console.log(task.assignedTo);
     console.log(Array.isArray(task.assignedTo));
@@ -288,3 +291,94 @@ function getContactObject(contactName){
     }
 }
 
+function setTaskFormMode(mode) {
+    const heading = document.querySelector('.add_task-h1');
+    const buttonText = document.querySelector(
+        '#save-task-button .font-size-buttons');
+    const isEditMode = mode === 'edit';
+    if (heading) {
+        heading.textContent = isEditMode
+            ? 'Edit Task'
+            : 'Add Task';
+    }
+    if (buttonText) {
+        buttonText.textContent = isEditMode
+            ? 'Save'
+            : 'Create Task';
+    }
+}
+
+async function saveTask(defaultStatus){
+    const task = getTaskFormData(defaultStatus);
+    if (!isTaskValid(task)) return;
+    if (editingTaskId){
+        await updateTaskInFirebase(task);
+    }
+    await finishSavingTask();
+}
+
+function getTaskFormData(defaultStatus){
+    const existingTask = editingTaskId ? getTaskById(editingTaskId)
+    : null;
+    return {
+        title: getInputValue('task-title'),
+        description: getInputValue('task-description'),
+        date: getInputValue('task-date'),
+        priority: priority.at(-1),
+        assignedTo: [...selectedContacts],
+        category: getTextContent('selected_category_text'),
+        subtasks: getInputValue('task-subtasks'),
+        status: existingTask?.status ?? defaultStatus,
+    };
+}
+
+function isTaskValid(task){
+    return Boolean(
+        task.title &&
+        task.description &&
+        task.date &&
+        task.priority &&
+        task.assignedTo &&
+        task.subtasks &&
+        task.category &&
+        task.category !== 'Select task category' &&
+        task.category !== 'Select Task Category'
+    );
+}
+
+async function updateTaskInFirebase(taskId, task){
+    const response = await fetch(
+        `${BASE_URL}tasks/${taskId}.json`,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task)
+        }
+    );
+    if (!response.ok){
+        throw new Error(
+            `Task-Update fehlgeschlagen: ${response.status}`
+        );
+    }
+    return await response.json()
+}
+
+async function finishSavingTask(){
+    editingTaskId = null;
+    priority = [];
+    selectedContacts = [];
+    clearTaskform();
+    closeDialog('add-task-dialog');
+    await fetchTasks();
+    renderBoard();
+    setTaskFormMode('create');
+}
+
+function openCreateTaskDialog(){
+    editingTaskId = null;
+    clearTaskform();
+    setTaskFormMode('create');
+    openDialog('add-task-dialog');
+}
