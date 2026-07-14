@@ -7,7 +7,7 @@ import {
     deleteBtnListener,
 } from './contacts.js';
 
-export function renderContactsList(Letter) {
+export function renderContactsListLetterSeperator(Letter) {
     return `
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`;
 }
