@@ -28,7 +28,6 @@ function getTaskTemplate(task) {
     const categoryClass = categoryStyles[task.category] ?? '';
     const priorityIcon = priorityIcons[task.priority] ?? '';
     const previewText = getPreviewText(task.description);
-    const assignedTo = getAssignedToText(task.assignedTo);
 
     return `
         <article
@@ -50,9 +49,65 @@ function getTaskTemplate(task) {
             </p>
 
             <div class="task-card-bottom">
-                <span>${assignedTo}</span>
+                ${getTaskContactIconsTemplate(task.assignedTo)}
                 ${priorityIcon}
             </div>
         </article>
+    `;
+}
+
+function getTaskContactIconsTemplate(assignedTo) {
+    const contacts = normalizeContacts(assignedTo);
+
+    return `
+        <div class="task-card-contacts">
+            ${contacts.map(getTaskContactIconTemplate).join('')}
+        </div>
+    `;
+}
+
+function getTaskContactIconTemplate(contact, index) {
+    return `
+        <span
+            class="task-card-contact"
+            style="
+                --contact-color: ${contact.color};
+                --contact-index: ${index};
+            "
+            title="${contact.name}"
+        >
+            ${contact.shortName}
+        </span>
+    `;
+}
+
+function getTaskDetailsContactsTemplate(assignedTo) {
+    const contacts = normalizeContacts(assignedTo);
+
+    if (!contacts.length) {
+        return '<p>No contacts assigned</p>';
+    }
+
+    return `
+        <div class="task-details-contacts">
+            ${contacts.map(getTaskDetailsContactTemplate).join('')}
+        </div>
+    `;
+}
+
+function getTaskDetailsContactTemplate(contact) {
+    return `
+        <div class="task-details-contact">
+            <span
+                class="task-details-contact-icon"
+                style="--contact-color: ${contact.color};"
+            >
+                ${contact.shortName}
+            </span>
+
+            <span class="task-details-contact-name">
+                ${contact.name}
+            </span>
+        </div>
     `;
 }

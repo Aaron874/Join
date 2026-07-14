@@ -40,18 +40,14 @@ async function reloadBoard() {
 async function fetchTasks(path = 'tasks') {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`);
-
         if (!response.ok) {
             throw new Error(`HTTP-Fehler: ${response.status}`);
         }
-
         const data = await response.json();
-
         fetchedTasks = Object.entries(data ?? {}).map(([id, task]) => ({
             ...task,
             id,
         }));
-
         return fetchedTasks;
     } catch (error) {
         console.error('Fehler beim Abrufen:', error);
@@ -68,7 +64,6 @@ function renderBoard() {
 
 function renderColumn(status, container) {
     if (!container) return;
-
     const content = fetchedTasks
         .filter(task => task.status === status)
         .map(getTaskTemplate)
@@ -89,7 +84,6 @@ function getPreviewText(text, maxLength = 20) {
     if (!text || text.length <= maxLength) {
         return text ?? '';
     }
-
     return `${text.slice(0, maxLength).trim()}...`;
 }
 
@@ -108,7 +102,6 @@ function initDragAndDrop() {
 
 function handleDragStart(event) {
     const card = event.currentTarget;
-
     draggedTaskId = card.dataset.taskId;
     card.classList.add('dragging');
 }
@@ -124,12 +117,9 @@ function handleDragOver(event) {
 
 async function handleDrop(event) {
     event.preventDefault();
-
     const task = getTaskById(draggedTaskId);
     const newStatus = event.currentTarget.dataset.status;
-
     if (!task || task.status === newStatus) return;
-
     try {
         await updateTaskStatus(task.id, newStatus);
         await reloadBoard();
@@ -149,18 +139,14 @@ async function updateTaskStatus(taskId, status) {
             body: JSON.stringify(status),
         }
     );
-
     validateResponse(response, 'Status-Update fehlgeschlagen');
-
     return response.json();
 }
 
 function openTaskDetails(taskId) {
     const task = getTaskById(taskId);
     const dialog = getElement('task-dialog');
-
     if (!task || !dialog) return;
-
     dialog.innerHTML = getTaskDialogTemplate(task);
     dialog.showModal();
 }
@@ -173,9 +159,7 @@ async function deleteTask(taskId) {
     const shouldDelete = confirm(
         'Are you sure you want to delete this task?'
     );
-
     if (!shouldDelete) return;
-
     try {
         await deleteTaskFromFirebase(taskId);
         closeTaskDialog();
@@ -189,7 +173,6 @@ async function persistTask(task) {
     if (editingTaskId) {
         return updateTaskInFirebase(editingTaskId, task);
     }
-
     return createTaskInFirebase(task);
 }
 
@@ -201,9 +184,7 @@ async function createTaskInFirebase(task) {
         },
         body: JSON.stringify(task),
     });
-
     validateResponse(response, 'Task konnte nicht erstellt werden');
-
     return response.json();
 }
 
@@ -214,17 +195,13 @@ async function deleteTaskFromFirebase(taskId) {
             method: 'DELETE',
         }
     );
-
     validateResponse(response, 'Task konnte nicht gelöscht werden');
 }
 
 function openEditTask(taskId) {
     const task = getTaskById(taskId);
-
     if (!task) return;
-
     editingTaskId = taskId;
-
     closeTaskDialog();
     fillTaskForm(task);
     setTaskFormMode('edit');
@@ -233,7 +210,6 @@ function openEditTask(taskId) {
 
 function openCreateTaskDialog(status = 'todo') {
     editingTaskId = null;
-
     clearTaskform();
     setTaskFormMode('create');
     setFormStatus(status);
@@ -245,7 +221,6 @@ function fillTaskForm(task) {
     setInputValue('task-description', task.description);
     setInputValue('task-subtasks', task.subtasks);
     setTextContent('selected_category_text', task.category);
-
     setTaskDate(task.date);
     selectPriority(task.priority);
     setAssignedContacts(task.assignedTo);
@@ -254,34 +229,26 @@ function fillTaskForm(task) {
 function setTaskDate(date) {
     const displayInput = getElement('dateDisplay');
     const dateInput = getElement('dateInput');
-
     if (!displayInput || !dateInput) return;
-
     displayInput.value = formatDateForDisplay(date);
     dateInput.value = formatDateForInput(date);
 }
 
 function formatDateForDisplay(date) {
     if (!date) return '';
-
     if (date.includes('/')) {
         return date;
     }
-
     const [year, month, day] = date.split('-');
-
     return `${day}/${month}/${year}`;
 }
 
 function formatDateForInput(date) {
     if (!date) return '';
-
     if (date.includes('-')) {
         return date;
     }
-
     const [day, month, year] = date.split('/');
-
     return `${year}-${month}-${day}`;
 }
 
@@ -289,9 +256,7 @@ function selectPriority(priorityValue) {
     const priorityElement = getElement(
         `priority-${priorityValue}`
     );
-
     if (!priorityElement) return;
-
     priority = [];
     colorChangePriority(priorityElement);
 }
@@ -303,11 +268,9 @@ function setAssignedContacts(assignedTo) {
 
 function normalizeContacts(assignedTo) {
     if (!assignedTo) return [];
-
     const contacts = Array.isArray(assignedTo)
         ? assignedTo
         : assignedTo.split(',');
-
     return contacts
         .map(getContactObject)
         .filter(Boolean);
@@ -315,17 +278,20 @@ function normalizeContacts(assignedTo) {
 
 function getContactObject(contact) {
     if (typeof contact === 'object' && contact.name) {
-        return contact;
+        return {
+            name: contact.name,
+            shortName:
+                contact.shortName ??
+                contact.shortname ??
+                contactListInitials(contact.name),
+            color: contact.color ?? '#2A3647',
+        };
     }
-
     const contactName = String(contact).trim();
-
     if (!contactName) return null;
-
     const contactData = contactsList.find(item =>
         item.name.toLowerCase() === contactName.toLowerCase()
     );
-
     return {
         name: contactName,
         shortName: contactData
@@ -337,13 +303,11 @@ function getContactObject(contact) {
 
 function setTaskFormMode(mode) {
     const isEditMode = mode === 'edit';
-
     setTextContent(
         '.add_task-h1',
         isEditMode ? 'Edit Task' : 'Add Task',
         true
     );
-
     setTextContent(
         '#save-task-button .font-size-buttons',
         isEditMode ? 'Save' : 'Create Task',
@@ -353,9 +317,7 @@ function setTaskFormMode(mode) {
 
 async function saveTask(defaultStatus = 'todo') {
     const task = getTaskFormData(defaultStatus);
-
     if (!isTaskValid(task)) return;
-
     try {
         await persistTask(task);
         await finishSavingTask();
@@ -368,13 +330,11 @@ async function persistTask(task) {
     if (editingTaskId) {
         return updateTaskInFirebase(editingTaskId, task);
     }
-
     return addTaskToFirebase(task);
 }
 
 function getTaskFormData(defaultStatus) {
     const existingTask = getTaskById(editingTaskId);
-
     return {
         title: getInputValue('task-title'),
         description: getInputValue('task-description'),
@@ -395,7 +355,6 @@ function getSelectedContactNames() {
 
 function isTaskValid(task) {
     formRequired();
-
     return Boolean(
         task.title &&
         task.description &&
@@ -426,9 +385,7 @@ async function updateTaskInFirebase(taskId, task) {
             body: JSON.stringify(task),
         }
     );
-
     validateResponse(response, 'Task-Update fehlgeschlagen');
-
     return response.json();
 }
 
@@ -437,7 +394,6 @@ async function finishSavingTask() {
     clearTaskform();
     closeDialog('add-task-dialog');
     setTaskFormMode('create');
-
     await reloadBoard();
 }
 
@@ -449,9 +405,7 @@ function resetTaskFormState() {
 
 function setFormStatus(status) {
     const dialog = getElement('add-task-dialog');
-
     if (!dialog) return;
-
     dialog.dataset.status = status;
 }
 
@@ -465,9 +419,7 @@ function getInputValue(id) {
 
 function setInputValue(id, value) {
     const element = getElement(id);
-
     if (!element) return;
-
     element.value = value ?? '';
 }
 
@@ -479,9 +431,7 @@ function setTextContent(selector, value, useSelector = false) {
     const element = useSelector
         ? document.querySelector(selector)
         : getElement(selector);
-
     if (!element) return;
-
     element.textContent = value ?? '';
 }
 
