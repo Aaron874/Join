@@ -287,10 +287,11 @@ function isContactObject(contact) {
 }
 
 function normalizeContactObject(contact) {
+    const contactData = findContactByName(contact.name);
     return {
         name: contact.name,
-        shortName: getContactShortName(contact),
-        color: contact.color ?? '#2A3647',
+        shortName: getContactShortName(contact, contactData),
+        color: getContactColor(contact, contactData)
     };
 }
 
@@ -298,23 +299,33 @@ function createContactObject(contact) {
     const contactName = String(contact).trim();
     if (!contactName) return null;
     const contactData = findContactByName(contactName);
-    return {
-        name: contactName,
-        shortName: getInitials(contactName, contactData),
-        color: contactData?.color ?? '#2A3647',
+    return{
+        name: contactData?.name ?? contactName,
+        shortName: getContactShortName(contactData, contactData),
+        color: getContactColor(contactData, contactData)
     };
 }
 
-function getContactShortName(contact) {
-    return contact.shortName
-        ?? contact.shortname
-        ?? contactListInitials(contact.name);
+function getContactShortName(contact, contactData) {
+    return contact?.shortName
+    ?? contact?.shortname
+    ?? contactData?.shortName
+    ?? contactData?.shortname
+    ?? contactListInitials(contactData?.name ?? contact?.name ?? '');
+}
+
+function getContactColor(contact, contactData){
+    return contact?.color
+    ?? contactData?.color
+    ?? '#2A3647';
 }
 
 function findContactByName(contactName) {
-    return contactsList.find(
-        contact =>
-            contact.name.toLowerCase() === contactName.toLowerCase()
+    const normalizedName = contactName
+    .trim()
+    .toLowerCase();
+    return contactsList.find(contact =>
+        contact.name.trim().toLowerCase() === normalizedName
     );
 }
 
