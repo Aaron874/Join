@@ -28,6 +28,7 @@ let draggedTaskId = null;
 let editingTaskId = null;
 
 async function initBoard() {
+    await loadBoardContacts();
     await reloadBoard();
     initDragAndDrop();
 }
