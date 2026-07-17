@@ -24,13 +24,16 @@ const EMPTY_COLUMN_TEXTS = {
 };
 
 let fetchedTasks = [];
+let fetchedContacts = [];
 let draggedTaskId = null;
 let editingTaskId = null;
 
 async function initBoard() {
     await loadBoardContacts();
+    await fetchContacts();
     await reloadBoard();
     initDragAndDrop();
+    console.log(fetchedContacts);
 }
 
 async function reloadBoard() {
@@ -70,6 +73,8 @@ function renderColumn(status, container) {
         .join('');
 
     container.innerHTML = content || getEmptyColumnTemplate(status);
+
+    fetchContacts();
 }
 
 function getEmptyColumnTemplate(status) {
@@ -261,6 +266,27 @@ function selectPriority(priorityValue) {
     colorChangePriority(priorityElement);
 }
 
+async function fetchContacts(path = 'contacts') {
+    try {
+        const response = await fetch(`${BASE_URL}${path}.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP-Fehler: ${response.status}`);
+        }
+        const data = await response.json();
+        fetchedContacts = Object.entries(data ?? {}).map(([id, contacts]) => ({
+            ...contacts, id,
+        }));
+        return fetchedContacts;
+    } catch (error) {
+        console.error('Fehler beim Abrufen:', error);
+        fetchedContacts = [];
+        return [];
+    }
+}
+
+
+
+
 function setAssignedContacts(assignedTo) {
     selectedContacts = normalizeContacts(assignedTo);
     showSelectedContacts();
@@ -299,7 +325,7 @@ function createContactObject(contact) {
     const contactName = String(contact).trim();
     if (!contactName) return null;
     const contactData = findContactByName(contactName);
-    return{
+    return {
         name: contactData?.name ?? contactName,
         shortName: getContactShortName(contactData, contactData),
         color: getContactColor(contactData, contactData)
@@ -308,22 +334,22 @@ function createContactObject(contact) {
 
 function getContactShortName(contact, contactData) {
     return contact?.shortName
-    ?? contact?.shortname
-    ?? contactData?.shortName
-    ?? contactData?.shortname
-    ?? contactListInitials(contactData?.name ?? contact?.name ?? '');
+        ?? contact?.shortname
+        ?? contactData?.shortName
+        ?? contactData?.shortname
+        ?? contactListInitials(contactData?.name ?? contact?.name ?? '');
 }
 
-function getContactColor(contact, contactData){
+function getContactColor(contact, contactData) {
     return contact?.color
-    ?? contactData?.color
-    ?? '#2A3647';
+        ?? contactData?.color
+        ?? '#2A3647';
 }
 
 function findContactByName(contactName) {
     const normalizedName = contactName
-    .trim()
-    .toLowerCase();
+        .trim()
+        .toLowerCase();
     return contactsList.find(contact =>
         contact.name.trim().toLowerCase() === normalizedName
     );
