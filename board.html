@@ -256,7 +256,7 @@
                                 assign</span>
 
                             <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
-                                onclick="dropdownContactsDown()">
+                                onclick="openBoardContactsDropdown()">
                                 <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
                                     <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
                                 </svg>
@@ -312,7 +312,9 @@
                                     </svg>
                                 </span>
                             </button>
-                            <button id="save-task-button" type="button" onclick="saveTask(document.getElementById('add-task-dialog').dataset.status || 'todo')" class="style-buttons bt-right">
+                            <button id="save-task-button" type="button"
+                                onclick="saveTask(document.getElementById('add-task-dialog').dataset.status || 'todo')"
+                                class="style-buttons bt-right">
                                 <span class="font-size-buttons">Create Task</span>
 
                                 <span class="checkmark">

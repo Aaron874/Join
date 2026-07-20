@@ -14,27 +14,27 @@ const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.
 
 
 const priorityConfig = {
-  urgent: {
-    button: 'priority-urgent',
-    font: 'urgent-font',
-    icon: 'urgent-icon',
-    buttonClass: 'style-priorities-red',
-    colorClass: 'color-urgent'
-  },
-  medium: {
-    button: 'priority-medium',
-    font: 'medium-font',
-    icon: 'medium-icon',
-    buttonClass: 'style-priorities-orange',
-    colorClass: 'color-medium'
-  },
-  low: {
-    button: 'priority-low',
-    font: 'low-font',
-    icon: 'low-icon',
-    buttonClass: 'style-priorities-green',
-    colorClass: 'color-low'
-  }
+    urgent: {
+        button: 'priority-urgent',
+        font: 'urgent-font',
+        icon: 'urgent-icon',
+        buttonClass: 'style-priorities-red',
+        colorClass: 'color-urgent'
+    },
+    medium: {
+        button: 'priority-medium',
+        font: 'medium-font',
+        icon: 'medium-icon',
+        buttonClass: 'style-priorities-orange',
+        colorClass: 'color-medium'
+    },
+    low: {
+        button: 'priority-low',
+        font: 'low-font',
+        icon: 'low-icon',
+        buttonClass: 'style-priorities-green',
+        colorClass: 'color-low'
+    }
 };
 
 
@@ -52,13 +52,15 @@ function searchContacts() {
     searchedContacts.innerHTML = '';
     if (input.length < 3) {
         searchedContacts.style.display = 'none';
-        return;}
+        return;
+    }
     const results = contactsList.filter(contact => contact.name.toLowerCase().includes(input));
     searchedContacts.style.display = 'flex';
     for (let index = 0; index < results.length; index++) {
         let shortName = contactListInitials(results[index].name);
         let searchedContactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
-        searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);}
+        searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);
+    }
 }
 
 
@@ -74,7 +76,8 @@ function dropdownContactsDown() {
         let shortName = contactListInitials(contactsList[index].name);
         let person = contactsList[index].name[0].toUpperCase() + contactsList[index].name.slice(1);
         let color = contactsList[index].color;
-        dropdown.innerHTML += contactsTemplate(person, color, shortName);}
+        dropdown.innerHTML += contactsTemplate(person, color, shortName);
+    }
 }
 
 
@@ -134,11 +137,13 @@ function toggleContact(contactName, shortName, color) {
         selectedContacts = selectedContacts.filter(
             contact => contact.name !== contactName);
         showSelectedContacts();
-        return;}
+        return;
+    }
     selectedContacts.push({
         name: contactName,
         shortName: shortName,
-        color: color});
+        color: color
+    });
     showSelectedContacts();
 }
 
@@ -170,110 +175,110 @@ function selectedCatgeory(element) {
 
 
 function getPriorityElements(config) {
-  return {
-    button: document.getElementById(config.button),
-    font: document.getElementById(config.font),
-    icon: document.getElementById(config.icon)
-  };
+    return {
+        button: document.getElementById(config.button),
+        font: document.getElementById(config.font),
+        icon: document.getElementById(config.icon)
+    };
 }
 
 function resetPriorityStyles() {
-  Object.values(priorityConfig).forEach(config => {
-    const elements = getPriorityElements(config);
-    elements.button.classList.remove(config.buttonClass);
-    elements.font.classList.remove(config.colorClass);
-    elements.icon.classList.remove(config.colorClass);
-  });
+    Object.values(priorityConfig).forEach(config => {
+        const elements = getPriorityElements(config);
+        elements.button.classList.remove(config.buttonClass);
+        elements.font.classList.remove(config.colorClass);
+        elements.icon.classList.remove(config.colorClass);
+    });
 }
 
 function colorChangePriority(element) {
-  resetPriorityStyles();
+    resetPriorityStyles();
 
-  const priorityName = element.id.split("-")[1];
-  const config = priorityConfig[priorityName];
-  const elements = getPriorityElements(config);
+    const priorityName = element.id.split("-")[1];
+    const config = priorityConfig[priorityName];
+    const elements = getPriorityElements(config);
 
-  elements.button.classList.add(config.buttonClass);
-  elements.font.classList.add(config.colorClass);
-  elements.icon.classList.add(config.colorClass);
+    elements.button.classList.add(config.buttonClass);
+    elements.font.classList.add(config.colorClass);
+    elements.icon.classList.add(config.colorClass);
 
-  priority.push(priorityName);
+    priority.push(priorityName);
 }
 
 
 function getTaskData(element) {
-  return {
-    title: document.getElementById("task-title").value.trim(),
-    description: document.getElementById("task-description").value.trim(),
-    date: document.getElementById("dateDisplay").value.trim(),
-    subtasks: document.getElementById("task-subtasks").value.trim(),
-    priority: priority[0],
-    assignedTo: selectedContacts.map(c => c.name).join(", "),
-    category: document.getElementById("selected_category_text").textContent.trim(),
-    status: element
-  };
+    return {
+        title: document.getElementById("task-title").value.trim(),
+        description: document.getElementById("task-description").value.trim(),
+        date: document.getElementById("dateDisplay").value.trim(),
+        subtasks: document.getElementById("task-subtasks").value.trim(),
+        priority: priority[0],
+        assignedTo: selectedContacts.map(c => c.name).join(", "),
+        category: document.getElementById("selected_category_text").textContent.trim(),
+        status: element
+    };
 }
 
 
 function isTaskValid(task) {
-  return task.title &&
-         task.description &&
-         task.date &&
-         task.subtasks &&
-         task.priority &&
-         task.category !== "Select task category" &&
-         task.category &&
-         selectedContacts.length > 0;
+    return task.title &&
+        task.description &&
+        task.date &&
+        task.subtasks &&
+        task.priority &&
+        task.category !== "Select task category" &&
+        task.category &&
+        selectedContacts.length > 0;
 }
 
 
 async function createTask(element) {
-  formRequired();
-  const task = getTaskData(element);
+    formRequired();
+    const task = getTaskData(element);
 
-  if (!isTaskValid(task)) return;
+    if (!isTaskValid(task)) return;
 
-  tasks.push(task);
-  await addTaskToFirebase(task);
-  priority = [];
-  selectedContacts = [];
-  clearTaskform();
-  console.log(tasks);
+    tasks.push(task);
+    await addTaskToFirebase(task);
+    priority = [];
+    selectedContacts = [];
+    clearTaskform();
+    console.log(tasks);
 }
 
 
 function resetInputErrors() {
-  titleInput.classList.remove("error");
-  titleError.classList.remove("show");
-  dateDisplay.classList.remove("error");
-  dateError.classList.remove("show");
+    titleInput.classList.remove("error");
+    titleError.classList.remove("show");
+    dateDisplay.classList.remove("error");
+    dateError.classList.remove("show");
 }
 
 
 function resetTaskFields() {
-  document.getElementById("task-title").value = "";
-  document.getElementById("task-description").value = "";
-  document.getElementById("dateDisplay").value = "";
-  document.getElementById("task-subtasks").value = "";
-  document.getElementById("assigned-trigger").value = "";
-  document.getElementById("selected_contacts").textContent = "Select contacts to assign";
-  document.getElementById("selected_category_text").textContent = "Select task category";
-  document.getElementById("div_contacts_initials").style.display = "";
+    document.getElementById("task-title").value = "";
+    document.getElementById("task-description").value = "";
+    document.getElementById("dateDisplay").value = "";
+    document.getElementById("task-subtasks").value = "";
+    document.getElementById("assigned-trigger").value = "";
+    document.getElementById("selected_contacts").textContent = "Select contacts to assign";
+    document.getElementById("selected_category_text").textContent = "Select task category";
+    document.getElementById("div_contacts_initials").style.display = "";
 }
 
 
 function resetTaskUI() {
-  selectedContacts = [];
-  resetPriorityStyles();
-  dropdownCategoryDown();
-  dropdownCategoryUp();
+    selectedContacts = [];
+    resetPriorityStyles();
+    dropdownCategoryDown();
+    dropdownCategoryUp();
 }
 
 
 function clearTaskform() {
-  resetInputErrors();
-  resetTaskFields();
-  resetTaskUI();
+    resetInputErrors();
+    resetTaskFields();
+    resetTaskUI();
 }
 
 
@@ -326,13 +331,16 @@ function formRequired() {
     if (titleInput.value.trim() === "") {
         titleInput.classList.add("error");
         titleError.classList.add("show");
-        formIsValid = false;} else {
-        titleInput.classList.remove("error");}
+        formIsValid = false;
+    } else {
+        titleInput.classList.remove("error");
+    }
     if (dateDisplay.value.trim() === "") {
         dateDisplay.classList.add("error");
         dateError.classList.add("show");
         formIsValid = false;
     } else {
-        dateDisplay.classList.remove("error");}
+        dateDisplay.classList.remove("error");
+    }
     if (!formIsValid) return;
 }
