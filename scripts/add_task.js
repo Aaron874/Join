@@ -9,6 +9,8 @@ let priority = [];
 
 let tasks = [];
 
+let subtasks = [];
+
 
 const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -205,13 +207,28 @@ function colorChangePriority(element) {
     priority.push(priorityName);
 }
 
+document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
+
+function addSubtask(event) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    const input = event.target;
+    const title = input.value.trim();
+    if (!title) return;
+    subtasks.push({
+        title,
+        completed: false
+    });
+    input.value = '';
+    renderSubtasks();
+}
 
 function getTaskData(element) {
     return {
         title: document.getElementById("task-title").value.trim(),
         description: document.getElementById("task-description").value.trim(),
         date: document.getElementById("dateDisplay").value.trim(),
-        subtasks: document.getElementById("task-subtasks").value.trim(),
+        subtasks: [...subtasks],
         priority: priority[0],
         assignedTo: selectedContacts.map(c => c.name).join(", "),
         category: document.getElementById("selected_category_text").textContent.trim(),
@@ -264,6 +281,8 @@ function resetTaskFields() {
     document.getElementById("selected_contacts").textContent = "Select contacts to assign";
     document.getElementById("selected_category_text").textContent = "Select task category";
     document.getElementById("div_contacts_initials").style.display = "";
+    subtasks = [];
+    renderSubtasks();
 }
 
 

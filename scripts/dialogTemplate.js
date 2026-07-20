@@ -44,7 +44,7 @@ function getTaskDialogTemplate(task) {
 
             <div class="task-dialog-section">
                 <h3>Subtasks</h3>
-                <p>${task.subtasks}</p>
+                <p>${getTaskDetailSubtasksTemplate(task.subtasks)}</p>
             </div>
 
             <div class="task-dialog-footer">

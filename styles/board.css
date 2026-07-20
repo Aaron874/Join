@@ -410,3 +410,21 @@
   width: 1px;
   background-color: var(--color-gray);
 }
+
+.task-detail-subtask {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 0;
+}
+
+.task-detail-subtask span {
+    flex: 1;
+    word-break: break-word;
+}
+
+.task-detail-subtask input[type="checkbox"] {
+    flex-shrink: 0;
+    cursor: pointer;
+}

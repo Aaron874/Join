@@ -25,8 +25,8 @@ const EMPTY_COLUMN_TEXTS = {
 
 let fetchedTasks = [];
 let fetchedContacts = [];
-let draggedTaskId = null;
-let editingTaskId = null;
+let draggedTaskId;
+let editingTaskId;
 
 async function initBoard() {
     await loadBoardContacts();
@@ -61,6 +61,13 @@ function renderBoard() {
     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
         renderColumn(status, getElement(containerId));
     });
+}
+
+function renderSubtasks() {
+    const list = document.getElementById('subtasks-list');
+    list.innerHTML = subtasks
+        .map(subtask => `<div>${subtask.title}</div>`)
+        .join('');
 }
 
 function renderColumn(status, container) {
@@ -170,13 +177,6 @@ async function deleteTask(taskId) {
     }
 }
 
-async function persistTask(task) {
-    if (editingTaskId) {
-        return updateTaskInFirebase(editingTaskId, task);
-    }
-    return createTaskInFirebase(task);
-}
-
 async function createTaskInFirebase(task) {
     const response = await fetch(`${BASE_URL}tasks.json`, {
         method: 'POST',
@@ -220,11 +220,11 @@ function openCreateTaskDialog(status = 'todo') {
 function fillTaskForm(task) {
     setInputValue('task-title', task.title);
     setInputValue('task-description', task.description);
-    setInputValue('task-subtasks', task.subtasks);
     setTextContent('selected_category_text', task.category);
     setTaskDate(task.date);
     selectPriority(task.priority);
     setAssignedContacts(task.assignedTo);
+    setTaskSubtasks(task.subtasks);
 }
 
 function setTaskDate(date) {
@@ -370,6 +370,21 @@ function setTaskFormMode(mode) {
     );
 }
 
+function setTaskSubtasks(taskSubtasks) {
+    if (Array.isArray(taskSubtasks)) {
+        subtasks = taskSubtasks.map(subtask => ({ ...subtask }));
+    } else if (typeof taskSubtasks === 'string' && taskSubtasks.trim()) {
+        subtasks = [{
+            title: taskSubtasks.trim(),
+            completed: false
+        }];
+    } else {
+        subtasks = [];
+    }
+    setInputValue('task-subtasks', '');
+    renderSubtasks();
+}
+
 async function saveTask(defaultStatus = 'todo') {
     const task = getTaskFormData(defaultStatus);
     if (!isTaskValid(task)) return;
@@ -397,9 +412,44 @@ function getTaskFormData(defaultStatus) {
         priority: priority.at(-1),
         assignedTo: getSelectedContactNames(),
         category: getTextContent('selected_category_text'),
-        subtasks: getInputValue('task-subtasks'),
+        subtasks: [...subtasks],
         status: existingTask?.status ?? defaultStatus,
     };
+}
+
+function getTaskDetailSubtasksTemplate(taskSubtasks) {
+    const subtasks = normalizeTaskSubtasks(taskSubtasks);
+
+    if (!subtasks.length) {
+        return '<p>No subtasks</p>';
+    }
+    return subtasks
+        .map((subtask, index) => `
+        <label class="task-detail-subtask">
+            <span>${subtask.title}</span>
+            <input
+                type="checkbox"
+                ${subtask.completed ? 'checked' : ''}
+                onchange="toggleTaskSubtask(${index})"
+            >
+        </label>
+    `)
+        .join('');
+}
+
+function normalizeTaskSubtasks(taskSubtasks) {
+    if (Array.isArray(taskSubtasks)) {
+        return taskSubtasks;
+    }
+
+    if (typeof taskSubtasks === 'string' && taskSubtasks.trim()) {
+        return [{
+            title: taskSubtasks.trim(),
+            completed: false
+        }];
+    }
+
+    return [];
 }
 
 function getSelectedContactNames() {
