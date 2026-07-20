@@ -485,6 +485,26 @@ async function updateTaskSubtasksInFirebase(taskId, subtasks) {
     }
 }
 
+function getCompletedSubtasks(subtasks) {
+    if (!Array.isArray(subtasks)) {
+        return 0;
+    }
+    return subtasks.filter(subtask => subtask.completed).length;
+}
+
+function getSubtaskProgress(subtasks) {
+    if (!Array.isArray(subtasks) || subtasks.length === 0) {
+        return 0;
+    }
+    return Math.round(
+        (getCompletedSubtasks(subtasks) / subtasks.length) * 100
+    );
+}
+
+function hasSubtasks(task){
+    return Array.isArray(task.subtasks) && task.subtasks.length > 0;
+}
+
 function getSelectedContactNames() {
     return selectedContacts
         .map(contact => contact.name)

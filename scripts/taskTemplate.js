@@ -47,7 +47,9 @@ function getTaskTemplate(task) {
             <p class="task-description">
                 ${previewText}
             </p>
-
+            <p>
+            ${getSubtaskProgressTemplate(task)}
+            </p>
             <div class="task-card-bottom">
                 ${getTaskContactIconsTemplate(task.assignedTo)}
                 ${priorityIcon}
@@ -108,6 +110,27 @@ function getTaskDetailsContactTemplate(contact) {
             <span class="task-details-contact-name">
                 ${contact.name}
             </span>
+        </div>
+    `;
+}
+
+function getSubtaskProgressTemplate(task) {
+    if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
+        return '';
+    }
+    const completed = getCompletedSubtasks(task.subtasks);
+    const total = task.subtasks.length;
+    const progress = getSubtaskProgress(task.subtasks);
+    return `
+        <div class="task-progress">
+            <div class="task-progress-bar">
+                <div
+                    class="task-progress-fill"
+                    style="width:${progress}%"
+                ></div>
+            </div>
+
+            <span>${completed}/${total}</span>
         </div>
     `;
 }
