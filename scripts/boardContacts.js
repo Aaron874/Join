@@ -4,33 +4,16 @@ import { getContacts } from '../firebase/contacts.service.js';
 
 window.boardContacts = [];
 window.contactsList = [];
-const boardContactColors = [
-    '#FF7A00',
-    '#9327FF',
-    '#6E52FF',
-    '#FC71FF',
-    '#00BEE8',
-    '#1FD7C1',
-    '#FF745E',
-    '#FFA35E',
-    '#FC71FF',
-    '#FFC701',
-    '#0038FF',
-    '#C3FF2B',
-    '#FFE62B',
-    '#FF4646'
-];
+// 
 
 window.loadBoardContacts = async function () {
     await ensureBoardAuthentication();
 
-    const loadedContacts = await getContacts();
-    const contacts = addBoardContactColors(loadedContacts);
+    const contacts = await getContacts();
     console.log(contacts);
     console.log("Anzahl Kontakte:", contacts.length);
     window.boardContacts = contacts;
     window.contactsList = contacts;
-
     return contacts;
 };
 
