@@ -27,6 +27,7 @@ let fetchedTasks = [];
 let fetchedContacts = [];
 let draggedTaskId;
 let editingTaskId;
+let currentTaskId;
 
 async function initBoard() {
     await loadBoardContacts();
@@ -152,6 +153,7 @@ async function updateTaskStatus(taskId, status) {
 }
 
 function openTaskDetails(taskId) {
+    currentTaskId = taskId;
     const task = getTaskById(taskId);
     const dialog = getElement('task-dialog');
     if (!task || !dialog) return;
@@ -450,6 +452,37 @@ function normalizeTaskSubtasks(taskSubtasks) {
     }
 
     return [];
+}
+async function toggleTaskSubtask(index) {
+    const task = fetchedTasks.find(task => task.id === currentTaskId);
+    if (!task || !Array.isArray(task.subtasks) || !task.subtasks[index]) {
+        console.error('Task oder Subtask wurde nicht gefunden');
+        return;
+    }
+    task.subtasks[index].completed = !task.subtasks[index].completed;
+    try {
+        await updateTaskSubtasksInFirebase(task.id, task.subtasks);
+        await reloadBoard();
+        openTaskDetails(task.id);
+    } catch (error) {
+        task.subtasks[index].completed = !task.subtasks[index].completed;
+        console.error('Subtask konnte nicht aktualisiert werden:', error);
+    }
+}
+
+async function updateTaskSubtasksInFirebase(taskId, subtasks) {
+    const url = `${BASE_URL}tasks/${taskId}/subtasks.json`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(subtasks)
+    });
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`${response.status}: ${errorText}`);
+    }
 }
 
 function getSelectedContactNames() {
