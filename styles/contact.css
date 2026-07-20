@@ -522,6 +522,10 @@ dialog::backdrop {
     align-items: center;
   }
 
+  .contacts_single_view_name {
+    text-align: center;
+  }
+
 }
 
 @media (max-width: 970px) {
