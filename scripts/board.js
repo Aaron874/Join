@@ -28,6 +28,7 @@ let fetchedContacts = [];
 let draggedTaskId;
 let editingTaskId;
 let currentTaskId;
+let currentSearch = '';
 
 async function initBoard() {
     await loadBoardContacts();
@@ -38,6 +39,7 @@ async function initBoard() {
 async function reloadBoard() {
     await fetchTasks();
     renderBoard();
+
 }
 
 async function fetchTasks(path = 'tasks') {
@@ -58,10 +60,13 @@ async function fetchTasks(path = 'tasks') {
     }
 }
 
+
 function renderBoard() {
     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
         renderColumn(status, getElement(containerId));
     });
+    console.log(fetchedTasks);
+    
 }
 
 function renderSubtasks() {
@@ -75,9 +80,16 @@ function renderColumn(status, container) {
     if (!container) return;
     const content = fetchedTasks
         .filter(task => task.status === status)
-        .map(getTaskTemplate)
-        .join('');
-
+        .filter(task => {
+            if (!currentSearch || currentSearch.length < 3) {
+                return true;
+            }
+            return (
+                task.title?.toLowerCase().includes(currentSearch) ||
+                task.assignedTo?.toLowerCase().includes(currentSearch)
+            );
+        })
+        .map(getTaskTemplate).join('');
     container.innerHTML = content || getEmptyColumnTemplate(status);
 }
 
@@ -501,7 +513,7 @@ function getSubtaskProgress(subtasks) {
     );
 }
 
-function hasSubtasks(task){
+function hasSubtasks(task) {
     return Array.isArray(task.subtasks) && task.subtasks.length > 0;
 }
 
@@ -609,4 +621,23 @@ function validateResponse(response, message) {
     if (!response.ok) {
         throw new Error(`${message}: ${response.status}`);
     }
+}
+
+function filterTasks(searchText){
+    const search = searchText.toLowerCase();
+    return fetchedTasks.filter(task => {
+        const titleMatch = task.title
+        ?.toLowerCase()
+        .includes(search);
+        const assignedMatch = task.assignedTo
+        ?.toLowerCase()
+        .includes(search);
+        return titleMatch || assignedMatch
+    });
+}
+
+function searchTasks(){
+    currentSearch = document.getElementById('search-input')
+    .value.trim();
+    renderBoard();
 }

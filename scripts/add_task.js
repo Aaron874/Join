@@ -315,6 +315,7 @@ async function postData(path = "", data = {}) {
 
 async function addTaskToFirebase(task = {}) {
     postData('tasks', task);
+    await reloadBoard();
 }
 
 const titleInput = document.getElementById("task-title");
