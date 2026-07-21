@@ -560,3 +560,9 @@ dialog::backdrop {
 }
 
 }
+
+@media (max-width: 700px) {
+  .contacts_single_view_container {
+    display: none;
+  }
+}
