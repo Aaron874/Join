@@ -71,6 +71,7 @@ function renderBoard() {
 
 function renderSubtasks() {
     const list = document.getElementById('subtasks-list');
+    if (!list) return;
     list.innerHTML = subtasks
         .map(subtask => `<div>${subtask.title}</div>`)
         .join('');
@@ -399,7 +400,10 @@ function setTaskSubtasks(taskSubtasks) {
     renderSubtasks();
 }
 
-async function saveTask(defaultStatus = 'todo') {
+async function saveTask(event) {
+    event.preventDefault();
+    const defaultStatus =
+        document.getElementById('add-task-dialog').dataset.status || 'todo';
     const task = getTaskFormData(defaultStatus);
     if (!isTaskValid(task)) return;
     try {

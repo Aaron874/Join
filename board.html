@@ -89,7 +89,8 @@
             </section>
             <section class="head-right">
                 <div class="search-wrapper">
-                    <input type="text" id="search-input" oninput="searchTasks()" class="search-input" placeholder="Search Task">
+                    <input type="text" id="search-input" oninput="searchTasks()" class="search-input"
+                        placeholder="Search Task">
                     <div class="search-divider"></div>
                     <button class="search-button" aria-label="search" title="search">
                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,34 +185,41 @@
             <section class="main-content main-content-padding-bottom">
 
                 <h1 class="add_task-h1">Add Task</h1>
-                <form class="style-content">
+                <form class="style-content" onsubmit="saveTask(event)">
                     <div class="style-form-left" action="">
                         <div class="div-star">
-                            <p>Title</p>
+                            <p>Title
                             <p class="star-style">*</p>
+                            </p>
                         </div>
-                        <input id="task-title" class="input-left" required type="text" placeholder="Enter a title">
-
-                        <p id="titleError" class="input-error">
+                        <input id="task-title" class="input-left" type="text" placeholder="Enter a title">
+                        <div id="titleError" class="error-message">
                             This field is required
-                        </p>
-                        <p class="padding-top">Description</p>
+                        </div>
+                        <p class="padding-top description-padding">Description</p>
                         <textarea id="task-description" class="textarea-description"
                             placeholder="Enter a description"></textarea>
                         <div class="div-star">
-                            <p>Due Date</p>
+                            <p>Due Date
                             <p class="star-style">*</p>
-                        </div>
-                        <div class="date-wrapper">
-                            <input id="dateDisplay" class="input-left date-input" type="text" placeholder="dd/mm/yyyy"
-                                readonly>
-
-                            <input id="dateInput" type="date" hidden>
+                            </p>
                         </div>
 
-                        <p id="dateError" class="input-error">
+                        <div class="date-field">
+                            <input id="dateDisplay" class="date-display" type="text" placeholder="dd/mm/yyyy" readonly>
+
+                            <input id="dateInput" class="real-date-input" type="date">
+
+                            <img src="./assets/img/calender.png" class="calendar-icon" alt="">
+                        </div>
+                        <div id="dateError" class="error-message">
                             This field is required
-                        </p>
+                        </div>
+                        <div class="div-star div-text-required">
+                            <p class="star-style">*
+                            <p class="text-required">This field is required</p>
+                            </p>
+                        </div>
                     </div>
                     <div class="content-divider"></div>
                     <div class="style-form-right">
@@ -248,7 +256,6 @@
                             </div>
                         </div>
                         <p>Assigned to</p>
-
                         <div class="assigned-dropdown">
                             <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
                                 class="assigned-trigger">
@@ -256,7 +263,7 @@
                                 assign</span>
 
                             <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
-                                onclick="openBoardContactsDropdown()">
+                                onclick="dropdownContactsDown()">
                                 <svg width="8" height="5" viewBox="0 0 8 5" fill="none">
                                     <path d="M4 5L0 0H8L4 5Z" fill="#2A3647" />
                                 </svg>
@@ -270,8 +277,11 @@
                             <div class="dropdown_contacts" id="dropdown_contacts"></div>
                         </div>
                         <div class="div_contacts_initials" id="div_contacts_initials"></div>
-                        <p class="padding-top">Category</p>
-
+                        <div class="div-star padding-top">
+                            <p>Title
+                            <p class="star-style">*</p>
+                            </p>
+                        </div>
                         <div class="assigned-dropdown">
                             <button type="button" class="assigned-trigger">
                                 <span class="font-size" id="selected_category_text">Select task category</span>
@@ -298,7 +308,9 @@
                                 </div>
                             </div>
                             <p class="padding-top">Subtasks</p>
+
                             <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
+
                             <div id="subtasks-list"></div>
                         </div>
                         <div class="style-div-buttons">
@@ -312,11 +324,8 @@
                                     </svg>
                                 </span>
                             </button>
-                            <button id="save-task-button" type="button"
-                                onclick="saveTask(document.getElementById('add-task-dialog').dataset.status || 'todo')"
-                                class="style-buttons bt-right">
+                            <button id="save-task-button" class="style-buttons bt-right" type="submit">
                                 <span class="font-size-buttons">Create Task</span>
-
                                 <span class="checkmark">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22"
                                         viewBox="0 0 15.49 11.22" aria-hidden="true">
@@ -326,6 +335,17 @@
                                 </span>
                             </button>
                         </div>
+                        <footer class="footer">
+                            <a class="footer-link-icons" href="summary.html"><img src="./assets/img/mobile-summary.png"
+                                    alt=""></a>
+                            <a class="footer-link-icons" href="add_task.html"><img src="./assets/img/mobile-addTask.png"
+                                    alt=""></a>
+                            <a class="footer-link-icons" href="board.html"><img src="./assets/img/mobile-board.png"
+                                    alt=""></a>
+                            <a class="footer-link-icons" href="contacts.html"><img
+                                    src="./assets/img/mobile-contacts.png" alt=""></a>
+
+                        </footer>
                 </form>
             </section>
         </dialog>
