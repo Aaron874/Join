@@ -1,5 +1,6 @@
 * {
   font-family: "Inter";
+  border: 1px solid red;
 }
 
 .visually-hidden {
@@ -91,6 +92,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-wrap: wrap;
   width: 100%;
   padding-left: 64px;
   font-size: var(--fs-standard);
@@ -456,3 +458,6 @@
     transition: width .25s ease;
 }
 
+.style-priority {
+  flex-wrap: wrap;
+}
