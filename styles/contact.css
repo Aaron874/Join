@@ -565,4 +565,48 @@ dialog::backdrop {
   .contacts_single_view_container {
     display: none;
   }
+
+  .contacts_single_view_header h2 {
+    border-bottom: none;
+  }
+
+  .contacts_single_view_header h3 {
+    border-bottom: none;
+    background-image: linear-gradient(to right, #29ABE2, #29ABE2);
+    background-position: left bottom;
+    background-size: 100px 3px;
+    background-repeat: no-repeat;
+    padding-bottom: 10px;
+  }
+
+  .contacts_single_view_content {
+    margin-top: 16px;
+  }
+
+  .contacts_single_view_container {
+    align-items: unset;
+    padding-left: 16px;
+  }
+
+  .contacts_single_view_content_header {
+    flex-direction: row;
+
+  }
+
+  .contacts_single_view_name {
+    text-align: unset;
+}
+
+.contacts_single_view_actions {
+  display: none;
+}
+
+.contacts_single_view_information_header {
+  text-align: unset;
+}
+
+.contacts_single_view_content_information {
+  align-items: unset;
+}
+
 }
