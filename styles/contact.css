@@ -10,6 +10,14 @@
     font-family: 'Inter', sans-serif;
 }
 
+.hidden {
+  display: none !important;
+}
+
+.visible_flex {
+  display: flex !important;
+}
+
 .dialog_container {
     display: flex;
     width: 90dvw;
@@ -493,6 +501,15 @@ dialog::backdrop {
   position: absolute;
   top: calc(100dvh - 156px);
   right: 20px;
+  padding: 0;
+}
+
+.mobile_back_btn {
+  display: none;
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  padding: 0;
 }
 
 @media (max-width: 1300px) {
@@ -588,6 +605,7 @@ dialog::backdrop {
     background-size: 100px 3px;
     background-repeat: no-repeat;
     padding-bottom: 10px;
+    margin-left: 0;
   }
 
   .contacts_single_view_content {
@@ -621,6 +639,10 @@ dialog::backdrop {
 }
 
 .mobile_edit_btn {
+  display: block;
+}
+
+.mobile_back_btn {
   display: block;
 }
 

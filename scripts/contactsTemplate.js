@@ -5,6 +5,7 @@ import {
     openDeleteDialogBtnListener,
     updateContactBtnListener,
     deleteBtnListener,
+    returnToListBtnListener,
 } from './contacts.js';
 
 export function renderContactsListLetterSeperator(Letter) {
@@ -85,9 +86,15 @@ export function renderSingleContactView(
                 src="assets/img/more_vert.webp"
                 alt="Edit Contact"
             </button>
+            <button id="mobile_back_btn_id" class="mobile_back_btn">
+              <img
+                src="assets/img/arrow-left-line.webp"
+                alt="Back to Contact List Button"
+            </button>
             `;
     openEditDialogBtnListener(newSingleView, id);
     openDeleteDialogBtnListener(newSingleView, id, person);
+    returnToListBtnListener(newSingleView);
     return newSingleView;
 }
 

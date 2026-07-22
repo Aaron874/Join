@@ -92,6 +92,13 @@ export function deleteBtnListener(contactId, person, editContactInput) {
     }
 }
 
+export function returnToListBtnListener (newSingleView) {
+  const returnToListBtn = newSingleView.querySelector('#mobile_back_btn_id');
+  returnToListBtn.addEventListener('click', () => {
+    switchListToSingleViewAndBack();
+  })
+}
+
 function getFirstLetterForSeperator() {
     firstLetterList = [];
     for (let index = 0; index < contactsList.length; index++) {
@@ -143,7 +150,7 @@ export function createListenerForContactInList(newContact, id) {
 
 export function openSingleViewContact(id) {
     const contactIndex = searchIndex(id);
-    showWindowSize();
+    switchListToSingleViewAndBack();
     const contact = contactsList[contactIndex];
     contactsSingleViewContainer.innerHTML = '';
     contactsSingleViewContainer.appendChild(
@@ -158,12 +165,13 @@ export function openSingleViewContact(id) {
     );
 }
 
-function showWindowSize() {
+function switchListToSingleViewAndBack() {
     let width = window.innerWidth;
-    console.log(`Window width: ${width}px`);
     if (width < 701) {
-        document.querySelector('.contacts_single_view_container').style.display = 'flex';
-        document.querySelector('.contacts_list_container').style.display = 'none';
+        const viewContainer = document.querySelector('.contacts_single_view_container');
+        const listContainer = document.querySelector('.contacts_list_container');
+        viewContainer.classList.toggle('visible_flex');
+        listContainer.classList.toggle('hidden');
 }
 }
 
