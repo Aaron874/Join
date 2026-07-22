@@ -134,6 +134,7 @@ export function createListenerForContactInList(newContact, id) {
 
 export function openSingleViewContact(id) {
     const contactIndex = searchIndex(id);
+    showWindowSize();
     const contact = contactsList[contactIndex];
     contactsSingleViewContainer.innerHTML = '';
     contactsSingleViewContainer.appendChild(
@@ -146,6 +147,15 @@ export function openSingleViewContact(id) {
             contact.id
         )
     );
+}
+
+function showWindowSize() {
+    let width = window.innerWidth;
+    console.log(`Window width: ${width}px`);
+    if (width < 701) {
+        document.querySelector('.contacts_single_view_container').style.display = 'flex';
+        document.querySelector('.contacts_list_container').style.display = 'none';
+}
 }
 
 function searchIndex(contactId) {
