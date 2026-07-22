@@ -80,6 +80,11 @@ export function renderSingleContactView(
                 <p class="contacts_single_view_phone" >${phone}</p>
               </div>
             </div>
+            <button id="mobile_edit_btn_id" class="mobile_edit_btn">
+              <img
+                src="assets/img/more_vert.webp"
+                alt="Edit Contact"
+            </button>
             `;
     openEditDialogBtnListener(newSingleView, id);
     openDeleteDialogBtnListener(newSingleView, id, person);

@@ -484,6 +484,17 @@ dialog::backdrop {
     display: none;
 }
 
+.mobile_edit_btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #2A3647;
+  border: 1px solid #2A3647;
+  position: absolute;
+  top: calc(100dvh - 156px);
+  right: 20px;
+}
+
 @media (max-width: 1300px) {
   .contacts_single_view_container {
     align-items: center;
@@ -607,6 +618,10 @@ dialog::backdrop {
 
 .contacts_single_view_content_information {
   align-items: unset;
+}
+
+.mobile_edit_btn {
+  display: block;
 }
 
 }

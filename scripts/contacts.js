@@ -59,17 +59,26 @@ document.addEventListener('submit', (event) => {
 });
 
 export function openEditDialogBtnListener(newSingleView, id) {
-    const editButton = newSingleView.querySelector('#edit_btn_id');
+  let ScreenSize = window.innerWidth
+  let editButton;
+  if (ScreenSize <701) {
+    editButton = newSingleView.querySelector('#mobile_edit_btn_id');
+  } else {
+    editButton = newSingleView.querySelector('#edit_btn_id');
+  }
     editButton.addEventListener('click', () => {
         openEditContactDialog(id);
     });
 }
 
 export function openDeleteDialogBtnListener(newSingleView, id, person) {
+  let ScreenSize = window.innerWidth
+  if (ScreenSize > 701) {
     const deleteButton = newSingleView.querySelector('#delete_btn_id');
     deleteButton.addEventListener('click', () => {
         deleteContactDialog(id, person);
     });
+  }
 }
 
 export function deleteBtnListener(contactId, person, editContactInput) {
