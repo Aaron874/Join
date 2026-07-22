@@ -45,7 +45,7 @@ header {
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
 }
 
 main {
@@ -80,6 +80,10 @@ aside {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+footer {
+  background-color: var(--bg-blue);
 }
 
 .header-content {
@@ -274,4 +278,10 @@ aside {
 
 .full-card a:hover {
   text-decoration: underline;
+}
+
+.mobile-footer{
+  width: 100%;
+  display: none;
+  justify-content: center;
 }
