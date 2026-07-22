@@ -1,6 +1,6 @@
 * {
   font-family: "Inter";
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .visually-hidden {
@@ -383,6 +383,21 @@
 .task-dialog-section p {
     margin: 16px 0 0;
     font-size: 20px;
+}
+
+.contacts_list_name_symbol {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--contact-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 2px solid white;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 .task-dialog-footer {

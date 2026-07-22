@@ -66,7 +66,6 @@ function renderBoard() {
         renderColumn(status, getElement(containerId));
     });
     console.log(fetchedTasks);
-    
 }
 
 function renderSubtasks() {
