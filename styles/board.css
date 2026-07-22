@@ -29,6 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: 0 64px 0 64px;
 }
 
@@ -36,7 +37,7 @@
   font-size: var(--fs-standard);
   display: flex;
   flex-direction: row;
-
+  gap: 10px;
 }
 
 .search-wrapper {
@@ -460,4 +461,10 @@
 
 .style-priority {
   flex-wrap: wrap;
+}
+
+@media (max-width: 780px){
+  .head-right {
+  flex-wrap: wrap;
+  }
 }
