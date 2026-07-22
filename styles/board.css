@@ -860,11 +860,10 @@ input::placeholder {
 }
 
 .task-dialog {
-    width: min(525px, calc(100vw - 32px));
-    /* max-height: calc(100dvh - 64px); */
+    width: (525px, calc(100vw - 32px));
+    min-width: 300px;
     border: none;
     border-radius: 30px;
-    padding: 0;
     overflow-y: auto;
     position: relative;
     margin: auto;
@@ -941,7 +940,7 @@ input::placeholder {
 
 .task-dialog-section p {
     margin: 16px 0 0;
-    font-size: 20px;
+    font-size: var(--fs-standard);
 }
 
 .contacts_list_name_symbol {
@@ -1284,6 +1283,18 @@ input::placeholder {
         padding-right: 0;
         bottom: 80px;
     }
+}
+
+@media(max-width: 420px){
+  .task-dialog-content{
+    padding: 16px;
+  }
+}
+
+@media(max-width: 360px){
+  .task-dialog-content{
+    padding: 8px;
+  }
 }
 
 @media (max-width: 780px){
