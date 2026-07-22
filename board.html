@@ -7,7 +7,6 @@
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="svg/xml">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./styles/board.css">
-    <link rel="stylesheet" href="./styles/add_task.css">
     <script type="module" src="./scripts/boardContacts.js"></script>
     <script defer src="./scripts/add_task.js"></script>
     <script defer src="./scripts/taskTemplate.js"></script>
@@ -337,9 +336,24 @@
                 </form>
             </section>
         </dialog>
+        <dialog class="task_dialog_success" id="task_dialog_success_id">
+            <p>Task succesfully created</p>
+        </dialog>
         <dialog id="task-dialog" class="task-dialog"></dialog>
+        <dialog class="task_dialog_delete" id="task_dialog_delete_id">
+        <div class="dialog_wrapper">
+          <p>Are you sure you want to delete this Task?</p>
+          <span id="task_name_id" ></span>
+          <div class="delete_btn_container">
+            <button>Delete</button>
+            <button>Cancel</button>
+          </div>
+  
+        </div>
+     
+      </dialog>
     </main>
-    
+
 </body>
 
 </html>

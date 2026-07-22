@@ -177,11 +177,21 @@ function closeTaskDialog() {
     closeDialog('task-dialog');
 }
 
+// async function deleteTask(taskId) {
+//     const shouldDelete = confirm(
+//         'Are you sure you want to delete this task?'
+//     );
+//     if (!shouldDelete) return;
+//     try {
+//         await deleteTaskFromFirebase(taskId);
+//         closeTaskDialog();
+//         await reloadBoard();
+//     } catch (error) {
+//         console.error('Task konnte nicht gelöscht werden:', error);
+//     }
+// }
+
 async function deleteTask(taskId) {
-    const shouldDelete = confirm(
-        'Are you sure you want to delete this task?'
-    );
-    if (!shouldDelete) return;
     try {
         await deleteTaskFromFirebase(taskId);
         closeTaskDialog();
@@ -643,4 +653,48 @@ function searchTasks(){
     currentSearch = document.getElementById('search-input')
     .value.trim();
     renderBoard();
+}
+
+function taskSuccessfullyCreatedDialog() {
+    const successDialog = document.getElementById('task_dialog_success_id');
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+    }, 2000);
+}
+
+function deleteTaskDialog(taskId, taskTitle) {
+    const deleteDialog = document.getElementById('task_dialog_delete_id');
+    const taskName = deleteDialog.querySelector('#task_name_id');
+    const buttons = deleteDialog.querySelectorAll('.delete_btn_container button');
+
+    const deleteButton = buttons[0];
+    const cancelButton = buttons[1];
+
+    taskName.textContent = taskTitle;
+
+    eventListenerDeleteTaskDialog(
+        taskId,
+        deleteButton,
+        cancelButton,
+        deleteDialog
+    );
+
+    deleteDialog.showModal();
+}
+
+function eventListenerDeleteTaskDialog(
+    taskId,
+    deleteButton,
+    cancelButton,
+    deleteDialog
+) {
+    deleteButton.onclick = async () => {
+        await deleteTask(taskId);
+        deleteDialog.close();
+    };
+
+    cancelButton.onclick = () => {
+        deleteDialog.close();
+    };
 }
