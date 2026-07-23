@@ -16,6 +16,21 @@ h1 .layout {
   display: flex;
 }
 
+.logo-header {
+  display: none;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+}
+
+.page-title button {
+  display: none;
+  width: 50px;
+  height: 50px;
+}
+
 .add_task-h1 {
   padding-bottom: 48px;
   font-size: 61px;
@@ -43,6 +58,11 @@ h1 .layout {
   flex-direction: column;
   width: 100%;
   height: 100%;
+}
+
+.button-text {
+  border: 1px solid red;
+  display: flex;
 }
 
 .style-content {
@@ -333,28 +353,17 @@ input::placeholder {
   margin-bottom: 0;
 }
 
-/* .symbole_up_dropdown_contacts {
-    display: none;
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    transform: translateY(-50%);
-    cursor: pointer;
-} */
-
 .dropdown-arrow {
   display: none;
   position: absolute;
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
-
   width: 24px;
   height: 24px;
   border: none;
   border-radius: 50%;
   background: transparent;
-
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -762,7 +771,7 @@ input::placeholder {
 
 .task-card-contact {
   position: relative;
-  z-index: calc(20 - var(--contact-index));
+  z-index: calc(3 - var(--contact-index));
   width: 32px;
   height: 32px;
   padding: 10px;
@@ -1077,10 +1086,10 @@ input::placeholder {
   border-radius: 10px;
 }
 
-@media(max-width: 1156px){
-  .board{
+@media(max-width: 1156px) {
+  .board {
     justify-content: center;
-    }
+  }
 }
 
 @media (max-width: 1135px) {
@@ -1115,6 +1124,16 @@ input::placeholder {
 
   .content-divider {
     display: none;
+  }
+}
+
+@media(max-width: 990px) {
+  .add-button {
+    display: none;
+  }
+
+  .page-title button {
+    display: flex;
   }
 }
 
@@ -1273,24 +1292,33 @@ input::placeholder {
     flex-wrap: wrap;
   }
 
-  main{
+  main {
     width: 100%;
     margin: 0;
   }
 
-  aside{
+  aside {
     display: none;
   }
 
-  
+  .logo-header {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .header-content {
+    display: none;
+  }
 
   .aside-content {
     align-items: center;
   }
 
-  .mobile-footer {
-  display: flex;
-  flex-direction: column;
+  .footer {
+    display: flex;
+    justify-content: center;
   }
 
   .board {
@@ -1302,7 +1330,7 @@ input::placeholder {
     padding-left: 16px;
   }
 
-  .logo{
+  .logo {
     display: none;
   }
 }
