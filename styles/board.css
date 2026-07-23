@@ -1216,9 +1216,9 @@ input::placeholder {
     display: none;
   }
 
-  .style-div-buttons {
+  /* .style-div-buttons {
     bottom: 80px;
-  }
+  } */
 }
 
 @media (max-width: 520px) {
@@ -1258,10 +1258,6 @@ input::placeholder {
 
   .content-divider {
     display: none;
-  }
-
-  .style-div-buttons {
-    bottom: 80px;
   }
 }
 
@@ -1327,7 +1323,6 @@ input::placeholder {
   .style-div-buttons {
     justify-content: center;
     padding-right: 0;
-    bottom: 80px;
   }
 }
 
