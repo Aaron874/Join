@@ -440,6 +440,7 @@ dialog::backdrop {
     border-radius: 20px;
     font-family: 'Inter';
     font-weight: 400;
+    transform: translate(-50%);
 
   }
 
@@ -646,4 +647,93 @@ dialog::backdrop {
   display: block;
 }
 
+.logo_dialog_contact {
+  display: none;
+}
+
+.dialog_container {
+  height: 90dvh;
+  width: 90dvw;
+  flex-direction: column;
+  max-width: 396px;
+  max-height: 760px;
+}
+
+.contact_logo_section {
+  flex: 9 10 0;
+  border-radius: 0;
+  justify-content: unset;
+  flex-direction: row;
+  width: 100%;
+
+}
+
+.add_contact_form_section {
+  flex: 11 1 0;
+  width: unset;
+}
+
+.contact_dialog_header {
+  margin-left: 16px;
+}
+
+.add_contact_text_left::after {
+  margin-left: 16px;
+}
+
+.add_contact_text_left {
+  height: unset;
+}
+
+.add_contact_text_left h3 {
+  font-size: 47px;
+}
+
+.contact_color_picker {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.contact_form_container {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact_form_container form {
+  margin-top: 20px;
+}
+
+.contact_btn_container {
+  justify-content: center;
+}
+
+.contact_input_wrapper {
+  margin-bottom: 24px;
+  width: 320px;
+}
+
+.add_contact_btn_cancel {
+  display: none;
+}
+
+}
+
+
+
+@media (max-width: 340px) {
+  .contact_dialog_header {
+    margin-left: 4px;
+  }
+  
+  .add_contact_text_left::after {
+    margin-left: 4px;
+  }
+
+  .contact_input_wrapper {
+    width: 280px;
+  }
 }
