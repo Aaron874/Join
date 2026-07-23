@@ -1,136 +1,165 @@
 const categoryStyles = {
-    'Technical Task': 'technical-task',
-    'User Story': 'user-story',
+'Technical Task': 'technical-task',
+'User Story': 'user-story',
 };
 
 const priorityIcons = {
-    urgent: `
-        <svg class="priority-icon urgent" width="20" height="15" viewBox="0 0 18 18" fill="none">
-            <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    `,
-    medium: `
-        <svg class="priority-icon medium" width="20" height="15" viewBox="0 0 26 18" fill="none">
-            <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-    `,
-    low: `
-        <svg class="priority-icon low" width="20" height="15" viewBox="0 0 18 18" fill="none">
-            <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    `,
+urgent: `
+<svg class="priority-icon urgent" width="20" height="15" viewBox="0 0 18 18" fill="none">
+    <path d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+`,
+medium: `
+<svg class="priority-icon medium" width="20" height="15" viewBox="0 0 26 18" fill="none">
+    <path d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    <path d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+</svg>
+`,
+low: `
+<svg class="priority-icon low" width="20" height="15" viewBox="0 0 18 18" fill="none">
+    <path d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+`,
 };
 
+
+
 function getTaskTemplate(task) {
-    const categoryClass = categoryStyles[task.category] ?? '';
-    const priorityIcon = priorityIcons[task.priority] ?? '';
-    const previewText = getPreviewText(task.description);
+const categoryClass = categoryStyles[task.category] ?? '';
+const priorityIcon = priorityIcons[task.priority] ?? '';
+const previewText = getPreviewText(task.description);
 
-    return `
-        <article
-            class="task-card"
-            draggable="true"
-            data-task-id="${task.id}"
-            onclick="openTaskDetails('${task.id}')"
-            ondragstart="handleDragStart(event)"
-            ondragend="handleDragEnd(event)"
-        >
-            <span class="card-head ${categoryClass}">
-                ${task.category}
-            </span>
+return `
+<article class="task-card" draggable="true" data-task-id="${task.id}" ondragstart="handleDragStart(event)"
+    ondragend="handleDragEnd(event)">
+    <div class="task-card-header">
+        <span class="card-head ${categoryClass}" onclick="openTaskDetails('${task.id}')">
+            ${task.category}
+        </span>
 
-            <h3>${task.title}</h3>
+        ${getMoveTaskTemplate(task)}
+    </div>
 
-            <p class="task-description">
-                ${previewText}
-            </p>
-            <p>
+    <div class="task-card-content" onclick="openTaskDetails('${task.id}')">
+        <h3>${task.title}</h3>
+
+        <p class="task-description">
+            ${previewText}
+        </p>
+
+        <p>
             ${getSubtaskProgressTemplate(task)}
-            </p>
-            <div class="task-card-bottom">
-                ${getTaskContactIconsTemplate(task.assignedTo)}
-                ${priorityIcon}
-            </div>
-        </article>
-    `;
+        </p>
+
+        <div class="task-card-bottom">
+            ${getTaskContactIconsTemplate(task.assignedTo)}
+            ${priorityIcon}
+        </div>
+    </div>
+</article>
+`;
 }
 
 function getTaskContactIconsTemplate(assignedTo) {
-    const contacts = normalizeContacts(assignedTo);
+const contacts = normalizeContacts(assignedTo);
 
-    return `
-        <div class="task-card-contacts">
-            ${contacts.map(getTaskContactIconTemplate).join('')}
-        </div>
-    `;
+return `
+<div class="task-card-contacts">
+    ${contacts.map(getTaskContactIconTemplate).join('')}
+</div>
+`;
 }
 
 function getTaskContactIconTemplate(contact, index) {
-    return `
-        <span
-            class="task-card-contact"
-            style="
+return `
+<span class="task-card-contact" style="
                 --contact-color: ${contact.color};
                 --contact-index: ${index};
-            "
-            title="${contact.name}"
-        >
-            ${contact.shortName}
-        </span>
-    `;
+            " title="${contact.name}">
+    ${contact.shortName}
+</span>
+`;
 }
 
 function getTaskDetailsContactsTemplate(assignedTo) {
-    const contacts = normalizeContacts(assignedTo);
+const contacts = normalizeContacts(assignedTo);
 
-    if (!contacts.length) {
-        return '<p>No contacts assigned</p>';
-    }
+if (!contacts.length) {
+return '<p>No contacts assigned</p>';
+}
 
-    return `
-        <div class="task-details-contacts">
-            ${contacts.map(getTaskDetailsContactTemplate).join('')}
-        </div>
-    `;
+return `
+<div class="task-details-contacts">
+    ${contacts.map(getTaskDetailsContactTemplate).join('')}
+</div>
+`;
 }
 
 function getTaskDetailsContactTemplate(contact) {
-    return `
-        <div class="task-details-contact">
-            <span
-                class="task-details-contact-icon"
-                style="--contact-color: ${contact.color};"
-            >
-                ${contact.shortName}
-            </span>
+return `
+<div class="task-details-contact">
+    <span class="task-details-contact-icon" style="--contact-color: ${contact.color};">
+        ${contact.shortName}
+    </span>
 
-            <span class="task-details-contact-name">
-                ${contact.name}
-            </span>
-        </div>
-    `;
+    <span class="task-details-contact-name">
+        ${contact.name}
+    </span>
+</div>
+`;
 }
 
 function getSubtaskProgressTemplate(task) {
-    if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
-        return '';
-    }
-    const completed = getCompletedSubtasks(task.subtasks);
-    const total = task.subtasks.length;
-    const progress = getSubtaskProgress(task.subtasks);
-    return `
-        <div class="task-progress">
-            <div class="task-progress-bar">
-                <div
-                    class="task-progress-fill"
-                    style="width:${progress}%"
-                ></div>
-            </div>
+if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
+return '';
+}
+const completed = getCompletedSubtasks(task.subtasks);
+const total = task.subtasks.length;
+const progress = getSubtaskProgress(task.subtasks);
+return `
+<div class="task-progress">
+    <div class="task-progress-bar">
+        <div class="task-progress-fill" style="width:${progress}%"></div>
+    </div>
 
-            <span>${completed}/${total}</span>
-        </div>
-    `;
+    <span>${completed}/${total}</span>
+</div>
+`;
+}
+
+function getMoveTaskTemplate(task) {
+const previousStatus = getPreviousStatus(task.status);
+const nextStatus = getNextStatus(task.status);
+
+return `
+<div class="move-task-wrapper">
+    <button class="move-task-button" type="button" draggable="false" aria-label="Move task"
+        onclick="toggleMoveTaskMenu(event, '${task.id}')"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="28" height="28" rx="9" stroke="#2A3647" stroke-width="2" />
+            <path d="M15 7.5V22.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+            <path d="M22.5 15.1416L7.5 15.1416" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+        </svg>
+
+    </button>
+
+    <div class="move-task-menu" id="move-task-menu-${task.id}">
+        ${previousStatus ? `
+        <button type="button" onclick="moveTaskToStatus(event, '${task.id}', '${previousStatus}')">
+            ${STATUS_LABELS[previousStatus]}
+        </button>
+        ` : ''}
+
+        ${nextStatus ? `
+        <button type="button" onclick="moveTaskToStatus(event, '${task.id}', '${nextStatus}')">
+            ${STATUS_LABELS[nextStatus]}
+        </button>
+        ` : ''}
+    </div>
+</div>
+`;
 }

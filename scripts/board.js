@@ -16,6 +16,20 @@ const COLUMN_IDS = {
     done: 'done-container',
 };
 
+const STATUS_ORDER = [
+    'todo',
+    'inProgress',
+    'awaitFeedback',
+    'done'
+];
+
+const STATUS_LABELS = {
+    todo: 'To Do',
+    inProgress: 'In Progress',
+    awaitFeedback: 'Await Feedback',
+    done: 'Done'
+};
+
 const EMPTY_COLUMN_TEXTS = {
     todo: 'No tasks To do',
     inProgress: 'No tasks in progress',
@@ -683,4 +697,52 @@ function eventListenerDeleteTaskDialog(taskId, deleteButton, cancelButton, delet
     cancelButton.onclick = () => {
         deleteDialog.close();
     };
+}
+
+function getPreviousStatus(currentStatus){
+    const currentIndex = STATUS_ORDER.indexOf(currentStatus);
+    if(currentIndex <= 0){
+        return null;
+    }
+    return STATUS_ORDER[currentIndex - 1];
+}
+
+function getNextStatus(currentStatus){
+    const currentIndex = STATUS_ORDER.indexOf(currentStatus);
+    if(
+        currentIndex === -1 ||
+        currentIndex >= STATUS_ORDER.length - 1
+    ){
+        return null;
+    }
+    return STATUS_ORDER[currentIndex + 1];
+}
+
+function handleTaskCardClick(event, taskId){
+    if(event.target.closest('.move-task-wrapper')){
+        return;
+    }
+    openTaskDetails(taskId);
+}
+
+function toggleMoveTaskMenu(event, taskId) {
+    event.preventDefault();
+    event.stopPropagation();
+    const menu = document.getElementById(`move-task-menu-${taskId}`);
+    if (!menu) {
+        console.error('Move-Menü wurde nicht gefunden:', taskId);
+        return;
+    }
+    menu.classList.toggle('move-task-menu-open');
+}
+
+async function moveTaskToStatus(event, taskId, newStatus) {
+    event.preventDefault();
+    event.stopPropagation();
+    try {
+        await updateTaskStatus(taskId, newStatus);
+        await reloadBoard();
+    } catch (error) {
+        console.error('Task konnte nicht verschoben werden:', error);
+    }
 }
