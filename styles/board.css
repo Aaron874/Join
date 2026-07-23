@@ -863,6 +863,7 @@ input::placeholder {
   position: absolute;
   top: 32px;
   right: 0;
+  transform: translateX(25%);
   z-index: 20;
   width: 150px;
   padding: 8px;
@@ -1374,6 +1375,7 @@ input::placeholder {
   .footer {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .board {
