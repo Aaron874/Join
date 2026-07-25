@@ -24,6 +24,7 @@
     max-width: 1065px;
     height: 90dvh;
     max-height: 450px;
+    min-height: 412px;
 
 }
 
@@ -514,6 +515,14 @@ dialog::backdrop {
   padding: 0;
 }
 
+.icon_mobile_close {
+  display: none;
+}
+
+.icon_desktop_close {
+  display: unset;
+}
+
 @media (max-width: 1300px) {
   .contacts_single_view_container {
     align-items: center;
@@ -729,12 +738,24 @@ dialog::backdrop {
   display: block;
 }
 
+.icon_mobile_close {
+  display: unset;
+}
+
+.icon_desktop_close {
+  display: none;
+}
+
+.add_contact_closing_btn {
+  right: 20px;
+}
+
 }
 
 
 
 
-@media (max-width: 350px) {
+@media (max-width: 370px) {
   .contact_dialog_header {
     margin-left: 4px;
   }
