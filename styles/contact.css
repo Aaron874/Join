@@ -577,7 +577,7 @@ dialog::backdrop {
     justify-content: unset;
     flex-direction: row;
     width: 100%;
-    min-height: 310px;
+    min-height: 200px;
   
   }
   
