@@ -1,0 +1,11 @@
+.summary-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-content {
+  padding-left: 163px !important;
+  width: calc(100% - 232px) !important;
+}
