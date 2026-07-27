@@ -89,7 +89,6 @@ footer {
 .header-content {
   width: 100%;
   max-width: 1440px;
-  font-family: "inter";
   font-size: var(--fs-standard);
   font-weight: 400;
   display: flex;
