@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: center;
     font-family: "Inter", sans-serif;
+    background-color: #f6f7f8;
   }
 
   header {
@@ -38,6 +39,7 @@
     border-radius: 8px;
     padding: 16px;
     color: white;
+    border: none;
  }
 
  main {
@@ -61,3 +63,83 @@
     text-decoration: none;
     cursor: pointer;
  }
+
+ .login_section {
+    box-shadow: 0 0 14px 3px rgba(0, 0, 0, 0.14);
+    border-radius: 10px;
+    padding: 48px 115px;
+    background-color: #FFFFFF;
+ }
+
+ .login_section h1 {
+    font-size: 61px;
+    font-weight: 700;
+    border-bottom: none;
+    background-image: linear-gradient(to right, #29ABE2, #29ABE2);
+    background-position: center bottom;
+    background-size: 150px 3px;
+    background-repeat: no-repeat;
+    padding-bottom: 10px;
+    margin: 0 0 16px 0;
+ }
+
+ .login_section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .login_input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #686868;
+    margin: 8px 0 8px 0;
+    border-radius: 10px;
+ }
+ .login_input_wrapper input {
+    width: 344px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px 10px 15px;
+    color: #686868;
+    font-size: 20px;
+
+ }
+
+ .login_input_wrapper img {
+        position: absolute;
+        right: 12px;
+        pointer-events: none;
+ }
+
+ .login_btn_wrapper {
+    margin-top: 30px;
+    display: flex;
+    gap: 35px;
+ }
+
+.guest_login_btn {
+    font-size: 21px;
+    font-weight: 700;
+    color: #2A3647;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: #2A3647 1px solid;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.login_btn {
+    background-color: #2A3647;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 21px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    border: none;
+}
