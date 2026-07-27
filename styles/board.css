@@ -16,8 +16,8 @@ h1 .layout {
   display: flex;
 }
 
-.logo-header {
-  display: none;
+.mobile-joinLogo {
+    display: none;
 }
 
 .page-title {
@@ -562,12 +562,6 @@ input::placeholder {
 .mobile-joinLogo {
   display: none;
 }
-
-.header-content {
-  padding-left: 163px !important;
-  width: calc(100% - 232px) !important;
-}
-
 
 
 .add-dialog {
@@ -1357,12 +1351,11 @@ priority-icon {
     display: none;
   }
 
-  .logo-header {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    padding-left: 10px;
-  }
+  .mobile-joinLogo {
+  display: flex;
+  position: fixed;
+  left: 48px;
+}
 
   .header-content {
     display: none;
