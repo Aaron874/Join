@@ -31,6 +31,7 @@ low: `
 function getTaskTemplate(task) {
 const categoryClass = categoryStyles[task.category] ?? '';
 const priorityIcon = priorityIcons[task.priority] ?? '';
+console.log(task.title, task.priority, priorityIcon);
 const previewText = getPreviewText(task.description);
 
 return `

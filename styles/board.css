@@ -900,16 +900,21 @@ input::placeholder {
 }
 
 .task-card-bottom {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30px;
-  height: 30px;
+}
+
+priority-icon {
+  display: block;
+  flex-shrink: 0;
 }
 
 .priority-icon.urgent {
   color: #ff3d00;
 }
+
 
 .priority-icon.medium {
   color: #ffa800;
