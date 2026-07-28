@@ -69,6 +69,7 @@
     border-radius: 10px;
     padding: 48px 115px;
     background-color: #FFFFFF;
+    position: relative;
  }
 
  .login_section h1 {
@@ -142,4 +143,36 @@
     align-items: center;
     border-radius: 10px;
     border: none;
+}
+
+.privacy_checkbox {
+    display: flex;
+    gap: 8px;
+    margin: 25px 0 32px 0;
+}
+
+.privacy_checkbox a {
+    text-decoration: none;
+    color: #124658;
+}
+
+.sign_up_btn {
+    background-color: #2A3647;
+    padding: 15px 24px;
+    color: #FFFFFF;
+    font-size: 21px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    border: none;
+}
+
+.back_to_log_in_btn {
+    border: none;
+    background-color: #FFFFFF;
+    padding: 0;
+    display: flex;
+    position: absolute;
+    left: 70px;
 }
