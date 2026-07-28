@@ -1,6 +1,34 @@
+/* * {
+  border: 1px solid red;
+} */
+
+main {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.footer {
+  display: none;
+}
+
+.footer-link-icons {
+  height: 76px;
+  width: 80px;
+  border-radius: 16px;
+}
+
+.footer-link-icons:hover {
+  background-color: #19202b;
+}
+
+.mobile-joinLogo {
+  display: none;
+}
+
 .summary-content {
   width: 100%;
   max-width: 1440px;
+  min-width: 0;
   min-height: calc(100dvh - 96px);
   padding: 48px;
   display: flex;
@@ -16,6 +44,7 @@
 
 .summary-wrapper {
   width: 100%;
+  min-width: 0;
 }
 
 .summary-heading {
@@ -43,13 +72,17 @@
 }
 
 .summary-dashboard {
+  width: 100%;
+  min-width: 0;
   display: flex;
+  flex-wrap: wrap-reverse;
   align-items: center;
   gap: 96px;
 }
 
 .summary-metrics {
-  width: 656px;
+  width: min(656px, 100%);
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -106,15 +139,15 @@
 }
 
 .summary-icon {
-    width: 69px;
-    height: 69px;
-    flex-shrink: 0;
+  width: 69px;
+  height: 69px;
+  flex-shrink: 0;
 }
 
 .summary-icon svg {
-    display: block;
-    width: 100%;
-    height: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .summary-card:hover .summary-icon {
@@ -138,6 +171,7 @@
   min-height: 196px;
   padding: 40px 56px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
@@ -194,4 +228,83 @@
 .summary-greeting strong {
   font-size: 64px;
   color: #0f5669;
+}
+
+@media(max-width: 1870px) {
+  main {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 997px) {
+
+  .summary-top-cards,
+  .summary-bottom-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-content {
+    padding: 16px;
+  }
+
+  .summary-card-small {
+    width: 164px;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .footer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .header-content{
+    width: 100%;
+    padding-left: 0 !important;
+  }
+
+  main {
+    margin-left: 5px;
+    width: 100%;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .mobile-joinLogo {
+    display: flex;
+    position: fixed;
+    left: 16px;
+  }
+}
+
+@media(max-width: 390px){
+  .summary-content{
+    padding: 0;
+  }
+
+  .summary-metrics{
+    align-items: center;
+  }
+
+  .summary-greeting strong{
+    font-size: 48px;
+  }
+
+  .summary-greeting span{
+    font-size: 36px;
+  }
+
+  .summary-card-wide {
+    width: 280px;
+  }
+
+  .summary-urgent-card{
+    width: 280px;
+  }
 }
