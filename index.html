@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Join Main Site</title>
         <link rel="stylesheet" href="styles/index.css" />
+        <script type="module" src="scripts/index.js"></script>
     </head>
     <body>
         <header>
@@ -19,7 +20,7 @@
                 <button class="back_to_log_in_btn">
                     <img src="assets/img/arrow-left-line.webp" alt="" />
                 </button>
-                <form action="">
+                <form action="" id="sign_log_in_id" novalidate>
                     <h1>Log in</h1>
                     <div class="login_input_wrapper">
                         <input type="text" placeholder="Name" required />
@@ -42,18 +43,18 @@
                     <div class="login_input_wrapper">
                         <input
                             type="password"
-                            name="Password"
-                            id=""
+                            name="confirmPassword"
+                            id="confirm_password"
                             placeholder="Confirm Password"
                             required
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
                     <div class="privacy_checkbox">
-                        <input type="checkbox" name="Privacy Policy Checkbox" id="" />
+                        <input type="checkbox" name="Privacy Policy Checkbox" id="" required/>
                         <p>I accept the <a href="policy.html">Privacy Policy</a></p>
                     </div>
-                    <button class="sign_up_btn" type="submit">Sign up</button>
+                    <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
                     <!-- <div class="login_input_wrapper">
                     <input  type="email" name="email" 
                     id="login_email_id"
