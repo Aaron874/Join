@@ -263,12 +263,11 @@ main {
   }
 
   .header-content{
-    width: 100%;
-    padding-left: 0 !important;
+    display: none;
   }
 
   main {
-    margin-left: 5px;
+    margin-left: 0;
     width: 100%;
   }
 
@@ -284,12 +283,21 @@ main {
 }
 
 @media(max-width: 390px){
+
+  .summary-heading h1{
+    padding-left: 10px;
+  }
+
   .summary-content{
     padding: 0;
   }
 
   .summary-metrics{
     align-items: center;
+  }
+
+  .summary-greeting{
+    padding-left: 10px;
   }
 
   .summary-greeting strong{
