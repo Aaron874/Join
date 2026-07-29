@@ -20,14 +20,29 @@
                 <button class="back_to_log_in_btn">
                     <img src="assets/img/arrow-left-line.webp" alt="" />
                 </button>
-                <form action="" id="sign_log_in_id" novalidate>
+                <form action="" id="sign_log_in_id">
                     <h1>Log in</h1>
                     <div class="login_input_wrapper">
-                        <input type="text" placeholder="Name" required />
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            minlength="2"
+                            maxlength="30"
+                            pattern="[\p{L}' \-]{2,100}"
+                            title="Der Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten."
+                            required
+                        />
                         <img src="assets/img/person_16_16_sign_up.webp" alt="Person Icon" />
                     </div>
                     <div class="login_input_wrapper">
-                        <input type="email" name="email" id="" placeholder="Email" required />
+                        <input
+                            type="email"
+                            name="email"
+                            id=""
+                            placeholder="Email"
+                            autocomplete="email"
+                            required
+                        />
                         <img src="assets/img/mail_login_sign.webp" alt="Mail Icon" />
                     </div>
                     <div class="login_input_wrapper">
@@ -36,6 +51,7 @@
                             name="password"
                             id=""
                             placeholder="Password"
+                            minlength="12"
                             required
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
@@ -51,7 +67,7 @@
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
                     <div class="privacy_checkbox">
-                        <input type="checkbox" name="Privacy Policy Checkbox" id="" required/>
+                        <input type="checkbox" name="Privacy Policy Checkbox" id="" required />
                         <p>I accept the <a href="policy.html">Privacy Policy</a></p>
                     </div>
                     <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
