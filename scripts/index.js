@@ -1,4 +1,4 @@
-// import { loginUser } from '../auth/auth.service.js'
+import { loginUser } from './auth/auth.service.js'
 export const user = "";
 
 document.addEventListener('submit', (event) => {
@@ -33,8 +33,9 @@ function userData (confirmPassword) {
         confirmPassword.reportValidity();
         return;
       }
-    console.log(values);
+
     form.reset();
+    // loginUser(values.email, values.password)
 }
 
 function resetValidation (confirmPassword ) {
