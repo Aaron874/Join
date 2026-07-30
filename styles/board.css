@@ -1205,10 +1205,6 @@ priority-icon {
     margin-left: 0;
   }
 
-  .header-content {
-    padding-left: 48px !important;
-  }
-
   .style-form-right {
     margin-top: -60px;
   }
@@ -1216,10 +1212,6 @@ priority-icon {
   .content-divider {
     display: none;
   }
-
-  /* .style-div-buttons {
-    bottom: 80px;
-  } */
 }
 
 @media (max-width: 520px) {
@@ -1357,6 +1349,19 @@ priority-icon {
   display: flex;
   position: fixed;
   left: 48px;
+}
+
+.header{
+  width: 100%;
+}
+
+.help-icon{
+  display: none !important; 
+}
+
+.right-header {
+  width: 100%;
+  justify-content: flex-end;
 }
 
   .header-content {
