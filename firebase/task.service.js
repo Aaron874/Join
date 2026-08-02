@@ -9,7 +9,7 @@ import {
 import {
     db,
     auth
-} from "./firebase.config.js";
+} from "./firebase-config.js";
 
 /**
  * Gibt die UID des aktuell angemeldeten Benutzers zurück.

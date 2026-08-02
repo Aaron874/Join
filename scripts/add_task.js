@@ -1,3 +1,8 @@
+import { auth } from "../firebase/firebase-config.js";
+import { guestLogin } from "../firebase/auth.js";
+import { getContacts } from "../firebase/contacts.service.js";
+import { createTask as createFirebaseTask } from "../firebase/task.service.js";
+
 let selectedContacts = [];
 
 
@@ -12,7 +17,7 @@ let tasks = [];
 let subtasks = [];
 
 
-const BASE_URL = "https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/";
+let contactsList = [];
 
 
 const priorityConfig = {
@@ -42,9 +47,39 @@ const priorityConfig = {
 
 window.addEventListener('DOMContentLoaded', initAddTask);
 
-function initAddTask() {
-    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
-    document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
+async function initAddTask() {
+    try {
+        const user = await ensureAuthenticatedUser();
+
+        console.log("Aktueller Benutzer:", user.uid);
+        console.log("Gast:", user.isAnonymous);
+
+        contactsList = await getContacts();
+
+        document.getElementById(
+            "symbole_down_dropdown_contacts"
+        ).style.display = "flex";
+
+        document.getElementById(
+            "symbole_down_dropdown_category"
+        ).style.display = "flex";
+    } catch (error) {
+        console.error(
+            "Add Task konnte nicht initialisiert werden:",
+            error
+        );
+    }
+}
+
+
+async function ensureAuthenticatedUser() {
+    if (auth.currentUser) {
+        return auth.currentUser;
+    }
+
+    const result = await guestLogin();
+
+    return result.user;
 }
 
 
@@ -63,6 +98,16 @@ function searchContacts() {
         let searchedContactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
         searchedContacts.innerHTML += contactsTemplate(searchedContactName, results[index].color, shortName);
     }
+}
+
+
+function contactListInitials(contactName) {
+    return contactName
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(word => word[0].toUpperCase())
+        .join('');
 }
 
 
@@ -220,7 +265,6 @@ function addSubtask(event) {
         completed: false
     });
     input.value = '';
-    renderSubtasks();
 }
 
 function getTaskData(element) {
@@ -249,18 +293,40 @@ function isTaskValid(task) {
 }
 
 
+function taskSuccessfullyCreatedDialog() {
+    alert("Task successfully created");
+}
+
+
 async function createTask(element) {
     formRequired();
+
     const task = getTaskData(element);
 
-    if (!isTaskValid(task)) return;
+    if (!isTaskValid(task)) {
+        return;
+    }
 
-    tasks.push(task);
-    await addTaskToFirebase(task);
-    priority = [];
-    selectedContacts = [];
-    clearTaskform();
-    console.log(tasks);
+    try {
+        const result = await createFirebaseTask(task);
+
+        const savedTask = {
+            id: result.key,
+            ...task
+        };
+
+        tasks.push(savedTask);
+
+        priority = [];
+        selectedContacts = [];
+
+        clearTaskform();
+        taskSuccessfullyCreatedDialog();
+
+        console.log("Task gespeichert:", savedTask);
+    } catch (error) {
+        console.error("Task konnte nicht gespeichert werden:", error);
+    }
 }
 
 
@@ -282,7 +348,6 @@ function resetTaskFields() {
     document.getElementById("selected_category_text").textContent = "Select task category";
     document.getElementById("div_contacts_initials").style.display = "";
     subtasks = [];
-    renderSubtasks();
 }
 
 
@@ -300,24 +365,6 @@ function clearTaskform() {
     resetTaskUI();
 }
 
-
-async function postData(path = "", data = {}) {
-    let response = await fetch(BASE_URL + path + ".json", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-    });
-    return responseToJson = await response.json();
-}
-
-
-async function addTaskToFirebase(task = {}) {
-    postData('tasks', task);
-    await reloadBoard();
-    taskSuccessfullyCreatedDialog()
-}
 
 const titleInput = document.getElementById("task-title");
 const titleError = document.getElementById("titleError");
@@ -365,3 +412,20 @@ function formRequired() {
     }
     if (!formIsValid) return;
 }
+
+
+window.searchContacts = searchContacts;
+window.clearInput = clearInput;
+
+window.dropdownContactsDown = dropdownContactsDown;
+window.dropdownContactsUp = dropdownContactsUp;
+
+window.dropdownCategoryDown = dropdownCategoryDown;
+window.dropdownCategoryUp = dropdownCategoryUp;
+
+window.toggleContact = toggleContact;
+window.selectedCatgeory = selectedCatgeory;
+
+window.colorChangePriority = colorChangePriority;
+window.clearTaskform = clearTaskform;
+window.createTask = createTask;
