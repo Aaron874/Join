@@ -57,3 +57,5 @@ function resetValidation (confirmPassword ) {
         confirmPassword.checkValidity()
         });
 }
+console.log(user);
+
