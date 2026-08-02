@@ -9,6 +9,8 @@
 
 window.addEventListener('DOMContentLoaded', initBoard);
 
+const BASE_URL ='https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/'
+
 const COLUMN_IDS = {
     todo: 'todo-container',
     inProgress: 'progress-container',
