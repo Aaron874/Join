@@ -7,7 +7,7 @@ import {
 import {
     db,
     auth
-} from "./firebase.config.js";
+} from "./firebase-config.js";
 
 /**
  * Erstellt das Benutzerprofil in der Realtime Database.
