@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./assets/img/logo.svg" type="svg/xml">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/summary.css">
+    <script src="./scripts/summaryTemplate.js"></script>
+    <script src="./scripts/summary.js"></script>
     <title>Join-Summary</title>
 </head>
 
 <body>
     <header>
-        <section class="header-content">Kanban Project Management Tool</section>
+      <section class="header-content">Kanban Project Management Tool</section>
+      <img class="mobile-joinLogo" src="./assets/img/mobile-joinLogo.png" alt="">
+
     </header>
     <aside>
         <div class="logo">
@@ -69,15 +74,21 @@
                 </a>
             </div>
             <div class="options">
-                <a href="policy.html">Privacy Policy</a> 
-                <a href="legal.html">Legal Notice</a> 
+                <a href="policy.html">Privacy Policy</a>
+                <a href="legal.html">Legal Notice</a>
             </div>
         </section>
     </aside>
     <main>
-        <section class="main-content">
-        </section>
+        <article id="summary-content" class="summary-content">
+        </article>
     </main>
+    <footer class="footer">
+        <a class="footer-link-icons" href="summary.html"><img src="./assets/img/mobile-summary.png" alt=""></a>
+        <a class="footer-link-icons" href="add_task.html"><img src="./assets/img/mobile-addTask.png" alt=""></a>
+        <a class="footer-link-icons" href="board.html"><img src="./assets/img/mobile-board.png" alt=""></a>
+        <a class="footer-link-icons" href="contacts.html"><img src="./assets/img/mobile-contacts.png" alt=""></a>
+    </footer>
 </body>
 
 </html>

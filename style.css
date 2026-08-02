@@ -86,10 +86,51 @@ footer {
   background-color: var(--bg-blue);
 }
 
+.header {
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content{
+  width: 100%;
+  max-width: 720px;
+}
+
+.right-header{
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.help-icon{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.loged-in-user-icon{
+  width: 56px;
+  height: 56px;
+  border: 3px solid var(--bg-blue);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--fs-standard);
+  font-weight: 800;
+  color: var(--color-blue);
+}
+
 .header-content {
   width: 100%;
   max-width: 1440px;
-  font-family: "inter";
   font-size: var(--fs-standard);
   font-weight: 400;
   display: flex;

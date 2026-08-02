@@ -1,0 +1,318 @@
+/* * {
+  border: 1px solid red;
+} */
+
+main {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.footer {
+  display: none;
+}
+
+.footer-link-icons {
+  height: 76px;
+  width: 80px;
+  border-radius: 16px;
+}
+
+.footer-link-icons:hover {
+  background-color: #19202b;
+}
+
+.mobile-joinLogo {
+  display: none;
+}
+
+.summary-content {
+  width: 100%;
+  max-width: 1440px;
+  min-width: 0;
+  min-height: calc(100dvh - 96px);
+  padding: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Inter";
+}
+
+.header-content {
+  padding-left: 163px !important;
+  width: calc(100% - 232px) !important;
+}
+
+.summary-wrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+.summary-heading {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 64px;
+}
+
+.summary-heading h1 {
+  font-size: 61px;
+  line-height: 1;
+}
+
+.summary-heading p {
+  font-size: 27px;
+  color: var(--bg-blue);
+}
+
+.summary-heading-line {
+  width: 3px;
+  height: 72px;
+  border-radius: 3px;
+  background-color: var(--color-blue);
+}
+
+.summary-dashboard {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  gap: 96px;
+}
+
+.summary-metrics {
+  width: min(656px, 100%);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.summary-top-cards,
+.summary-bottom-cards {
+  display: flex;
+  gap: 32px;
+}
+
+.summary-card {
+  background-color: var(--bg-white);
+  color: var(--bg-blue);
+  border-radius: 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.summary-card:hover {
+  transform: scale(1.04);
+  background-color: var(--bg-blue);
+  color: var(--bg-white);
+}
+
+.summary-card-wide {
+  width: 312px;
+  min-height: 196px;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+}
+
+.summary-card-wide div,
+.summary-urgent-count div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-card strong {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.summary-card span {
+  font-size: 23px;
+  text-align: center;
+}
+
+.summary-icon {
+  width: 69px;
+  height: 69px;
+  flex-shrink: 0;
+}
+
+.summary-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.summary-card:hover .summary-icon {
+  background-color: var(--bg-white);
+  color: var(--bg-blue);
+}
+
+.summary-icon-urgent {
+  background-color: var(--bg-urgent);
+  color: var(--bg-white);
+  border-radius: 50%;
+}
+
+.summary-card:hover .summary-icon-urgent {
+  background-color: var(--bg-white);
+  color: var(--bg-urgent);
+}
+
+.summary-urgent-card {
+  width: 100%;
+  min-height: 196px;
+  padding: 40px 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary-urgent-count {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.summary-divider {
+  width: 2px;
+  height: 120px;
+  background-color: var(--color-gray);
+}
+
+.summary-deadline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary-deadline strong {
+  font-size: 21px;
+}
+
+.summary-deadline span {
+  font-size: 16px;
+  text-align: left;
+}
+
+.summary-card-small {
+  width: calc((100% - 64px) / 3);
+  min-height: 196px;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.summary-greeting {
+  display: flex;
+  flex-direction: column;
+  color: var(--bg-blue);
+  white-space: nowrap;
+}
+
+.summary-greeting span {
+  font-size: 47px;
+}
+
+.summary-greeting strong {
+  font-size: 64px;
+  color: #0f5669;
+}
+
+@media(max-width: 1870px) {
+  main {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 997px) {
+
+  .summary-top-cards,
+  .summary-bottom-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-content {
+    padding: 16px;
+  }
+
+  .summary-card-small {
+    width: 164px;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .footer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .header-content{
+    display: none;
+  }
+
+  main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .mobile-joinLogo {
+    display: flex;
+    position: fixed;
+    left: 16px;
+  }
+}
+
+@media(max-width: 390px){
+
+  .summary-heading h1{
+    padding-left: 10px;
+  }
+
+  .summary-content{
+    padding: 0;
+  }
+
+  .summary-metrics{
+    align-items: center;
+  }
+
+  .summary-greeting{
+    padding-left: 10px;
+  }
+
+  .summary-greeting strong{
+    font-size: 48px;
+  }
+
+  .summary-greeting span{
+    font-size: 36px;
+  }
+
+  .summary-card-wide {
+    width: 280px;
+  }
+
+  .summary-urgent-card{
+    width: 280px;
+  }
+}

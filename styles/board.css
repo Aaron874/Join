@@ -8,6 +8,8 @@
   pointer-events: none;
 }
 
+
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -16,8 +18,8 @@ h1 .layout {
   display: flex;
 }
 
-.logo-header {
-  display: none;
+.mobile-joinLogo {
+    display: none;
 }
 
 .page-title {
@@ -563,12 +565,6 @@ input::placeholder {
   display: none;
 }
 
-.header-content {
-  padding-left: 163px !important;
-  width: calc(100% - 232px) !important;
-}
-
-
 
 .add-dialog {
   width: 1116px;
@@ -900,16 +896,21 @@ input::placeholder {
 }
 
 .task-card-bottom {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 30px;
-  height: 30px;
+}
+
+priority-icon {
+  display: block;
+  flex-shrink: 0;
 }
 
 .priority-icon.urgent {
   color: #ff3d00;
 }
+
 
 .priority-icon.medium {
   color: #ffa800;
@@ -1204,10 +1205,6 @@ input::placeholder {
     margin-left: 0;
   }
 
-  .header-content {
-    padding-left: 48px !important;
-  }
-
   .style-form-right {
     margin-top: -60px;
   }
@@ -1215,10 +1212,6 @@ input::placeholder {
   .content-divider {
     display: none;
   }
-
-  /* .style-div-buttons {
-    bottom: 80px;
-  } */
 }
 
 @media (max-width: 520px) {
@@ -1352,12 +1345,24 @@ input::placeholder {
     display: none;
   }
 
-  .logo-header {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    padding-left: 10px;
-  }
+  .mobile-joinLogo {
+  display: flex;
+  position: fixed;
+  left: 48px;
+}
+
+.header{
+  width: 100%;
+}
+
+.help-icon{
+  display: none !important; 
+}
+
+.right-header {
+  width: 100%;
+  justify-content: flex-end;
+}
 
   .header-content {
     display: none;
