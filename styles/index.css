@@ -176,3 +176,11 @@
     position: absolute;
     left: 70px;
 }
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

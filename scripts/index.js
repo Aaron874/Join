@@ -1,13 +1,12 @@
 import { loginUser, registerUser } from './auth/auth.service.js';
 import { createUserProfile, getUserProfile } from '../firebase/user.service.js';
-readUserProfile();
+// readUserProfile();
 
 document.addEventListener('submit', (event) => {
     if (!event.target.matches('#sign_log_in_id')) return;
     event.preventDefault();
     switch (event.submitter.dataset.action) {
         case 'logIn':
-            console.log("User Log In");
             loginCurrentUser();
             break;
         case 'signUp':
@@ -19,11 +18,39 @@ document.addEventListener('submit', (event) => {
     }
 });
 
+document.addEventListener('click', (event) => {
+    if (event.target.matches('.guest_login_btn')) {
+        event.preventDefault();
+        loginGuestUser();
+        return
+    }
+    if (event.target.matches('#change_to_sign_up_btn')) {
+        document.getElementById("back_to_log_in_btn_id").classList.remove("hidden");
+        changeLogOrSignForm("Sign up");
+        return;  
+    }
+    if (event.target.closest('#back_to_log_in_btn_id' || event.target.closest('.back_to_log_in_btn'))) {
+        document.getElementById("back_to_log_in_btn_id").classList.add("hidden");
+        changeLogOrSignForm("Log in");
+}});
+
+function changeLogOrSignForm(LogOrSign) {
+    // changeHeaderSignOrLog(LogOrSign);
+    let logSignContainer = document.getElementById("sign_log_in_id");
+    logSignContainer.innerHTML = "";
+    if (LogOrSign === "Sign up") {
+        logSignContainer.innerHTML += signUpTemplate();
+    } if (LogOrSign === "Log in") {
+        logSignContainer.innerHTML += signInTemplate();
+    }
+}
+
+
 async function loginCurrentUser() {
     let formValues = dataFromForm();
     try {
         const uid = await loginUser(formValues.email, formValues.password);
-        console.log("UID:", uid);
+        window.location.href = "summary.html";
     } catch (error) {
         console.error(error.code, error.message);
         if (error.code === "auth/invalid-credential") {
