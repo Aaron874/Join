@@ -414,18 +414,29 @@ function formRequired() {
 }
 
 
+// window.searchContacts = searchContacts;
+// window.clearInput = clearInput;
+
+// window.dropdownContactsDown = dropdownContactsDown;
+// window.dropdownContactsUp = dropdownContactsUp;
+
+// window.dropdownCategoryDown = dropdownCategoryDown;
+// window.dropdownCategoryUp = dropdownCategoryUp;
+
+// window.toggleContact = toggleContact;
+// window.selectedCatgeory = selectedCatgeory;
+
+// window.colorChangePriority = colorChangePriority;
+// window.clearTaskform = clearTaskform;
+// window.createTask = createTask;
 window.searchContacts = searchContacts;
 window.clearInput = clearInput;
-
 window.dropdownContactsDown = dropdownContactsDown;
 window.dropdownContactsUp = dropdownContactsUp;
-
 window.dropdownCategoryDown = dropdownCategoryDown;
 window.dropdownCategoryUp = dropdownCategoryUp;
-
-window.toggleContact = toggleContact;
 window.selectedCatgeory = selectedCatgeory;
-
 window.colorChangePriority = colorChangePriority;
 window.clearTaskform = clearTaskform;
-window.createTask = createTask;
+window.toggleContact = toggleContact;
+window.showSelectedContacts = showSelectedContacts;
