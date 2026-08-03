@@ -65,9 +65,7 @@ async function fetchTasks(path = 'tasks') {
             throw new Error(`HTTP-Fehler: ${response.status}`);
         }
         const data = await response.json();
-        fetchedTasks = Object.entries(data ?? {}).map(([id, task]) => ({
-            ...task, id,
-        }));
+        fetchedTasks = normalizeFetchedTasks(data);
         return fetchedTasks;
     } catch (error) {
         console.error('Fehler beim Abrufen:', error);
@@ -76,12 +74,63 @@ async function fetchTasks(path = 'tasks') {
     }
 }
 
+function normalizeFetchedTasks(data) {
+    const tasks = [];
+
+    Object.entries(data ?? {}).forEach(([firstLevelId, value]) => {
+        if (isTaskObject(value)) {
+            tasks.push({
+                ...value,
+                id: firstLevelId,
+            });
+
+            return;
+        }
+
+        Object.entries(value ?? {}).forEach(([taskId, task]) => {
+            if (!isTaskObject(task)) return;
+
+            tasks.push({
+                ...task,
+                id: taskId,
+                userId: firstLevelId,
+            });
+        });
+    });
+
+    return tasks;
+}
+
+function isTaskObject(value) {
+    return (
+        value &&
+        typeof value === 'object' &&
+        typeof value.title === 'string' &&
+        typeof value.status === 'string'
+    );
+}
+
+
+// function renderBoard() {
+//     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
+//         renderColumn(status, getElement(containerId));
+//     });
+//     console.log(fetchedTasks);
+// }
 
 function renderBoard() {
+    console.table(
+        fetchedTasks.map(task => ({
+            id: task.id,
+            title: task.title,
+            status: task.status,
+            priority: task.priority,
+        }))
+    );
+
     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
         renderColumn(status, getElement(containerId));
     });
-    console.log(fetchedTasks);
 }
 
 function renderSubtasks() {
@@ -92,21 +141,45 @@ function renderSubtasks() {
         .join('');
 }
 
+// function renderColumn(status, container) {
+//     if (!container) return;
+//     const content = fetchedTasks
+//         .filter(task => task.status === status)
+//         .filter(task => {
+//             if (!currentSearch || currentSearch.length < 3) {
+//                 return true;
+//             }
+//             return (
+//                 task.title?.toLowerCase().includes(currentSearch) ||
+//                 task.assignedTo?.toLowerCase().includes(currentSearch)
+//             );
+//         })
+//         .map(getTaskTemplate).join('');
+//     container.innerHTML = content || getEmptyColumnTemplate(status);
+// }
+
 function renderColumn(status, container) {
-    if (!container) return;
-    const content = fetchedTasks
-        .filter(task => task.status === status)
-        .filter(task => {
-            if (!currentSearch || currentSearch.length < 3) {
-                return true;
-            }
-            return (
-                task.title?.toLowerCase().includes(currentSearch) ||
-                task.assignedTo?.toLowerCase().includes(currentSearch)
-            );
-        })
-        .map(getTaskTemplate).join('');
-    container.innerHTML = content || getEmptyColumnTemplate(status);
+    if (!container) {
+        console.error('Container fehlt für Status:', status);
+        return;
+    }
+
+    const columnTasks = fetchedTasks.filter(task => task.status === status);
+
+    console.log(
+        `Spalte ${status}:`,
+        columnTasks.map(task => ({
+            title: task.title,
+            status: task.status,
+        }))
+    );
+
+    const content = columnTasks
+        .map(getTaskTemplate)
+        .join('');
+
+    container.innerHTML =
+        content || getEmptyColumnTemplate(status);
 }
 
 function getEmptyColumnTemplate(status) {
