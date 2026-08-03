@@ -181,6 +181,23 @@
     display: none;
 }
 
-.visible {
-    display: block;
+.sign_up_success_dialog {
+    position: fixed;
+    top: 0px;
+    background-color: #2A3647;
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.3);
 }

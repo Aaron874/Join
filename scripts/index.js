@@ -1,6 +1,7 @@
 import { loginUser, registerUser } from './auth/auth.service.js';
 import { createUserProfile, getUserProfile } from '../firebase/user.service.js';
-// readUserProfile();
+
+const successDialog = document.getElementById("sign_up_success_dialog_id");
 
 document.addEventListener('submit', (event) => {
     if (!event.target.matches('#sign_log_in_id')) return;
@@ -35,7 +36,6 @@ document.addEventListener('click', (event) => {
 }});
 
 function changeLogOrSignForm(LogOrSign) {
-    // changeHeaderSignOrLog(LogOrSign);
     let logSignContainer = document.getElementById("sign_log_in_id");
     logSignContainer.innerHTML = "";
     if (LogOrSign === "Sign up") {
@@ -56,16 +56,6 @@ async function loginCurrentUser() {
         if (error.code === "auth/invalid-credential") {
             alert("E-Mail oder Passwort ist falsch.");
         }
-    }
-}
-
-async function readUserProfile() {
-    let userProfile = await getUserProfile();
-    if (userProfile) {
-        console.log("User Profile:", userProfile);
-        console.log("uid:", userProfile.uid);
-    } else {
-        console.log("No user profile found.");
     }
 }
 
@@ -92,6 +82,7 @@ async function userData (confirmPassword) {
     form.reset();
     await registerUser(values.email, values.password);
     await createUserProfile(values.username, values.email);
+    successDialogOpen();
 }
 
 function resetValidation (confirmPassword ) {
@@ -100,5 +91,11 @@ function resetValidation (confirmPassword ) {
         confirmPassword.checkValidity()
         });
 }
-console.log(user);
 
+function successDialogOpen() {
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+        changeLogOrSignForm("Log in");
+    }, 800);
+}

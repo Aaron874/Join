@@ -8,7 +8,7 @@ function signUpTemplate() {
                             placeholder="Name"
                             minlength="2"
                             maxlength="30"
-                            pattern="[\p{L}' \-]{2,100}"
+                            pattern="[\\p{L}' \\-]{2,100}""
                             title="Der Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten."
                             required
                         />
