@@ -443,19 +443,22 @@ async function persistTask(task) {
     if (editingTaskId) {
         return updateTaskInFirebase(editingTaskId, task);
     }
-    return addTaskToFirebase(task);
+    return window.addTaskToFirebase(task);
 }
 
 function getTaskFormData(defaultStatus) {
     const existingTask = getTaskById(editingTaskId);
+    const addTaskState = window.getAddTaskState();
     return {
         title: getInputValue('task-title'),
         description: getInputValue('task-description'),
         date: getInputValue('dateDisplay'),
-        priority: priority.at(-1),
-        assignedTo: getSelectedContactNames(),
+        priority: addTaskState.priority,
+        assignedTo: addTaskState.selectedContacts
+            .map(contact => contact.name)
+            .join(', '),
         category: getTextContent('selected_category_text'),
-        subtasks: [...subtasks],
+        subtasks: [...addTaskState.subtasks],
         status: existingTask?.status ?? defaultStatus,
     };
 }
@@ -547,7 +550,8 @@ function hasSubtasks(task) {
 }
 
 function getSelectedContactNames() {
-    return selectedContacts
+    const contacts = window.getSelectedContacts?.() ?? [];
+    return contacts
         .map(contact => contact.name)
         .join(', ');
 }

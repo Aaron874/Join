@@ -440,3 +440,16 @@ window.colorChangePriority = colorChangePriority;
 window.clearTaskform = clearTaskform;
 window.toggleContact = toggleContact;
 window.showSelectedContacts = showSelectedContacts;
+window.formRequired = formRequired;
+window.addTaskToFirebase = async function (task) {
+    return await createFirebaseTask(task);
+};
+
+window.getAddTaskState = function () {
+    return {
+        priority: priority.at(-1),
+        selectedContacts,
+        subtasks,
+    };
+};
+
