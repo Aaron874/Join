@@ -231,26 +231,30 @@ async function handleDrop(event) {
     const newStatus = event.currentTarget.dataset.status;
     if (!task || task.status === newStatus) return;
     try {
-        await updateTaskStatus(task.id, newStatus);
+        await updateTaskStatus(task, newStatus);
         await reloadBoard();
     } catch (error) {
         console.error('Drop fehlgeschlagen:', error);
     }
 }
 
-async function updateTaskStatus(taskId, status) {
+async function updateTaskStatus(task, status) {
+    const taskPath = task.userId
+    ? `tasks/${task.userId}/${task.id}`
+    : `tasks/${task.id}`;
     const response = await fetch(
-        `${BASE_URL}tasks/${taskId}/status.json`,
+        `${BASE_URL}${taskPath}.json`,
         {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(status),
+            body: JSON.stringify({
+                status,
+            }),
         }
     );
-    validateResponse(response, 'Status-Update fehlgeschlagen');
-    return response.json();
+    validateResponse(response, 'Status-Update fehlgeschlagen')
 }
 
 function openTaskDetails(taskId) {
@@ -818,10 +822,12 @@ function toggleMoveTaskMenu(event, taskId) {
 async function moveTaskToStatus(event, taskId, newStatus) {
     event.preventDefault();
     event.stopPropagation();
+    const task = getTaskById(taskId);
+    if (!task || task.status === newStatus) return;
     try {
-        await updateTaskStatus(taskId, newStatus);
+        await updateTaskStatus(task, newStatus);
         await reloadBoard();
     } catch (error) {
-        console.error('Task konnte nicht verschoben werden:', error);
+        console.error('Task konnte nicht verschoben werden', error);
     }
 }

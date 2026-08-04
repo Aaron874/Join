@@ -101,11 +101,12 @@ export async function updateTask(taskId, updatedTask) {
  * @param {string} taskId
  * @param {string} status
  */
-export async function updateTaskStatus(taskId, status) {
-    const uid = getUserId();
-
+export async function updateTaskStatus(task, status) {
+    const taskPath = task.userId
+    ? `tasks/${task.userId}/${task.id}`
+    : `tasks/${task.id}`;
     return update(
-        ref(db, `tasks/${uid}/${taskId}`),
+        ref(db, taskPath),
         {
             status
         }
