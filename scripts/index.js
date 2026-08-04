@@ -2,6 +2,7 @@ import { loginUser, registerUser } from './auth/auth.service.js';
 import { createUserProfile, getUserProfile } from '../firebase/user.service.js';
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
+const signUpContainer = document.getElementById("sign_up_btn_wrapper");
 
 document.addEventListener('submit', (event) => {
     if (!event.target.matches('#sign_log_in_id')) return;
@@ -39,8 +40,10 @@ function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
     logSignContainer.innerHTML = "";
     if (LogOrSign === "Sign up") {
+        signUpContainer.classList.add("hidden");
         logSignContainer.innerHTML += signUpTemplate();
     } if (LogOrSign === "Log in") {
+        signUpContainer.classList.remove("hidden");
         logSignContainer.innerHTML += signInTemplate();
     }
 }
