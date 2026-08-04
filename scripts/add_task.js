@@ -265,7 +265,46 @@ function addSubtask(event) {
         completed: false
     });
     input.value = '';
+    renderAddTaskSubtasks();
 }
+
+function renderAddTaskSubtasks() {
+    const list = document.getElementById('subtasks-list');
+    if (!list) return;
+    list.innerHTML = subtasks
+        .map(subtask => `<div>${subtask.title}</div>`)
+        .join('');
+}
+
+window.setAddTaskSubtasks = function (taskSubtasks) {
+    if (Array.isArray(taskSubtasks)) {
+        subtasks = taskSubtasks.map(subtask => ({
+            ...subtask
+        }));
+    } else if (
+        typeof taskSubtasks === 'string' &&
+        taskSubtasks.trim()
+    ) {
+        subtasks = [{
+            title: taskSubtasks.trim(),
+            completed: false
+        }];
+    } else {
+        subtasks = [];
+    }
+    const input = document.getElementById('task-subtasks');
+    if (input) {
+        input.value = '';
+    }
+    renderAddTaskSubtasks();
+};
+
+function resetSubtasks() {
+    subtasks = [];
+    renderAddTaskSubtasks();
+}
+
+
 
 function getTaskData(element) {
     return {
@@ -347,6 +386,8 @@ function resetTaskFields() {
     document.getElementById("selected_contacts").textContent = "Select contacts to assign";
     document.getElementById("selected_category_text").textContent = "Select task category";
     document.getElementById("div_contacts_initials").style.display = "";
+    document.getElementById("task-subtasks").value = "";
+    resetSubtasks();
     subtasks = [];
 }
 
@@ -396,21 +437,25 @@ function openDatePicker() {
 
 function formRequired() {
     let formIsValid = true;
+
     if (titleInput.value.trim() === "") {
         titleInput.classList.add("error");
         titleError.classList.add("show");
         formIsValid = false;
     } else {
         titleInput.classList.remove("error");
+        titleError.classList.remove("show");
     }
+
     if (dateDisplay.value.trim() === "") {
         dateDisplay.classList.add("error");
         dateError.classList.add("show");
         formIsValid = false;
     } else {
         dateDisplay.classList.remove("error");
+        dateError.classList.remove("show");
     }
-    if (!formIsValid) return;
+    return formIsValid;
 }
 
 
@@ -441,6 +486,7 @@ window.clearTaskform = clearTaskform;
 window.toggleContact = toggleContact;
 window.showSelectedContacts = showSelectedContacts;
 window.formRequired = formRequired;
+window.addSubtask = addSubtask;
 window.addTaskToFirebase = async function (task) {
     return await createFirebaseTask(task);
 };

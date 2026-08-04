@@ -285,8 +285,13 @@ function closeTaskDialog() {
 // }
 
 async function deleteTask(taskId) {
+    const task = getTaskById(taskId);
+    if (!task) {
+        console.error('Der zu löschende Task wurde nicht gefunden:', taskId);
+        return;
+    }
     try {
-        await deleteTaskFromFirebase(taskId);
+        await deleteTaskFromFirebase(task);
         closeTaskDialog();
         await reloadBoard();
     } catch (error) {
@@ -306,14 +311,20 @@ async function createTaskInFirebase(task) {
     return response.json();
 }
 
-async function deleteTaskFromFirebase(taskId) {
+async function deleteTaskFromFirebase(task) {
+    const taskPath = task.userId
+        ? `tasks/${task.userId}/${task.id}`
+        : `tasks/${task.id}`;
     const response = await fetch(
-        `${BASE_URL}tasks/${taskId}.json`,
+        `${BASE_URL}${taskPath}.json`,
         {
             method: 'DELETE',
         }
     );
-    validateResponse(response, 'Task konnte nicht gelöscht werden');
+    validateResponse(
+        response,
+        'Task konnte nicht gelöscht werden'
+    );
 }
 
 function openEditTask(taskId) {
@@ -371,12 +382,9 @@ function formatDateForInput(date) {
 }
 
 function selectPriority(priorityValue) {
-    const priorityElement = getElement(
-        `priority-${priorityValue}`
-    );
+    const priorityElement = getElement(`priority-${priorityValue}`);
     if (!priorityElement) return;
-    priority = [];
-    colorChangePriority(priorityElement);
+    window.colorChangePriority(priorityElement);
 }
 
 async function openBoardContactsDropdown() {
@@ -488,25 +496,20 @@ function setTaskFormMode(mode) {
 }
 
 function setTaskSubtasks(taskSubtasks) {
-    if (Array.isArray(taskSubtasks)) {
-        subtasks = taskSubtasks.map(subtask => ({ ...subtask }));
-    } else if (typeof taskSubtasks === 'string' && taskSubtasks.trim()) {
-        subtasks = [{
-            title: taskSubtasks.trim(),
-            completed: false
-        }];
-    } else {
-        subtasks = [];
-    }
-    setInputValue('task-subtasks', '');
-    renderSubtasks();
+    window.setAddTaskSubtasks(taskSubtasks);
 }
 
 async function saveTask(event) {
+
+    console.log('saveTask gestartet');
+    console.log('editingTaskId', editingTaskId);
+    
+    
     event.preventDefault();
     const defaultStatus =
         document.getElementById('add-task-dialog').dataset.status || 'todo';
     const task = getTaskFormData(defaultStatus);
+    console.log('Task-Daten beim Speichern:', task);
     if (!isTaskValid(task)) return;
     try {
         await persistTask(task);
@@ -516,11 +519,15 @@ async function saveTask(event) {
     }
 }
 
-async function persistTask(task) {
-    if (editingTaskId) {
-        return updateTaskInFirebase(editingTaskId, task);
+async function persistTask(taskData) {
+    if(!editingTaskId){
+        return window.addTaskToFirebase(taskData)
     }
-    return window.addTaskToFirebase(task);
+    const existingTask = getTaskById(editingTaskId);
+    if (!existingTask){
+        throw new Error('Der zu bearbeitende Task wurde nicht gefunden.');
+    }
+    return updateTaskInFirebase(existingTask, taskData)
 }
 
 function getTaskFormData(defaultStatus) {
@@ -582,7 +589,7 @@ async function toggleTaskSubtask(index) {
     }
     task.subtasks[index].completed = !task.subtasks[index].completed;
     try {
-        await updateTaskSubtasksInFirebase(task.id, task.subtasks);
+        await updateTaskSubtasksInFirebase(task, task.subtasks);
         await reloadBoard();
         openTaskDetails(task.id);
     } catch (error) {
@@ -591,18 +598,28 @@ async function toggleTaskSubtask(index) {
     }
 }
 
-async function updateTaskSubtasksInFirebase(taskId, subtasks) {
-    const url = `${BASE_URL}tasks/${taskId}/subtasks.json`;
-    const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(subtasks)
-    });
+async function updateTaskSubtasksInFirebase(task, subtasks) {
+    const taskPath = task.userId
+        ? `tasks/${task.userId}/${task.id}`
+        : `tasks/${task.id}`;
+    const response = await fetch(
+        `${BASE_URL}${taskPath}.json`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                subtasks: subtasks,
+            }),
+        }
+    );
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`${response.status}: ${errorText}`);
+
+        throw new Error(
+            `${response.status}: ${errorText}`
+        );
     }
 }
 
@@ -635,13 +652,11 @@ function getSelectedContactNames() {
 
 function isTaskValid(task) {
     formRequired();
+
     return Boolean(
         task.title &&
-        task.description &&
         task.date &&
-        task.subtasks &&
         task.priority &&
-        task.assignedTo &&
         isValidCategory(task.category)
     );
 }
@@ -654,19 +669,49 @@ function isValidCategory(category) {
     );
 }
 
-async function updateTaskInFirebase(taskId, task) {
-    const response = await fetch(
-        `${BASE_URL}tasks/${taskId}.json`,
-        {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        }
-    );
-    validateResponse(response, 'Task-Update fehlgeschlagen');
-    return response.json();
+// async function updateTaskInFirebase(existingTask, taskData) {
+//     const taskPath = existingTask.userId
+//         ? `tasks/${existingTask.userId}/${existingTask.id}`
+//         : `tasks/${existingTask.id}`;
+//     const response = await fetch(
+//         `${BASE_URL}${taskPath}.json`,
+//         {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(taskData),
+//         }
+//     );
+//     validateResponse(response, 'Task-Update fehlgeschlagen');
+//     return response.json();
+// }
+
+async function updateTaskInFirebase(existingTask, taskData) {
+    const taskPath = existingTask.userId
+        ? `tasks/${existingTask.userId}/${existingTask.id}`
+        : `tasks/${existingTask.id}`;
+    const url = `${BASE_URL}${taskPath}.json`;
+    console.log('Vorhandener Task:', existingTask);
+    console.log('Firebase-Pfad:', taskPath);
+    console.log('Firebase-URL:', url);
+    console.log('Gesendete Task-Daten:', taskData);
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(taskData),
+    });
+    const responseText = await response.text();
+    console.log('Firebase-Status:', response.status);
+    console.log('Firebase-Antwort:', responseText);
+    if (!response.ok) {
+        throw new Error(
+            `Task-Update fehlgeschlagen: ${response.status} – ${responseText}`
+        );
+    }
+    return responseText ? JSON.parse(responseText) : null;
 }
 
 async function finishSavingTask() {
