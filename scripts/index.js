@@ -54,7 +54,7 @@ async function loginCurrentUser() {
     } catch (error) {
         console.error(error.code, error.message);
         if (error.code === "auth/invalid-credential") {
-            alert("E-Mail oder Passwort ist falsch.");
+            showErrorLogIn();
         }
     }
 }
@@ -98,4 +98,12 @@ function successDialogOpen() {
         successDialog.close();
         changeLogOrSignForm("Log in");
     }, 800);
+}
+
+function showErrorLogIn() {
+    const errorLogIn = document.getElementById("login_error_id");
+    errorLogIn.classList.remove("hidden");
+    setTimeout(() => {
+        errorLogIn.classList.add("hidden");
+    }, 3000);
 }

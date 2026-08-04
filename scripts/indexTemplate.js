@@ -73,6 +73,14 @@ function signInTemplate() {
                     required
                     >
                 <img src="assets/img/lock.webp" alt="password lock sign">
+                </div>
+                <div
+                    id="login_error_id"
+                    class="alert_log_in hidden"
+                    role="alert"
+                    aria-live="assertive"
+                >
+                    Benutzername oder Passwort ist nicht korrekt.
                 </div>        
                 <div class="login_btn_wrapper">
                     <button class="login_btn" type="submit" data-action="logIn">Log in</button>
