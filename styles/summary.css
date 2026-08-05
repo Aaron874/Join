@@ -38,8 +38,8 @@ main {
 }
 
 .header-content {
-  padding-left: 163px !important;
-  width: calc(100% - 232px) !important;
+  padding-left: 163px;
+  width: calc(720px - 232px);
 }
 
 .summary-wrapper {
