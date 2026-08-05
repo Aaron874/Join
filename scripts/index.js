@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from './auth/auth.service.js';
+import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
@@ -23,7 +23,7 @@ document.addEventListener('submit', (event) => {
 document.addEventListener('click', (event) => {
     if (event.target.matches('.guest_login_btn')) {
         event.preventDefault();
-        loginGuestUser();
+        createGuestUser();
         return
     }
     if (event.target.matches('#change_to_sign_up_btn')) {
@@ -35,6 +35,15 @@ document.addEventListener('click', (event) => {
         document.getElementById("back_to_log_in_btn_id").classList.add("hidden");
         changeLogOrSignForm("Log in");
 }});
+
+async function createGuestUser() {
+    try {
+        await loginGuest();
+        window.location.href = "summary.html";
+    } catch (error) {
+        
+    }
+}
 
 function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
@@ -53,14 +62,12 @@ async function loginCurrentUser() {
     setFormDisabled(true);
     let formValues = dataFromForm();
     try {
-        const uid = await loginUser(formValues.email, formValues.password);
+        await loginUser(formValues.email, formValues.password);
         setFormDisabled(false);
         window.location.href = "summary.html";
     } catch (error) {
+        showErrorLogIn();
         console.error(error.code, error.message);
-        if (error.code === "auth/invalid-credential") {
-            showErrorLogIn();
-        }
     }
 }
 
@@ -86,9 +93,6 @@ async function userData (confirmPassword) {
       }
     form.reset();
     registerNewUser(values);
-    // await registerUser(values.email, values.password);
-    // await createUserProfile(values.username, values.email);
-    // successDialogOpen();
 }
 
 async function registerNewUser(values) {
@@ -142,4 +146,15 @@ function setFormDisabled(disabled) {
       .forEach(element => {
         element.disabled = disabled;
       });
+  }
+
+  function showErrorGuestLogin() {
+    const errorLogIn = document.getElementById("login_error_id");
+    errorLogIn.textContent = "Guest login failed. Please try again.";
+    errorLogIn.classList.remove("hidden");
+    setTimeout(() => {
+        errorLogIn.classList.add("hidden");
+        setFormDisabled(false);
+        errorLogIn.textContent = "Username or Password incorrect";
+    }, 3000);
   }

@@ -56,7 +56,7 @@ function signUpTemplate() {
                     role="alert"
                     aria-live="assertive"
                 >
-                    Diese E-Mail-Adresse ist bereits registriert.
+                    This email address is already registered.
                 </div>
                     <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
 `;            
@@ -88,7 +88,7 @@ function signInTemplate() {
                     role="alert"
                     aria-live="assertive"
                 >
-                    Benutzername oder Passwort ist nicht korrekt.
+                    Username or Password incorrect
                 </div>        
                 <div class="login_btn_wrapper">
                     <button class="login_btn" type="submit" data-action="logIn">Log in</button>
