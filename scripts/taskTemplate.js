@@ -31,9 +31,7 @@ low: `
 function getTaskTemplate(task) {
 const categoryClass = categoryStyles[task.category] ?? '';
 const priorityIcon = priorityIcons[task.priority] ?? '';
-console.log(task.title, task.priority, priorityIcon);
 const previewText = getPreviewText(task.description);
-
 return `
 <article class="task-card" draggable="true" data-task-id="${task.id}" ondragstart="handleDragStart(event)"
     ondragend="handleDragEnd(event)">
@@ -44,18 +42,14 @@ return `
 
         ${getMoveTaskTemplate(task)}
     </div>
-
     <div class="task-card-content" onclick="openTaskDetails('${task.id}')">
         <h3>${task.title}</h3>
-
         <p class="task-description">
             ${previewText}
         </p>
-
         <p>
             ${getSubtaskProgressTemplate(task)}
         </p>
-
         <div class="task-card-bottom">
             ${getTaskContactIconsTemplate(task.assignedTo)}
             ${priorityIcon}
@@ -67,7 +61,6 @@ return `
 
 function getTaskContactIconsTemplate(assignedTo) {
 const contacts = normalizeContacts(assignedTo);
-
 return `
 <div class="task-card-contacts">
     ${contacts.map(getTaskContactIconTemplate).join('')}
@@ -88,11 +81,9 @@ return `
 
 function getTaskDetailsContactsTemplate(assignedTo) {
 const contacts = normalizeContacts(assignedTo);
-
 if (!contacts.length) {
 return '<p>No contacts assigned</p>';
 }
-
 return `
 <div class="task-details-contacts">
     ${contacts.map(getTaskDetailsContactTemplate).join('')}
@@ -135,7 +126,6 @@ return `
 function getMoveTaskTemplate(task) {
 const previousStatus = getPreviousStatus(task.status);
 const nextStatus = getNextStatus(task.status);
-
 return `
 <div class="move-task-wrapper">
     <button class="move-task-button" type="button" draggable="false" aria-label="Move task"
@@ -153,17 +143,13 @@ return `
                     fill="#2A3647" />
             </g>
         </svg>
-
-
     </button>
-
     <div class="move-task-menu" id="move-task-menu-${task.id}">
         ${previousStatus ? `
         <button type="button" onclick="moveTaskToStatus(event, '${task.id}', '${previousStatus}')">
             ${STATUS_LABELS[previousStatus]}
         </button>
         ` : ''}
-
         ${nextStatus ? `
         <button type="button" onclick="moveTaskToStatus(event, '${task.id}', '${nextStatus}')">
             ${STATUS_LABELS[nextStatus]}

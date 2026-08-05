@@ -1,11 +1,3 @@
-//Progressbar für Subtasks, mit Wert wievele Subtasks sind erledigt von gesamter Subtask-Liste. Subtasks nach fetch in ein array oder muss schon beim post in ein Array gepackt werden?
-//Icons für Zugewiesene Kontakte
-//Task description in Vorschautext umbauen
-//Dialog mit Taskdetails. (Ohne mit ganzen Task-description text und Subtasks als Text)
-//Close-Button in beide dialogs einbauen.
-//Add-Task für die jeweiligen Status-Columns einbauen, damit auch ein Task z.B. in Await feedback hinzugefügt werden kann.
-//style.css und board.css responsive machen. Ab einer bestimmten Breite soll die Sidebar verschwinden und über ein Burger-Menü im Footer aufrufbar sein. Bisheriges Styling sieht bei Auflösung 3008x1692 super aus. Responsive-Darstellung soll bis 320x480 super aussehen.
-//Suchfunktion bauen. Inputfeld und Button existieren schon. es müssen aber mindestens 3 Zeichen im Suchfeld sein, bevor die Suche ausgeführt werden darf.
 
 window.addEventListener('DOMContentLoaded', initBoard);
 
@@ -76,20 +68,17 @@ async function fetchTasks(path = 'tasks') {
 
 function normalizeFetchedTasks(data) {
     const tasks = [];
-
     Object.entries(data ?? {}).forEach(([firstLevelId, value]) => {
         if (isTaskObject(value)) {
             tasks.push({
                 ...value,
                 id: firstLevelId,
             });
-
             return;
         }
 
         Object.entries(value ?? {}).forEach(([taskId, task]) => {
             if (!isTaskObject(task)) return;
-
             tasks.push({
                 ...task,
                 id: taskId,
@@ -97,7 +86,6 @@ function normalizeFetchedTasks(data) {
             });
         });
     });
-
     return tasks;
 }
 
@@ -110,24 +98,7 @@ function isTaskObject(value) {
     );
 }
 
-
-// function renderBoard() {
-//     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
-//         renderColumn(status, getElement(containerId));
-//     });
-//     console.log(fetchedTasks);
-// }
-
 function renderBoard() {
-    console.table(
-        fetchedTasks.map(task => ({
-            id: task.id,
-            title: task.title,
-            status: task.status,
-            priority: task.priority,
-        }))
-    );
-
     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
         renderColumn(status, getElement(containerId));
     });
@@ -141,43 +112,15 @@ function renderSubtasks() {
         .join('');
 }
 
-// function renderColumn(status, container) {
-//     if (!container) return;
-//     const content = fetchedTasks
-//         .filter(task => task.status === status)
-//         .filter(task => {
-//             if (!currentSearch || currentSearch.length < 3) {
-//                 return true;
-//             }
-//             return (
-//                 task.title?.toLowerCase().includes(currentSearch) ||
-//                 task.assignedTo?.toLowerCase().includes(currentSearch)
-//             );
-//         })
-//         .map(getTaskTemplate).join('');
-//     container.innerHTML = content || getEmptyColumnTemplate(status);
-// }
-
 function renderColumn(status, container) {
     if (!container) {
         console.error('Container fehlt für Status:', status);
         return;
     }
-
     const columnTasks = fetchedTasks.filter(task => task.status === status);
-
-    console.log(
-        `Spalte ${status}:`,
-        columnTasks.map(task => ({
-            title: task.title,
-            status: task.status,
-        }))
-    );
-
     const content = columnTasks
         .map(getTaskTemplate)
         .join('');
-
     container.innerHTML =
         content || getEmptyColumnTemplate(status);
 }
@@ -270,20 +213,6 @@ function closeTaskDialog() {
     closeDialog('task-dialog');
 }
 
-// async function deleteTask(taskId) {
-//     const shouldDelete = confirm(
-//         'Are you sure you want to delete this task?'
-//     );
-//     if (!shouldDelete) return;
-//     try {
-//         await deleteTaskFromFirebase(taskId);
-//         closeTaskDialog();
-//         await reloadBoard();
-//     } catch (error) {
-//         console.error('Task konnte nicht gelöscht werden:', error);
-//     }
-// }
-
 async function deleteTask(taskId) {
     const task = getTaskById(taskId);
     if (!task) {
@@ -321,10 +250,7 @@ async function deleteTaskFromFirebase(task) {
             method: 'DELETE',
         }
     );
-    validateResponse(
-        response,
-        'Task konnte nicht gelöscht werden'
-    );
+    validateResponse(response, 'Task konnte nicht gelöscht werden');
 }
 
 function openEditTask(taskId) {
@@ -391,9 +317,6 @@ async function openBoardContactsDropdown() {
     if (!window.contactsList?.length) {
         await loadBoardContacts();
     }
-
-    console.log('Geladene Kontakte:', window.contactsList);
-
     dropdownContactsDown();
 }
 
@@ -500,11 +423,8 @@ function setTaskSubtasks(taskSubtasks) {
 }
 
 async function saveTask(event) {
-
     console.log('saveTask gestartet');
-    console.log('editingTaskId', editingTaskId);
-    
-    
+    console.log('editingTaskId', editingTaskId);    
     event.preventDefault();
     const defaultStatus =
         document.getElementById('add-task-dialog').dataset.status || 'todo';
@@ -549,7 +469,6 @@ function getTaskFormData(defaultStatus) {
 
 function getTaskDetailSubtasksTemplate(taskSubtasks) {
     const subtasks = normalizeTaskSubtasks(taskSubtasks);
-
     if (!subtasks.length) {
         return '<p>No subtasks</p>';
     }
@@ -571,16 +490,15 @@ function normalizeTaskSubtasks(taskSubtasks) {
     if (Array.isArray(taskSubtasks)) {
         return taskSubtasks;
     }
-
     if (typeof taskSubtasks === 'string' && taskSubtasks.trim()) {
         return [{
             title: taskSubtasks.trim(),
             completed: false
         }];
     }
-
     return [];
 }
+
 async function toggleTaskSubtask(index) {
     const task = fetchedTasks.find(task => task.id === currentTaskId);
     if (!task || !Array.isArray(task.subtasks) || !task.subtasks[index]) {
@@ -669,33 +587,11 @@ function isValidCategory(category) {
     );
 }
 
-// async function updateTaskInFirebase(existingTask, taskData) {
-//     const taskPath = existingTask.userId
-//         ? `tasks/${existingTask.userId}/${existingTask.id}`
-//         : `tasks/${existingTask.id}`;
-//     const response = await fetch(
-//         `${BASE_URL}${taskPath}.json`,
-//         {
-//             method: 'PUT',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(taskData),
-//         }
-//     );
-//     validateResponse(response, 'Task-Update fehlgeschlagen');
-//     return response.json();
-// }
-
 async function updateTaskInFirebase(existingTask, taskData) {
     const taskPath = existingTask.userId
         ? `tasks/${existingTask.userId}/${existingTask.id}`
         : `tasks/${existingTask.id}`;
     const url = `${BASE_URL}${taskPath}.json`;
-    console.log('Vorhandener Task:', existingTask);
-    console.log('Firebase-Pfad:', taskPath);
-    console.log('Firebase-URL:', url);
-    console.log('Gesendete Task-Daten:', taskData);
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
@@ -704,8 +600,6 @@ async function updateTaskInFirebase(existingTask, taskData) {
         body: JSON.stringify(taskData),
     });
     const responseText = await response.text();
-    console.log('Firebase-Status:', response.status);
-    console.log('Firebase-Antwort:', responseText);
     if (!response.ok) {
         throw new Error(
             `Task-Update fehlgeschlagen: ${response.status} – ${responseText}`
@@ -812,7 +706,6 @@ function deleteTaskDialog(taskId, taskTitle) {
     const deleteButton = buttons[0];
     const cancelButton = buttons[1];
     taskName.textContent = taskTitle;
-
     eventListenerDeleteTaskDialog(taskId, deleteButton, cancelButton, deleteDialog);
     deleteDialog.showModal();
 }

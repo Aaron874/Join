@@ -8,10 +8,7 @@ window.contactsList = [];
 
 window.loadBoardContacts = async function () {
     await ensureBoardAuthentication();
-
     const contacts = await getContacts();
-    console.log(contacts);
-    console.log("Anzahl Kontakte:", contacts.length);
     window.boardContacts = contacts;
     window.contactsList = contacts;
     return contacts;
@@ -26,7 +23,6 @@ function addBoardContactColors(contacts) {
 
 async function ensureBoardAuthentication() {
     if (auth.currentUser) return;
-
     await guestLogin();
     await waitForAuthenticatedUser();
 }
@@ -35,11 +31,9 @@ function waitForAuthenticatedUser() {
     return new Promise((resolve, reject) => {
         const timeoutId = setTimeout(() => {
             reject(new Error('Authentifizierung fehlgeschlagen.'));
-        }, 5000);
-
+        }, 1000);
         const intervalId = setInterval(() => {
             if (!auth.currentUser) return;
-
             clearInterval(intervalId);
             clearTimeout(timeoutId);
             resolve();
