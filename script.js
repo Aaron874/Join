@@ -96,3 +96,19 @@ function setGuestIcon(userIcon) {
     userIcon.textContent = 'G';
     userIcon.title = 'Guest';
 }
+
+window.getCurrentRegisteredUserName = function () {
+    return new Promise(resolve => {
+        const unsubscribe = onAuthStateChanged(auth, async user => {
+            unsubscribe();
+
+            if (!user || user.isAnonymous) {
+                resolve('');
+                return;
+            }
+
+            const userName = await getLoggedInUserName(user);
+            resolve(userName);
+        });
+    });
+};

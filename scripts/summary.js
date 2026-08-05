@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', initSummary);
 
-function initSummary() {
-    renderSummary();
-}
+
 
 const BASE_URL = 'https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/';
 
@@ -12,7 +10,11 @@ document.addEventListener('DOMContentLoaded', initSummary);
 
 async function initSummary() {
     summaryTasks = await fetchTasks();
-    renderSummary();
+
+    const userName =
+        await window.getCurrentRegisteredUserName();
+
+    renderSummary(userName);
 }
 
 async function fetchTasks(path = 'tasks') {
@@ -46,7 +48,7 @@ function getTaskCount() {
     return summaryTasks.length;
 }
 
-function renderSummary() {
+function renderSummary(userName) {
     const container = document.getElementById('summary-content');
 
     container.innerHTML = getSummaryTemplate({
@@ -58,7 +60,7 @@ function renderSummary() {
         awaitFeedback: getTaskCountByStatus('awaitFeedback'),
         deadline: getUpcomingDeadline(),
         greeting: getGreeting(),
-        userName: 'Sofia Müller'
+        userName
     });
 }
 
