@@ -1,4 +1,11 @@
 
+/**
+ * Board module
+ *
+ * Responsible for loading, rendering and managing tasks on the board
+ * (drag & drop, create, update, delete). Interacts with Firebase
+ * Realtime Database and provides utility helpers for task UI.
+ */
 window.addEventListener('DOMContentLoaded', initBoard);
 
 const BASE_URL ='https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/'
@@ -38,34 +45,54 @@ let editingTaskId;
 let currentTaskId;
 let currentSearch = '';
 
+/**
+ * Initialize the board.
+ * Loads board contacts, fetches tasks and initializes drag-and-drop.
+ * @returns {Promise<void>}
+ */
 async function initBoard() {
     await loadBoardContacts();
     await reloadBoard();
     initDragAndDrop();
 }
 
+/**
+ * Reloads the board data by fetching latest tasks and re-rendering.
+ * @returns {Promise<void>}
+ */
 async function reloadBoard() {
     await fetchTasks();
     renderBoard();
 
 }
 
+/**
+ * Fetch tasks from Firebase Realtime Database and normalize the result.
+ * @param {string} [path='tasks'] - Firebase path to fetch (e.g. 'tasks' or 'tasks/{userId}').
+ * @returns {Promise<Array>} Array of normalized task objects.
+ */
 async function fetchTasks(path = 'tasks') {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`);
         if (!response.ok) {
-            throw new Error(`HTTP-Fehler: ${response.status}`);
+            throw new Error(`HTTP error: ${response.status}`);
         }
         const data = await response.json();
         fetchedTasks = normalizeFetchedTasks(data);
         return fetchedTasks;
     } catch (error) {
-        console.error('Fehler beim Abrufen:', error);
+        console.error('Error fetching tasks:', error);
         fetchedTasks = [];
         return [];
     }
 }
 
+/**
+ * Normalize raw Firebase response into a flat array of task objects.
+ * Handles both flat and nested (per-user) task structures.
+ * @param {Object|null} data - Raw JSON from Firebase
+ * @returns {Array<Object>} Normalized list of tasks
+ */
 function normalizeFetchedTasks(data) {
     const tasks = [];
     Object.entries(data ?? {}).forEach(([firstLevelId, value]) => {
@@ -89,6 +116,11 @@ function normalizeFetchedTasks(data) {
     return tasks;
 }
 
+/**
+ * Heuristic to determine whether a value looks like a task object.
+ * @param {unknown} value
+ * @returns {boolean}
+ */
 function isTaskObject(value) {
     return (
         value &&
@@ -98,12 +130,21 @@ function isTaskObject(value) {
     );
 }
 
+/**
+ * Render all columns of the board based on `fetchedTasks`.
+ * @returns {void}
+ */
 function renderBoard() {
     Object.entries(COLUMN_IDS).forEach(([status, containerId]) => {
         renderColumn(status, getElement(containerId));
     });
 }
 
+/**
+ * Render subtasks into the subtasks list element.
+ * Expects a global `subtasks` array to be available in context.
+ * @returns {void}
+ */
 function renderSubtasks() {
     const list = document.getElementById('subtasks-list');
     if (!list) return;
@@ -112,9 +153,15 @@ function renderSubtasks() {
         .join('');
 }
 
+/**
+ * Render a single column of tasks into the given container.
+ * @param {string} status - Column status key (e.g. 'todo')
+ * @param {HTMLElement|null} container - DOM element for the column
+ * @returns {void}
+ */
 function renderColumn(status, container) {
     if (!container) {
-        console.error('Container fehlt für Status:', status);
+        console.error('Container missing for status:', status);
         return;
     }
     const columnTasks = fetchedTasks.filter(task => task.status === status);
@@ -125,6 +172,11 @@ function renderColumn(status, container) {
         content || getEmptyColumnTemplate(status);
 }
 
+/**
+ * Return HTML used when a column has no tasks.
+ * @param {string} status
+ * @returns {string}
+ */
 function getEmptyColumnTemplate(status) {
     return `
         <div class="notask">
@@ -133,6 +185,12 @@ function getEmptyColumnTemplate(status) {
     `;
 }
 
+/**
+ * Return a preview (truncated) version of a text field.
+ * @param {string} text
+ * @param {number} [maxLength=20]
+ * @returns {string}
+ */
 function getPreviewText(text, maxLength = 20) {
     if (!text || text.length <= maxLength) {
         return text ?? '';
@@ -140,12 +198,21 @@ function getPreviewText(text, maxLength = 20) {
     return `${text.slice(0, maxLength).trim()}...`;
 }
 
+/**
+ * Convert assignedTo value into a comma-separated list of names.
+ * @param {string|Array|Object} assignedTo
+ * @returns {string}
+ */
 function getAssignedToText(assignedTo) {
     return normalizeContacts(assignedTo)
         .map(contact => contact.name)
         .join(', ');
 }
 
+/**
+ * Initialize drag and drop listeners for task columns.
+ * @returns {void}
+ */
 function initDragAndDrop() {
     document.querySelectorAll('.task-queue').forEach(column => {
         column.addEventListener('dragover', handleDragOver);
@@ -153,21 +220,38 @@ function initDragAndDrop() {
     });
 }
 
+/**
+ * Handler for dragstart on a task card. Stores dragged task id.
+ * @param {DragEvent} event
+ */
 function handleDragStart(event) {
     const card = event.currentTarget;
     draggedTaskId = card.dataset.taskId;
     card.classList.add('dragging');
 }
 
+/**
+ * Handler for dragend on a task card. Clears drag state.
+ * @param {DragEvent} event
+ */
 function handleDragEnd(event) {
     event.currentTarget.classList.remove('dragging');
     draggedTaskId = null;
 }
 
+/**
+ * Handler for dragover to allow drop.
+ * @param {DragEvent} event
+ */
 function handleDragOver(event) {
     event.preventDefault();
 }
 
+/**
+ * Handler for drop event on a column. Updates task status and reloads board.
+ * @param {DragEvent} event
+ * @returns {Promise<void>}
+ */
 async function handleDrop(event) {
     event.preventDefault();
     const task = getTaskById(draggedTaskId);
@@ -177,10 +261,16 @@ async function handleDrop(event) {
         await updateTaskStatus(task, newStatus);
         await reloadBoard();
     } catch (error) {
-        console.error('Drop fehlgeschlagen:', error);
+        console.error('Drop failed:', error);
     }
 }
 
+/**
+ * Update only the `status` field of a task in Firebase.
+ * @param {Object} task - Task object containing `id` and optional `userId`.
+ * @param {string} status - New status value.
+ * @returns {Promise<void>}
+ */
 async function updateTaskStatus(task, status) {
     const taskPath = task.userId
     ? `tasks/${task.userId}/${task.id}`
@@ -197,9 +287,14 @@ async function updateTaskStatus(task, status) {
             }),
         }
     );
-    validateResponse(response, 'Status-Update fehlgeschlagen')
+    validateResponse(response, 'Status update failed')
 }
 
+/**
+ * Open task details dialog for a given task id.
+ * @param {string} taskId
+ * @returns {void}
+ */
 function openTaskDetails(taskId) {
     currentTaskId = taskId;
     const task = getTaskById(taskId);
@@ -209,14 +304,23 @@ function openTaskDetails(taskId) {
     dialog.showModal();
 }
 
+/**
+ * Close the currently open task dialog.
+ * @returns {void}
+ */
 function closeTaskDialog() {
     closeDialog('task-dialog');
 }
 
+/**
+ * Delete a task by id (removes from Firebase and reloads board).
+ * @param {string} taskId
+ * @returns {Promise<void>}
+ */
 async function deleteTask(taskId) {
     const task = getTaskById(taskId);
     if (!task) {
-        console.error('Der zu löschende Task wurde nicht gefunden:', taskId);
+        console.error('Task to delete not found:', taskId);
         return;
     }
     try {
@@ -224,10 +328,15 @@ async function deleteTask(taskId) {
         closeTaskDialog();
         await reloadBoard();
     } catch (error) {
-        console.error('Task konnte nicht gelöscht werden:', error);
+        console.error('Failed to delete task:', error);
     }
 }
 
+/**
+ * Create a new task in Firebase.
+ * @param {Object} task - Task payload to POST
+ * @returns {Promise<Object>} Parsed JSON response from Firebase
+ */
 async function createTaskInFirebase(task) {
     const response = await fetch(`${BASE_URL}tasks.json`, {
         method: 'POST',
@@ -236,10 +345,15 @@ async function createTaskInFirebase(task) {
         },
         body: JSON.stringify(task),
     });
-    validateResponse(response, 'Task konnte nicht erstellt werden');
+    validateResponse(response, 'Failed to create task');
     return response.json();
 }
 
+/**
+ * Delete a task in Firebase using its object (id and optional userId).
+ * @param {Object} task
+ * @returns {Promise<void>}
+ */
 async function deleteTaskFromFirebase(task) {
     const taskPath = task.userId
         ? `tasks/${task.userId}/${task.id}`
@@ -250,9 +364,14 @@ async function deleteTaskFromFirebase(task) {
             method: 'DELETE',
         }
     );
-    validateResponse(response, 'Task konnte nicht gelöscht werden');
+    validateResponse(response, 'Failed to delete task');
 }
 
+/**
+ * Open the edit form for a given task id and populate with values.
+ * @param {string} taskId
+ * @returns {void}
+ */
 function openEditTask(taskId) {
     const task = getTaskById(taskId);
     if (!task) return;
@@ -263,6 +382,10 @@ function openEditTask(taskId) {
     openDialog('add-task-dialog');
 }
 
+/**
+ * Open the create-task dialog and reset form state.
+ * @param {string} [status='todo'] - default status for the new task
+ */
 function openCreateTaskDialog(status = 'todo') {
     editingTaskId = null;
     clearTaskform();
@@ -271,6 +394,10 @@ function openCreateTaskDialog(status = 'todo') {
     openDialog('add-task-dialog');
 }
 
+/**
+ * Populate the add/edit task form with values from a task object.
+ * @param {Object} task
+ */
 function fillTaskForm(task) {
     setInputValue('task-title', task.title);
     setInputValue('task-description', task.description);
@@ -281,6 +408,11 @@ function fillTaskForm(task) {
     setTaskSubtasks(task.subtasks);
 }
 
+/**
+ * Set date fields in the task form for display and input values.
+ * Accepts either 'YYYY-MM-DD' or 'DD/MM/YYYY'.
+ * @param {string} date
+ */
 function setTaskDate(date) {
     const displayInput = getElement('dateDisplay');
     const dateInput = getElement('dateInput');
@@ -289,6 +421,12 @@ function setTaskDate(date) {
     dateInput.value = formatDateForInput(date);
 }
 
+/**
+ * Convert a date value to display format 'DD/MM/YYYY'. If already in that
+ * format, returns unchanged.
+ * @param {string} date
+ * @returns {string}
+ */
 function formatDateForDisplay(date) {
     if (!date) return '';
     if (date.includes('/')) {
@@ -298,6 +436,12 @@ function formatDateForDisplay(date) {
     return `${day}/${month}/${year}`;
 }
 
+/**
+ * Convert a date value to input format 'YYYY-MM-DD'. If already in that
+ * format, returns unchanged.
+ * @param {string} date
+ * @returns {string}
+ */
 function formatDateForInput(date) {
     if (!date) return '';
     if (date.includes('-')) {
@@ -307,12 +451,20 @@ function formatDateForInput(date) {
     return `${year}-${month}-${day}`;
 }
 
+/**
+ * Select a priority element in the UI and trigger the color change.
+ * @param {string} priorityValue
+ */
 function selectPriority(priorityValue) {
     const priorityElement = getElement(`priority-${priorityValue}`);
     if (!priorityElement) return;
     window.colorChangePriority(priorityElement);
 }
 
+/**
+ * Ensure board contacts are loaded and open the contacts dropdown.
+ * @returns {Promise<void>}
+ */
 async function openBoardContactsDropdown() {
     if (!window.contactsList?.length) {
         await loadBoardContacts();
@@ -321,11 +473,21 @@ async function openBoardContactsDropdown() {
 }
 
 
+/**
+ * Set assigned contacts in the add/edit task form UI.
+ * Accepts array or comma-separated string values.
+ * @param {string|Array|Object} assignedTo
+ */
 function setAssignedContacts(assignedTo) {
     selectedContacts = normalizeContacts(assignedTo);
     showSelectedContacts();
 }
 
+/**
+ * Normalize assignedTo into an array of contact objects.
+ * @param {string|Array|Object} assignedTo
+ * @returns {Array<Object>}
+ */
 function normalizeContacts(assignedTo) {
     if (!assignedTo) return [];
     const contacts = Array.isArray(assignedTo)
@@ -336,16 +498,32 @@ function normalizeContacts(assignedTo) {
         .filter(Boolean);
 }
 
+/**
+ * Convert a contact item (string or object) into a canonical contact object.
+ * @param {string|Object} contact
+ * @returns {Object|null}
+ */
 function getContactObject(contact) {
     return isContactObject(contact)
         ? normalizeContactObject(contact)
         : createContactObject(contact);
 }
 
+/**
+ * Check whether the provided value is a contact object with a name.
+ * @param {unknown} contact
+ * @returns {boolean}
+ */
 function isContactObject(contact) {
     return typeof contact === 'object' && contact?.name;
 }
 
+/**
+ * Normalize a contact object by enriching with shortName and color from
+ * the board contacts if available.
+ * @param {Object} contact
+ * @returns {Object}
+ */
 function normalizeContactObject(contact) {
     const contactData = findContactByName(contact.name);
     return {
@@ -355,6 +533,12 @@ function normalizeContactObject(contact) {
     };
 }
 
+/**
+ * Create a contact object from a string name, attempting to enrich from
+ * existing board contacts.
+ * @param {string} contact
+ * @returns {Object|null}
+ */
 function createContactObject(contact) {
     const contactName = String(contact).trim();
     if (!contactName) return null;
@@ -366,6 +550,12 @@ function createContactObject(contact) {
     };
 }
 
+/**
+ * Determine a short display name (initials) for a contact.
+ * @param {Object} contact
+ * @param {Object} contactData
+ * @returns {string}
+ */
 function getContactShortName(contact, contactData) {
     return contact?.shortName
         ?? contact?.shortname
@@ -374,12 +564,23 @@ function getContactShortName(contact, contactData) {
         ?? contactListInitials(contactData?.name ?? contact?.name ?? '');
 }
 
+/**
+ * Get display color for a contact, falling back to a default.
+ * @param {Object} contact
+ * @param {Object} contactData
+ * @returns {string}
+ */
 function getContactColor(contact, contactData) {
     return contact?.color
         ?? contactData?.color
         ?? '#2A3647';
 }
 
+/**
+ * Find a contact in the `boardContacts` array by name (case-insensitive).
+ * @param {string} contactName
+ * @returns {Object|undefined}
+ */
 function findContactByName(contactName) {
     const normalizedName = contactName.trim().toLowerCase();
 
@@ -389,6 +590,11 @@ function findContactByName(contactName) {
     );
 }
 
+/**
+ * Build initials from a contact name (first two words).
+ * @param {string} contactName
+ * @returns {string}
+ */
 function contactListInitials(contactName) {
     return contactName
         .trim()
@@ -398,12 +604,22 @@ function contactListInitials(contactName) {
         .join('');
 }
 
+/**
+ * Return initials for a contact, preferring provided contactData.
+ * @param {string} contactName
+ * @param {Object} contactData
+ * @returns {string}
+ */
 function getInitials(contactName, contactData) {
     return contactData
         ? contactListInitials(contactData.name)
         : contactName.slice(0, 2).toUpperCase();
 }
 
+/**
+ * Set the task form mode to 'create' or 'edit' and update labels.
+ * @param {string} mode
+ */
 function setTaskFormMode(mode) {
     const isEditMode = mode === 'edit';
     setTextContent(
@@ -418,38 +634,58 @@ function setTaskFormMode(mode) {
     );
 }
 
+/**
+ * Set subtasks into the global add-task widget helper.
+ * @param {Array|String} taskSubtasks
+ */
 function setTaskSubtasks(taskSubtasks) {
     window.setAddTaskSubtasks(taskSubtasks);
 }
 
+/**
+ * Submit handler for saving a task (create or update).
+ * Validates form, persists task and finishes the UI flow.
+ * @param {Event} event
+ * @returns {Promise<void>}
+ */
 async function saveTask(event) {
-    console.log('saveTask gestartet');
+    console.log('saveTask started');
     console.log('editingTaskId', editingTaskId);    
     event.preventDefault();
     const defaultStatus =
         document.getElementById('add-task-dialog').dataset.status || 'todo';
     const task = getTaskFormData(defaultStatus);
-    console.log('Task-Daten beim Speichern:', task);
+    console.log('Task data on save:', task);
     if (!isTaskValid(task)) return;
     try {
         await persistTask(task);
         await finishSavingTask();
     } catch (error) {
-        console.error('Task konnte nicht gespeichert werden:', error);
+        console.error('Failed to save task:', error);
     }
 }
 
+/**
+ * Persist a task either by creating a new one or updating an existing one.
+ * @param {Object} taskData
+ * @returns {Promise<Object|null|void>}
+ */
 async function persistTask(taskData) {
     if(!editingTaskId){
         return window.addTaskToFirebase(taskData)
     }
     const existingTask = getTaskById(editingTaskId);
     if (!existingTask){
-        throw new Error('Der zu bearbeitende Task wurde nicht gefunden.');
+        throw new Error('Task to edit not found.');
     }
     return updateTaskInFirebase(existingTask, taskData)
 }
 
+/**
+ * Read form values and construct a task payload object.
+ * @param {string} defaultStatus
+ * @returns {Object} task payload
+ */
 function getTaskFormData(defaultStatus) {
     const existingTask = getTaskById(editingTaskId);
     const addTaskState = window.getAddTaskState();
@@ -467,6 +703,11 @@ function getTaskFormData(defaultStatus) {
     };
 }
 
+/**
+ * Build HTML for task detail subtasks view.
+ * @param {Array|string} taskSubtasks
+ * @returns {string} HTML fragment
+ */
 function getTaskDetailSubtasksTemplate(taskSubtasks) {
     const subtasks = normalizeTaskSubtasks(taskSubtasks);
     if (!subtasks.length) {
@@ -486,6 +727,12 @@ function getTaskDetailSubtasksTemplate(taskSubtasks) {
         .join('');
 }
 
+/**
+ * Normalize subtasks field into an array structure.
+ * Accepts array or newline/comma-separated string inputs.
+ * @param {Array|string|undefined} taskSubtasks
+ * @returns {Array}
+ */
 function normalizeTaskSubtasks(taskSubtasks) {
     if (Array.isArray(taskSubtasks)) {
         return taskSubtasks;
@@ -499,10 +746,16 @@ function normalizeTaskSubtasks(taskSubtasks) {
     return [];
 }
 
+/**
+ * Toggle completion state of a subtask for the currently opened task.
+ * Updates Firebase and refreshes the UI.
+ * @param {number} index - Index of the subtask in the task's subtasks array
+ * @returns {Promise<void>}
+ */
 async function toggleTaskSubtask(index) {
     const task = fetchedTasks.find(task => task.id === currentTaskId);
     if (!task || !Array.isArray(task.subtasks) || !task.subtasks[index]) {
-        console.error('Task oder Subtask wurde nicht gefunden');
+        console.error('Task or subtask not found');
         return;
     }
     task.subtasks[index].completed = !task.subtasks[index].completed;
@@ -512,10 +765,16 @@ async function toggleTaskSubtask(index) {
         openTaskDetails(task.id);
     } catch (error) {
         task.subtasks[index].completed = !task.subtasks[index].completed;
-        console.error('Subtask konnte nicht aktualisiert werden:', error);
+        console.error('Failed to update subtask:', error);
     }
 }
 
+/**
+ * Persist updated subtasks array for a task to Firebase.
+ * @param {Object} task
+ * @param {Array} subtasks
+ * @returns {Promise<void>}
+ */
 async function updateTaskSubtasksInFirebase(task, subtasks) {
     const taskPath = task.userId
         ? `tasks/${task.userId}/${task.id}`
@@ -541,6 +800,11 @@ async function updateTaskSubtasksInFirebase(task, subtasks) {
     }
 }
 
+/**
+ * Count completed subtasks in an array.
+ * @param {Array} subtasks
+ * @returns {number}
+ */
 function getCompletedSubtasks(subtasks) {
     if (!Array.isArray(subtasks)) {
         return 0;
@@ -548,6 +812,11 @@ function getCompletedSubtasks(subtasks) {
     return subtasks.filter(subtask => subtask.completed).length;
 }
 
+/**
+ * Compute subtask completion progress as a percentage.
+ * @param {Array} subtasks
+ * @returns {number} percentage (0-100)
+ */
 function getSubtaskProgress(subtasks) {
     if (!Array.isArray(subtasks) || subtasks.length === 0) {
         return 0;
@@ -557,10 +826,19 @@ function getSubtaskProgress(subtasks) {
     );
 }
 
+/**
+ * Check whether a task has subtasks.
+ * @param {Object} task
+ * @returns {boolean}
+ */
 function hasSubtasks(task) {
     return Array.isArray(task.subtasks) && task.subtasks.length > 0;
 }
 
+/**
+ * Return comma-separated names of currently selected contacts from the global helper.
+ * @returns {string}
+ */
 function getSelectedContactNames() {
     const contacts = window.getSelectedContacts?.() ?? [];
     return contacts
@@ -568,6 +846,12 @@ function getSelectedContactNames() {
         .join(', ');
 }
 
+/**
+ * Validate that required fields for a task are present.
+ * Triggers `formRequired()` UI helper and returns boolean validity.
+ * @param {Object} task
+ * @returns {boolean}
+ */
 function isTaskValid(task) {
     formRequired();
 
@@ -579,6 +863,11 @@ function isTaskValid(task) {
     );
 }
 
+/**
+ * Validate the selected task category is not the placeholder value.
+ * @param {string} category
+ * @returns {boolean}
+ */
 function isValidCategory(category) {
     return Boolean(
         category &&
@@ -587,6 +876,12 @@ function isValidCategory(category) {
     );
 }
 
+/**
+ * Replace an existing task in Firebase (PUT) with provided task data.
+ * @param {Object} existingTask
+ * @param {Object} taskData
+ * @returns {Promise<Object|null>} Parsed response or null
+ */
 async function updateTaskInFirebase(existingTask, taskData) {
     const taskPath = existingTask.userId
         ? `tasks/${existingTask.userId}/${existingTask.id}`
@@ -602,12 +897,16 @@ async function updateTaskInFirebase(existingTask, taskData) {
     const responseText = await response.text();
     if (!response.ok) {
         throw new Error(
-            `Task-Update fehlgeschlagen: ${response.status} – ${responseText}`
+            `Task update failed: ${response.status} – ${responseText}`
         );
     }
     return responseText ? JSON.parse(responseText) : null;
 }
 
+/**
+ * Finalize UI and state after saving a task: reset form state and reload board.
+ * @returns {Promise<void>}
+ */
 async function finishSavingTask() {
     resetTaskFormState();
     clearTaskform();
@@ -616,36 +915,70 @@ async function finishSavingTask() {
     await reloadBoard();
 }
 
+/**
+ * Reset local form related state variables.
+ * @returns {void}
+ */
 function resetTaskFormState() {
     editingTaskId = null;
     priority = [];
     selectedContacts = [];
 }
 
+/**
+ * Set the status dataset attribute on the add-task dialog.
+ * @param {string} status
+ */
 function setFormStatus(status) {
     const dialog = getElement('add-task-dialog');
     if (!dialog) return;
     dialog.dataset.status = status;
 }
 
+/**
+ * Find a task in the cached `fetchedTasks` by id.
+ * @param {string} taskId
+ * @returns {Object|undefined}
+ */
 function getTaskById(taskId) {
     return fetchedTasks.find(task => task.id === taskId);
 }
 
+/**
+ * Get trimmed value from an input element by id.
+ * @param {string} id
+ * @returns {string}
+ */
 function getInputValue(id) {
     return getElement(id)?.value.trim() ?? '';
 }
 
+/**
+ * Set value on an input element by id.
+ * @param {string} id
+ * @param {string} value
+ */
 function setInputValue(id, value) {
     const element = getElement(id);
     if (!element) return;
     element.value = value ?? '';
 }
 
+/**
+ * Get trimmed textContent of an element by id.
+ * @param {string} id
+ * @returns {string}
+ */
 function getTextContent(id) {
     return getElement(id)?.textContent.trim() ?? '';
 }
 
+/**
+ * Set textContent on an element. Optionally use querySelector instead of id lookup.
+ * @param {string} selector - id or selector
+ * @param {string} value
+ * @param {boolean} [useSelector=false]
+ */
 function setTextContent(selector, value, useSelector = false) {
     const element = useSelector
         ? document.querySelector(selector)
@@ -654,24 +987,47 @@ function setTextContent(selector, value, useSelector = false) {
     element.textContent = value ?? '';
 }
 
+/**
+ * Shorthand for document.getElementById.
+ * @param {string} id
+ * @returns {HTMLElement|null}
+ */
 function getElement(id) {
     return document.getElementById(id);
 }
 
+/**
+ * Open a native dialog element by id.
+ * @param {string} id
+ */
 function openDialog(id) {
     getElement(id)?.showModal();
 }
 
+/**
+ * Close a native dialog element by id.
+ * @param {string} id
+ */
 function closeDialog(id) {
     getElement(id)?.close();
 }
 
+/**
+ * Validate a fetch Response and throw an Error with provided message if not ok.
+ * @param {Response} response
+ * @param {string} message
+ */
 function validateResponse(response, message) {
     if (!response.ok) {
         throw new Error(`${message}: ${response.status}`);
     }
 }
 
+/**
+ * Filter cached tasks by search text matching title or assignedTo.
+ * @param {string} searchText
+ * @returns {Array<Object>}
+ */
 function filterTasks(searchText){
     const search = searchText.toLowerCase();
     return fetchedTasks.filter(task => {
@@ -685,12 +1041,20 @@ function filterTasks(searchText){
     });
 }
 
+/**
+ * Read the search input value into `currentSearch` and re-render the board.
+ * @returns {void}
+ */
 function searchTasks(){
     currentSearch = document.getElementById('search-input')
     .value.trim();
     renderBoard();
 }
 
+/**
+ * Show a short success dialog when a task is created.
+ * @returns {void}
+ */
 function taskSuccessfullyCreatedDialog() {
     const successDialog = document.getElementById('task_dialog_success_id');
     successDialog.showModal();
@@ -699,6 +1063,11 @@ function taskSuccessfullyCreatedDialog() {
     }, 2000);
 }
 
+/**
+ * Open a confirmation dialog to delete a task.
+ * @param {string} taskId
+ * @param {string} taskTitle
+ */
 function deleteTaskDialog(taskId, taskTitle) {
     const deleteDialog = document.getElementById('task_dialog_delete_id');
     const taskName = deleteDialog.querySelector('#task_name_id');
@@ -710,6 +1079,13 @@ function deleteTaskDialog(taskId, taskTitle) {
     deleteDialog.showModal();
 }
 
+/**
+ * Attach event listeners to delete dialog buttons.
+ * @param {string} taskId
+ * @param {HTMLElement} deleteButton
+ * @param {HTMLElement} cancelButton
+ * @param {HTMLElement} deleteDialog
+ */
 function eventListenerDeleteTaskDialog(taskId, deleteButton, cancelButton, deleteDialog) {
     deleteButton.onclick = async () => {
         await deleteTask(taskId);
@@ -720,6 +1096,11 @@ function eventListenerDeleteTaskDialog(taskId, deleteButton, cancelButton, delet
     };
 }
 
+/**
+ * Get the previous status key in the workflow order, or null if none.
+ * @param {string} currentStatus
+ * @returns {string|null}
+ */
 function getPreviousStatus(currentStatus){
     const currentIndex = STATUS_ORDER.indexOf(currentStatus);
     if(currentIndex <= 0){
@@ -728,6 +1109,11 @@ function getPreviousStatus(currentStatus){
     return STATUS_ORDER[currentIndex - 1];
 }
 
+/**
+ * Get the next status key in the workflow order, or null if none.
+ * @param {string} currentStatus
+ * @returns {string|null}
+ */
 function getNextStatus(currentStatus){
     const currentIndex = STATUS_ORDER.indexOf(currentStatus);
     if(
@@ -739,6 +1125,12 @@ function getNextStatus(currentStatus){
     return STATUS_ORDER[currentIndex + 1];
 }
 
+/**
+ * Handle click on a task card. If the click happened on the move menu wrapper
+ * ignore it; otherwise open task details.
+ * @param {MouseEvent} event
+ * @param {string} taskId
+ */
 function handleTaskCardClick(event, taskId){
     if(event.target.closest('.move-task-wrapper')){
         return;
@@ -746,17 +1138,29 @@ function handleTaskCardClick(event, taskId){
     openTaskDetails(taskId);
 }
 
+/**
+ * Toggle the move-task menu visibility for a specific task card.
+ * @param {Event} event
+ * @param {string} taskId
+ */
 function toggleMoveTaskMenu(event, taskId) {
     event.preventDefault();
     event.stopPropagation();
     const menu = document.getElementById(`move-task-menu-${taskId}`);
     if (!menu) {
-        console.error('Move-Menü wurde nicht gefunden:', taskId);
+        console.error('Move menu not found for task:', taskId);
         return;
     }
     menu.classList.toggle('move-task-menu-open');
 }
 
+/**
+ * Move a task to a new status programmatically (used by move menu).
+ * @param {Event} event
+ * @param {string} taskId
+ * @param {string} newStatus
+ * @returns {Promise<void>}
+ */
 async function moveTaskToStatus(event, taskId, newStatus) {
     event.preventDefault();
     event.stopPropagation();
@@ -766,6 +1170,6 @@ async function moveTaskToStatus(event, taskId, newStatus) {
         await updateTaskStatus(task, newStatus);
         await reloadBoard();
     } catch (error) {
-        console.error('Task konnte nicht verschoben werden', error);
+        console.error('Failed to move task', error);
     }
 }

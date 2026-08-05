@@ -1,13 +1,18 @@
+/**
+ * Summary module
+ * Responsible for fetching tasks and rendering a small summary view
+ * including counts by status/priority and next upcoming deadline.
+ */
 document.addEventListener('DOMContentLoaded', initSummary);
-
-
 
 const BASE_URL = 'https://join-dca51-default-rtdb.europe-west1.firebasedatabase.app/';
 
 let summaryTasks = [];
 
-document.addEventListener('DOMContentLoaded', initSummary);
-
+/**
+ * Initialize the summary view: fetch tasks and render summary.
+ * @returns {Promise<void>}
+ */
 async function initSummary() {
     summaryTasks = await fetchTasks();
 
@@ -17,11 +22,16 @@ async function initSummary() {
     renderSummary(userName);
 }
 
+/**
+ * Fetch tasks from Firebase and store them in `summaryTasks`.
+ * @param {string} [path='tasks'] - Firebase path to fetch
+ * @returns {Promise<Array<Object>>} Array of tasks
+ */
 async function fetchTasks(path = 'tasks') {
     try {
         const response = await fetch(`${BASE_URL}${path}.json`);
         if (!response.ok) {
-            throw new Error(`HTTP-Fehler: ${response.status}`);
+            throw new Error(`HTTP error: ${response.status}`);
         }
         const data = await response.json();
         summaryTasks = Object.entries(data ?? {}).map(([id, task]) => ({
@@ -30,24 +40,43 @@ async function fetchTasks(path = 'tasks') {
         }));
         return summaryTasks;
     } catch (error) {
-        console.error('Fehler beim Abrufen:', error);
+        console.error('Error fetching tasks:', error);
         summaryTasks = [];
         return [];
     }
 }
 
+/**
+ * Count tasks filtered by status.
+ * @param {string} status
+ * @returns {number}
+ */
 function getTaskCountByStatus(status) {
     return summaryTasks.filter(task => task.status === status).length;
 }
 
+/**
+ * Count tasks filtered by priority.
+ * @param {string} priority
+ * @returns {number}
+ */
 function getTaskCountByPriority(priority) {
     return summaryTasks.filter(task => task.priority === priority).length;
 }
 
+/**
+ * Return total number of tasks in cache.
+ * @returns {number}
+ */
 function getTaskCount() {
     return summaryTasks.length;
 }
 
+/**
+ * Render the summary HTML into the summary container.
+ * @param {string} userName
+ * @returns {void}
+ */
 function renderSummary(userName) {
     const container = document.getElementById('summary-content');
 
@@ -64,6 +93,11 @@ function renderSummary(userName) {
     });
 }
 
+/**
+ * Return the nearest upcoming task deadline formatted for display.
+ * If no dated tasks exist returns 'No deadline'.
+ * @returns {string}
+ */
 function getUpcomingDeadline() {
     const tasksWithDate = summaryTasks.filter(task => task.date);
     if (!tasksWithDate.length) {
@@ -75,6 +109,11 @@ function getUpcomingDeadline() {
     return formatDeadline(sortedTasks[0].date);
 }
 
+/**
+ * Parse a date in 'DD/MM/YYYY' format into a Date object.
+ * @param {string} dateString - Date string in 'DD/MM/YYYY'
+ * @returns {Date}
+ */
 function parseTaskDate(dateString) {
     const [day, month, year] = dateString.split('/');
     return new Date(
@@ -84,6 +123,11 @@ function parseTaskDate(dateString) {
     );
 }
 
+/**
+ * Format a 'DD/MM/YYYY' date string into a human-readable form.
+ * @param {string} dateString
+ * @returns {string}
+ */
 function formatDeadline(dateString) {
     return parseTaskDate(dateString).toLocaleDateString('en-US', {
         month: 'long',
@@ -92,6 +136,10 @@ function formatDeadline(dateString) {
     });
 }
 
+/**
+ * Return a greeting string based on the current hour.
+ * @returns {string}
+ */
 function getGreeting() {
     const currentHour = new Date().getHours();
     if (currentHour < 12) {
