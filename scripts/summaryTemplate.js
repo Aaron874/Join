@@ -128,10 +128,13 @@ return `
 }
 
 function getSummaryGreetingTemplate(summaryData) {
-return `
-<div class="summary-greeting">
-    <span>${summaryData.greeting}</span>
-    <strong>${summaryData.userName}</strong>
-</div>
-`;
+    return `
+        <div class="summary-greeting">
+            <span>${summaryData.greeting}</span>
+            ${summaryData.userName
+                ? `<strong>${summaryData.userName}</strong>`
+                : ''
+            }
+        </div>
+    `;
 }
