@@ -41,7 +41,7 @@ async function createGuestUser() {
         await loginGuest();
         window.location.href = "summary.html";
     } catch (error) {
-        
+        showErrorGuestLogin();
     }
 }
 
