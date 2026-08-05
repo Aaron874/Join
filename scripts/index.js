@@ -1,5 +1,5 @@
 import { loginUser, registerUser } from './auth/auth.service.js';
-import { createUserProfile, getUserProfile } from '../firebase/user.service.js';
+import { createUserProfile } from '../firebase/user.service.js';
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainer = document.getElementById("sign_up_btn_wrapper");
@@ -50,9 +50,11 @@ function changeLogOrSignForm(LogOrSign) {
 
 
 async function loginCurrentUser() {
+    setFormDisabled(true);
     let formValues = dataFromForm();
     try {
         const uid = await loginUser(formValues.email, formValues.password);
+        setFormDisabled(false);
         window.location.href = "summary.html";
     } catch (error) {
         console.error(error.code, error.message);
@@ -83,9 +85,22 @@ async function userData (confirmPassword) {
         return;
       }
     form.reset();
-    await registerUser(values.email, values.password);
-    await createUserProfile(values.username, values.email);
-    successDialogOpen();
+    registerNewUser(values);
+    // await registerUser(values.email, values.password);
+    // await createUserProfile(values.username, values.email);
+    // successDialogOpen();
+}
+
+async function registerNewUser(values) {
+    setFormDisabled(true);
+    try {
+        await registerUser(values.email, values.password);
+        await createUserProfile(values.username, values.email);
+        successDialogOpen();
+        setFormDisabled(false);
+    } catch (error) {
+        showErrorSignUp();
+    }
 }
 
 function resetValidation (confirmPassword ) {
@@ -108,5 +123,23 @@ function showErrorLogIn() {
     errorLogIn.classList.remove("hidden");
     setTimeout(() => {
         errorLogIn.classList.add("hidden");
+        setFormDisabled(false);
     }, 3000);
 }
+
+function showErrorSignUp() {
+    const errorSignUp = document.getElementById("sign_up_error_id");
+    errorSignUp.classList.remove("hidden");
+    setTimeout(() => {
+        errorSignUp.classList.add("hidden");
+        setFormDisabled(false);
+    }, 3000);
+}
+
+function setFormDisabled(disabled) {
+    document
+      .querySelectorAll("#sign_log_in_id input, #sign_log_in_id button")
+      .forEach(element => {
+        element.disabled = disabled;
+      });
+  }

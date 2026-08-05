@@ -50,6 +50,14 @@ function signUpTemplate() {
                         <input type="checkbox" name="Privacy Policy Checkbox" id="" required />
                         <p>I accept the <a href="policy.html">Privacy Policy</a></p>
                     </div>
+                <div
+                    id="sign_up_error_id"
+                    class="alert_sign_up hidden"
+                    role="alert"
+                    aria-live="assertive"
+                >
+                    Diese E-Mail-Adresse ist bereits registriert.
+                </div>
                     <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
 `;            
 }
