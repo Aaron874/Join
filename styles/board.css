@@ -664,6 +664,10 @@ input::placeholder {
   flex: 1;
 }
 
+.highlight {
+  background-color: var(--color-gray);
+}
+
 
 .status-head {
   display: flex;
@@ -684,6 +688,7 @@ input::placeholder {
 .task-queue {
   margin-top: 24px;
   width: 100%;
+  padding-bottom: 50px;
 }
 
 .notask {

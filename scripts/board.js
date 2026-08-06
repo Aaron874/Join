@@ -292,6 +292,7 @@ function getAssignedToText(assignedTo) {
 function initDragAndDrop() {
     document.querySelectorAll('.task-queue').forEach(column => {
         column.addEventListener('dragover', handleDragOver);
+        column.addEventListener('dragleave', handleDragLeave);
         column.addEventListener('drop', handleDrop);
     });
 }
@@ -312,6 +313,7 @@ function handleDragStart(event) {
  */
 function handleDragEnd(event) {
     event.currentTarget.classList.remove('dragging');
+    event.currentTarget.classList.remove('highlight');
     draggedTaskId = null;
 }
 
@@ -321,6 +323,14 @@ function handleDragEnd(event) {
  */
 function handleDragOver(event) {
     event.preventDefault();
+    event.currentTarget.classList.add('highlight');
+
+}
+
+function handleDragLeave(event) {
+    const column = event.currentTarget;
+    if(column.contains(event.relatedTarget)) return;
+    column.classList.remove('highlight');
 }
 
 /**
@@ -330,6 +340,7 @@ function handleDragOver(event) {
  */
 async function handleDrop(event) {
     event.preventDefault();
+    event.currentTarget.classList.remove('highlight');
     const task = getTaskById(draggedTaskId);
     const newStatus = event.currentTarget.dataset.status;
     if (!task || task.status === newStatus) return;
