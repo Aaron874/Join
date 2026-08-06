@@ -1,5 +1,5 @@
 import { auth } from '../firebase/firebase-config.js';
-import { guestLogin } from '../firebase/auth.js';
+import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { getContacts } from '../firebase/contacts.service.js';
 
 window.boardContacts = [];
@@ -40,25 +40,6 @@ function addBoardContactColors(contacts) {
  * @returns {Promise<void>}
  */
 async function ensureBoardAuthentication() {
-    if (auth.currentUser) return;
-    await guestLogin();
-    await waitForAuthenticatedUser();
+    return waitForAuthenticatedUser();
 }
 
-/**
- * Wait until `auth.currentUser` is available or reject after timeout.
- * @returns {Promise<void>} Resolves when a user is authenticated.
- */
-function waitForAuthenticatedUser() {
-    return new Promise((resolve, reject) => {
-        const timeoutId = setTimeout(() => {
-            reject(new Error('Authentication failed.'));
-        }, 1000);
-        const intervalId = setInterval(() => {
-            if (!auth.currentUser) return;
-            clearInterval(intervalId);
-            clearTimeout(timeoutId);
-            resolve();
-        }, 50);
-    });
-}

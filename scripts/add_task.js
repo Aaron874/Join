@@ -1,5 +1,5 @@
 import { auth } from "../firebase/firebase-config.js";
-import { guestLogin } from "../firebase/auth.js";
+import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { getContacts } from "../firebase/contacts.service.js";
 import { createTask as createFirebaseTask } from "../firebase/task.service.js";
 
@@ -73,13 +73,7 @@ async function initAddTask() {
 
 
 async function ensureAuthenticatedUser() {
-    if (auth.currentUser) {
-        return auth.currentUser;
-    }
-
-    const result = await guestLogin();
-
-    return result.user;
+    return waitForAuthenticatedUser();
 }
 
 

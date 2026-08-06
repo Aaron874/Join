@@ -1,5 +1,5 @@
 import { db, auth } from '../firebase/firebase-config.js';
-import { guestLogin } from '../firebase/auth.js';
+import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
 import {
     getContacts,
@@ -25,7 +25,7 @@ const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
 
-window.result = await guestLogin();
+window.result = await waitForAuthenticatedUser();
 
 loadContacts();
 
