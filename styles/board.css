@@ -19,7 +19,7 @@ h1 .layout {
 }
 
 .mobile-joinLogo {
-    display: none;
+  display: none;
 }
 
 .page-title {
@@ -666,6 +666,8 @@ input::placeholder {
 
 .highlight {
   background-color: var(--color-gray);
+  border: 2px dashed var(--color-notices);
+  border-radius: 10px;
 }
 
 
@@ -688,7 +690,8 @@ input::placeholder {
 .task-queue {
   margin-top: 24px;
   width: 100%;
-  padding-bottom: 50px;
+  min-width: 250px;
+  min-height: 250px;
 }
 
 .notask {
@@ -701,6 +704,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 50px;
 }
 
 .add-dialog {
@@ -845,13 +849,13 @@ input::placeholder {
 .move-task-button,
 .move-task-button svg,
 .move-task-button path {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 
 .task-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .move-task-wrapper {
@@ -890,14 +894,14 @@ input::placeholder {
 }
 
 .move-task-button {
-    position: relative;
-    z-index: 11;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background: transparent;
-    cursor: pointer;
+  position: relative;
+  z-index: 11;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 .task-card-bottom {
@@ -1194,7 +1198,7 @@ priority-icon {
     display: flex;
   }
 
-  .move-task-button{
+  .move-task-button {
     display: flex;
   }
 }
@@ -1351,23 +1355,23 @@ priority-icon {
   }
 
   .mobile-joinLogo {
-  display: flex;
-  position: fixed;
-  left: 48px;
-}
+    display: flex;
+    position: fixed;
+    left: 48px;
+  }
 
-.header{
-  width: 100%;
-}
+  .header {
+    width: 100%;
+  }
 
-.help-icon{
-  display: none !important; 
-}
+  .help-icon {
+    display: none !important;
+  }
 
-.right-header {
-  width: 100%;
-  justify-content: flex-end;
-}
+  .right-header {
+    width: 100%;
+    justify-content: flex-end;
+  }
 
   .header-content {
     display: none;
