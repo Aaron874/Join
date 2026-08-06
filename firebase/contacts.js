@@ -3,9 +3,6 @@ import { getContacts }
 
 async function initContacts() {
     const contacts = await getContacts();
-
-    console.log(contacts);
-
     renderContacts(contacts);
 }
 
