@@ -526,7 +526,7 @@ input::placeholder {
     visibility: hidden;
     opacity: 0;
 
-    transition: opacity 150ms ease;
+    transition: opacity 120ms ease;
 }
 
 .error-message.show {
