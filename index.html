@@ -1,69 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Join Main Site</title>
-        <link rel="stylesheet" href="styles/index.css" />
-        <script type="module" src="scripts/index.js"></script>
-        <script src="scripts/indexTemplate.js"></script>
-    </head>
-    <body>
-        <header>
-            <img src="assets/img/Capa 2.webp" alt="" />
-            <div id="sign_up_btn_wrapper">
-                <span>Not a Join user?</span>
-                <button id="change_to_sign_up_btn">Sign up</button>
-            </div>
-        </header>
-        <main>
-            <section class="login_section">
-                <button class="back_to_log_in_btn hidden" id="back_to_log_in_btn_id">
-                    <img src="assets/img/arrow-left-line.webp" alt="" />
-                </button>
-                <form action="" id="sign_log_in_id">
-                    <h1 id="header_log_sign">Log in</h1>
-                    <div class="login_input_wrapper">
-                        <input
-                            type="email"
-                            name="email"
-                            id="login_email_id"
-                            placeholder="Email"
-                            required
-                        />
-                        <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon" />
-                    </div>
-                    <div class="login_input_wrapper">
-                        <input
-                            type="password"
-                            name="password"
-                            id="login_password_id"
-                            placeholder="Password"
-                            required
-                        />
-                        <img src="assets/img/lock.webp" alt="password lock sign" />
-                    </div>
-                    <div
-                    id="login_error_id"
-                    class="alert_log_in hidden"
-                    role="alert"
-                    aria-live="assertive"
-                >
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/img/logo.svg" type="svg/xml">
+    <title>Join Main Site</title>
+    <link rel="stylesheet" href="styles/index.css" />
+    <script type="module" src="scripts/index.js"></script>
+    <script src="scripts/indexTemplate.js"></script>
+</head>
+
+<body>
+    <header>
+        <img src="assets/img/Capa 2.webp" alt="" />
+        <div id="sign_up_btn_wrapper">
+            <span>Not a Join user?</span>
+            <button id="change_to_sign_up_btn">Sign up</button>
+        </div>
+    </header>
+    <main>
+        <section class="login_section">
+            <button class="back_to_log_in_btn hidden" id="back_to_log_in_btn_id">
+                <img src="assets/img/arrow-left-line.webp" alt="" />
+            </button>
+            <form action="" id="sign_log_in_id">
+                <h1 id="header_log_sign">Log in</h1>
+                <div class="login_input_wrapper">
+                    <input type="email" name="email" id="login_email_id" placeholder="Email" required />
+                    <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon" />
+                </div>
+                <div class="login_input_wrapper">
+                    <input type="password" name="password" id="login_password_id" placeholder="Password" required />
+                    <img src="assets/img/lock.webp" alt="password lock sign" />
+                </div>
+                <div id="login_error_id" class="alert_log_in hidden" role="alert" aria-live="assertive">
                     Username or Password incorrect
                 </div>
-                    <div class="login_btn_wrapper">
-                        <button class="login_btn" type="submit" data-action="logIn">Log in</button>
-                        <button class="guest_login_btn">Guest Log in</button>
-                    </div>
-                </form>
-            </section>
-            <dialog id="sign_up_success_dialog_id" class="sign_up_success_dialog">
-                <h1>You Signed Up succesfully</h1>
-            </dialog>
-        </main>
-        <footer>
-            <a href="policy.html">Privacy Policy</a>
-            <a href="legal.html">Legal notice</a>
-        </footer>
-    </body>
+                <div class="login_btn_wrapper">
+                    <button class="login_btn" type="submit" data-action="logIn">Log in</button>
+                    <button class="guest_login_btn">Guest Log in</button>
+                </div>
+            </form>
+        </section>
+        <dialog id="sign_up_success_dialog_id" class="sign_up_success_dialog">
+            <h1>You Signed Up succesfully</h1>
+        </dialog>
+    </main>
+    <footer>
+        <a href="policy.html">Privacy Policy</a>
+        <a href="legal.html">Legal notice</a>
+    </footer>
+</body>
+
 </html>
