@@ -51,9 +51,7 @@ async function initAddTask() {
     try {
         const user = await ensureAuthenticatedUser();
 
-        console.log("Aktueller Benutzer:", user.uid);
-        console.log("Gast:", user.isAnonymous);
-
+        
         contactsList = await getContacts();
 
         document.getElementById(
@@ -356,7 +354,7 @@ async function createTask(element) {
         clearTaskform();
         taskSuccessfullyCreatedDialog();
 
-        console.log("Task gespeichert:", savedTask);
+        
     } catch (error) {
         console.error("Task konnte nicht gespeichert werden:", error);
     }
