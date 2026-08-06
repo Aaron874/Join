@@ -738,7 +738,6 @@ async function saveTask(event) {
     const defaultStatus =
         document.getElementById('add-task-dialog').dataset.status || 'todo';
     const task = getTaskFormData(defaultStatus);
-    console.log('Task data on save:', task);
     if (!isTaskValid(task)) return;
     try {
         await persistTask(task);
