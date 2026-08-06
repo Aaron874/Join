@@ -389,6 +389,7 @@ function resetTaskFields() {
 function resetTaskUI() {
     selectedContacts = [];
     resetPriorityStyles();
+    dropdownContactsUp();
     dropdownCategoryDown();
     dropdownCategoryUp();
 }
