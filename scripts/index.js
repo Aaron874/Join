@@ -59,8 +59,8 @@ function changeLogOrSignForm(LogOrSign) {
 
 
 async function loginCurrentUser() {
-    setFormDisabled(true);
     let formValues = dataFromForm();
+    setFormDisabled(true);
     try {
         await loginUser(formValues.email, formValues.password);
         setFormDisabled(false);
