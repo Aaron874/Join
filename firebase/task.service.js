@@ -3,26 +3,27 @@ import {
     push,
     get,
     update,
-    remove
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    remove,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
-import {
-    db,
-    auth
-} from "./firebase-config.js";
+import { db, auth } from './firebase-config.js';
 
 /**
  * Gibt die UID des aktuell angemeldeten Benutzers zurück.
  * @returns {string}
  */
-function getUserId() {
+function getUserPath(collection) {
     const user = auth.currentUser;
 
     if (!user) {
-        throw new Error("Kein Benutzer angemeldet.");
+        throw new Error('Kein Benutzer angemeldet.');
     }
 
-    return user.uid;
+    if (user.isAnonymous) {
+        return `${collection}/guest`;
+    }
+
+    return `${collection}/${user.uid}`;
 }
 
 /**
@@ -31,12 +32,7 @@ function getUserId() {
  * @returns {Promise}
  */
 export async function createTask(task) {
-    const uid = getUserId();
-
-    return push(
-        ref(db, `tasks/${uid}`),
-        task
-    );
+    return push(ref(db, getUserPath('tasks')), task);
 }
 
 /**
@@ -44,11 +40,7 @@ export async function createTask(task) {
  * @returns {Promise<Array>}
  */
 export async function getTasks() {
-    const uid = getUserId();
-
-    const snapshot = await get(
-        ref(db, `tasks/${uid}`)
-    );
+    const snapshot = await get(ref(db, getUserPath('tasks')));
 
     if (!snapshot.exists()) {
         return [];
@@ -56,7 +48,7 @@ export async function getTasks() {
 
     return Object.entries(snapshot.val()).map(([id, task]) => ({
         id,
-        ...task
+        ...task,
     }));
 }
 
@@ -66,11 +58,7 @@ export async function getTasks() {
  * @returns {Promise<Object|null>}
  */
 export async function getTask(taskId) {
-    const uid = getUserId();
-
-    const snapshot = await get(
-        ref(db, `tasks/${uid}/${taskId}`)
-    );
+    const snapshot = await get(ref(db, `${getUserPath('tasks')}/${taskId}`));
 
     if (!snapshot.exists()) {
         return null;
@@ -78,7 +66,7 @@ export async function getTask(taskId) {
 
     return {
         id: taskId,
-        ...snapshot.val()
+        ...snapshot.val(),
     };
 }
 
@@ -88,12 +76,7 @@ export async function getTask(taskId) {
  * @param {Object} updatedTask
  */
 export async function updateTask(taskId, updatedTask) {
-    const uid = getUserId();
-
-    return update(
-        ref(db, `tasks/${uid}/${taskId}`),
-        updatedTask
-    );
+    return update(ref(db, `${getUserPath('tasks')}/${taskId}`), updatedTask);
 }
 
 /**
@@ -102,15 +85,10 @@ export async function updateTask(taskId, updatedTask) {
  * @param {string} status
  */
 export async function updateTaskStatus(task, status) {
-    const taskPath = task.userId
-    ? `tasks/${task.userId}/${task.id}`
-    : `tasks/${task.id}`;
-    return update(
-        ref(db, taskPath),
-        {
-            status
-        }
-    );
+    const taskPath = task.userId ? `tasks/${task.userId}/${task.id}` : `tasks/${task.id}`;
+    return update(ref(db, taskPath), {
+        status,
+    });
 }
 
 /**
@@ -118,9 +96,5 @@ export async function updateTaskStatus(task, status) {
  * @param {string} taskId
  */
 export async function deleteTask(taskId) {
-    const uid = getUserId();
-
-    return remove(
-        ref(db, `tasks/${uid}/${taskId}`)
-    );
+    return remove(ref(db, `${getUserPath('tasks')}/${taskId}`));
 }

@@ -3,26 +3,27 @@ import {
     push,
     get,
     update,
-    remove
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    remove,
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
-import {
-    db,
-    auth
-} from "./firebase-config.js";
+import { db, auth } from './firebase-config.js';
 
 /**
  * Gibt die UID des aktuell angemeldeten Benutzers zurück.
  * @returns {string}
  */
-function getUserId() {
+function getUserPath(collection) {
     const user = auth.currentUser;
 
     if (!user) {
-        throw new Error("Kein Benutzer angemeldet.");
+        throw new Error('Kein Benutzer angemeldet.');
     }
 
-    return user.uid;
+    if (user.isAnonymous) {
+        return `${collection}/guest`;
+    }
+
+    return `${collection}/${user.uid}`;
 }
 
 /**
@@ -31,12 +32,7 @@ function getUserId() {
  * @returns {Promise}
  */
 export async function createContact(contact) {
-    const uid = getUserId();
-
-    return push(
-        ref(db, `contacts/${uid}`),
-        contact
-    );
+    return push(ref(db, getUserPath('contacts')), contact);
 }
 
 /**
@@ -44,12 +40,7 @@ export async function createContact(contact) {
  * @returns {Promise<Array>}
  */
 export async function getContacts() {
-    const uid = getUserId();
-    
-
-    const snapshot = await get(
-        ref(db, `contacts/${uid}`)
-    );
+    const snapshot = await get(ref(db, getUserPath('contacts')));
 
     if (!snapshot.exists()) {
         return [];
@@ -57,7 +48,7 @@ export async function getContacts() {
 
     return Object.entries(snapshot.val()).map(([id, contact]) => ({
         id,
-        ...contact
+        ...contact,
     }));
 }
 
@@ -67,19 +58,14 @@ export async function getContacts() {
  * @returns {Promise<Object|null>}
  */
 export async function getContact(contactId) {
-    const uid = getUserId();
-
-    const snapshot = await get(
-        ref(db, `contacts/${uid}/${contactId}`)
-    );
-
+    const snapshot = await get(ref(db, `${getUserPath('contacts')}/${contactId}`));
     if (!snapshot.exists()) {
         return null;
     }
 
     return {
         id: contactId,
-        ...snapshot.val()
+        ...snapshot.val(),
     };
 }
 
@@ -89,12 +75,7 @@ export async function getContact(contactId) {
  * @param {Object} updatedContact
  */
 export async function updateContact(contactId, updatedContact) {
-    const uid = getUserId();
-
-    return update(
-        ref(db, `contacts/${uid}/${contactId}`),
-        updatedContact
-    );
+    return update(ref(db, `${getUserPath('contacts')}/${contactId}`), updatedContact);
 }
 
 /**
@@ -102,9 +83,5 @@ export async function updateContact(contactId, updatedContact) {
  * @param {string} contactId
  */
 export async function deleteContact(contactId) {
-    const uid = getUserId();
-
-    return remove(
-        ref(db, `contacts/${uid}/${contactId}`)
-    );
+    return remove(ref(db, `${getUserPath('contacts')}/${contactId}`));
 }
