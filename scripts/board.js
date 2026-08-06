@@ -88,32 +88,74 @@ async function fetchTasks(path = 'tasks') {
 }
 
 /**
- * Normalize raw Firebase response into a flat array of task objects.
- * Handles both flat and nested (per-user) task structures.
- * @param {Object|null} data - Raw JSON from Firebase
- * @returns {Array<Object>} Normalized list of tasks
+ * Build request options for JSON-based fetch calls.
+ * @param {string} method - HTTP method for the request.
+ * @param {Object} data - Payload to serialize as JSON.
+ * @returns {{method:string, headers:Object, body:string}}
+ */
+function getJsonRequestOptions(method, data) {
+    return {
+        method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    };
+}
+
+/**
+ * Parse a Firebase REST response and return the JSON payload.
+ * @param {Response} response - Fetch response object.
+ * @param {string} errorMessage - Error message prefix for failures.
+ * @returns {Promise<unknown|null>} Parsed response body, or null for empty responses.
+ * @throws {Error} If the response is not ok.
+ */
+async function parseFirebaseResponse(response, errorMessage) {
+    const responseText = await response.text();
+    if (!response.ok) {
+        throw new Error(
+            `${errorMessage}: ${response.status} – ${responseText}`
+        );
+    }
+    return responseText
+        ? JSON.parse(responseText)
+        : null;
+}
+
+/**
+ * Normalize tasks stored under a user-specific Firebase node.
+ * @param {string} userId - Firebase user id that owns the task list.
+ * @param {Object} userTasks - Object containing tasks keyed by task id.
+ * @returns {Array<Object>} Array of normalized task objects.
+ */
+function normalizeUserTasks(userId, userTasks) {
+    return Object.entries(userTasks ?? {})
+        .filter(([, task]) => isTaskObject(task))
+        .map(([taskId, task]) => ({
+            ...task,
+            id: taskId,
+            userId,
+        }));
+}
+
+/**
+ * Convert raw Firebase result data into a flat array of task objects.
+ * Supports both top-level task entries and nested user task maps.
+ * @param {Object} data - Raw data returned by Firebase.
+ * @returns {Array<Object>} Normalized list of task objects.
  */
 function normalizeFetchedTasks(data) {
-    const tasks = [];
-    Object.entries(data ?? {}).forEach(([firstLevelId, value]) => {
-        if (isTaskObject(value)) {
-            tasks.push({
-                ...value,
-                id: firstLevelId,
-            });
-            return;
+    return Object.entries(data ?? {}).flatMap(
+        ([firstLevelId, value]) => {
+            if (isTaskObject(value)) {
+                return [{
+                    ...value,
+                    id: firstLevelId,
+                }];
+            }
+            return normalizeUserTasks(firstLevelId, value);
         }
-
-        Object.entries(value ?? {}).forEach(([taskId, task]) => {
-            if (!isTaskObject(task)) return;
-            tasks.push({
-                ...task,
-                id: taskId,
-                userId: firstLevelId,
-            });
-        });
-    });
-    return tasks;
+    );
 }
 
 /**
@@ -153,10 +195,45 @@ function renderSubtasks() {
         .join('');
 }
 
+// ...existing code...
 /**
- * Render a single column of tasks into the given container.
- * @param {string} status - Column status key (e.g. 'todo')
- * @param {HTMLElement|null} container - DOM element for the column
+ * Determine whether a task matches the current search filter.
+ * Returns true for search terms shorter than three characters.
+ * @param {Object} task - Task object to test.
+ * @param {string} searchTerm - Lowercased search term.
+ * @returns {boolean}
+ */
+function taskMatchesSearch(task, searchTerm) {
+    if (searchTerm.length < 3) return true;
+
+    const searchableValues = [
+        task.title,
+        task.assignedTo,
+    ];
+
+    return searchableValues.some(value =>
+        value?.toLowerCase().includes(searchTerm)
+    );
+}
+
+/**
+ * Get tasks for a specific board column, applying the active search filter.
+ * @param {string} status - Column status key.
+ * @returns {Array<Object>}
+ */
+function getTasksForColumn(status) {
+    const searchTerm = currentSearch.toLowerCase();
+
+    return fetchedTasks.filter(task =>
+        task.status === status &&
+        taskMatchesSearch(task, searchTerm)
+    );
+}
+
+/**
+ * Render tasks for a given status column into the provided container.
+ * @param {string} status - Column status key.
+ * @param {HTMLElement} container - Container element for task cards.
  * @returns {void}
  */
 function renderColumn(status, container) {
@@ -164,8 +241,7 @@ function renderColumn(status, container) {
         console.error('Container missing for status:', status);
         return;
     }
-    const columnTasks = fetchedTasks.filter(task => task.status === status);
-    const content = columnTasks
+    const content = getTasksForColumn(status)
         .map(getTaskTemplate)
         .join('');
     container.innerHTML =
@@ -275,8 +351,7 @@ async function updateTaskStatus(task, status) {
     const taskPath = task.userId
     ? `tasks/${task.userId}/${task.id}`
     : `tasks/${task.id}`;
-    const response = await fetch(
-        `${BASE_URL}${taskPath}.json`,
+    const response = await fetch(`${BASE_URL}${taskPath}.json`,
         {
             method: 'PATCH',
             headers: {
@@ -519,6 +594,17 @@ function isContactObject(contact) {
 }
 
 /**
+ * Return the Firebase storage path for a task.
+ * @param {Object} task - Task object containing `id` and optional `userId`.
+ * @returns {string}
+ */
+function getTaskPath(task) {
+    return task.userId
+        ? `tasks/${task.userId}/${task.id}`
+        : `tasks/${task.id}`;
+}
+
+/**
  * Normalize a contact object by enriching with shortName and color from
  * the board contacts if available.
  * @param {Object} contact
@@ -583,7 +669,6 @@ function getContactColor(contact, contactData) {
  */
 function findContactByName(contactName) {
     const normalizedName = contactName.trim().toLowerCase();
-
     return boardContacts.find(
         contact =>
             contact.name.trim().toLowerCase() === normalizedName
@@ -648,9 +733,7 @@ function setTaskSubtasks(taskSubtasks) {
  * @param {Event} event
  * @returns {Promise<void>}
  */
-async function saveTask(event) {
-    console.log('saveTask started');
-    console.log('editingTaskId', editingTaskId);    
+async function saveTask(event) { 
     event.preventDefault();
     const defaultStatus =
         document.getElementById('add-task-dialog').dataset.status || 'todo';
@@ -776,28 +859,15 @@ async function toggleTaskSubtask(index) {
  * @returns {Promise<void>}
  */
 async function updateTaskSubtasksInFirebase(task, subtasks) {
-    const taskPath = task.userId
-        ? `tasks/${task.userId}/${task.id}`
-        : `tasks/${task.id}`;
     const response = await fetch(
-        `${BASE_URL}${taskPath}.json`,
-        {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                subtasks: subtasks,
-            }),
-        }
+        `${BASE_URL}${getTaskPath(task)}.json`,
+        getJsonRequestOptions('PATCH', { subtasks })
     );
-    if (!response.ok) {
-        const errorText = await response.text();
 
-        throw new Error(
-            `${response.status}: ${errorText}`
-        );
-    }
+    await parseFirebaseResponse(
+        response,
+        'Subtasks konnten nicht aktualisiert werden'
+    );
 }
 
 /**
@@ -883,24 +953,15 @@ function isValidCategory(category) {
  * @returns {Promise<Object|null>} Parsed response or null
  */
 async function updateTaskInFirebase(existingTask, taskData) {
-    const taskPath = existingTask.userId
-        ? `tasks/${existingTask.userId}/${existingTask.id}`
-        : `tasks/${existingTask.id}`;
-    const url = `${BASE_URL}${taskPath}.json`;
-    const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(taskData),
-    });
-    const responseText = await response.text();
-    if (!response.ok) {
-        throw new Error(
-            `Task update failed: ${response.status} – ${responseText}`
-        );
-    }
-    return responseText ? JSON.parse(responseText) : null;
+    const response = await fetch(
+        `${BASE_URL}${getTaskPath(existingTask)}.json`,
+        getJsonRequestOptions('PUT', taskData)
+    );
+
+    return parseFirebaseResponse(
+        response,
+        'Task update failed'
+    );
 }
 
 /**
@@ -1024,8 +1085,8 @@ function validateResponse(response, message) {
 }
 
 /**
- * Filter cached tasks by search text matching title or assignedTo.
- * @param {string} searchText
+ * Filter cached tasks by title or assigned contact name.
+ * @param {string} searchText - Search string.
  * @returns {Array<Object>}
  */
 function filterTasks(searchText){
@@ -1042,7 +1103,7 @@ function filterTasks(searchText){
 }
 
 /**
- * Read the search input value into `currentSearch` and re-render the board.
+ * Read the search input value into `currentSearch` and update the board view.
  * @returns {void}
  */
 function searchTasks(){
@@ -1052,7 +1113,7 @@ function searchTasks(){
 }
 
 /**
- * Show a short success dialog when a task is created.
+ * Show a short confirmation dialog after a task has been created.
  * @returns {void}
  */
 function taskSuccessfullyCreatedDialog() {
