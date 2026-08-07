@@ -1,6 +1,3 @@
-/* * {
-  border: 1px solid red;
-} */
 
 main {
   flex-wrap: wrap;
@@ -38,7 +35,6 @@ main {
 }
 
 .header-content {
-  padding-left: 163px;
   width: calc(720px - 232px);
 }
 

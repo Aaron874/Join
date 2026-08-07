@@ -582,6 +582,7 @@ input::placeholder {
 
 .board-head {
   width: 100%;
+  max-width: 1440px;
   height: 232px;
   display: flex;
   align-items: center;
@@ -652,6 +653,7 @@ input::placeholder {
   align-items: flex-start;
   flex-wrap: wrap;
   width: 100%;
+  max-width: 1440px;
   padding-left: 64px;
   font-size: var(--fs-standard);
   font-weight: bold;
