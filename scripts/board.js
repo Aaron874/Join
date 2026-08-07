@@ -933,7 +933,6 @@ function getSelectedContactNames() {
  * @returns {boolean}
  */
 function isTaskValid(task) {
-    formRequired();
 
     return Boolean(
         task.title &&
