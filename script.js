@@ -4,6 +4,7 @@ const BASE_URL = 'https://join-dca51-default-rtdb.europe-west1.firebasedatabase.
 
 import { auth } from '../firebase/firebase-config.js';
 import { getUserProfile } from '../firebase/user.service.js';
+import { logout } from "./firebase/auth.js";
 
 import {
     onAuthStateChanged
@@ -112,3 +113,31 @@ window.getCurrentRegisteredUserName = function () {
         });
     });
 };
+
+function toggleUserMenu(event) {
+    event.stopPropagation();
+    document.getElementById('user-menu')?.classList.toggle('open');
+}
+
+function closeUserMenu() {
+    document.getElementById('user-menu')?.classList.remove('open');
+}
+
+document.addEventListener('click', event => {
+    const menu = event.target.closest('#user-menu');
+    if (!event.target.closest('#loged-in-user') &&
+        (!menu || event.target.closest('a, button'))) closeUserMenu();
+});
+
+async function logoutCurrentUser() {
+    try {
+        await logout();
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error("Logout fehlgeschlagen:", error);
+    }
+}
+
+window.logoutCurrentUser = logoutCurrentUser;
+
+window.toggleUserMenu = toggleUserMenu;

@@ -94,32 +94,34 @@ footer {
   align-items: center;
 }
 
-.header-content{
+.header-content {
   width: 100%;
   max-width: 720px;
   margin-left: 232px;
 }
 
-.right-header{
+.right-header {
   width: 50%;
   display: flex;
+  position: relative;
   justify-content: flex-end;
   align-items: center;
   gap: 20px;
   padding-right: 20px;
 }
 
-.help-icon{
+.help-icon {
   width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
 }
 
-.loged-in-user-icon{
+.loged-in-user-icon {
   width: 56px;
   height: 56px;
   border: 3px solid var(--bg-blue);
+  cursor: pointer;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -140,6 +142,53 @@ footer {
 .logo {
   width: 100px;
   height: 120px;
+}
+
+.user-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 150px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: var(--bg-blue);
+  border-radius: 20px 0 20px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-25px);
+  transition:
+    transform 200ms ease,
+    opacity 200ms ease,
+    visibility 200ms;
+}
+
+.user-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-menu a,
+.user-menu button {
+  padding: 0;
+  font-family: "Inter";
+  font-size: 16px;
+  color: var(--color-gray);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.user-menu a:hover,
+.user-menu button:hover {
+  color: var(--bg-white);
+}
+
+.user-menu-help {
+  display: none;
 }
 
 .aside-content {
@@ -168,12 +217,12 @@ footer {
 }
 
 .main-content {
-    display: flex;
-    flex-direction: column;
-    max-width: 1440px;
-    padding: 48px;
-    width: 100%;
-    /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  padding: 48px;
+  width: 100%;
+  /* align-items: center; */
 }
 
 .hidden {
@@ -322,21 +371,59 @@ footer {
   text-decoration: underline;
 }
 
-.mobile-footer{
+.mobile-footer {
   width: 100%;
   display: none;
   justify-content: center;
 }
 
-@media (max-width: 920px){
-  .header-content{
+@media (max-width: 920px) {
+  .header-content {
     padding-left: 20px !important;
   }
 }
 
-@media (max-width: 780px){
+@media (max-width: 780px) {
   .right-header {
-  width: 100%;
-  justify-content: flex-end;
-}
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .help-icon {
+    display: none !important;
+  }
+
+  .user-menu-help {
+    display: block;
+  }
+
+  .user-menu {
+    gap: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .header-content {
+    display: none;
+  }
+
+  .mobile-joinLogo {
+    display: flex;
+    position: fixed;
+    left: 48px;
+  }
+
+  .header {
+    width: 100%;
+  }
+
+  .aside-content {
+    align-items: center;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

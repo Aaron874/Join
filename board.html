@@ -35,9 +35,15 @@
                             fill="#686868" />
                     </svg>
                 </a>
-                <div class="loged-in-user-icon" id="loged-in-user">
+                <div class="loged-in-user-icon" id="loged-in-user" onclick="toggleUserMenu(event)">
                     G
                 </div>
+                <nav class="user-menu" id="user-menu">
+                    <a class="user-menu-help" href="help.html">Help</a>
+                    <a href="legal.html">Legal Notice</a>
+                    <a href="policy.html">Privacy Policy</a>
+                    <button type="button" onclick="logoutCurrentUser()">Log out</button>
+                </nav>
             </section>
         </article>
     </header>

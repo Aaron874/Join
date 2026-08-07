@@ -5,8 +5,10 @@ import { auth } from "./firebase-config.js";
 import {
     signInAnonymously,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 export async function guestLogin() {
     return await signInAnonymously(auth);
@@ -26,4 +28,8 @@ export async function register(email, password) {
         email,
         password
     );
+}
+
+export async function logout() {
+    return await signOut(auth);
 }

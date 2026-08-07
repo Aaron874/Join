@@ -14,9 +14,10 @@
 </head>
 
 <body>
-    <header><article class="header">
+    <header>
+        <article class="header">
             <section class="header-content">Kanban Project Management Tool</section>
-                <img class="mobile-joinLogo" src="./assets/img/mobile-joinLogo.png" alt="">
+            <img class="mobile-joinLogo" src="./assets/img/mobile-joinLogo.png" alt="">
             <section class="right-header">
                 <a class="help-icon" href="help.html">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,9 +26,15 @@
                             fill="#686868" />
                     </svg>
                 </a>
-                <div class="loged-in-user-icon" id="loged-in-user">
+                <div class="loged-in-user-icon" id="loged-in-user" onclick="toggleUserMenu(event)">
                     G
                 </div>
+                <nav class="user-menu" id="user-menu">
+                    <a class="user-menu-help" href="help.html">Help</a>
+                    <a href="legal.html">Legal Notice</a>
+                    <a href="policy.html">Privacy Policy</a>
+                    <button type="button" onclick="logoutCurrentUser()">Log out</button>
+                </nav>
             </section>
         </article>
     </header>

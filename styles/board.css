@@ -861,7 +861,7 @@ input::placeholder {
 
 .move-task-wrapper {
   position: relative;
-  z-index: 4;
+  z-index: 2;
 }
 
 .move-task-menu {
@@ -1222,6 +1222,10 @@ priority-icon {
   .content-divider {
     display: none;
   }
+
+  .footer {
+    display: flex;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1353,39 +1357,6 @@ priority-icon {
 
   aside {
     display: none;
-  }
-
-  .mobile-joinLogo {
-    display: flex;
-    position: fixed;
-    left: 48px;
-  }
-
-  .header {
-    width: 100%;
-  }
-
-  .help-icon {
-    display: none !important;
-  }
-
-  .right-header {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .header-content {
-    display: none;
-  }
-
-  .aside-content {
-    align-items: center;
-  }
-
-  .footer {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
   }
 
   .board {
