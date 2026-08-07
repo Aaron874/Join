@@ -146,4 +146,3 @@ exposeFunctions();
 window.addTaskToFirebase = async function (task) {
     return await createFirebaseTask(task);
 };
-

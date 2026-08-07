@@ -124,8 +124,7 @@ async function openBoardContactsDropdown() {
  * @param {string|Array|Object} assignedTo
  */
 function setAssignedContacts(assignedTo) {
-    selectedContacts = normalizeContacts(assignedTo);
-    showSelectedContacts();
+    window.setSelectedContacts(normalizeContacts(assignedTo));
 }
 
 /**

@@ -67,23 +67,6 @@ async function reloadBoard() {
 }
 
 /**
- * Create a new task in Firebase.
- * @param {Object} task - Task payload to POST
- * @returns {Promise<Object>} Parsed JSON response from Firebase
- */
-async function createTaskInFirebase(task) {
-    const response = await fetch(`${BASE_URL}tasks.json`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(task),
-    });
-    validateResponse(response, 'Failed to create task');
-    return response.json();
-}
-
-/**
  * Normalize assignedTo into an array of contact objects.
  * @param {string|Array|Object} assignedTo
  * @returns {Array<Object>}
@@ -213,17 +196,6 @@ function getInitials(contactName, contactData) {
     return contactData
         ? contactListInitials(contactData.name)
         : contactName.slice(0, 2).toUpperCase();
-}
-
-/**
- * Return comma-separated names of currently selected contacts from the global helper.
- * @returns {string}
- */
-function getSelectedContactNames() {
-    const contacts = window.getSelectedContacts?.() ?? [];
-    return contacts
-        .map(contact => contact.name)
-        .join(', ');
 }
 
 /**

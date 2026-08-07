@@ -175,3 +175,8 @@ function clearContactFields() {
     document.getElementById("selected_contacts").textContent =
         "Select contacts to assign";
 }
+
+window.setSelectedContacts = function (contacts) {
+    selectedContacts = contacts;
+    showSelectedContacts();
+};
