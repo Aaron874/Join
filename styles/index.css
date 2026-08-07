@@ -2,37 +2,43 @@
     font-family: "Inter";
     src: url(../assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf);
     font-display: swap;
-  }
-  
-  * {
+}
+
+* {
     box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
-  }
-  
-  body {
+}
+
+body {
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: "Inter", sans-serif;
     background-color: #f6f7f8;
-  }
+}
 
-  header {
+header {
     max-width: 1440px;
     margin: 30px auto 30px auto;
     display: flex;
     justify-content: space-between;
     width: calc(100dvw - 60px);
-  }
+}
 
-  header span {
+header img {
+    width: 100px;
+    height: auto;
+    background-color: #f6f7f8;
+}
+
+header span {
     font-size: 20px;
     font-weight: 400;
-  }
+}
 
- header button {
+header button {
     background-color: #2a3647;
     font-size: 16px;
     font-weight: 700;
@@ -40,39 +46,39 @@
     padding: 16px;
     color: white;
     border: none;
- }
+}
 
- main {
+main {
     height: calc(100dvh - 282px);
     display: flex;
     align-items: center;
- }
+}
 
- footer {
+footer {
     height: 100px;
     display: flex;
     align-items: center;
     gap: 16px;
- }
+}
 
- footer a {
+footer a {
     color: #686868;
     font-size: 16px;
     font-weight: 400;
     padding: 16px;
     text-decoration: none;
     cursor: pointer;
- }
+}
 
- .login_section {
+.login_section {
     box-shadow: 0 0 14px 3px rgba(0, 0, 0, 0.14);
     border-radius: 10px;
     padding: 48px 115px;
     background-color: #FFFFFF;
     position: relative;
- }
+}
 
- .login_section h1 {
+.login_section h1 {
     font-size: 61px;
     font-weight: 700;
     border-bottom: none;
@@ -82,23 +88,24 @@
     background-repeat: no-repeat;
     padding-bottom: 10px;
     margin: 0 0 16px 0;
- }
+}
 
- .login_section form {
+.login_section form {
     display: flex;
     flex-direction: column;
     align-items: center;
- }
+}
 
- .login_input_wrapper {
+.login_input_wrapper {
     position: relative;
     display: flex;
     align-items: center;
     border: 1px solid #686868;
     margin: 8px 0 8px 0;
     border-radius: 10px;
- }
- .login_input_wrapper input {
+}
+
+.login_input_wrapper input {
     width: 344px;
     border: none;
     border-radius: 10px;
@@ -106,19 +113,19 @@
     color: #686868;
     font-size: 20px;
 
- }
+}
 
- .login_input_wrapper img {
-        position: absolute;
-        right: 12px;
-        pointer-events: none;
- }
+.login_input_wrapper img {
+    position: absolute;
+    right: 12px;
+    pointer-events: none;
+}
 
- .login_btn_wrapper {
+.login_btn_wrapper {
     margin-top: 30px;
     display: flex;
     gap: 35px;
- }
+}
 
 .guest_login_btn {
     font-size: 21px;

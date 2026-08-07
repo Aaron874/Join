@@ -4,6 +4,22 @@ import { createUserProfile } from '../firebase/user.service.js';
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainer = document.getElementById("sign_up_btn_wrapper");
 
+document.addEventListener('DOMContentLoaded', animateLogo);
+
+function animateLogo() {
+    const logo = document.querySelector('header img');
+    if (!logo) return;
+    const { left, top, width, height } = logo.getBoundingClientRect();
+    const x = innerWidth / 2 - left - width / 2;
+    const y = innerHeight / 2 - top - height / 2;
+    logo.style.cssText += 'position:relative; z-index:1000;';
+    const animation = logo.animate([
+        { transform: `translate(${x}px, ${y}px) scale(8)` },
+        { transform: 'translate(0) scale(1)' }
+    ], { duration: 2000, easing: 'ease-in-out', fill: 'forwards' });
+    animation.onfinish = () => logo.style.zIndex = '';
+}
+
 document.addEventListener('submit', (event) => {
     if (!event.target.matches('#sign_log_in_id')) return;
     event.preventDefault();
