@@ -33,12 +33,12 @@ header img {
     background-color: #f6f7f8;
 }
 
-header span {
+.sign_up_txt {
     font-size: 20px;
     font-weight: 400;
 }
 
-header button {
+.sign_up_btn {
     background-color: #2a3647;
     font-size: 16px;
     font-weight: 700;
@@ -258,4 +258,109 @@ dialog::backdrop {
     background-color: #FEE2E2;
     color: #991B1B;
     margin-bottom: 30px;
+}
+
+.sign_up_btn_wrapper_footer {
+    display: none;
+}
+
+@media (max-width: 588px) {
+    .login_section {
+        padding: 48px 50px;
+    }
+
+    
+}
+
+@media (max-width: 462px) {
+    .login_section {
+        padding: 16px 16px;
+    }
+    .login_input_wrapper input {
+        width: 280px;
+    }
+    .login_btn_wrapper {
+        margin-top: 16px;
+        gap: 8px;
+        flex-direction: column;
+    }
+    .guest_login_btn {
+        width: 180px;
+        justify-content: center;
+    }
+    .login_btn {
+        width: 180px;
+        justify-content: center;
+    }
+    header img {
+        width: 64px;
+    }
+    header {
+        height: 80px;
+    }
+    .sign_up_btn_wrapper_header {
+        display: none;
+    }
+    main {
+        height: calc(100dvh - 190px);
+    }
+    .sign_up_btn_wrapper_footer {
+        display: flex;
+        gap: 35px;
+        align-items: center;
+    }
+    footer {
+        flex-direction: column;
+        gap: 35px;
+        height: 110px;
+    }
+   
+
+}
+
+@media (orientation: landscape) and (max-height: 590px) {
+    body {
+        min-height: 584px;
+    }
+    main {
+        min-height: 394px;
+    }
+    .login_section {
+        padding: 16px 16px;
+    }
+    .login_input_wrapper input {
+        width: 280px;
+    }
+    .login_btn_wrapper {
+        margin-top: 16px;
+        gap: 8px;
+        flex-direction: column;
+    }
+    .guest_login_btn {
+        width: 180px;
+        justify-content: center;
+    }
+    .login_btn {
+        width: 180px;
+        justify-content: center;
+    }
+    header img {
+        width: 64px;
+    }
+    header {
+        height: 80px;
+    }
+    .sign_up_btn_wrapper_header {
+        display: none;
+    }
+    .sign_up_btn_wrapper_footer {
+        display: flex;
+        gap: 35px;
+        align-items: center;
+    }
+    footer {
+        flex-direction: column;
+        gap: 35px;
+        height: 110px;
+    }
 }
