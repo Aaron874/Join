@@ -46,6 +46,7 @@ header button {
     padding: 16px;
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 main {
@@ -138,6 +139,7 @@ footer a {
     border: #2A3647 1px solid;
     padding: 10px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .login_btn {
@@ -150,6 +152,7 @@ footer a {
     align-items: center;
     border-radius: 10px;
     border: none;
+    cursor: pointer;
 }
 
 .privacy_checkbox {
@@ -158,9 +161,38 @@ footer a {
     margin: 25px 0 32px 0;
 }
 
+.privacy_checkbox input {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 2px solid #2A3647;
+    appearance: none;
+}
+
+input[type="checkbox"]:checked {
+    background: black;
+  }
+  
+input[type="checkbox"]:checked::after {
+    content: "✓";
+    color: white;
+    display: block;
+    text-align: center;
+    line-height: 14px;
+}
+
+.privacy_checkbox p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #686868;
+}
+
 .privacy_checkbox a {
     text-decoration: none;
     color: #124658;
+    font-size: 16px;
+    font-weight: 400;
 }
 
 .sign_up_btn {
@@ -173,6 +205,7 @@ footer a {
     align-items: center;
     border-radius: 10px;
     border: none;
+    cursor: pointer;
 }
 
 .back_to_log_in_btn {
@@ -182,6 +215,7 @@ footer a {
     display: flex;
     position: absolute;
     left: 70px;
+    cursor: pointer;
 }
 
 .hidden {
