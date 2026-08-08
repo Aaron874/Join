@@ -319,7 +319,10 @@ function closeAddContactDialog() {
 }
 
 function deleteInputValues() {
-document.querySelector("#contact_form_id").reset();
+    const form = document.querySelector("#contact_form_id");
+    form.querySelectorAll("input").forEach(input => {
+    input.value = "";
+    });
     document.documentElement.style.setProperty('--contact-color', '#D1D1D1');
 }
 
@@ -337,15 +340,29 @@ function getNewContactValues() {
 async function writeNewContact(contact) {
     try {
         await createContact(contact);
-        contactsList.push(contact);
+        await getContactsAfterCreation();
+        let newContactId = idNewContact();
         removeContactListFromDom();
         getFirstLetterForSeperator();
         closeAddContactDialog();
         contactSuccessfullyCreatedDialog();
-        openSingleViewContact(contact.id);
+        openSingleViewContact(newContactId);
     } catch (error) {
         console.error('Fehler beim Speichern:', error);
     }
+}
+
+async function getContactsAfterCreation() {
+    try {
+        contactsList = await getContacts();
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Kontakte:', error);
+    }
+}
+
+function idNewContact() {
+    const newContactId = contactsList[contactsList.length - 1].id;
+    return newContactId;
 }
 
 function removeContactListFromDom() {
@@ -382,7 +399,10 @@ function openEditInput(mode, id) {
     if (existingInput) {
         existingInput.remove();
     }
-    let contactId = searchIndex(id);
+    let contactId = undefined;
+    if (id !== undefined) {
+        contactId = searchIndex(id);
+    }
     editContactInputContainer.appendChild(renderContactInput(mode, contactId));
 }
 

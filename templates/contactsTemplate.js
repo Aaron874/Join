@@ -124,7 +124,7 @@ export function renderContactInput(mode, contactId) {
                   contactsList[contactId]?.shortName ?? ''
               }</span>
             </label>
-            <form action="" method="post" id="contact_form_id" autocomplete="off">
+            <form action="" method="post" id="contact_form_id">
               <div class="contact_input_wrapper">
                 <input
                   type="text"
@@ -134,7 +134,7 @@ export function renderContactInput(mode, contactId) {
                   placeholder="Name"
                   minlength="2"
                   maxlength="50"
-                  pattern="[\\p{L}' \\-]{2,100}""
+                  pattern="[\\p{L}' \\-]{2,100}"
                   title="Der Name darf nur Buchstaben, Leerzeichen, Apostrophe und Bindestriche enthalten."
                   required
                 />
