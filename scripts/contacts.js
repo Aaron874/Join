@@ -15,7 +15,7 @@ import {
     renderUnderlineHeaderContactDialog,
     renderPersonInitialsForAddContact,
     renderContactInput,
-} from './contactsTemplate.js';
+} from '../templates/contactsTemplate.js';
 
 export let contactsList = [];
 let firstLetterList = [];
@@ -312,16 +312,14 @@ function resetPersonInitials() {
 }
 
 function closeAddContactDialog() {
-    contactDialog.close();
     document.documentElement.style.setProperty('--contact-color', '#D1D1D1');
     deleteInputValues();
     resetPersonInitials();
+    contactDialog.close();
 }
 
 function deleteInputValues() {
-    document.getElementById('contact_name_id').value = '';
-    document.getElementById('contact_email_id').value = '';
-    document.getElementById('contact_phone_id').value = '';
+document.querySelector("#contact_form_id").reset();
     document.documentElement.style.setProperty('--contact-color', '#D1D1D1');
 }
 

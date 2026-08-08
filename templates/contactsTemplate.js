@@ -6,7 +6,7 @@ import {
     updateContactBtnListener,
     deleteBtnListener,
     returnToListBtnListener,
-} from './contacts.js';
+} from '../scripts/contacts.js';
 
 export function renderContactsListLetterSeperator(Letter) {
     return `
@@ -124,7 +124,7 @@ export function renderContactInput(mode, contactId) {
                   contactsList[contactId]?.shortName ?? ''
               }</span>
             </label>
-            <form action="" method="post" id="contact_form_id">
+            <form action="" method="post" id="contact_form_id" autocomplete="off">
               <div class="contact_input_wrapper">
                 <input
                   type="text"
