@@ -30,6 +30,15 @@ const priorityConfig = {
 };
 
 window.addEventListener('DOMContentLoaded', initAddTask);
+
+document.addEventListener('click', event => {
+    if (!event.target.closest('#contacts-dropdown-wrapper'))
+        dropdownContactsUp();
+
+    if (!event.target.closest('#category-dropdown-wrapper'))
+        dropdownCategoryUp();
+});
+
 async function initAddTask() {
     try {
         await ensureAuthenticatedUser();
