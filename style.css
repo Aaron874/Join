@@ -131,6 +131,10 @@ footer {
   color: var(--color-blue);
 }
 
+.loged-in-user-icon[hidden]{
+  display: none;
+}
+
 .header-content {
   width: 50%;
   max-width: 720px;

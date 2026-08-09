@@ -43,14 +43,12 @@ async function updateLoggedInUserIcon(userIcon, user) {
         return;
     }
     userIcon.hidden = false;
-
     if (user.isAnonymous) {
         setGuestIcon(userIcon);
         return;
     }
     const userName = await getLoggedInUserName(user);
     const initials = getUserInitials(userName);
-
     userIcon.textContent = initials || getEmailInitials(user.email);
     userIcon.title = userName || user.email || 'User';
 }

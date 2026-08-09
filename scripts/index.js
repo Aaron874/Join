@@ -1,11 +1,18 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
+import { auth } from '../firebase/firebase-config.js';
+import { logout } from '../firebase/auth.js'
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
 
-document.addEventListener('DOMContentLoaded', animateLogo);
+document.addEventListener('DOMContentLoaded', initLoginPage);
+
+async function initLoginPage() {
+    await logout();
+    animateLogo();
+}
 
 function animateLogo() {
     const logo = document.querySelector('header img');
