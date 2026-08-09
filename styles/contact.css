@@ -749,6 +749,12 @@ dialog::backdrop {
 .add_contact_closing_btn {
   right: 20px;
 }
+footer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
 
 }
 

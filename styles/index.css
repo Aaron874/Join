@@ -341,7 +341,7 @@ dialog::backdrop {
         min-height: 584px;
     }
     main {
-        min-height: 394px;
+        min-height: 680px;
     }
     .login_section h1 {
         font-size: 47px;
