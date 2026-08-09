@@ -34,16 +34,51 @@ async function fetchTasks(path = 'tasks') {
             throw new Error(`HTTP error: ${response.status}`);
         }
         const data = await response.json();
-        summaryTasks = Object.entries(data ?? {}).map(([id, task]) => ({
-            ...task,
-            id,
-        }));
+        summaryTasks = normalizeFetchedTasks(data);
         return summaryTasks;
     } catch (error) {
         console.error('Error fetching tasks:', error);
         summaryTasks = [];
         return [];
     }
+}
+
+/**
+ * Normalize fetched task data from Firebase into a flat array of task objects.
+ * @param {Object<string, any> | null | undefined} data - Raw task data from Firebase.
+ * @returns {Array<Object>} Normalized tasks with a stable `id` and, where applicable, a `userId`.
+ */
+function normalizeFetchedTasks(data) {
+    return Object.entries(data ?? {}).flatMap(([firstLevelId, value]) => {
+        if (isTaskObject(value)) {
+            return [{
+                ...value,
+                id: firstLevelId,
+            }];
+        }
+
+        return Object.entries(value ?? {})
+            .filter(([, task]) => isTaskObject(task))
+            .map(([taskId, task]) => ({
+                ...task,
+                id: taskId,
+                userId: firstLevelId,
+            }));
+    });
+}
+
+/**
+ * Check whether a value represents a task-like object.
+ * @param {any} value - Value to validate.
+ * @returns {boolean} True if the value has the expected task fields.
+ */
+function isTaskObject(value) {
+    return (
+        value &&
+        typeof value === 'object' &&
+        typeof value.title === 'string' &&
+        typeof value.status === 'string'
+    );
 }
 
 /**
