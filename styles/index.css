@@ -264,6 +264,12 @@ dialog::backdrop {
     display: none;
 }
 
+.sign_up_btn_wrapper_header {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
 @media (max-width: 588px) {
     .login_section {
         padding: 48px 50px;
