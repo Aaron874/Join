@@ -193,6 +193,7 @@ input[type="checkbox"]:checked::after {
     color: #124658;
     font-size: 16px;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .sign_up_btn {
@@ -216,10 +217,11 @@ input[type="checkbox"]:checked::after {
     position: absolute;
     left: 70px;
     cursor: pointer;
+    top: 70px;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .sign_up_success_dialog {
@@ -274,6 +276,9 @@ dialog::backdrop {
     .login_section {
         padding: 48px 50px;
     }
+    .back_to_log_in_btn {
+        left: 50px;
+    }
 
     
 }
@@ -281,6 +286,9 @@ dialog::backdrop {
 @media (max-width: 462px) {
     .login_section {
         padding: 16px 16px;
+    }
+    .login_section h1 {
+        font-size: 47px;
     }
     .login_input_wrapper input {
         width: 280px;
@@ -320,6 +328,10 @@ dialog::backdrop {
         gap: 35px;
         height: 110px;
     }
+    .back_to_log_in_btn {
+        left: 20px;
+        top: 30px;
+    }
    
 
 }
@@ -330,6 +342,9 @@ dialog::backdrop {
     }
     main {
         min-height: 394px;
+    }
+    .login_section h1 {
+        font-size: 47px;
     }
     .login_section {
         padding: 16px 16px;
@@ -368,5 +383,9 @@ dialog::backdrop {
         flex-direction: column;
         gap: 35px;
         height: 110px;
+    }
+    .back_to_log_in_btn {
+        left: 20px;
+        top: 30px;
     }
 }

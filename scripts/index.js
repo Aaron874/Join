@@ -2,7 +2,8 @@ import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
-const signUpContainer = document.getElementById("sign_up_btn_wrapper");
+const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
+const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
 
 document.addEventListener('DOMContentLoaded', animateLogo);
 
@@ -64,10 +65,12 @@ function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
     logSignContainer.innerHTML = "";
     if (LogOrSign === "Sign up") {
-        signUpContainer.classList.add("hidden");
+        signUpContainerHeader.classList.add("hidden");
+        signUpContainerFooter.classList.add("hidden");
         logSignContainer.innerHTML += signUpTemplate();
     } if (LogOrSign === "Log in") {
-        signUpContainer.classList.remove("hidden");
+        signUpContainerHeader.classList.remove("hidden");
+        signUpContainerFooter.classList.remove("hidden");
         logSignContainer.innerHTML += signInTemplate();
     }
 }
