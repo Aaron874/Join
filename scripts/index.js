@@ -9,11 +9,56 @@ const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_foote
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
+document.addEventListener('submit', (event) => {
+    if (!event.target.matches('#sign_log_in_id')) return;
+    event.preventDefault();
+    switch (event.submitter.dataset.action) {
+        case 'logIn':
+            loginCurrentUser();
+            break;
+        case 'signUp':
+            let confirmPassword = document.getElementById('confirm_password');
+            confirmPassword.setCustomValidity('');
+            userData(confirmPassword);
+            break;
+    }
+});
+
+document.addEventListener('click', (event) => {
+    if (event.target.matches('.guest_login_btn')) {
+        event.preventDefault();
+        createGuestUser();
+        return;
+    }
+    if (event.target.matches('#change_to_sign_up_btn')) {
+        document.getElementById('back_to_log_in_btn_id').classList.remove('hidden');
+        changeLogOrSignForm('Sign up');
+        return;
+    }
+    if (event.target.closest('#back_to_log_in_btn_id' || event.target.closest('.back_to_log_in_btn'))) {
+        document.getElementById('back_to_log_in_btn_id').classList.add('hidden');
+        changeLogOrSignForm('Log in');
+    }
+});
+
+/**
+ * Initialize the login page.
+ * Logs out any existing user session and starts the logo animation.
+ * @returns {Promise<void>}
+ */
+/**
+ * Initialize the login page.
+ * Logs out any existing user session and starts the logo animation.
+ * @returns {Promise<void>}
+ */
 async function initLoginPage() {
     await logout();
     animateLogo();
 }
 
+/**
+ * Animate the page logo into place from the center of the viewport.
+ */
 function animateLogo() {
     const logo = document.querySelector('header img');
     if (!logo) return;
@@ -59,6 +104,11 @@ document.addEventListener('click', (event) => {
         changeLogOrSignForm("Log in");
 }});
 
+/**
+ * Log in as a guest user and navigate to the summary page.
+ * Shows an error message if the guest login fails.
+ * @returns {Promise<void>}
+ */
 async function createGuestUser() {
     try {
         await loginGuest();
@@ -68,6 +118,10 @@ async function createGuestUser() {
     }
 }
 
+/**
+ * Toggle the log in / sign up form state.
+ * @param {string} LogOrSign - The form mode, either "Sign up" or "Log in".
+ */
 function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
     logSignContainer.innerHTML = "";
@@ -83,6 +137,10 @@ function changeLogOrSignForm(LogOrSign) {
 }
 
 
+/**
+ * Log in the current user using form values and navigate to summary on success.
+ * @returns {Promise<void>}
+ */
 async function loginCurrentUser() {
     let formValues = dataFromForm();
     setFormDisabled(true);
@@ -96,6 +154,10 @@ async function loginCurrentUser() {
     }
 }
 
+/**
+ * Read the login form values and reset the form.
+ * @returns {Object<string, string>} The submitted form values.
+ */
 function dataFromForm() {
     const form = document.getElementById("sign_log_in_id");
     const formData = new FormData(form);
@@ -105,6 +167,11 @@ function dataFromForm() {
 }
 
 
+/**
+ * Validate sign-up data and start the user registration process.
+ * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
+ * @returns {Promise<void>}
+ */
 async function userData (confirmPassword) {
     resetValidation(confirmPassword);
     const form = document.getElementById("sign_log_in_id");
@@ -119,6 +186,11 @@ async function userData (confirmPassword) {
     registerNewUser(values);
 }
 
+/**
+ * Register a new user and create their profile.
+ * @param {{email: string, password: string, username: string}} values - Registration details.
+ * @returns {Promise<void>}
+ */
 async function registerNewUser(values) {
     setFormDisabled(true);
     try {
@@ -131,6 +203,10 @@ async function registerNewUser(values) {
     }
 }
 
+/**
+ * Reset validation state for the confirm password input when the user types.
+ * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
+ */
 function resetValidation (confirmPassword ) {
     confirmPassword.addEventListener("input", () => {
         confirmPassword.setCustomValidity("");
@@ -138,6 +214,9 @@ function resetValidation (confirmPassword ) {
         });
 }
 
+/**
+ * Show the success dialog and return the user to the login form after a delay.
+ */
 function successDialogOpen() {
     successDialog.showModal();
     setTimeout(() => {
@@ -146,6 +225,9 @@ function successDialogOpen() {
     }, 800);
 }
 
+/**
+ * Display the login error message and re-enable the form.
+ */
 function showErrorLogIn() {
     const errorLogIn = document.getElementById("login_error_id");
     errorLogIn.classList.remove("hidden");
@@ -155,6 +237,9 @@ function showErrorLogIn() {
     }, 3000);
 }
 
+/**
+ * Display the sign-up error message and re-enable the form.
+ */
 function showErrorSignUp() {
     const errorSignUp = document.getElementById("sign_up_error_id");
     errorSignUp.classList.remove("hidden");
@@ -164,6 +249,10 @@ function showErrorSignUp() {
     }, 3000);
 }
 
+/**
+ * Enable or disable all inputs and buttons in the login form.
+ * @param {boolean} disabled - True to disable the form, false to enable.
+ */
 function setFormDisabled(disabled) {
     document
       .querySelectorAll("#sign_log_in_id input, #sign_log_in_id button")
@@ -172,6 +261,9 @@ function setFormDisabled(disabled) {
       });
   }
 
+/**
+ * Show the guest login error message and restore the form state.
+ */
   function showErrorGuestLogin() {
     const errorLogIn = document.getElementById("login_error_id");
     errorLogIn.textContent = "Guest login failed. Please try again.";

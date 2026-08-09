@@ -264,17 +264,6 @@ footer {
   width: auto;
 }
 
-/* @media (max-width: 1920px) {
-  .header-content {
-    padding-left: 170px;
-  }
-} */
-
-@media (max-width: 1580px) {
-  /* .header-content {
-    padding-left: 342px;
-  } */
-}
 
 /* legal page styles */
 .legal-page {

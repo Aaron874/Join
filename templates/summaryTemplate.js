@@ -128,13 +128,11 @@ return `
 }
 
 function getSummaryGreetingTemplate(summaryData) {
+    const punctuation = summaryData.userName ? ',' : '!';
     return `
         <div class="summary-greeting">
-            <span>${summaryData.greeting}</span>
-            ${summaryData.userName
-                ? `<strong>${summaryData.userName}</strong>`
-                : ''
-            }
+            <span>${summaryData.greeting}${punctuation}</span>
+            ${summaryData.userName ? `<strong>${summaryData.userName}</strong>` : ''}
         </div>
     `;
 }

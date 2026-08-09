@@ -15,10 +15,8 @@ let summaryTasks = [];
  */
 async function initSummary() {
     summaryTasks = await fetchTasks();
-
     const userName =
         await window.getCurrentRegisteredUserName();
-
     renderSummary(userName);
 }
 
@@ -56,7 +54,6 @@ function normalizeFetchedTasks(data) {
                 id: firstLevelId,
             }];
         }
-
         return Object.entries(value ?? {})
             .filter(([, task]) => isTaskObject(task))
             .map(([taskId, task]) => ({
@@ -114,7 +111,6 @@ function getTaskCount() {
  */
 function renderSummary(userName) {
     const container = document.getElementById('summary-content');
-
     container.innerHTML = getSummaryTemplate({
         todo: getTaskCountByStatus('todo'),
         done: getTaskCountByStatus('done'),
@@ -178,10 +174,10 @@ function formatDeadline(dateString) {
 function getGreeting() {
     const currentHour = new Date().getHours();
     if (currentHour < 12) {
-        return 'Good morning,';
+        return 'Good morning';
     }
     if (currentHour < 18) {
-        return 'Good afternoon,';
+        return 'Good afternoon';
     }
-    return 'Good evening,';
+    return 'Good evening';
 }
