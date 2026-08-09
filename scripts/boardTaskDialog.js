@@ -202,9 +202,11 @@ function getTaskFormData(defaultStatus) {
         description: getInputValue('task-description'),
         date: getInputValue('dateDisplay'),
         priority: addTaskState.priority,
-        assignedTo: addTaskState.selectedContacts
-            .map(contact => contact.name)
-            .join(', '),
+        assignedTo: addTaskState.selectedContacts.map(contact => ({
+            name: contact.name,
+            shortName: contact.shortName,
+            color: contact.color
+        })),
         category: getTextContent('selected_category_text'),
         subtasks: [...addTaskState.subtasks],
         status: existingTask?.status ?? defaultStatus,

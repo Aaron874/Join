@@ -1,5 +1,5 @@
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
-import { getContacts } from "../firebase/contacts.service.js";
+import { getContacts, getAllContacts } from "../firebase/contacts.service.js";
 import { createTask as createFirebaseTask } from "../firebase/task.service.js";
 let selectedContacts = [];
 let priority = "";
@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', initAddTask);
 async function initAddTask() {
     try {
         await ensureAuthenticatedUser();
-        contactsList = await getContacts();
+        contactsList = await getAllContacts();
         document.getElementById(
             "symbole_down_dropdown_contacts"
         ).style.display = "flex";
@@ -408,4 +408,12 @@ window.getAddTaskState = function () {
         selectedContacts,
         subtasks,
     };
+};
+
+window.setSelectedContacts = function (contacts) {
+    selectedContacts = Array.isArray(contacts)
+        ? contacts.map(contact => ({ ...contact }))
+        : [];
+
+    showSelectedContacts();
 };

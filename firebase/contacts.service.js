@@ -85,3 +85,21 @@ export async function updateContact(contactId, updatedContact) {
 export async function deleteContact(contactId) {
     return remove(ref(db, `${getUserPath('contacts')}/${contactId}`));
 }
+
+
+/**
+ * Loads all contacts from the database.
+ * @returns {Promise<Array<Object>>} A list of all contacts with their IDs.
+ */
+export async function getAllContacts() {
+    const snapshot = await get(ref(db, 'contacts'));
+    if (!snapshot.exists()) {
+        return [];
+    }
+    return Object.values(snapshot.val()).flatMap(userContacts =>
+        Object.entries(userContacts ?? {}).map(([id, contact]) => ({
+            id,
+            ...contact,
+        }))
+    );
+}
