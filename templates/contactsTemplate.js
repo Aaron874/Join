@@ -24,6 +24,20 @@ export function renderContactsListLetterSeperator(Letter) {
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`;
 }
 
+/**
+ * Creates a single contact list item element with avatar, name, and email,
+ * and registers a click listener to open the contact's single view.
+ *
+ * @param {string} shortName - The contact's initials, displayed in the avatar.
+ * @param {string} person - The full name of the contact.
+ * @param {string} email - The contact's email address, rendered as a mailto link.
+ * @param {string} [color='#BDBDBD'] - The color used for the avatar background.
+ * @param {string|number} id - The unique identifier of the contact, used to build the element's DOM id and register the click listener.
+ * @returns {HTMLButtonElement} The created contact list item element.
+ *
+ * @example
+ * const item = renderContactsListItems('JD', 'John Doe', 'john@example.com', '#FF5733', contact.id);
+ */
 export function renderContactsListItems(shortName, person, email, color = '#BDBDBD', id) {
     let newContact = document.createElement('button');
     newContact.classList.add('contacts_list_items_container');
@@ -39,6 +53,17 @@ export function renderContactsListItems(shortName, person, email, color = '#BDBD
     return newContact;
 }
 
+/**
+ * Creates the heading element for the contact dialog header, with text depending
+ * on whether the dialog is in add or edit mode.
+ *
+ * @param {boolean} [isEditMode=false] - Whether the dialog is in edit mode (`true`) or add mode (`false`).
+ * @returns {HTMLHeadingElement} The created `<h3>` heading element with the appropriate text.
+ *
+ * @example
+ * const heading = renderAddOrEditContactDialog(true); // 'Edit Contact'
+ * const heading = renderAddOrEditContactDialog(); // 'Add Contact'
+ */
 export function renderAddOrEditContactDialog(isEditMode = false) {
     let addContactDialogContent = document.createElement('h3');
     if (isEditMode) {
@@ -49,12 +74,37 @@ export function renderAddOrEditContactDialog(isEditMode = false) {
     return addContactDialogContent;
 }
 
+/**
+ * Creates the underline/subtitle text element displayed below the heading
+ * in the contact dialog header.
+ *
+ * @returns {HTMLParagraphElement} The created `<p>` element containing the subtitle text.
+ *
+ * @example
+ * const subtitle = renderUnderlineHeaderContactDialog();
+ */
 export function renderUnderlineHeaderContactDialog() {
     let contactDialogUnderline = document.createElement('p');
     contactDialogUnderline.textContent = 'Tasks are better with a team!';
     return contactDialogUnderline;
 }
 
+/**
+ * Creates the single contact view element with the contact's details (avatar,
+ * name, email, phone) and action buttons. Registers the click listeners for
+ * the edit, delete, and mobile back-to-list buttons within the view.
+ *
+ * @param {string} shortName - The contact's initials, displayed in the avatar.
+ * @param {string} person - The full name of the contact.
+ * @param {string} email - The contact's email address, rendered as a mailto link.
+ * @param {string} [color='#BDBDBD'] - The color used for the avatar background.
+ * @param {string} [phone='No phone number'] - The contact's phone number.
+ * @param {string|number} id - The unique identifier of the contact, used to register the edit and delete listeners.
+ * @returns {HTMLDivElement} The created single contact view element.
+ *
+ * @example
+ * const view = renderSingleContactView('JD', 'John Doe', 'john@example.com', '#FF5733', '123456', contact.id);
+ */
 export function renderSingleContactView(
     shortName,
     person,
@@ -109,6 +159,16 @@ export function renderSingleContactView(
     return newSingleView;
 }
 
+/**
+ * Creates the avatar preview element showing the given initials, used in the
+ * add contact dialog as a substitute for the default person icon.
+ *
+ * @param {string} initials - The initials to be displayed in the avatar preview.
+ * @returns {HTMLSpanElement} The created `<span>` element containing the initials.
+ *
+ * @example
+ * const initialsElement = renderPersonInitialsForAddContact('JD');
+ */
 export function renderPersonInitialsForAddContact(initials) {
     let personInitials = document.createElement('span');
     personInitials.classList.add('person_initials');
@@ -117,6 +177,22 @@ export function renderPersonInitialsForAddContact(initials) {
     return personInitials;
 }
 
+
+/**
+ * Creates the contact form used for both adding and editing a contact.
+ * Pre-fills the color picker, initials, name, email, and phone fields with the
+ * existing contact's data when `contactId` refers to an existing contact,
+ * otherwise falls back to empty values/default color. Renders the appropriate
+ * action buttons based on `mode` and registers the update and delete listeners.
+ *
+ * @param {string} [mode] - The form mode, e.g. `'edit'` or `undefined`/other value for add mode. Passed through to `renderButtons`.
+ * @param {string|number} [contactId] - The index used to look up the existing contact in `contactsList`. Omit or leave undefined when creating a new contact.
+ * @returns {HTMLDivElement} The created contact form container element.
+ *
+ * @example
+ * const form = renderContactInput('edit', contactId);
+ * const form = renderContactInput(); // add mode
+ */
 export function renderContactInput(mode, contactId) {
     let editContactInput = document.createElement('div');
     editContactInput.classList.add('contact_form_container');
@@ -183,6 +259,20 @@ export function renderContactInput(mode, contactId) {
     return editContactInput;
 }
 
+
+/**
+ * Renders the appropriate action buttons markup for the contact form,
+ * depending on whether it is used in edit or add mode. In edit mode,
+ * renders "Delete" and "Save" buttons; otherwise renders "Cancel" and
+ * "Create contact" buttons.
+ *
+ * @param {string} [mode] - The form mode, e.g. `'edit'` or `undefined`/other value for add mode.
+ * @returns {string} The HTML string for the button container matching the given mode.
+ *
+ * @example
+ * const buttons = renderButtons('edit');
+ * const buttons = renderButtons(); // add mode
+ */
 function renderButtons(mode) {
     if (mode === 'edit') {
         return `
