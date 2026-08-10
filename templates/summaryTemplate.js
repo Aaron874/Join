@@ -1,3 +1,9 @@
+/**
+ * Build the main summary page HTML template.
+ *
+ * @param {Object} summaryData - Data used to populate the summary view.
+ * @returns {string} HTML string for the summary page.
+ */
 function getSummaryTemplate(summaryData) {
 return `
 <section class="summary-wrapper">
@@ -20,6 +26,12 @@ return `
 `;
 }
 
+/**
+ * Build the top summary cards section.
+ *
+ * @param {Object} summaryData - Data used to populate the top summary cards.
+ * @returns {string} HTML string for the top cards section.
+ */
 function getSummaryTopCardsTemplate(summaryData) {
 return `
 <div class="summary-top-cards">
@@ -66,6 +78,12 @@ return `
 `;
 }
 
+/**
+ * Build the urgent summary card section.
+ *
+ * @param {Object} summaryData - Data used to populate the urgent card.
+ * @returns {string} HTML string for the urgent summary card.
+ */
 function getSummaryUrgentTemplate(summaryData) {
 return `
 <a class="summary-card summary-urgent-card" href="board.html">
@@ -106,6 +124,12 @@ return `
 `;
 }
 
+/**
+ * Build the bottom summary cards section.
+ *
+ * @param {Object} summaryData - Data used to populate the bottom summary cards.
+ * @returns {string} HTML string for the bottom cards section.
+ */
 function getSummaryBottomCardsTemplate(summaryData) {
 return `
 <div class="summary-bottom-cards">
@@ -127,6 +151,14 @@ return `
 `;
 }
 
+/**
+ * Build the summary greeting block.
+ *
+ * @param {Object} summaryData - Data used to populate the greeting section.
+ * @param {string} [summaryData.userName] - Optional user name for personalization.
+ * @param {string} summaryData.greeting - Greeting text to display.
+ * @returns {string} HTML string for the greeting block.
+ */
 function getSummaryGreetingTemplate(summaryData) {
     const punctuation = summaryData.userName ? ',' : '!';
     return `

@@ -1,3 +1,8 @@
+/**
+ * Return the HTML template for the sign-up form.
+ *
+ * @returns {string} HTML string for the user sign-up form.
+ */
 function signUpTemplate() {
     return `
                     <h1 id="header_log_sign" >Sign up</h1>
@@ -62,6 +67,11 @@ function signUpTemplate() {
 `;            
 }
 
+/**
+ * Return the HTML template for the sign-in form.
+ *
+ * @returns {string} HTML string for the user log-in form.
+ */
 function signInTemplate() {
     return `
                     <h1 id="header_log_sign" >Log in</h1>

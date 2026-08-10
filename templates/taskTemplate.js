@@ -28,6 +28,20 @@ low: `
 
 
 
+/**
+ * Build the HTML template for a task card.
+ *
+ * @param {Object} task - The task data object.
+ * @param {string} task.id - Unique task identifier.
+ * @param {string} task.title - Task title.
+ * @param {string} task.description - Task description text.
+ * @param {string} task.category - Task category label.
+ * @param {string} task.priority - Task priority level.
+ * @param {string} task.status - Task status.
+ * @param {Array<Object>} task.assignedTo - Assigned contacts.
+ * @param {Array<Object>} task.subtasks - Subtask list.
+ * @returns {string} HTML string for the task card.
+ */
 function getTaskTemplate(task) {
 const categoryClass = categoryStyles[task.category] ?? '';
 const priorityIcon = priorityIcons[task.priority] ?? '';
@@ -59,6 +73,12 @@ return `
 `;
 }
 
+/**
+ * Build the contact icon group for a task card.
+ *
+ * @param {Array<Object>} assignedTo - Array of assigned contact objects.
+ * @returns {string} HTML string for the contact icons container.
+ */
 function getTaskContactIconsTemplate(assignedTo) {
 const contacts = normalizeContacts(assignedTo);
 return `
@@ -68,6 +88,16 @@ return `
 `;
 }
 
+/**
+ * Build the HTML for a single task contact icon.
+ *
+ * @param {Object} contact - Contact data for the icon.
+ * @param {string} contact.name - Contact full name.
+ * @param {string} contact.shortName - Contact initials or short label.
+ * @param {string} contact.color - Contact badge color.
+ * @param {number} index - Index used for styling order.
+ * @returns {string} HTML string for the contact icon.
+ */
 function getTaskContactIconTemplate(contact, index) {
 return `
 <span class="task-card-contact" style="
@@ -79,6 +109,12 @@ return `
 `;
 }
 
+/**
+ * Build the contact section for task details.
+ *
+ * @param {Array<Object>} assignedTo - Array of assigned contact objects.
+ * @returns {string} HTML string for the task details contact section.
+ */
 function getTaskDetailsContactsTemplate(assignedTo) {
 const contacts = normalizeContacts(assignedTo);
 if (!contacts.length) {
@@ -91,6 +127,15 @@ return `
 `;
 }
 
+/**
+ * Build the HTML for a single detailed task contact entry.
+ *
+ * @param {Object} contact - Contact data object.
+ * @param {string} contact.name - Contact full name.
+ * @param {string} contact.shortName - Contact initials or short label.
+ * @param {string} contact.color - Contact badge color.
+ * @returns {string} HTML string for the detailed contact entry.
+ */
 function getTaskDetailsContactTemplate(contact) {
 return `
 <div class="task-details-contact">
@@ -105,6 +150,13 @@ return `
 `;
 }
 
+/**
+ * Build the subtask progress bar for a task.
+ *
+ * @param {Object} task - The task data object.
+ * @param {Array<Object>} [task.subtasks] - Array of task subtasks.
+ * @returns {string} HTML string for the subtask progress bar.
+ */
 function getSubtaskProgressTemplate(task) {
 if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
 return '';
@@ -123,6 +175,14 @@ return `
 `;
 }
 
+/**
+ * Build the move task control for a task card.
+ *
+ * @param {Object} task - The task data object.
+ * @param {string} task.id - Unique task identifier.
+ * @param {string} task.status - Current task status.
+ * @returns {string} HTML string for the move task control.
+ */
 function getMoveTaskTemplate(task) {
 const previousStatus = getPreviousStatus(task.status);
 const nextStatus = getNextStatus(task.status);

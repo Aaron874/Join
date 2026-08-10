@@ -1,3 +1,17 @@
+/**
+ * Build the task dialog HTML template for a task detail view.
+ *
+ * @param {Object} task - The task data object.
+ * @param {string} task.id - Unique task identifier.
+ * @param {string} task.title - Task title.
+ * @param {string} task.description - Task description.
+ * @param {string} task.category - Task category used for styling.
+ * @param {string} task.priority - Task priority label.
+ * @param {string} task.date - Task due date.
+ * @param {Array<Object>} task.assignedTo - Assigned contact list.
+ * @param {Array<Object>} task.subtasks - Subtask list.
+ * @returns {string} HTML string for the task dialog.
+ */
 function getTaskDialogTemplate(task) {
 const categoryClass = categoryStyles[task.category] ?? '';
 const priorityIcon = priorityIcons[task.priority] ?? '';

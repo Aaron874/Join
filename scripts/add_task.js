@@ -30,6 +30,11 @@ document.addEventListener('click', event => {
         dropdownCategoryUp();
 });
 
+/**
+ * Initialize the add task page when the DOM is ready.
+ *
+ * @returns {Promise<void>} Resolves when authentication and contact retrieval complete.
+ */
 async function initAddTask() {
     try {
         await ensureAuthenticatedUser();
@@ -40,15 +45,26 @@ async function initAddTask() {
     }
 }
 
+/**
+ * Display the dropdown arrow icons for contact and category dropdowns.
+ */
 function showDropdownArrows() {
     document.getElementById("symbole_down_dropdown_contacts").style.display = "flex";
     document.getElementById("symbole_down_dropdown_category").style.display = "flex";
 }
 
+/**
+ * Wait for an authenticated user session before initializing task creation.
+ *
+ * @returns {Promise<any>} The authenticated user session result.
+ */
 async function ensureAuthenticatedUser() {
     return waitForAuthenticatedUser();
 }
 
+/**
+ * Filter contacts by the current search input and render the results.
+ */
 function searchContacts() {
     const searchedContacts = document.getElementById('dropdown_contacts');
     const input = document.getElementById('assigned-trigger').value.toLowerCase().trim();
@@ -61,6 +77,12 @@ function searchContacts() {
     renderSearchedContacts(searchedContacts, results);
 }
 
+/**
+ * Render the list of contacts matching the search query.
+ *
+ * @param {HTMLElement} searchedContacts - Container element for search results.
+ * @param {Array<Object>} results - Filtered contacts to render.
+ */
 function renderSearchedContacts(searchedContacts, results) {
     searchedContacts.style.display = 'flex';
     for (let index = 0; index < results.length; index++) {
@@ -72,11 +94,20 @@ function renderSearchedContacts(searchedContacts, results) {
     }
 }
 
+/**
+ * Compute initials from a contact name.
+ *
+ * @param {string} contactName - The full contact name.
+ * @returns {string} Initials derived from the name.
+ */
 function contactListInitials(contactName) {
     return contactName.trim().split(/\s+/).slice(0, 2)
         .map(word => word[0].toUpperCase()).join('');
 }
 
+/**
+ * Open the contacts dropdown and render the available contacts.
+ */
 function dropdownContactsDown() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'none';
     document.getElementById('symbole_up_dropdown_contacts').style.display = 'flex';
@@ -87,6 +118,11 @@ function dropdownContactsDown() {
     renderContacts(dropdown);
 }
 
+/**
+ * Render all contacts inside the contacts dropdown container.
+ *
+ * @param {HTMLElement} dropdown - The dropdown element to populate.
+ */
 function renderContacts(dropdown) {
     dropdown.innerHTML = '';
     for (let index = 0; index < contactsList.length; index++) {
@@ -97,6 +133,9 @@ function renderContacts(dropdown) {
     }
 }
 
+/**
+ * Close the contacts dropdown and restore the selected contacts display.
+ */
 function dropdownContactsUp() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_contacts').style.display = '';
@@ -109,6 +148,9 @@ function dropdownContactsUp() {
     showSelectedContacts();
 }
 
+/**
+ * Clear the assigned contacts search input and placeholder text.
+ */
 function clearInput() {
     let input = document.getElementById('assigned-trigger');
     input.value = '';
@@ -116,6 +158,9 @@ function clearInput() {
     inputPlaceholder.textContent = '';
 }
 
+/**
+ * Open the category dropdown menu.
+ */
 function dropdownCategoryDown() {
     document.getElementById('symbole_down_dropdown_category').style.display = 'none';
     document.getElementById('symbole_up_dropdown_category').style.display = 'flex';
@@ -123,6 +168,9 @@ function dropdownCategoryDown() {
     dropdown.style.display = 'flex';
 }
 
+/**
+ * Close the category dropdown menu.
+ */
 function dropdownCategoryUp() {
     document.getElementById('symbole_down_dropdown_category').style.display = 'flex';
     document.getElementById('symbole_up_dropdown_category').style.display = '';
@@ -130,6 +178,14 @@ function dropdownCategoryUp() {
     dropdown.style.display = '';
 }
 
+/**
+ * Build a contact entry for the assignment dropdown.
+ *
+ * @param {string} contactName - The display name of the contact.
+ * @param {string} color - The contact badge color.
+ * @param {string} shortName - The contact initials.
+ * @returns {string} HTML string for a contact dropdown item.
+ */
 function contactsTemplate(contactName, color, shortName) {
     const checked = selectedContacts.some(contact => contact.name.trim() === contactName.trim());
     return `
@@ -142,6 +198,13 @@ function contactsTemplate(contactName, color, shortName) {
         </div>`;
 }
 
+/**
+ * Toggle selection of a contact for the current task.
+ *
+ * @param {string} contactName - The name of the contact to toggle.
+ * @param {string} shortName - The contact initials.
+ * @param {string} color - The contact badge color.
+ */
 function toggleContact(contactName, shortName, color) {
     const contactExists = selectedContacts.some(contact => contact.name === contactName);
     if (contactExists) {
@@ -156,11 +219,19 @@ function toggleContact(contactName, shortName, color) {
     showSelectedContacts();
 }
 
+/**
+ * Remove a contact from the selected contacts list.
+ *
+ * @param {string} contactName - The name of the contact to remove.
+ */
 function removeSelectedContact(contactName) {
     selectedContacts = selectedContacts.filter(contact => contact.name !== contactName);
     showSelectedContacts();
 }
 
+/**
+ * Display the currently selected contacts in the task form.
+ */
 function showSelectedContacts() {
     const contactsDiv = document.getElementById('div_contacts_initials');
     contactsDiv.style.display = 'flex';
@@ -170,17 +241,35 @@ function showSelectedContacts() {
     }
 }
 
+/**
+ * Render the selected contact initials badge.
+ *
+ * @param {string} shortName - The contact initials.
+ * @param {string} color - The contact badge color.
+ * @returns {string} HTML string for the selected contact badge.
+ */
 function templateSelectedContacts(shortName, color) {
     return `<div>
                 <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
             </div>`;
 }
 
+/**
+ * Set the selected category label and close the category dropdown.
+ *
+ * @param {HTMLElement} element - The selected category element.
+ */
 function selectedCatgeory(element) {
     document.getElementById("selected_category_text").textContent = element.innerText;
     dropdownCategoryUp();
 }
 
+/**
+ * Retrieve the DOM elements used for a priority option.
+ *
+ * @param {Object} config - The priority configuration object.
+ * @returns {{button:HTMLElement,font:HTMLElement,icon:HTMLElement}} The priority elements.
+ */
 function getPriorityElements(config) {
     return {
         button: document.getElementById(config.button),
@@ -189,6 +278,9 @@ function getPriorityElements(config) {
     };
 }
 
+/**
+ * Reset all priority styling classes to their default state.
+ */
 function resetPriorityStyles() {
     Object.values(priorityConfig).forEach(config => {
         const elements = getPriorityElements(config);
@@ -198,6 +290,11 @@ function resetPriorityStyles() {
     });
 }
 
+/**
+ * Apply the selected priority styling and update the current priority.
+ *
+ * @param {HTMLElement} element - The clicked priority button element.
+ */
 function colorChangePriority(element) {
     resetPriorityStyles();
     const priorityName = element.id.split("-")[1];
@@ -209,6 +306,12 @@ function colorChangePriority(element) {
     priority = priorityName;
 }
 
+/**
+ * Collect all task data from the add task form.
+ *
+ * @param {string} element - The desired status for the new task.
+ * @returns {Object} The assembled task object.
+ */
 function getTaskData(element) {
     return {
         title: document.getElementById("task-title").value.trim(),
@@ -222,12 +325,23 @@ function getTaskData(element) {
     };
 }
 
+/**
+ * Get the currently assigned contacts for the task.
+ *
+ * @returns {Array<Object>} Array of selected contact objects.
+ */
 function getAssignedContacts() {
     return selectedContacts.map(contact => ({
         name: contact.name, shortName: contact.shortName, color: contact.color
     }));
 }
 
+/**
+ * Validate that the current task form data is sufficient to create a task.
+ *
+ * @param {Object} task - The assembled task data.
+ * @returns {boolean} True if the task is valid, false otherwise.
+ */
 function isTaskValid(task) {
     return task.title &&
         task.description &&
@@ -239,6 +353,12 @@ function isTaskValid(task) {
         selectedContacts.length > 0;
 }
 
+/**
+ * Create a new task after validating the form and saving to Firebase.
+ *
+ * @param {string} element - The desired status for the new task.
+ * @returns {Promise<void>} Resolves when task creation completes.
+ */
 async function createTask(element) {
     formRequired();
     const task = getTaskData(element);
@@ -253,6 +373,9 @@ async function createTask(element) {
     }
 }
 
+/**
+ * Reset the form and UI after successful task creation.
+ */
 function taskCreatedSuccessfully() {
     priority = "";
     selectedContacts = [];
@@ -260,6 +383,9 @@ function taskCreatedSuccessfully() {
     taskSuccessfullyCreatedDialog();
 }
 
+/**
+ * Remove validation error styling from title and date fields.
+ */
 function resetInputErrors() {
     titleInput.classList.remove("error");
     titleError.classList.remove("show");
@@ -267,6 +393,9 @@ function resetInputErrors() {
     dateError.classList.remove("show");
 }
 
+/**
+ * Reset all visible task form input fields to their default state.
+ */
 function resetTaskFields() {
     document.getElementById("task-title").value = "";
     document.getElementById("task-description").value = "";
@@ -279,6 +408,9 @@ function resetTaskFields() {
     window.resetSubtasks();
 }
 
+/**
+ * Reset the add task UI state and hide active dropdowns.
+ */
 function resetTaskUI() {
     selectedContacts = [];
     resetPriorityStyles();
@@ -287,6 +419,9 @@ function resetTaskUI() {
     dropdownCategoryUp();
 }
 
+/**
+ * Clear the add task form and reset all related UI state.
+ */
 function clearTaskform() {
     resetInputErrors();
     resetTaskFields();
@@ -309,6 +444,9 @@ dateInput.addEventListener("change", () => {
     dateDisplay.value = `${day}/${month}/${year}`;
 });
 
+/**
+ * Open the browser date picker for the task date input.
+ */
 function openDatePicker() {
     if (dateInput.showPicker) {
         dateInput.showPicker();
@@ -317,6 +455,11 @@ function openDatePicker() {
     }
 }
 
+/**
+ * Validate required form fields and return whether the form is valid.
+ *
+ * @returns {boolean} True if required fields are valid, false otherwise.
+ */
 function formRequired() {
     let formIsValid = true;
     if (!validateTitle()) {
@@ -328,6 +471,11 @@ function formRequired() {
     return formIsValid;
 }
 
+/**
+ * Validate the task title input and show error styling if invalid.
+ *
+ * @returns {boolean} True when the title is valid, false otherwise.
+ */
 function validateTitle() {
     if (titleInput.value.trim() === "") {
         titleInput.classList.add("error");
@@ -339,6 +487,11 @@ function validateTitle() {
     return true;
 }
 
+/**
+ * Validate the task date display input and show error styling if invalid.
+ *
+ * @returns {boolean} True when the date is valid, false otherwise.
+ */
 function validateDate() {
     if (dateDisplay.value.trim() === "") {
         dateDisplay.classList.add("error");
