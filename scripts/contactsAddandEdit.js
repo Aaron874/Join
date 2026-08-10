@@ -5,7 +5,7 @@ import {
     renderPersonInitialsForAddContact,
  } from '../templates/contactsTemplate.js';
 
- import {DEFAULT_CONTACT_COLOR, writeNewContact} from './contacts.js';
+ import {DEFAULT_CONTACT_COLOR, writeNewContact, MOBILE_BREAKPOINT, searchIndex} from './contacts.js';
 const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
@@ -94,6 +94,22 @@ function openEditInput(mode, id) {
         contactId = searchIndex(id);
     }
     editContactInputContainer.appendChild(renderContactInput(mode, contactId));
+}
+
+/**
+ * Registers an input event listener on the color picker element inside the contact form.
+ * Updates the `--contact-color` CSS custom property on the picker's parent element
+ * in real time to reflect the currently selected color.
+ *
+ * @returns {void}
+ *
+ * @example
+ * startEventListenerColorPicker();
+ */
+function startEventListenerColorPicker() {
+    document.getElementById('contact_color_picker_id').addEventListener('input', (event) => {
+        event.target.parentElement.style.setProperty('--contact-color', event.target.value);
+    });
 }
 
 /**
@@ -258,4 +274,48 @@ function contactListInitials(contactListName) {
         .map((word) => word[0].toUpperCase())
         .join('');
     return initials;
+}
+
+/**
+ * Opens the contact dialog in edit mode for a given contact.
+ * Displays the dialog as a modal, switches the dialog header to the "edit" state,
+ * populates the form with the existing contact's data, and registers the
+ * event listener for the color picker.
+ *
+ * @param {string|number} id - The ID of the contact to be edited.
+ * @returns {void}
+ *
+ * @example
+ * openEditContactDialog(contact.id);
+ */
+export function openEditContactDialog(id) {
+    contactDialog.showModal();
+    contactDialogHeaderSwitch(true);
+    openEditInput('edit', id);
+    startEventListenerColorPicker();
+}
+
+/**
+ * Registers a click event listener on the edit button of a contact's single view.
+ * Selects either the mobile or desktop edit button depending on the current screen width,
+ * and opens the edit dialog for the given contact when clicked.
+ *
+ * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
+ * @param {string|number} id - The ID of the contact to be opened in the edit dialog.
+ * @returns {void}
+ *
+ * @example
+ * openEditDialogBtnListener(singleViewElement, contact.id);
+ */
+export function openEditDialogBtnListener(newSingleView, id) {
+    let screenSize = window.innerWidth;
+    let editButton;
+    if (screenSize < MOBILE_BREAKPOINT) {
+        editButton = newSingleView.querySelector('#mobile_edit_btn_id');
+    } else {
+        editButton = newSingleView.querySelector('#edit_btn_id');
+    }
+    editButton.addEventListener('click', () => {
+        openEditContactDialog(id);
+    });
 }

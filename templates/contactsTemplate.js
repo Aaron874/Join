@@ -1,6 +1,5 @@
 import {
     createListenerForContactInList,
-    openEditDialogBtnListener,
     contactsList,
     openDeleteDialogBtnListener,
     updateContactBtnListener,
@@ -9,7 +8,7 @@ import {
     DEFAULT_CONTACT_COLOR
 } from '../scripts/contacts.js';
 
-import {  } from '../scripts/contactsAddandEdit.js';
+import { openEditDialogBtnListener, } from '../scripts/contactsAddandEdit.js';
 
 
 /**

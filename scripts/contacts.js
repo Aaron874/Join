@@ -14,7 +14,7 @@ import {
 import { closeAddContactDialog } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
-const MOBILE_BREAKPOINT = 701;
+export const MOBILE_BREAKPOINT = 701;
 const SUCCESS_DIALOG_TIMEOUT = 2000;
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 
@@ -41,30 +41,7 @@ async function loadContacts() {
 
 
 
-/**
- * Registers a click event listener on the edit button of a contact's single view.
- * Selects either the mobile or desktop edit button depending on the current screen width,
- * and opens the edit dialog for the given contact when clicked.
- *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
- * @param {string|number} id - The ID of the contact to be opened in the edit dialog.
- * @returns {void}
- *
- * @example
- * openEditDialogBtnListener(singleViewElement, contact.id);
- */
-export function openEditDialogBtnListener(newSingleView, id) {
-    let screenSize = window.innerWidth;
-    let editButton;
-    if (screenSize < MOBILE_BREAKPOINT) {
-        editButton = newSingleView.querySelector('#mobile_edit_btn_id');
-    } else {
-        editButton = newSingleView.querySelector('#edit_btn_id');
-    }
-    editButton.addEventListener('click', () => {
-        openEditContactDialog(id);
-    });
-}
+
 
 /**
  * Registers a click event listener on the delete button of the contact's single view.
@@ -218,7 +195,7 @@ function switchListToSingleViewAndBack() {
  * @example
  * const index = searchIndex(contact.id);
  */
-function searchIndex(contactId) {
+export function searchIndex(contactId) {
     for (let index = 0; index < contactsList.length; index++) {
         if (contactsList[index].id === contactId) {
             return index;
@@ -512,24 +489,7 @@ function errorMessageDialog(message) {
     }, SUCCESS_DIALOG_TIMEOUT);
 }
 
-/**
- * Opens the contact dialog in edit mode for a given contact.
- * Displays the dialog as a modal, switches the dialog header to the "edit" state,
- * populates the form with the existing contact's data, and registers the
- * event listener for the color picker.
- *
- * @param {string|number} id - The ID of the contact to be edited.
- * @returns {void}
- *
- * @example
- * openEditContactDialog(contact.id);
- */
-export function openEditContactDialog(id) {
-    contactDialog.showModal();
-    contactDialogHeaderSwitch(true);
-    openEditInput('edit', id);
-    startEventListenerColorPicker();
-}
+
 
 
 
