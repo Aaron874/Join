@@ -731,6 +731,13 @@ input::placeholder {
     }
 }
 
+@media (max-width: 485px) {
+
+    .style-priority {
+        gap: 0;
+    }
+}
+
 @media (max-width: 450px) {
 
     .mobile-joinLogo {
@@ -738,11 +745,11 @@ input::placeholder {
     }
 
     .style-priorities-p {
-        font-size: 8px !important;
+        font-size: 16px !important;
     }
 
     .font-size {
-        font-size: 12px !important;
+        font-size: 16px !important;
     }
 
     .add_task-h1 {
@@ -754,7 +761,7 @@ input::placeholder {
     }
 
     .input-right {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .div-text-required {
@@ -762,7 +769,7 @@ input::placeholder {
     }
 
     .main-content {
-        padding: 16px 16px 380px 16px !important;
+        padding: 16px 8px 380px 8px !important;
     }
 
     .bt-right {
@@ -779,7 +786,7 @@ input::placeholder {
     }
 
     .text-required {
-        font-size: 12px !important;
+        font-size: 16px !important;
     }
 
     .style-form-right {
