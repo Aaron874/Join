@@ -1,6 +1,5 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
-import { auth } from '../firebase/firebase-config.js';
 import { logout } from '../firebase/auth.js'
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
@@ -9,6 +8,19 @@ const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_foote
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
+
+/**
+ * Registers a global submit event listener for the login/sign-up form.
+ * Prevents the default form submission and delegates to the appropriate
+ * handler based on the submitter's `data-action` attribute: logs in the
+ * current user for `'logIn'`, or resets the confirm password field's
+ * custom validity and processes the entered user data for `'signUp'`.
+ *
+ * @returns {void}
+ *
+ * @example
+ * // Registered once at module load; no manual invocation needed.
+ */
 document.addEventListener('submit', (event) => {
     if (!event.target.matches('#sign_log_in_id')) return;
     event.preventDefault();
@@ -24,6 +36,18 @@ document.addEventListener('submit', (event) => {
     }
 });
 
+/**
+ * Registers a global click event listener that handles the login/registration
+ * form interactions. Creates a guest user when the guest login button is
+ * clicked, switches to the sign-up form and reveals the "back to login" button
+ * when the sign-up link is clicked, or switches back to the login form and
+ * hides the "back to login" button when it is clicked.
+ *
+ * @returns {void}
+ *
+ * @example
+ * // Registered once at module load; no manual invocation needed.
+ */
 document.addEventListener('click', (event) => {
     if (event.target.matches('.guest_login_btn')) {
         event.preventDefault();
@@ -35,7 +59,7 @@ document.addEventListener('click', (event) => {
         changeLogOrSignForm('Sign up');
         return;
     }
-    if (event.target.closest('#back_to_log_in_btn_id' || event.target.closest('.back_to_log_in_btn'))) {
+    if (event.target.closest('#back_to_log_in_btn_id') || event.target.closest('.back_to_log_in_btn')) {
         document.getElementById('back_to_log_in_btn_id').classList.add('hidden');
         changeLogOrSignForm('Log in');
     }
