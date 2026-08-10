@@ -564,7 +564,7 @@ input::placeholder {
 }
 
 .header-content {
-    padding-left: 163px !important;
+    /* padding-left: 163px !important; */
     width: calc(100% - 232px) !important;
 }
 
