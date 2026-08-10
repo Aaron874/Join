@@ -19,6 +19,7 @@ import {
 
 export let contactsList = [];
 let firstLetterList = [];
+export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 const contactsListContainer = document.querySelector('.contacts_list_container');
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 const contactDialog = document.getElementById('contact_dialog_id');
@@ -71,9 +72,9 @@ document.addEventListener('submit', (event) => {
  * openEditDialogBtnListener(singleViewElement, contact.id);
  */
 export function openEditDialogBtnListener(newSingleView, id) {
-  let ScreenSize = window.innerWidth
+  let screenSize = window.innerWidth
   let editButton;
-  if (ScreenSize <701) {
+  if (screenSize <701) {
     editButton = newSingleView.querySelector('#mobile_edit_btn_id');
   } else {
     editButton = newSingleView.querySelector('#edit_btn_id');
@@ -99,8 +100,8 @@ export function openEditDialogBtnListener(newSingleView, id) {
  * openDeleteDialogBtnListener(singleViewElement, contact.id, contact);
  */
 export function openDeleteDialogBtnListener(newSingleView, id, person) {
-  let ScreenSize = window.innerWidth
-  if (ScreenSize > 701) {
+  let screenSize = window.innerWidth
+  if (screenSize > 701) {
     const deleteButton = newSingleView.querySelector('#delete_btn_id');
     deleteButton.addEventListener('click', () => {
         deleteContactDialog(id, person);
@@ -631,7 +632,7 @@ function resetPersonInitials() {
  * closeAddContactDialog();
  */
 function closeAddContactDialog() {
-    document.documentElement.style.setProperty('--contact-color', '#D1D1D1');
+    document.documentElement.style.setProperty('--contact-color', DEFAULT_CONTACT_COLOR);
     deleteInputValues();
     resetPersonInitials();
     contactDialog.close();
@@ -651,7 +652,7 @@ function deleteInputValues() {
     form.querySelectorAll("input").forEach(input => {
     input.value = "";
     });
-    document.documentElement.style.setProperty('--contact-color', '#D1D1D1');
+    document.documentElement.style.setProperty('--contact-color', DEFAULT_CONTACT_COLOR);
 }
 
 /**

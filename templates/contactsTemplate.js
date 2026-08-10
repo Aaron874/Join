@@ -6,6 +6,7 @@ import {
     updateContactBtnListener,
     deleteBtnListener,
     returnToListBtnListener,
+    DEFAULT_CONTACT_COLOR
 } from '../scripts/contacts.js';
 
 export function renderContactsListLetterSeperator(Letter) {
@@ -112,13 +113,13 @@ export function renderContactInput(mode, contactId) {
     editContactInput.id = 'contact_input_id';
     editContactInput.innerHTML = `
             <label class="contact_color_picker" style="--contact-color: ${
-                contactsList[contactId]?.color ?? '#D1D1D1'
+                contactsList[contactId]?.color ?? DEFAULT_CONTACT_COLOR
             };">
               <input
                 type="color"
                 name="background_color"
                 id="contact_color_picker_id"
-                value="${contactsList[contactId]?.color ?? '#D1D1D1'}"
+                value="${contactsList[contactId]?.color ?? DEFAULT_CONTACT_COLOR}"
               />
               <span class="person_initials" id="person_initials_id">${
                   contactsList[contactId]?.shortName ?? ''
