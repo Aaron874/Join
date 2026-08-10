@@ -187,7 +187,6 @@ async function createTask(element) {
 function taskCreatedSuccessfully() {
     priority = "";
     clearTaskform();
-    taskSuccessfullyCreatedDialog();
 }
 
 /**
