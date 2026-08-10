@@ -20,6 +20,8 @@ import {
 export let contactsList = [];
 let firstLetterList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
+const MOBILE_BREAKPOINT = 701;
+const SUCCESS_DIALOG_TIMEOUT = 2000;
 const contactsListContainer = document.querySelector('.contacts_list_container');
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 const contactDialog = document.getElementById('contact_dialog_id');
@@ -74,7 +76,7 @@ document.addEventListener('submit', (event) => {
 export function openEditDialogBtnListener(newSingleView, id) {
   let screenSize = window.innerWidth
   let editButton;
-  if (screenSize <701) {
+  if (screenSize < MOBILE_BREAKPOINT) {
     editButton = newSingleView.querySelector('#mobile_edit_btn_id');
   } else {
     editButton = newSingleView.querySelector('#edit_btn_id');
@@ -101,7 +103,7 @@ export function openEditDialogBtnListener(newSingleView, id) {
  */
 export function openDeleteDialogBtnListener(newSingleView, id, person) {
   let screenSize = window.innerWidth
-  if (screenSize > 701) {
+  if (screenSize > MOBILE_BREAKPOINT) {
     const deleteButton = newSingleView.querySelector('#delete_btn_id');
     deleteButton.addEventListener('click', () => {
         deleteContactDialog(id, person);
@@ -314,7 +316,7 @@ export function openSingleViewContact(id) {
  */
 function switchListToSingleViewAndBack() {
     let width = window.innerWidth;
-    if (width < 701) {
+    if (width < MOBILE_BREAKPOINT) {
         const viewContainer = document.querySelector('.contacts_single_view_container');
         const listContainer = document.querySelector('.contacts_list_container');
         viewContainer.classList.toggle('visible_flex');
@@ -771,7 +773,7 @@ function contactSuccessfullyCreatedDialog() {
     successDialog.showModal();
     setTimeout(() => {
         successDialog.close();
-    }, 2000);
+    }, SUCCESS_DIALOG_TIMEOUT);
 }
 
 /**
