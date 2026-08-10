@@ -15,6 +15,7 @@
   --fs-h2: clamp(20px, 27px, 34px);
   --fs-standard: clamp(18px, 20px, 24px);
   --fs-options: clamp(16px, 18px, 20px);
+
 }
 
 @font-face {
@@ -98,6 +99,7 @@ footer {
   width: 100%;
   max-width: 720px;
   margin-left: 232px;
+  padding-left: 20px;
 }
 
 .right-header {
