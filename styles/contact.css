@@ -38,6 +38,7 @@
     padding: 15px 24px 15px 24px;
     border-radius: 5px;
     gap: 20px;
+    overflow-wrap: anywhere;
 }
 
 .contacts_list_items_container:hover {
@@ -86,7 +87,7 @@
 
 .contacts_list_container {
     flex: 3;
-    min-width: 350px;
+    min-width: 320px;
     height: calc(100dvh - 96px);
     display: flex;
     flex-direction: column;
@@ -123,7 +124,7 @@ align-items: center;
 background-color: #2A3647;
 padding: 8px;
 justify-content: center;
-width: calc(100% - 16px);
+width: calc(100dvw - 16px);
 border-radius: 5px;
 margin: 16px 0 16px 0;
 max-width: 350px;
@@ -772,5 +773,13 @@ footer {
 
   .contact_input_wrapper {
     width: 280px;
+  }
+  .contacts_single_view_name {
+    font-size: 24px;
+  }
+  .contacts_icon {
+    width: 60px;
+    height: 60px;
+    font-size: 27px;
   }
 }
