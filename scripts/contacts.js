@@ -74,18 +74,17 @@ document.addEventListener('submit', (event) => {
  * openEditDialogBtnListener(singleViewElement, contact.id);
  */
 export function openEditDialogBtnListener(newSingleView, id) {
-  let screenSize = window.innerWidth
-  let editButton;
-  if (screenSize < MOBILE_BREAKPOINT) {
-    editButton = newSingleView.querySelector('#mobile_edit_btn_id');
-  } else {
-    editButton = newSingleView.querySelector('#edit_btn_id');
-  }
+    let screenSize = window.innerWidth;
+    let editButton;
+    if (screenSize < MOBILE_BREAKPOINT) {
+        editButton = newSingleView.querySelector('#mobile_edit_btn_id');
+    } else {
+        editButton = newSingleView.querySelector('#edit_btn_id');
+    }
     editButton.addEventListener('click', () => {
         openEditContactDialog(id);
     });
 }
-
 
 /**
  * Registers a click event listener on the delete button of the contact's single view.
@@ -102,15 +101,14 @@ export function openEditDialogBtnListener(newSingleView, id) {
  * openDeleteDialogBtnListener(singleViewElement, contact.id, contact);
  */
 export function openDeleteDialogBtnListener(newSingleView, id, person) {
-  let screenSize = window.innerWidth
-  if (screenSize > MOBILE_BREAKPOINT) {
-    const deleteButton = newSingleView.querySelector('#delete_btn_id');
-    deleteButton.addEventListener('click', () => {
-        deleteContactDialog(id, person);
-    });
-  }
+    let screenSize = window.innerWidth;
+    if (screenSize > MOBILE_BREAKPOINT) {
+        const deleteButton = newSingleView.querySelector('#delete_btn_id');
+        deleteButton.addEventListener('click', () => {
+            deleteContactDialog(id, person);
+        });
+    }
 }
-
 
 /**
  * Registers a click event listener on the delete button inside the edit contact form.
@@ -146,13 +144,12 @@ export function deleteBtnListener(contactId, person, editContactInput) {
  * @example
  * returnToListBtnListener(singleViewElement);
  */
-export function returnToListBtnListener (newSingleView) {
-  const returnToListBtn = newSingleView.querySelector('#mobile_back_btn_id');
-  returnToListBtn.addEventListener('click', () => {
-    switchListToSingleViewAndBack();
-  })
+export function returnToListBtnListener(newSingleView) {
+    const returnToListBtn = newSingleView.querySelector('#mobile_back_btn_id');
+    returnToListBtn.addEventListener('click', () => {
+        switchListToSingleViewAndBack();
+    });
 }
-
 
 /**
  * Builds the list of first letters used as section separators for the contact list.
@@ -176,7 +173,6 @@ function getFirstLetterForSeperator() {
     sortLetterSeperatorList();
 }
 
-
 /**
  * Removes duplicate letters from the global `firstLetterList` and sorts the remaining
  * letters alphabetically using German locale rules. Afterwards triggers the creation
@@ -192,7 +188,6 @@ function sortLetterSeperatorList() {
     firstLetterList.sort((a, b) => a.localeCompare(b, 'de'));
     createContactsListLetterSeperator();
 }
-
 
 /**
  * Renders the letter separator elements into the contact list container based on the
@@ -212,7 +207,6 @@ function createContactsListLetterSeperator() {
     }
     createContactListItems();
 }
-
 
 /**
  * Iterates over the global `contactsList` and extracts the relevant Contact data
@@ -235,7 +229,6 @@ function createContactListItems() {
         pushContactsToList(shortName, person, email, firstLetter, color, id);
     }
 }
-
 
 /**
  * Inserts a single rendered contact list item into the DOM, placing it directly after
@@ -303,7 +296,6 @@ export function openSingleViewContact(id) {
     );
 }
 
-
 /**
  * Toggles the visibility between the contact list and the single contact view
  * on mobile screens. Only applies when the screen width is below the mobile
@@ -321,9 +313,8 @@ function switchListToSingleViewAndBack() {
         const listContainer = document.querySelector('.contacts_list_container');
         viewContainer.classList.toggle('visible_flex');
         listContainer.classList.toggle('hidden');
+    }
 }
-}
-
 
 /**
  * Searches the global `contactsList` for a contact matching the given ID and
@@ -343,7 +334,6 @@ function searchIndex(contactId) {
         }
     }
 }
-
 
 /**
  * Registers a click event listener on the update/save button inside the edit contact form.
@@ -375,7 +365,6 @@ export function updateContactBtnListener(editContactInput, contactId) {
     }
 }
 
-
 /**
  * Updates a contact with the given data, both remotely and in the local application state.
  * Persists the updated contact via `updateContact`, re-fetches the updated contact data,
@@ -400,7 +389,6 @@ async function updateContactInList(contactId, updatedContact) {
     openSingleViewContact(contactId);
 }
 
-
 /**
  * Updates the DOM representation of a contact list item with the given contact's
  * current data. Updates the displayed name, email, avatar initials, and avatar color
@@ -422,7 +410,6 @@ function changeContactInDom(contactId, changedContact) {
         .querySelector('.contacts_list_name_symbol')
         .style.setProperty('--contact-color', changedContact.color);
 }
-
 
 /**
  * Opens the delete confirmation dialog for a given contact.
@@ -517,7 +504,6 @@ function openAddContactDialog() {
     startEventListenersAddContactDialog();
 }
 
-
 /**
  * Registers an input event listener on the color picker element inside the contact form.
  * Updates the `--contact-color` CSS custom property on the picker's parent element
@@ -533,7 +519,6 @@ function startEventListenerColorPicker() {
         event.target.parentElement.style.setProperty('--contact-color', event.target.value);
     });
 }
-
 
 /**
  * Registers a blur event listener on the contact name input field inside the add contact dialog.
@@ -650,9 +635,9 @@ function closeAddContactDialog() {
  * deleteInputValues();
  */
 function deleteInputValues() {
-    const form = document.querySelector("#contact_form_id");
-    form.querySelectorAll("input").forEach(input => {
-    input.value = "";
+    const form = document.querySelector('#contact_form_id');
+    form.querySelectorAll('input').forEach((input) => {
+        input.value = '';
     });
     document.documentElement.style.setProperty('--contact-color', DEFAULT_CONTACT_COLOR);
 }
@@ -683,8 +668,8 @@ function getNewContactValues() {
  * Creates the contact remotely, re-fetches the updated contacts list, determines
  * the ID of the newly created contact, rebuilds the rendered contact list and its
  * letter separators, closes the add contact dialog, shows a success confirmation,
- * and opens the single view of the newly created contact. Logs an error to the
- * console if any step fails.
+ * and opens the single view of the newly created contact. Displays an error
+ * dialog to the user if any step fails.
  *
  * @async
  * @param {Object} contact - The new contact data to be saved (e.g. name, email, phone, color, shortName).
@@ -704,14 +689,14 @@ async function writeNewContact(contact) {
         contactSuccessfullyCreatedDialog();
         openSingleViewContact(newContactId);
     } catch (error) {
-        console.error('Fehler beim Speichern:', error);
+        errorMessageDialog('Error saving new Contact. Please try again.');
     }
 }
 
 /**
  * Re-fetches the full contacts list from the backend and updates the global
- * `contactsList` after a new contact has been created. Logs an error to the
- * console if the fetch fails.
+ * `contactsList` after a new contact has been created. Displays an error
+ * dialog to the user if the fetch fails.
  *
  * @async
  * @returns {Promise<void>}
@@ -723,7 +708,7 @@ async function getContactsAfterCreation() {
     try {
         contactsList = await getContacts();
     } catch (error) {
-        console.error('Fehler beim Abrufen der Kontakte:', error);
+        errorMessageDialog('Error by Loading Contact please try again.');
     }
 }
 
@@ -770,6 +755,27 @@ function removeContactListFromDom() {
  */
 function contactSuccessfullyCreatedDialog() {
     const successDialog = document.getElementById('contact_dialog_success_id');
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+    }, SUCCESS_DIALOG_TIMEOUT);
+}
+
+/**
+ * Displays a temporary message dialog with the given text, reusing the
+ * success dialog element. Shows the dialog as a modal and automatically
+ * closes it again after `SUCCESS_DIALOG_TIMEOUT` milliseconds.
+ *
+ * @param {string} message - The message to be displayed in the dialog.
+ * @returns {void}
+ *
+ * @example
+ * errorMessageDialog('Error by Loading Contact please try again.');
+ */
+function errorMessageDialog(message) {
+    const successDialog = document.getElementById('contact_dialog_success_id');
+    const messageElement = successDialog.querySelector('p');
+    messageElement.textContent = message;
     successDialog.showModal();
     setTimeout(() => {
         successDialog.close();
