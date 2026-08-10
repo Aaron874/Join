@@ -5,6 +5,7 @@ import { logout } from '../firebase/auth.js'
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
+const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
@@ -97,36 +98,6 @@ function animateLogo() {
     animation.onfinish = () => logo.style.zIndex = '';
 }
 
-document.addEventListener('submit', (event) => {
-    if (!event.target.matches('#sign_log_in_id')) return;
-    event.preventDefault();
-    switch (event.submitter.dataset.action) {
-        case 'logIn':
-            loginCurrentUser();
-            break;
-        case 'signUp':
-            let confirmPassword = document.getElementById("confirm_password")
-                confirmPassword.setCustomValidity("");
-            userData(confirmPassword);
-            break;
-    }
-});
-
-document.addEventListener('click', (event) => {
-    if (event.target.matches('.guest_login_btn')) {
-        event.preventDefault();
-        createGuestUser();
-        return
-    }
-    if (event.target.matches('#change_to_sign_up_btn')) {
-        document.getElementById("back_to_log_in_btn_id").classList.remove("hidden");
-        changeLogOrSignForm("Sign up");
-        return;  
-    }
-    if (event.target.closest('#back_to_log_in_btn_id' || event.target.closest('.back_to_log_in_btn'))) {
-        document.getElementById("back_to_log_in_btn_id").classList.add("hidden");
-        changeLogOrSignForm("Log in");
-}});
 
 /**
  * Log in as a guest user and navigate to the summary page.
@@ -174,7 +145,6 @@ async function loginCurrentUser() {
         window.location.href = "summary.html";
     } catch (error) {
         showErrorLogIn();
-        console.error(error.code, error.message);
     }
 }
 
@@ -258,7 +228,7 @@ function showErrorLogIn() {
     setTimeout(() => {
         errorLogIn.classList.add("hidden");
         setFormDisabled(false);
-    }, 3000);
+    }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
 
 /**
@@ -270,7 +240,7 @@ function showErrorSignUp() {
     setTimeout(() => {
         errorSignUp.classList.add("hidden");
         setFormDisabled(false);
-    }, 3000);
+    }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
 
 /**
@@ -296,5 +266,5 @@ function setFormDisabled(disabled) {
         errorLogIn.classList.add("hidden");
         setFormDisabled(false);
         errorLogIn.textContent = "Username or Password incorrect";
-    }, 3000);
+    }, MAXIMUM_ERROR_DISPLAY_TIME);
   }
