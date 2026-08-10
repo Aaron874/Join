@@ -9,27 +9,21 @@ import {
     DEFAULT_CONTACT_COLOR
 } from '../scripts/contacts.js';
 
+
 /**
- * Render a list separator for the contacts list by letter.
+ * Renders the HTML markup for a single letter separator used in the contact list.
  *
- * @param {string} Letter - The letter used as the separator label.
- * @returns {string} HTML string for the list letter separator.
+ * @param {string} Letter - The letter to be displayed and set as the `data-letter` attribute.
+ * @returns {string} The HTML string for the letter separator element.
+ *
+ * @example
+ * const html = renderContactsListLetterSeperator('J');
  */
 export function renderContactsListLetterSeperator(Letter) {
     return `
      <div class="contacts_list_letter_seperator" data-letter="${Letter}">${Letter}</div>`;
 }
 
-/**
- * Render a contact list item as a button element.
- *
- * @param {string} shortName - The initials or short label shown in the contact badge.
- * @param {string} person - The full name of the contact.
- * @param {string} email - The contact email address.
- * @param {string} [color='#BDBDBD'] - The color value used for the initials badge.
- * @param {string|number} id - The unique identifier for the contact.
- * @returns {HTMLButtonElement} The rendered contact button element.
- */
 export function renderContactsListItems(shortName, person, email, color = '#BDBDBD', id) {
     let newContact = document.createElement('button');
     newContact.classList.add('contacts_list_items_container');
@@ -45,12 +39,6 @@ export function renderContactsListItems(shortName, person, email, color = '#BDBD
     return newContact;
 }
 
-/**
- * Render the dialog heading for adding or editing a contact.
- *
- * @param {boolean} [isEditMode=false] - Whether the dialog is in edit mode.
- * @returns {HTMLHeadingElement} The heading element for the dialog.
- */
 export function renderAddOrEditContactDialog(isEditMode = false) {
     let addContactDialogContent = document.createElement('h3');
     if (isEditMode) {
@@ -61,28 +49,12 @@ export function renderAddOrEditContactDialog(isEditMode = false) {
     return addContactDialogContent;
 }
 
-/**
- * Render the subtitle text for the contact dialog header.
- *
- * @returns {HTMLParagraphElement} The paragraph element containing the dialog subtitle.
- */
 export function renderUnderlineHeaderContactDialog() {
     let contactDialogUnderline = document.createElement('p');
     contactDialogUnderline.textContent = 'Tasks are better with a team!';
     return contactDialogUnderline;
 }
 
-/**
- * Render the detailed single contact view element.
- *
- * @param {string} shortName - The initials or short label for the contact.
- * @param {string} person - The contact's display name.
- * @param {string} email - The contact's email address.
- * @param {string} [color='#BDBDBD'] - The badge color for the contact initials.
- * @param {string} [phone='No phone number'] - The contact's phone number.
- * @param {string|number} id - The unique identifier for the contact.
- * @returns {HTMLDivElement} The rendered single contact view container.
- */
 export function renderSingleContactView(
     shortName,
     person,
@@ -137,12 +109,6 @@ export function renderSingleContactView(
     return newSingleView;
 }
 
-/**
- * Render the initials element for the add contact form.
- *
- * @param {string} initials - The initials text to display.
- * @returns {HTMLSpanElement} The span element containing the initials.
- */
 export function renderPersonInitialsForAddContact(initials) {
     let personInitials = document.createElement('span');
     personInitials.classList.add('person_initials');
@@ -151,13 +117,6 @@ export function renderPersonInitialsForAddContact(initials) {
     return personInitials;
 }
 
-/**
- * Render the contact input form markup for add or edit mode.
- *
- * @param {'add'|'edit'} mode - The current form mode.
- * @param {string|number} contactId - The id of the contact being edited.
- * @returns {HTMLDivElement} The rendered contact form container.
- */
 export function renderContactInput(mode, contactId) {
     let editContactInput = document.createElement('div');
     editContactInput.classList.add('contact_form_container');
@@ -224,12 +183,6 @@ export function renderContactInput(mode, contactId) {
     return editContactInput;
 }
 
-/**
- * Render the contact form action buttons depending on mode.
- *
- * @param {'add'|'edit'} mode - The current form mode.
- * @returns {string} HTML string for the action buttons.
- */
 function renderButtons(mode) {
     if (mode === 'edit') {
         return `
