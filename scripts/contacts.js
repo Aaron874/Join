@@ -1,19 +1,17 @@
 import { getFirstLetterForSeperator } from './contactListBuilder.js';
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
-import {
-    getContacts,
-    updateContact,
-    getContact,
-    deleteContact,
-} from '../firebase/contacts.service.js';
+import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
 import { renderSingleContactView } from '../templates/contactsTemplate.js';
-
-import { closeAddContactDialog } from './contactsAddandEdit.js';
+import {
+    closeAddContactDialog,
+    errorMessageDialog,
+    eventListenerDeleteContactDialog,
+    contactSuccessfullyCreatedDialog,
+} from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
-const SUCCESS_DIALOG_TIMEOUT = 2000;
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 
 window.result = await waitForAuthenticatedUser();
@@ -285,35 +283,6 @@ export function deleteContactDialog(contactId, person) {
 }
 
 /**
- * Registers the click event listeners for the delete confirmation dialog's action buttons.
- * On confirm, deletes the contact remotely, removes it from the DOM, closes the delete
- * dialog, and also closes the contact edit dialog if it is currently open.
- * On cancel, simply closes the delete dialog without further action.
- *
- * @param {string|number} contactId - The ID of the contact to be deleted.
- * @param {HTMLElement} deleteButton - The button element that confirms the deletion.
- * @param {HTMLElement} cancelButton - The button element that cancels the deletion.
- * @param {HTMLDialogElement} deleteDialog - The dialog element to be closed after confirm or cancel.
- * @returns {void}
- *
- * @example
- * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
- */
-function eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog) {
-    deleteButton.addEventListener('click', async () => {
-        await deleteContact(contactId);
-        removeContactFromDom(contactId);
-        deleteDialog.close();
-        if (contactDialog.open) {
-            contactDialog.close();
-        }
-    });
-    cancelButton.addEventListener('click', () => {
-        deleteDialog.close();
-    });
-}
-
-/**
  * Removes a contact from the local application state and refreshes the contact list UI.
  * Finds the contact's index in the global `contactsList` and removes it, clears the
  * rendered contact list from the DOM, rebuilds the letter separators, and opens the
@@ -413,44 +382,6 @@ function removeContactListFromDom() {
     contactListElements.forEach((element) => {
         element.remove();
     });
-}
-
-/**
- * Displays a temporary success confirmation dialog after a contact has been created.
- * Shows the dialog as a modal and automatically closes it again after 2 seconds.
- *
- * @returns {void}
- *
- * @example
- * contactSuccessfullyCreatedDialog();
- */
-function contactSuccessfullyCreatedDialog() {
-    const successDialog = document.getElementById('contact_dialog_success_id');
-    successDialog.showModal();
-    setTimeout(() => {
-        successDialog.close();
-    }, SUCCESS_DIALOG_TIMEOUT);
-}
-
-/**
- * Displays a temporary message dialog with the given text, reusing the
- * success dialog element. Shows the dialog as a modal and automatically
- * closes it again after `SUCCESS_DIALOG_TIMEOUT` milliseconds.
- *
- * @param {string} message - The message to be displayed in the dialog.
- * @returns {void}
- *
- * @example
- * errorMessageDialog('Error by Loading Contact please try again.');
- */
-function errorMessageDialog(message) {
-    const successDialog = document.getElementById('contact_dialog_success_id');
-    const messageElement = successDialog.querySelector('p');
-    messageElement.textContent = message;
-    successDialog.showModal();
-    setTimeout(() => {
-        successDialog.close();
-    }, SUCCESS_DIALOG_TIMEOUT);
 }
 
 /**
