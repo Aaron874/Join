@@ -434,6 +434,8 @@ dialog::backdrop {
     border-radius: 20px;
     font-family: 'Inter';
     font-weight: 400;
+    min-width: 316px;
+    transform: translate(-50%);
   }
 
   .contact_dialog_delete {
@@ -447,6 +449,7 @@ dialog::backdrop {
     font-family: 'Inter';
     font-weight: 400;
     transform: translate(-50%);
+    min-width: 310px;
 
   }
 
@@ -776,7 +779,7 @@ footer {
   }
 
   .contact_input_wrapper {
-    width: 280px;
+    width: 270px;
   }
   .contacts_single_view_name {
     font-size: 24px;
@@ -785,5 +788,9 @@ footer {
     width: 60px;
     height: 60px;
     font-size: 27px;
+  }
+  .add_contact_form_section {
+    width: calc(100% - 8px);
+    margin: 0 auto 0 auto;
   }
 }

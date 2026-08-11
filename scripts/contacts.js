@@ -286,7 +286,8 @@ export function deleteContactDialog(contactId, person) {
  * Removes a contact from the local application state and refreshes the contact list UI.
  * Finds the contact's index in the global `contactsList` and removes it, clears the
  * rendered contact list from the DOM, rebuilds the letter separators, and opens the
- * single view of the first remaining contact.
+ * single view of the first remaining contact. Does nothing further if no contacts
+ * are left in the list.
  *
  * @param {string|number} contactId - The ID of the contact to be removed.
  * @returns {void}
@@ -294,12 +295,16 @@ export function deleteContactDialog(contactId, person) {
  * @example
  * removeContactFromDom(contact.id);
  */
-function removeContactFromDom(contactId) {
+export function removeContactFromDom(contactId) {
     const indexContact = searchIndex(contactId);
     contactsList.splice(indexContact, 1);
     removeContactListFromDom();
     getFirstLetterForSeperator();
     const firstContactListItem = seperatIdFromContactList();
+    if (!firstContactListItem) {
+        switchListToSingleViewAndBack();
+        return;
+    }
     openSingleViewContact(firstContactListItem);
 }
 
@@ -387,14 +392,19 @@ function removeContactListFromDom() {
 /**
  * Extracts the contact ID from the first contact list item element currently
  * rendered in the DOM, by removing the `'contact_id_'` prefix from its element ID.
+ * Returns `null` if no contact list item exists (i.e. the list is empty).
  *
- * @returns {string} The extracted ID of the first contact in the list.
+ * @returns {string|null} The extracted ID of the first contact in the list,
+ * or `null` if there are no contacts left.
  *
  * @example
  * const firstId = seperatIdFromContactList();
  */
 function seperatIdFromContactList() {
     const firstContactListItem = document.querySelector('.contacts_list_items_container');
+    if (!firstContactListItem) {
+        return null;
+    }
     const contactId = firstContactListItem.id.replace('contact_id_', '');
     return contactId;
 }

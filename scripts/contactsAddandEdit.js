@@ -10,6 +10,7 @@ import {
     writeNewContact,
     MOBILE_BREAKPOINT,
     searchIndex,
+    removeContactFromDom
 } from './contacts.js';
 
 import { deleteContact } from '../firebase/contacts.service.js';
