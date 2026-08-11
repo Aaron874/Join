@@ -5,11 +5,10 @@ import {
     updateContactBtnListener,
     deleteBtnListener,
     returnToListBtnListener,
-    DEFAULT_CONTACT_COLOR
+    DEFAULT_CONTACT_COLOR,
 } from '../scripts/contacts.js';
 
-import { openEditDialogBtnListener, } from '../scripts/contactsAddandEdit.js';
-
+import { openEditDialogBtnListener } from '../scripts/contactsAddandEdit.js';
 
 /**
  * Renders the HTML markup for a single letter separator used in the contact list.
@@ -178,7 +177,6 @@ export function renderPersonInitialsForAddContact(initials) {
     return personInitials;
 }
 
-
 /**
  * Creates the contact form used for both adding and editing a contact.
  * Pre-fills the color picker, initials, name, email, and phone fields with the
@@ -259,7 +257,6 @@ export function renderContactInput(mode, contactId) {
     deleteBtnListener(contactId, contactsList[contactId]?.name, editContactInput);
     return editContactInput;
 }
-
 
 /**
  * Renders the appropriate action buttons markup for the contact form,

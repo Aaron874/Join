@@ -7,9 +7,7 @@ import {
     getContact,
     deleteContact,
 } from '../firebase/contacts.service.js';
-import {
-    renderSingleContactView,
-} from '../templates/contactsTemplate.js';
+import { renderSingleContactView } from '../templates/contactsTemplate.js';
 
 import { closeAddContactDialog } from './contactsAddandEdit.js';
 export let contactsList = [];
@@ -36,12 +34,6 @@ async function loadContacts() {
     contactsList = await getContacts();
     getFirstLetterForSeperator();
 }
-
-
-
-
-
-
 
 /**
  * Registers a click event listener on the delete button of the contact's single view.
@@ -107,16 +99,6 @@ export function returnToListBtnListener(newSingleView) {
         switchListToSingleViewAndBack();
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Registers a click event listener on a contact list item element.
@@ -352,24 +334,6 @@ function removeContactFromDom(contactId) {
     openSingleViewContact(firstContactListItem);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Persists a new contact and refreshes the contact list UI accordingly.
  * Creates the contact remotely, re-fetches the updated contacts list, determines
@@ -488,12 +452,6 @@ function errorMessageDialog(message) {
         successDialog.close();
     }, SUCCESS_DIALOG_TIMEOUT);
 }
-
-
-
-
-
-
 
 /**
  * Extracts the contact ID from the first contact list item element currently

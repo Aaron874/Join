@@ -1,4 +1,4 @@
-import { contactsList } from "./contacts.js";
+import { contactsList } from './contacts.js';
 import {
     renderContactsListLetterSeperator,
     renderContactsListItems,
@@ -6,7 +6,6 @@ import {
 
 let firstLetterList = [];
 const contactsListContainer = document.querySelector('.contacts_list_container');
-
 
 /**
  * Builds the list of first letters used as section separators for the contact list.

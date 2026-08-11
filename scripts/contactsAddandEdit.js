@@ -1,15 +1,19 @@
-import { 
+import {
     renderAddOrEditContactDialog,
     renderUnderlineHeaderContactDialog,
     renderContactInput,
     renderPersonInitialsForAddContact,
- } from '../templates/contactsTemplate.js';
+} from '../templates/contactsTemplate.js';
 
- import {DEFAULT_CONTACT_COLOR, writeNewContact, MOBILE_BREAKPOINT, searchIndex} from './contacts.js';
+import {
+    DEFAULT_CONTACT_COLOR,
+    writeNewContact,
+    MOBILE_BREAKPOINT,
+    searchIndex,
+} from './contacts.js';
 const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
-
 
 /**
  * Registers a global click event listener that handles elements with a
