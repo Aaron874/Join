@@ -3,12 +3,7 @@ import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
 import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
 import { renderSingleContactView } from '../templates/contactsTemplate.js';
-import {
-    closeAddContactDialog,
-    errorMessageDialog,
-    eventListenerDeleteContactDialog,
-    contactSuccessfullyCreatedDialog,
-} from './contactsAddandEdit.js';
+import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
@@ -34,14 +29,13 @@ async function loadContacts() {
 }
 
 /**
- * Registers a click event listener on the delete button of the contact's single view.
- * Only attaches the listener when the screen width is above the mobile breakpoint,
- * since the delete button is not available in the mobile layout.
- * Opens the delete confirmation dialog for the given contact when clicked.
+ * Registers a click listener on the delete button of the single contact view,
+ * but only above the mobile breakpoint (button not available on mobile).
+ * Opens the delete confirmation dialog for the contact when clicked.
  *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
+ * @param {HTMLElement} newSingleView - The single contact view element containing the button.
  * @param {string|number} id - The ID of the contact to be deleted.
- * @param {Object} person - The contact object/data to be passed to the delete dialog.
+ * @param {Object} person - The contact data passed to the delete dialog.
  * @returns {void}
  *
  * @example
@@ -58,13 +52,12 @@ export function openDeleteDialogBtnListener(newSingleView, id, person) {
 }
 
 /**
- * Registers a click event listener on the delete button inside the edit contact form.
- * Looks up the actual contact identifier from the global contacts list using the given
- * contact index/id and opens the delete confirmation dialog when clicked.
+ * Registers a click listener on the delete button in the edit contact form
+ * that opens the delete confirmation dialog for the contact.
  *
- * @param {string|number} contactId - The index or key used to look up the contact in `contactsList`.
- * @param {Object} person - The contact object/data to be passed to the delete dialog.
- * @param {HTMLElement} editContactInput - The DOM element of the edit contact form in which the button is searched for.
+ * @param {string|number} contactId - Index/key to look up the contact in `contactsList`.
+ * @param {Object} person - The contact data passed to the delete dialog.
+ * @param {HTMLElement} editContactInput - The edit contact form element containing the button.
  * @returns {void}
  *
  * @example
@@ -339,9 +332,8 @@ export async function writeNewContact(contact) {
 }
 
 /**
- * Re-fetches the full contacts list from the backend and updates the global
- * `contactsList` after a new contact has been created. Displays an error
- * dialog to the user if the fetch fails.
+ * Re-fetches the contacts list and updates the global `contactsList`.
+ * Shows an error dialog if the fetch fails.
  *
  * @async
  * @returns {Promise<void>}
@@ -390,12 +382,10 @@ function removeContactListFromDom() {
 }
 
 /**
- * Extracts the contact ID from the first contact list item element currently
- * rendered in the DOM, by removing the `'contact_id_'` prefix from its element ID.
- * Returns `null` if no contact list item exists (i.e. the list is empty).
+ * Extracts the ID from the first contact list item in the DOM by removing
+ * the `'contact_id_'` prefix, or `null` if the list is empty.
  *
- * @returns {string|null} The extracted ID of the first contact in the list,
- * or `null` if there are no contacts left.
+ * @returns {string|null} The first contact's ID, or `null` if none exist.
  *
  * @example
  * const firstId = seperatIdFromContactList();
