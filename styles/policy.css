@@ -10,6 +10,11 @@ header {
     width: calc(720px - 232px);
 }
 
+.legal-main {
+    background-color: var(--bg-white);
+    font-family: "Inter", sans-serif;
+}
+
 
 @media (max-width: 935px) {
     .full-card h1 {
@@ -24,7 +29,7 @@ header {
 
     main {
         width: 100%;
-        padding-top: 48px;
+        padding-top: 96px;
         margin: 0;
     }
 
@@ -38,7 +43,7 @@ header {
         left: 16px;
     }
 
-    .main-content {
+    .legal-page {
         padding: 24px;
         padding-top: 32px;
     }
@@ -56,6 +61,10 @@ header {
     .legal-card {
         padding: 16px;
     }
+
+    .legal-page {
+        padding: 16px;
+    }
 }
 
 @media (max-width: 425px) {
@@ -67,8 +76,48 @@ header {
         font-size: 18px;
     }
 
-    .main-content {
-        padding-left: 16px;
-        padding-right: 16px;
+    .legal-page {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .legal-card {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .full-card h1 {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .full-card h2 {
+        font-size: 15px;
+        margin-top: 20px;
+        margin-bottom: 12px;
+    }
+
+    .full-card h3 {
+        font-size: 15px;
+    }
+
+    .full-card p,
+    .full-card li {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .full-card ul {
+        padding-left: 18px;
+    }
+
+    .legal-page {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .legal-card {
+        padding: 10px;
     }
 }

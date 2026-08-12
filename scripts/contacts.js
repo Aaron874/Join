@@ -1,21 +1,12 @@
 import { getFirstLetterForSeperator } from './contactListBuilder.js';
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
-import {
-    getContacts,
-    updateContact,
-    getContact,
-    deleteContact,
-} from '../firebase/contacts.service.js';
-import {
-    renderSingleContactView,
-} from '../templates/contactsTemplate.js';
-
-import { closeAddContactDialog } from './contactsAddandEdit.js';
+import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
+import { renderSingleContactView } from '../templates/contactsTemplate.js';
+import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
-const SUCCESS_DIALOG_TIMEOUT = 2000;
 const contactsSingleViewContainer = document.querySelector('#contacts_single_view_content_id');
 
 window.result = await waitForAuthenticatedUser();
@@ -37,21 +28,14 @@ async function loadContacts() {
     getFirstLetterForSeperator();
 }
 
-
-
-
-
-
-
 /**
- * Registers a click event listener on the delete button of the contact's single view.
- * Only attaches the listener when the screen width is above the mobile breakpoint,
- * since the delete button is not available in the mobile layout.
- * Opens the delete confirmation dialog for the given contact when clicked.
+ * Registers a click listener on the delete button of the single contact view,
+ * but only above the mobile breakpoint (button not available on mobile).
+ * Opens the delete confirmation dialog for the contact when clicked.
  *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
+ * @param {HTMLElement} newSingleView - The single contact view element containing the button.
  * @param {string|number} id - The ID of the contact to be deleted.
- * @param {Object} person - The contact object/data to be passed to the delete dialog.
+ * @param {Object} person - The contact data passed to the delete dialog.
  * @returns {void}
  *
  * @example
@@ -68,13 +52,12 @@ export function openDeleteDialogBtnListener(newSingleView, id, person) {
 }
 
 /**
- * Registers a click event listener on the delete button inside the edit contact form.
- * Looks up the actual contact identifier from the global contacts list using the given
- * contact index/id and opens the delete confirmation dialog when clicked.
+ * Registers a click listener on the delete button in the edit contact form
+ * that opens the delete confirmation dialog for the contact.
  *
- * @param {string|number} contactId - The index or key used to look up the contact in `contactsList`.
- * @param {Object} person - The contact object/data to be passed to the delete dialog.
- * @param {HTMLElement} editContactInput - The DOM element of the edit contact form in which the button is searched for.
+ * @param {string|number} contactId - Index/key to look up the contact in `contactsList`.
+ * @param {Object} person - The contact data passed to the delete dialog.
+ * @param {HTMLElement} editContactInput - The edit contact form element containing the button.
  * @returns {void}
  *
  * @example
@@ -107,16 +90,6 @@ export function returnToListBtnListener(newSingleView) {
         switchListToSingleViewAndBack();
     });
 }
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Registers a click event listener on a contact list item element.
@@ -303,39 +276,11 @@ export function deleteContactDialog(contactId, person) {
 }
 
 /**
- * Registers the click event listeners for the delete confirmation dialog's action buttons.
- * On confirm, deletes the contact remotely, removes it from the DOM, closes the delete
- * dialog, and also closes the contact edit dialog if it is currently open.
- * On cancel, simply closes the delete dialog without further action.
- *
- * @param {string|number} contactId - The ID of the contact to be deleted.
- * @param {HTMLElement} deleteButton - The button element that confirms the deletion.
- * @param {HTMLElement} cancelButton - The button element that cancels the deletion.
- * @param {HTMLDialogElement} deleteDialog - The dialog element to be closed after confirm or cancel.
- * @returns {void}
- *
- * @example
- * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
- */
-function eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog) {
-    deleteButton.addEventListener('click', async () => {
-        await deleteContact(contactId);
-        removeContactFromDom(contactId);
-        deleteDialog.close();
-        if (contactDialog.open) {
-            contactDialog.close();
-        }
-    });
-    cancelButton.addEventListener('click', () => {
-        deleteDialog.close();
-    });
-}
-
-/**
  * Removes a contact from the local application state and refreshes the contact list UI.
  * Finds the contact's index in the global `contactsList` and removes it, clears the
  * rendered contact list from the DOM, rebuilds the letter separators, and opens the
- * single view of the first remaining contact.
+ * single view of the first remaining contact. Does nothing further if no contacts
+ * are left in the list.
  *
  * @param {string|number} contactId - The ID of the contact to be removed.
  * @returns {void}
@@ -343,32 +288,18 @@ function eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton,
  * @example
  * removeContactFromDom(contact.id);
  */
-function removeContactFromDom(contactId) {
+export function removeContactFromDom(contactId) {
     const indexContact = searchIndex(contactId);
     contactsList.splice(indexContact, 1);
     removeContactListFromDom();
     getFirstLetterForSeperator();
     const firstContactListItem = seperatIdFromContactList();
+    if (!firstContactListItem) {
+        switchListToSingleViewAndBack();
+        return;
+    }
     openSingleViewContact(firstContactListItem);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Persists a new contact and refreshes the contact list UI accordingly.
@@ -401,9 +332,8 @@ export async function writeNewContact(contact) {
 }
 
 /**
- * Re-fetches the full contacts list from the backend and updates the global
- * `contactsList` after a new contact has been created. Displays an error
- * dialog to the user if the fetch fails.
+ * Re-fetches the contacts list and updates the global `contactsList`.
+ * Shows an error dialog if the fetch fails.
  *
  * @async
  * @returns {Promise<void>}
@@ -452,60 +382,19 @@ function removeContactListFromDom() {
 }
 
 /**
- * Displays a temporary success confirmation dialog after a contact has been created.
- * Shows the dialog as a modal and automatically closes it again after 2 seconds.
+ * Extracts the ID from the first contact list item in the DOM by removing
+ * the `'contact_id_'` prefix, or `null` if the list is empty.
  *
- * @returns {void}
- *
- * @example
- * contactSuccessfullyCreatedDialog();
- */
-function contactSuccessfullyCreatedDialog() {
-    const successDialog = document.getElementById('contact_dialog_success_id');
-    successDialog.showModal();
-    setTimeout(() => {
-        successDialog.close();
-    }, SUCCESS_DIALOG_TIMEOUT);
-}
-
-/**
- * Displays a temporary message dialog with the given text, reusing the
- * success dialog element. Shows the dialog as a modal and automatically
- * closes it again after `SUCCESS_DIALOG_TIMEOUT` milliseconds.
- *
- * @param {string} message - The message to be displayed in the dialog.
- * @returns {void}
- *
- * @example
- * errorMessageDialog('Error by Loading Contact please try again.');
- */
-function errorMessageDialog(message) {
-    const successDialog = document.getElementById('contact_dialog_success_id');
-    const messageElement = successDialog.querySelector('p');
-    messageElement.textContent = message;
-    successDialog.showModal();
-    setTimeout(() => {
-        successDialog.close();
-    }, SUCCESS_DIALOG_TIMEOUT);
-}
-
-
-
-
-
-
-
-/**
- * Extracts the contact ID from the first contact list item element currently
- * rendered in the DOM, by removing the `'contact_id_'` prefix from its element ID.
- *
- * @returns {string} The extracted ID of the first contact in the list.
+ * @returns {string|null} The first contact's ID, or `null` if none exist.
  *
  * @example
  * const firstId = seperatIdFromContactList();
  */
 function seperatIdFromContactList() {
     const firstContactListItem = document.querySelector('.contacts_list_items_container');
+    if (!firstContactListItem) {
+        return null;
+    }
     const contactId = firstContactListItem.id.replace('contact_id_', '');
     return contactId;
 }
