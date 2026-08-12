@@ -205,11 +205,14 @@ function getInitials(contactName, contactData) {
  * @returns {boolean}
  */
 function isTaskValid(task) {
+    const categoryValid = isValidCategory(task.category);
+    const categoryError = document.getElementById('categoryError');
+    categoryError?.classList.toggle('show', !categoryValid);
     return Boolean(
         task.title &&
         task.date &&
         task.priority &&
-        isValidCategory(task.category)
+        categoryValid
     );
 }
 

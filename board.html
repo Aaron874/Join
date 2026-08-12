@@ -16,7 +16,7 @@
     <script defer src="./scripts/boardRender.js"></script>
     <script type="module" src="./scripts/boardContacts.js"></script>
     <script type="module" src="./scripts/add_task.js"></script>
-    <script defer src="./scripts/add_task_subtasks.js"></script>
+    <script type="module" src="./scripts/add_task_subtasks.js"></script>
     <script defer src="./templates/taskTemplate.js"></script>
     <script defer src="./templates/dialogTemplate.js"></script>
     <script defer src="./scripts/board.js"></script>
@@ -229,14 +229,14 @@
                     ×
                 </button>
                 <h1 class="add_task-h1">Add Task</h1>
-                <form class="style-content" onsubmit="saveTask(event)">
+                <form class="style-content" id="add_task_form" onsubmit="saveTask(event)">
                     <div class="style-form-left" action="">
                         <div class="div-star">
                             <p>Title
                             <p class="star-style">*</p>
                             </p>
                         </div>
-                        <input id="task-title" class="input-left" type="text" placeholder="Enter a title">
+                        <input id="task-title" class="input-left" type="text" placeholder="Enter a title" required>
                         <div id="titleError" class="error-message">
                             This field is required
                         </div>
@@ -250,7 +250,8 @@
                         </div>
 
                         <div class="date-field">
-                            <input id="dateDisplay" class="date-display" type="text" placeholder="dd/mm/yyyy" readonly>
+                            <input id="dateDisplay" class="date-display" type="text" placeholder="dd/mm/yyyy" readonly
+                                required>
 
                             <input id="dateInput" class="real-date-input" type="date">
 
@@ -347,9 +348,13 @@
                                 <div id="technicaltask" onclick="selectedCatgeory(this)" class="category_div">
                                     <span class="font-size">Technical Task</span>
                                 </div>
+
                                 <div id="userstory" onclick="selectedCatgeory(this)" class="category_div">
                                     <span class="font-size">User Story</span>
                                 </div>
+                            </div>
+                            <div id="categoryError" class="error-message">
+                                This field is required
                             </div>
                             <p class="padding-top">Subtasks</p>
 
@@ -371,7 +376,8 @@
                         </svg>
                     </span>
                 </button>
-                <button id="save-task-button" class="style-buttons bt-right" type="submit">
+                <button id="save-task-button" class="style-buttons bt-right" type="button"
+                    onclick="document.getElementById('add_task_form').requestSubmit()">
                     <span class="font-size-buttons">Create Task</span>
                     <span class="checkmark">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15.49" height="11.22" viewBox="0 0 15.49 11.22"

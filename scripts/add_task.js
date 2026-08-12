@@ -74,7 +74,11 @@ function dropdownCategoryUp() {
  * @returns {void}
  */
 function selectedCatgeory(element) {
-    document.getElementById("selected_category_text").textContent = element.innerText;
+    document.getElementById("selected_category_text").textContent =
+        element.innerText;
+    document
+        .getElementById('categoryError')
+        ?.classList.remove('show');
     dropdownCategoryUp();
 }
 

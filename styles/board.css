@@ -461,7 +461,7 @@ input::placeholder {
 
 .div-text-required {
   position: absolute;
-  bottom: 50px;
+  bottom: 10px;
 }
 
 .text-required {
