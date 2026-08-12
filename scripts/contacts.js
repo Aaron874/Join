@@ -2,8 +2,9 @@ import { getFirstLetterForSeperator } from './contactListBuilder.js';
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
 import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
+import { getUserProfile } from '../firebase/user.service.js';
 import { renderSingleContactView } from '../templates/contactsTemplate.js';
-import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog } from './contactsAddandEdit.js';
+import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog, contactListInitials } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
@@ -14,8 +15,9 @@ window.result = await waitForAuthenticatedUser();
 loadContacts();
 
 /**
- * Loads the full contacts list from the backend into the global `contactsList`
- * and rebuilds the letter separators for the contact list UI.
+ * Loads the full contacts list from the backend into the global `contactsList`,
+ * makes sure the currently logged-in user has their own account as an editable
+ * entry in that list, and rebuilds the letter separators for the contact list UI.
  *
  * @async
  * @returns {Promise<void>}
@@ -25,7 +27,44 @@ loadContacts();
  */
 async function loadContacts() {
     contactsList = await getContacts();
+    await ensureSelfContactExists();
     getFirstLetterForSeperator();
+}
+
+/**
+ * Ensures the currently logged-in (non-guest) user also appears as a regular,
+ * editable entry in their own contact list. Looks up the user's profile
+ * (name/email), skips silently if no such profile can be resolved or a
+ * contact with that email already exists, and otherwise creates the contact
+ * and refreshes `contactsList` from the backend.
+ *
+ * @async
+ * @returns {Promise<void>}
+ *
+ * @example
+ * await ensureSelfContactExists();
+ */
+async function ensureSelfContactExists() {
+    const user = window.result;
+    if (!user || user.isAnonymous) return;
+    try {
+        const profile = await getUserProfile();
+        const name = profile?.name ?? profile?.username ?? user.displayName ?? '';
+        const email = profile?.email ?? user.email ?? '';
+        if (!name || !email) return;
+        const alreadyExists = contactsList.some((contact) => contact.email === email);
+        if (alreadyExists) return;
+        await createContact({
+            name,
+            email,
+            phone: '',
+            color: DEFAULT_CONTACT_COLOR,
+            shortName: contactListInitials(name),
+        });
+        contactsList = await getContacts();
+    } catch (error) {
+        console.error('Eigener Kontakt konnte nicht angelegt werden:', error);
+    }
 }
 
 /**

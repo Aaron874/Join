@@ -275,7 +275,7 @@ function getNewContactValues() {
  * @example
  * const initials = contactListInitials('John Doe'); // 'JD'
  */
-function contactListInitials(contactListName) {
+export function contactListInitials(contactListName) {
     let initials = contactListName
         .split(' ')
         .splice(0, 2)
