@@ -719,6 +719,10 @@ input::placeholder {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.main-content {
+  position: relative;
+}
+
 .dialog-close-btn {
   position: absolute;
   top: 32px;
@@ -1156,37 +1160,60 @@ priority-icon {
 }
 
 @media (max-width: 1135px) {
+  .add-dialog {
+    width: calc(100vw - 32px);
+    height: calc(100dvh - 32px);
+    padding: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    overflow: hidden;
+  }
+
+  .main-content {
+    min-height: 0;
+    width: 100%;
+    padding: 48px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
   .style-content {
     flex-direction: column;
   }
 
-  .main-content-padding-bottom {
-    padding-bottom: 380px !important;
-  }
-
-  .div-text-required {
-    position: relative;
-    bottom: -470px;
-  }
-
-  .style-div-buttons {
-    bottom: 0;
-    justify-content: flex-end;
-    background-color: #f5f6f7;
-    width: auto;
-    padding-right: 48px;
-    left: 0;
-    right: 0;
-    padding-top: 14px;
-    padding-bottom: 14px;
+  .style-form-left,
+  .style-form-right {
+    height: auto;
+    margin: 0;
   }
 
   .style-form-right {
-    margin-top: -60px;
+    padding-bottom: 48px;
+  }
+
+  .input-right{
+    margin-bottom: 48px;
   }
 
   .content-divider {
     display: none;
+  }
+
+  .div-text-required {
+    position: static;
+  }
+
+  .style-div-buttons {
+    position: static;
+    width: 100%;
+    min-height: 84px;
+    padding: 16px 48px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    background-color: #f5f6f7;
+    box-sizing: border-box;
   }
 }
 
@@ -1213,10 +1240,6 @@ priority-icon {
   .main-add_task {
     width: 100%;
     margin-left: 0;
-  }
-
-  .style-form-right {
-    margin-top: -60px;
   }
 
   .content-divider {
@@ -1246,21 +1269,12 @@ priority-icon {
     font-size: 16px !important;
   }
 
-  .div-text-required {
-    position: relative;
-    bottom: -445px;
-  }
-
   .main-content {
-    padding: 24px 24px 380px 24px !important;
+    padding: 24px;
   }
 
   .bt-right {
     width: 150px;
-  }
-
-  .style-form-right {
-    margin-top: -60px;
   }
 
   .content-divider {
@@ -1294,14 +1308,6 @@ priority-icon {
     font-size: 12px;
   }
 
-  .div-text-required {
-    bottom: -90px;
-  }
-
-  .main-content {
-    padding: 16px 16px 380px 16px !important;
-  }
-
   .bt-right {
     width: 135px;
   }
@@ -1310,17 +1316,8 @@ priority-icon {
     width: 85px !important;
   }
 
-  .div-text-required {
-    position: relative;
-    bottom: -425px;
-  }
-
   .text-required {
     font-size: 12px !important;
-  }
-
-  .style-form-right {
-    margin-top: -60px;
   }
 
   .content-divider {
@@ -1329,13 +1326,22 @@ priority-icon {
 
   .style-div-buttons {
     justify-content: center;
-    padding-right: 0;
+    padding: 12px 16px;
   }
 }
 
 @media(max-width: 420px) {
   .task-dialog-content {
     padding: 16px;
+  }
+
+  .add_task-h1{
+    font-size: 36px;
+  }
+
+  .dialog-close-btn {
+    top: 16px;
+    right: 16px;
   }
 }
 
@@ -1371,4 +1377,5 @@ priority-icon {
   .logo {
     display: none;
   }
+
 }

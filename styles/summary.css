@@ -9,6 +9,7 @@ body {
 
 .footer {
     display: none;
+    margin-top: 5px;
 }
 
 .footer-link-icons {
