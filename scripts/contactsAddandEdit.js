@@ -1,15 +1,23 @@
-import { 
+import {
     renderAddOrEditContactDialog,
     renderUnderlineHeaderContactDialog,
     renderContactInput,
     renderPersonInitialsForAddContact,
- } from '../templates/contactsTemplate.js';
+} from '../templates/contactsTemplate.js';
 
- import {DEFAULT_CONTACT_COLOR, writeNewContact, MOBILE_BREAKPOINT, searchIndex} from './contacts.js';
+import {
+    DEFAULT_CONTACT_COLOR,
+    writeNewContact,
+    MOBILE_BREAKPOINT,
+    searchIndex,
+    removeContactFromDom
+} from './contacts.js';
+
+import { deleteContact } from '../firebase/contacts.service.js';
 const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
-
+const SUCCESS_DIALOG_TIMEOUT = 2000;
 
 /**
  * Registers a global click event listener that handles elements with a
@@ -317,5 +325,76 @@ export function openEditDialogBtnListener(newSingleView, id) {
     }
     editButton.addEventListener('click', () => {
         openEditContactDialog(id);
+    });
+}
+
+/**
+ * Displays a temporary success confirmation dialog after a contact has been created.
+ * Shows the dialog as a modal and automatically closes it again after 2 seconds.
+ *
+ * @returns {void}
+ *
+ * @example
+ * contactSuccessfullyCreatedDialog();
+ */
+export function contactSuccessfullyCreatedDialog() {
+    const successDialog = document.getElementById('contact_dialog_success_id');
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+    }, SUCCESS_DIALOG_TIMEOUT);
+}
+
+/**
+ * Displays a temporary message dialog with the given text, reusing the
+ * success dialog element. Shows the dialog as a modal and automatically
+ * closes it again after `SUCCESS_DIALOG_TIMEOUT` milliseconds.
+ *
+ * @param {string} message - The message to be displayed in the dialog.
+ * @returns {void}
+ *
+ * @example
+ * errorMessageDialog('Error by Loading Contact please try again.');
+ */
+export function errorMessageDialog(message) {
+    const successDialog = document.getElementById('contact_dialog_success_id');
+    const messageElement = successDialog.querySelector('p');
+    messageElement.textContent = message;
+    successDialog.showModal();
+    setTimeout(() => {
+        successDialog.close();
+    }, SUCCESS_DIALOG_TIMEOUT);
+}
+/**
+ * Registers the click event listeners for the delete confirmation dialog's action buttons.
+ * On confirm, deletes the contact remotely, removes it from the DOM, closes the delete
+ * dialog, and also closes the contact edit dialog if it is currently open.
+ * On cancel, simply closes the delete dialog without further action.
+ *
+ * @param {string|number} contactId - The ID of the contact to be deleted.
+ * @param {HTMLElement} deleteButton - The button element that confirms the deletion.
+ * @param {HTMLElement} cancelButton - The button element that cancels the deletion.
+ * @param {HTMLDialogElement} deleteDialog - The dialog element to be closed after confirm or cancel.
+ * @returns {void}
+ *
+ * @example
+ * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
+ */
+export function eventListenerDeleteContactDialog(
+    contactId,
+    deleteButton,
+    cancelButton,
+    deleteDialog
+) {
+    deleteButton.addEventListener('click', async () => {
+        await deleteContact(contactId);
+        removeContactFromDom(contactId);
+        deleteDialog.close();
+        if (contactDialog.open) {
+            contactDialog.close();
+        }
+    });
+    cancelButton.addEventListener('click', () => {
+        deleteDialog.close();
     });
 }
