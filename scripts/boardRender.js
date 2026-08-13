@@ -33,14 +33,18 @@ function renderSubtasks() {
  */
 function taskMatchesSearch(task, searchTerm) {
     if (searchTerm.length < 3) return true;
-
-    const searchableValues = [
-        task.title,
-        task.assignedTo,
-    ];
-
-    return searchableValues.some(value =>
-        value?.toLowerCase().includes(searchTerm)
+    const assignedTo = Array.isArray(task.assignedTo)
+        ? task.assignedTo.map(contact => contact.name).join(' ')
+        : task.assignedTo ?? '';
+    const subtasks = Array.isArray(task.subtasks)
+        ? task.subtasks.map(subtask => subtask.title).join(' ')
+        : task.subtasks ?? '';
+    return [
+        task.title ?? '',
+        assignedTo,
+        subtasks
+    ].some(value =>
+        value.toLowerCase().includes(searchTerm)
     );
 }
 

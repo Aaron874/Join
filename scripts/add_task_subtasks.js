@@ -28,7 +28,7 @@ function renderAddTaskSubtasks() {
     const list = document.getElementById('subtasks-list');
     if (!list) return;
     list.innerHTML = window.subtasks
-        .map(subtask => `<div>${subtask.title}</div>`)
+        .map((subtask, index) => getSubtaskTemplate(subtask, index))
         .join('');
 }
 
@@ -45,6 +45,47 @@ window.setAddTaskSubtasks = function (taskSubtasks) {
     }
     renderAddTaskSubtasks();
 };
+
+/**
+ * Delete a subtask at the specified index and refresh the UI.
+ *
+ * @param {number} index - The index of the subtask to delete.
+ */
+function deleteSubtask(index) {
+    window.subtasks.splice(index, 1);
+    renderAddTaskSubtasks();
+}
+
+/**
+ * Enable edit mode for a subtask by replacing it with an input field.
+ *
+ * @param {number} index - The index of the subtask to edit.
+ */
+function editSubtask(index) {
+    const item = document.querySelectorAll('.subtask-item')[index];
+    const title = window.subtasks[index].title;
+    item.innerHTML = `
+        <input
+            class="subtask-edit-input"
+            value="${title}"
+            onkeydown="if(event.key === 'Enter') saveSubtaskEdit(${index})">
+        <button type="button" onclick="saveSubtaskEdit(${index})">✓</button>
+    `;
+    item.querySelector('input').focus();
+}
+
+/**
+ * Save the edited subtask and refresh the UI.
+ *
+ * @param {number} index - The index of the subtask to save.
+ */
+function saveSubtaskEdit(index) {
+    const input = document.querySelectorAll('.subtask-item')[index]
+        .querySelector('input');
+    if (!input.value.trim()) return;
+    window.subtasks[index].title = input.value.trim();
+    renderAddTaskSubtasks();
+}
 
 /**
  * Replace the current subtask list with the provided subtasks.
@@ -80,3 +121,6 @@ function resetSubtasks() {
 
 window.addSubtask = addSubtask;
 window.resetSubtasks = resetSubtasks;
+window.editSubtask = editSubtask;
+window.saveSubtaskEdit = saveSubtaskEdit;
+window.deleteSubtask = deleteSubtask;

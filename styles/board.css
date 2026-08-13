@@ -517,7 +517,6 @@ input::placeholder {
 
 .error-message {
   height: 18px;
-  /* oder 16–20px, je nach Schriftgröße */
   font-size: 12px;
   color: #ff8190;
 
@@ -540,6 +539,50 @@ input::placeholder {
 
 .error {
   border: 1px solid #ff8190 !important;
+}
+
+.subtask-item {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.subtask-item>span {
+  flex: 1;
+  text-align: left;
+}
+
+.subtask-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subtask-actions button,
+.subtask-item>button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: #2a3647;
+  cursor: pointer;
+}
+
+.subtask-actions button:hover,
+.subtask-item>button:hover {
+  color: #29abe2;
+}
+
+.subtask-edit-input {
+  flex: 1;
+  height: 36px;
+  border: none;
+  border-bottom: 1px solid #29abe2;
+  outline: none;
 }
 
 
@@ -1038,11 +1081,18 @@ priority-icon {
 }
 
 .task-dialog-footer button {
-  border: none;
-  background: transparent;
-  color: var(--color-darkblue);
-  font-size: 20px;
-  cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--color-darkblue);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-dialog-footer button:hover {
+    color: var(--color-blue);
 }
 
 .delete-edit {
@@ -1152,16 +1202,16 @@ priority-icon {
 
 @media (max-width: 1135px) {
   .add-dialog {
-        width: calc(100vw - 32px);
-        height: calc(100dvh - 32px);
-        padding: 0;
-        overflow: hidden;
-    }
+    width: calc(100vw - 32px);
+    height: calc(100dvh - 32px);
+    padding: 0;
+    overflow: hidden;
+  }
 
-    .add-dialog[open] {
-        display: grid;
-        grid-template-rows: minmax(0, 1fr) auto;
-    }
+  .add-dialog[open] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
 
   .main-content {
     min-height: 0;
@@ -1185,7 +1235,7 @@ priority-icon {
     padding-bottom: 48px;
   }
 
-  .input-right{
+  .input-right {
     margin-bottom: 48px;
   }
 
@@ -1329,7 +1379,7 @@ priority-icon {
     padding: 16px;
   }
 
-  .add_task-h1{
+  .add_task-h1 {
     font-size: 36px;
   }
 
