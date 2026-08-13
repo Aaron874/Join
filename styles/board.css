@@ -559,9 +559,17 @@ input::placeholder {
 }
 
 .subtask-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 120ms ease;
+}
+
+.subtask-item:hover .subtask-actions {
+    opacity: 1;
+    visibility: visible;
 }
 
 .subtask-actions button,
@@ -1431,4 +1439,11 @@ priority-icon {
     display: none;
   }
 
+}
+
+@media (hover: none) {
+    .subtask-actions {
+        opacity: 1;
+        visibility: visible;
+    }
 }
