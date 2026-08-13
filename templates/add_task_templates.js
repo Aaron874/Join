@@ -41,3 +41,4 @@ export function templateSelectedContacts(shortName, color) {
         </div>
     </div>`;
 }
+
