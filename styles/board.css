@@ -14,6 +14,10 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+body.dialog-open {
+    overflow: hidden;
+}
+
 h1 .layout {
   display: flex;
 }
@@ -969,13 +973,13 @@ priority-icon {
 }
 
 .task-dialog {
-  width: (525px, calc(100vw - 32px));
-  min-width: 300px;
+  width: min(525px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 10px;
   border: none;
   border-radius: 30px;
   overflow-y: auto;
-  position: relative;
-  margin: auto;
 }
 
 .task-dialog::backdrop {
@@ -1327,6 +1331,11 @@ priority-icon {
 }
 
 @media (max-width: 450px) {
+
+  .task-dialog-close {
+    top: 16px;
+    right: 16px;
+  }
 
   .mobile-joinLogo {
     left: 16px;

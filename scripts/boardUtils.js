@@ -57,6 +57,7 @@ function getElement(id) {
  */
 function openDialog(id) {
     getElement(id)?.showModal();
+    document.body.classList.add('dialog-open');
 }
 
 /**
@@ -65,6 +66,7 @@ function openDialog(id) {
  */
 function closeDialog(id) {
     getElement(id)?.close();
+    document.body.classList.remove('dialog-open');
 }
 
 /**
