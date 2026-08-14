@@ -29,6 +29,32 @@ header {
     background-color: #19202b;
 }
 
+.back-to-login-link {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 24px 48px 0;
+    font-size: 16px;
+    color: var(--color-black);
+}
+
+.back-to-login-link img {
+    width: 24px;
+    height: 24px;
+}
+
+body.logged-out aside {
+    display: none !important;
+}
+
+body.logged-out footer.footer {
+    display: none !important;
+}
+
+body.logged-out .back-to-login-link {
+    display: flex;
+}
+
 
 @media (max-width: 935px) {
     .full-card h1 {
@@ -60,6 +86,10 @@ header {
     .legal-page {
         padding: 24px;
         padding-top: 32px;
+    }
+
+    .back-to-login-link {
+        padding: 24px 24px 0;
     }
 
     .footer {
@@ -99,6 +129,10 @@ header {
     .legal-page {
         padding: 16px;
     }
+
+    .back-to-login-link {
+        padding: 16px 16px 0;
+    }
 }
 
 @media (max-width: 425px) {
@@ -117,6 +151,10 @@ header {
 
     .legal-card {
         padding: 12px;
+    }
+
+    .back-to-login-link {
+        padding: 12px 12px 0;
     }
 }
 
