@@ -4,7 +4,7 @@ import {
     getAssignedContacts,
     getSelectedContacts,
     resetContacts
-} from "./add_task_contacts.js";
+} from "./addTaskContacts.js";
 
 let priority = "";
 
