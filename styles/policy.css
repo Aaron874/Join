@@ -15,6 +15,20 @@ header {
     font-family: "Inter", sans-serif;
 }
 
+.footer {
+    display: none;
+}
+
+.footer-link-icons {
+    height: 76px;
+    width: 80px;
+    border-radius: 16px;
+}
+
+.footer-link-icons:hover {
+    background-color: #19202b;
+}
+
 
 @media (max-width: 935px) {
     .full-card h1 {
@@ -46,6 +60,26 @@ header {
     .legal-page {
         padding: 24px;
         padding-top: 32px;
+    }
+
+    .footer {
+        display: flex;
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+
+    .footer-link-icons {
+        width: 25%;
+        height: 76px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer-link-icons img {
+        display: block;
+        max-width: 100%;
+        height: auto;
     }
 }
 
