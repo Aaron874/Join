@@ -61,7 +61,7 @@ function signUpTemplate() {
                     role="alert"
                     aria-live="assertive"
                 >
-                    This email address is already registered.
+                    Sign up failed. Please try again.
                 </div>
                     <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
 `;            

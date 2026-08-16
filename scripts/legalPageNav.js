@@ -3,11 +3,14 @@ import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/f
 
 /**
  * Switches legal.html/policy.html between the full app navigation (sidebar,
- * mobile footer nav) and a plain "back to login" link, depending on whether
- * a user is currently authenticated. These pages are reachable both from
- * within the app (registered users and guests) and directly from the login
- * screen, where no one is signed in yet and the app navigation makes no
- * sense.
+ * mobile footer nav) and the guest footer nav (Log In / Privacy Policy /
+ * Legal Notice), depending on whether a user is currently authenticated.
+ * These pages are reachable both from within the app (registered users and
+ * guests) and directly from the login screen, where no one is signed in yet.
+ *
+ * Neither `logged-in` nor `logged-out` is set on `<body>` until Firebase
+ * reports the actual auth state, so the app navigation never flashes on
+ * screen before being hidden again.
  *
  * @returns {void}
  *
@@ -16,5 +19,6 @@ import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/f
  * // on legal.html and policy.html.
  */
 onAuthStateChanged(auth, (user) => {
+    document.body.classList.toggle('logged-in', !!user);
     document.body.classList.toggle('logged-out', !user);
 });

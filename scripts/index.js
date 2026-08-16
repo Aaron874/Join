@@ -193,7 +193,25 @@ async function registerNewUser(values) {
         successDialogOpen();
         setFormDisabled(false);
     } catch (error) {
-        showErrorSignUp();
+        showErrorSignUp(error);
+    }
+}
+
+/**
+ * Map a Firebase Auth registration error to a user-facing message.
+ * @param {{code?: string}} error - The error thrown by the registration call.
+ * @returns {string} A message describing what went wrong.
+ */
+function signUpErrorMessage(error) {
+    switch (error?.code) {
+        case 'auth/email-already-in-use':
+            return 'This email address is already registered.';
+        case 'auth/invalid-email':
+            return 'Please enter a valid, complete email address.';
+        case 'auth/weak-password':
+            return 'Password is too weak. Please choose a stronger one.';
+        default:
+            return 'Sign up failed. Please try again.';
     }
 }
 
@@ -232,10 +250,12 @@ function showErrorLogIn() {
 }
 
 /**
- * Display the sign-up error message and re-enable the form.
+ * Display the sign-up error message matching the given error and re-enable the form.
+ * @param {{code?: string}} [error] - The error thrown by the registration call.
  */
-function showErrorSignUp() {
+function showErrorSignUp(error) {
     const errorSignUp = document.getElementById("sign_up_error_id");
+    errorSignUp.textContent = signUpErrorMessage(error);
     errorSignUp.classList.remove("hidden");
     setTimeout(() => {
         errorSignUp.classList.add("hidden");
