@@ -149,7 +149,10 @@
                             <a
                                 href="index.html"
                                 class="legal-back-arrow"
-                                onclick="history.back(); return false;"
+                                onclick="
+                                    history.back();
+                                    return false;
+                                "
                                 aria-label="Zurück"
                             >
                                 <img src="./assets/img/arrow-left-line.webp" alt="" />
@@ -159,22 +162,19 @@
                         <h2>Angaben gemäß § 5 TMG</h2>
 
                         <p>
-                            Max Mustermann<br />
-                            Musterstraße 12<br />
-                            12345 Musterstadt<br />
+                            Christian Noack<br />
+                            Eggestr. 4a<br />
+                            32758 Detmold<br />
                             Deutschland
                         </p>
 
                         <h2>Vertreten durch</h2>
 
-                        <p>Max Mustermann</p>
+                        <p>Christian Noack</p>
 
                         <h2>Kontakt</h2>
 
-                        <p>
-                            Telefon: +49 (0) 123 456789<br />
-                            E-Mail: info@deinedomain.de
-                        </p>
+                        <p>E-Mail: admin@christian-noack.com</p>
 
                         <h2>Umsatzsteuer-ID</h2>
 
@@ -186,9 +186,9 @@
                         <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 
                         <p>
-                            Max Mustermann<br />
-                            Musterstraße 12<br />
-                            12345 Musterstadt
+                            Christin Noack<br />
+                            Eggestr. 4a<br />
+                            32758 Detmold
                         </p>
 
                         <h2>EU-Streitschlichtung</h2>
@@ -281,14 +281,28 @@
             </section>
         </main>
         <footer class="footer footer-app" id="footer_app_id">
-            <a class="footer-link-icons" href="summary.html"><img src="./assets/img/mobile-summary.png" alt="" /></a>
-            <a class="footer-link-icons" href="add_task.html"><img src="./assets/img/mobile-addTask.png" alt="" /></a>
-            <a class="footer-link-icons" href="board.html"><img src="./assets/img/mobile-board.png" alt="" /></a>
-            <a class="footer-link-icons" href="contacts.html"><img src="./assets/img/mobile-contacts.png" alt="" /></a>
+            <a class="footer-link-icons" href="summary.html"
+                ><img src="./assets/img/mobile-summary.png" alt=""
+            /></a>
+            <a class="footer-link-icons" href="add_task.html"
+                ><img src="./assets/img/mobile-addTask.png" alt=""
+            /></a>
+            <a class="footer-link-icons" href="board.html"
+                ><img src="./assets/img/mobile-board.png" alt=""
+            /></a>
+            <a class="footer-link-icons" href="contacts.html"
+                ><img src="./assets/img/mobile-contacts.png" alt=""
+            /></a>
         </footer>
         <footer class="footer footer-guest" id="footer_guest_id">
             <a class="footer-guest-link footer-guest-link-login" href="index.html">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
                     <path
                         d="M7.5 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5H7.5"
                         stroke="white"
@@ -303,13 +317,21 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
-                    <path d="M17.5 10H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path
+                        d="M17.5 10H7.5"
+                        stroke="white"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
                 </svg>
                 <span>Log In</span>
             </a>
             <div class="footer-guest-right">
                 <a class="footer-guest-link" href="policy.html">Privacy Policy</a>
-                <a class="footer-guest-link footer-guest-link-active" href="legal.html">Legal Notice</a>
+                <a class="footer-guest-link footer-guest-link-active" href="legal.html"
+                    >Legal Notice</a
+                >
             </div>
         </footer>
     </body>
