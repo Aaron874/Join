@@ -45,6 +45,7 @@ body {
 .summary-wrapper {
     width: 100%;
     min-width: 0;
+    margin: 0 10px;
 }
 
 .summary-heading {

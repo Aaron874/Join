@@ -1287,6 +1287,12 @@ priority-icon {
   }
 }
 
+@media(max-width: 780px){
+  .footer {
+    display: flex;
+  }
+}
+
 @media (max-width: 755px) {
 
   .header-content {
@@ -1302,9 +1308,9 @@ priority-icon {
     display: none;
   }
 
-  .footer {
+  /* .footer {
     display: flex;
-  }
+  } */
 }
 
 @media (max-width: 520px) {

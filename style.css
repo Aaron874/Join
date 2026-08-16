@@ -54,7 +54,7 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
+  align-items: flex-start;
   margin-left: 232px;
   padding-top: 96px;
   width: calc(100% - 232px);
@@ -85,26 +85,21 @@ aside {
 
 footer {
   background-color: var(--bg-blue);
+  position: fixed;
+  z-index: 4;
+  bottom: 0;
+  width: 100%;
 }
 
 .header {
   width: 100%;
-  max-width: 1440px;
+  padding-left: 240px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .header a {
-  display: flex;
-  align-items: center;
-}
-
-.header-content {
-  width: 100%;
-  max-width: 720px;
-  margin-left: 232px;
-  padding-left: 20px;
   display: flex;
   align-items: center;
 }
@@ -152,10 +147,11 @@ footer {
 
 .header-content {
   width: 50%;
-  max-width: 720px;
+  /* max-width: 720px; */
   font-size: var(--fs-standard);
   font-weight: 400;
   display: flex;
+  justify-content: flex-start;
 }
 
 .logo {
@@ -429,5 +425,13 @@ footer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  main {
+    padding-bottom: 80px;
+  }
+
+  .footer a {
+    width: 76px;
   }
 }
