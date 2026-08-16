@@ -19,6 +19,9 @@ function signUpTemplate() {
                         />
                         <img src="assets/img/person_16_16_sign_up.webp" alt="Person Icon" />
                     </div>
+                    <div id="error_sign_up_username" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Username required
+                    </div>
                     <div class="login_input_wrapper">
                         <input
                             type="email"
@@ -29,6 +32,9 @@ function signUpTemplate() {
                             required
                         />
                         <img src="assets/img/mail_login_sign.webp" alt="Mail Icon" />
+                    </div>
+                    <div id="error_sign_up_email" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    E-mail required
                     </div>
                     <div class="login_input_wrapper">
                         <input
@@ -41,6 +47,9 @@ function signUpTemplate() {
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
+                    <div id="error_sign_up_password" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Password required
+                    </div>
                     <div class="login_input_wrapper">
                         <input
                             type="password"
@@ -51,13 +60,19 @@ function signUpTemplate() {
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
+                    <div id="error_sign_up_password_match" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Passwords do not match
+                    </div>
                     <div class="privacy_checkbox">
                         <input type="checkbox" name="Privacy Policy Checkbox" id="" required />
                         <p>I accept the <a href="policy.html">Privacy Policy</a></p>
                     </div>
+                    <div id="error_sign_up_privacy_checkbox" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Please accept privacy for sign up
+                    </div>
                 <div
                     id="sign_up_error_id"
-                    class="alert_sign_up hidden"
+                    class="alert_sign_up hidden_errors"
                     role="alert"
                     aria-live="assertive"
                 >
@@ -83,6 +98,9 @@ function signInTemplate() {
                     >
                 <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon">
                 </div>
+                <div id="login_error_id" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Username required
+                </div>
                 <div class="login_input_wrapper">
                     <input  type="password" 
                     name="password" 
@@ -94,7 +112,7 @@ function signInTemplate() {
                 </div>
                 <div
                     id="login_error_id"
-                    class="alert_log_in hidden"
+                    class="alert_log_in hidden_errors"
                     role="alert"
                     aria-live="assertive"
                 >

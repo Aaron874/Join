@@ -8,6 +8,7 @@
     <title>Join Main Site</title>
     <link rel="stylesheet" href="styles/index.css" />
     <script type="module" src="scripts/index.js"></script>
+    <script type="module" src="scripts/validation.js" ></script>
     <script src="templates/indexTemplate.js"></script>
 </head>
 
@@ -30,11 +31,14 @@
                     <input type="email" name="email" id="login_email_id" placeholder="Email" required />
                     <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon" />
                 </div>
+                <div id="error_log_in_email" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Email required
+                </div>
                 <div class="login_input_wrapper">
                     <input type="password" name="password" id="login_password_id" placeholder="Password" required />
                     <img src="assets/img/lock.webp" alt="password lock sign" />
                 </div>
-                <div id="login_error_id" class="alert_log_in hidden" role="alert" aria-live="assertive">
+                <div id="error_log_in_password_or_both" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
                     Username or Password incorrect
                 </div>
                 <div class="login_btn_wrapper">
