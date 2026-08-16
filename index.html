@@ -25,17 +25,17 @@
             <button class="back_to_log_in_btn hidden" id="back_to_log_in_btn_id">
                 <img src="assets/img/arrow-left-line.webp" alt="" />
             </button>
-            <form action="" id="sign_log_in_id">
+            <form action="" id="sign_log_in_id" novalidate>
                 <h1 id="header_log_sign">Log in</h1>
                 <div class="login_input_wrapper">
-                    <input type="email" name="email" id="login_email_id" placeholder="Email" required />
+                    <input type="email" name="email" id="login_email_id" placeholder="Email"/>
                     <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon" />
                 </div>
                 <div id="error_log_in_email" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
                     Email required
                 </div>
                 <div class="login_input_wrapper">
-                    <input type="password" name="password" id="login_password_id" placeholder="Password" required />
+                    <input type="password" name="password" id="login_password_id" placeholder="Password"/>
                     <img src="assets/img/lock.webp" alt="password lock sign" />
                 </div>
                 <div id="error_log_in_password_or_both" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">

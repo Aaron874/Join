@@ -224,13 +224,6 @@ input[type="checkbox"]:checked::after {
     display: none !important;
 }
 
-.hidden_errors {
-    display: block;
-    visibility: hidden;
-    opacity: 0;
-}
-
-
 .sign_up_success_dialog {
     position: fixed;
     top: 0px;
@@ -252,8 +245,19 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
 }
 
+
+
 .alert_log_in {
+    display: block;
     color: #E60026;
+    visibility: visible;
+    opacity: 1;
+    min-height: 20px;
+}
+
+.hidden_errors {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .alert_sign_up {

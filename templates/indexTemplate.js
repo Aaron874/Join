@@ -1,3 +1,4 @@
+
 /**
  * Return the HTML template for the sign-up form.
  *
@@ -11,11 +12,8 @@ function signUpTemplate() {
                             type="text"
                             name="username"
                             placeholder="Name"
-                            minlength="2"
-                            maxlength="30"
-                            pattern="[\\p{L}' \\-]{2,100}""
-                            title="Der Name darf nur Buchstaben, Leerzeichen, Bindestriche und Apostrophe enthalten."
-                            required
+                            id="sign_up_username_input"
+                            autocomplete="off"
                         />
                         <img src="assets/img/person_16_16_sign_up.webp" alt="Person Icon" />
                     </div>
@@ -26,10 +24,9 @@ function signUpTemplate() {
                         <input
                             type="email"
                             name="email"
-                            id=""
+                            id="sign_up_email_input"
                             placeholder="Email"
-                            autocomplete="email"
-                            required
+                            autocomplete="off"
                         />
                         <img src="assets/img/mail_login_sign.webp" alt="Mail Icon" />
                     </div>
@@ -40,10 +37,9 @@ function signUpTemplate() {
                         <input
                             type="password"
                             name="password"
-                            id=""
+                            id="sign_up_password_input"
                             placeholder="Password"
-                            minlength="12"
-                            required
+                            autocomplete="off"
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
@@ -54,9 +50,9 @@ function signUpTemplate() {
                         <input
                             type="password"
                             name="confirmPassword"
-                            id="confirm_password"
+                            id="sign_up_confirm_password_input"
                             placeholder="Confirm Password"
-                            required
+                            autocomplete="off"
                         />
                         <img src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
@@ -64,7 +60,7 @@ function signUpTemplate() {
                     Passwords do not match
                     </div>
                     <div class="privacy_checkbox">
-                        <input type="checkbox" name="Privacy Policy Checkbox" id="" required />
+                        <input type="checkbox" name="Privacy Policy Checkbox" id="sign_up_checkbox"/>
                         <p>I accept the <a href="policy.html">Privacy Policy</a></p>
                     </div>
                     <div id="error_sign_up_privacy_checkbox" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
@@ -79,7 +75,8 @@ function signUpTemplate() {
                     Sign up failed. Please try again.
                 </div>
                     <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
-`;            
+`;
+    
 }
 
 /**
@@ -94,7 +91,6 @@ function signInTemplate() {
                     <input  type="email" name="email" 
                     id="login_email_id"
                     placeholder="Email"
-                    required
                     >
                 <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon">
                 </div>
@@ -106,7 +102,6 @@ function signInTemplate() {
                     name="password" 
                     id="login_password_id"
                     placeholder="Password"
-                    required
                     >
                 <img src="assets/img/lock.webp" alt="password lock sign">
                 </div>

@@ -1,6 +1,8 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
-import { logout } from '../firebase/auth.js'
+import { logout } from '../firebase/auth.js';
+import { getSignUpErrorElements, attachSignUpValidation, userData } from '../scripts/validation.js';
+
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
@@ -30,9 +32,7 @@ document.addEventListener('submit', (event) => {
             loginCurrentUser();
             break;
         case 'signUp':
-            let confirmPassword = document.getElementById('confirm_password');
-            confirmPassword.setCustomValidity('');
-            userData(confirmPassword);
+            // userData();
             break;
     }
 });
@@ -124,10 +124,13 @@ function changeLogOrSignForm(LogOrSign) {
         signUpContainerHeader.classList.add("hidden");
         signUpContainerFooter.classList.add("hidden");
         logSignContainer.innerHTML += signUpTemplate();
+        const signUpElements = getSignUpErrorElements();   
+        attachSignUpValidation(signUpElements);   
     } if (LogOrSign === "Log in") {
         signUpContainerHeader.classList.remove("hidden");
         signUpContainerFooter.classList.remove("hidden");
         logSignContainer.innerHTML += signInTemplate();
+
     }
 }
 
@@ -161,24 +164,6 @@ function dataFromForm() {
 }
 
 
-/**
- * Validate sign-up data and start the user registration process.
- * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
- * @returns {Promise<void>}
- */
-async function userData (confirmPassword) {
-    resetValidation(confirmPassword);
-    const form = document.getElementById("sign_log_in_id");
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries())
-    if (values.password !== values.confirmPassword) {
-        confirmPassword.setCustomValidity("Passwords do not match");
-        confirmPassword.reportValidity();
-        return;
-      }
-    form.reset();
-    registerNewUser(values);
-}
 
 /**
  * Register a new user and create their profile.
@@ -215,16 +200,7 @@ function signUpErrorMessage(error) {
     }
 }
 
-/**
- * Reset validation state for the confirm password input when the user types.
- * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
- */
-function resetValidation (confirmPassword ) {
-    confirmPassword.addEventListener("input", () => {
-        confirmPassword.setCustomValidity("");
-        confirmPassword.checkValidity()
-        });
-}
+
 
 /**
  * Show the success dialog and return the user to the login form after a delay.
