@@ -68,7 +68,7 @@ function signUpTemplate() {
                     </div>
                 <div
                     id="sign_up_error_id"
-                    class="alert_sign_up hidden_errors"
+                    class="alert_sign_up hidden"
                     role="alert"
                     aria-live="assertive"
                 >
@@ -107,7 +107,7 @@ function signInTemplate() {
                 </div>
                 <div
                     id="login_error_id"
-                    class="alert_log_in hidden_errors"
+                    class="alert_log_in hidden"
                     role="alert"
                     aria-live="assertive"
                 >

@@ -8,6 +8,7 @@ const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
+export let signUpElements = null;
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
@@ -32,7 +33,7 @@ document.addEventListener('submit', (event) => {
             loginCurrentUser();
             break;
         case 'signUp':
-            // userData();
+            userData();
             break;
     }
 });
@@ -124,7 +125,7 @@ function changeLogOrSignForm(LogOrSign) {
         signUpContainerHeader.classList.add("hidden");
         signUpContainerFooter.classList.add("hidden");
         logSignContainer.innerHTML += signUpTemplate();
-        const signUpElements = getSignUpErrorElements();   
+        signUpElements = getSignUpErrorElements();   
         attachSignUpValidation(signUpElements);   
     } if (LogOrSign === "Log in") {
         signUpContainerHeader.classList.remove("hidden");
@@ -188,13 +189,15 @@ async function registerNewUser(values) {
  * @returns {string} A message describing what went wrong.
  */
 function signUpErrorMessage(error) {
-    switch (error?.code) {
+    switch (error?.code || error) {
         case 'auth/email-already-in-use':
             return 'This email address is already registered.';
         case 'auth/invalid-email':
             return 'Please enter a valid, complete email address.';
         case 'auth/weak-password':
             return 'Password is too weak. Please choose a stronger one.';
+        case 'Check Inputs above':
+            return 'Check Inputs above';
         default:
             return 'Sign up failed. Please try again.';
     }
@@ -216,7 +219,7 @@ function successDialogOpen() {
 /**
  * Display the login error message and re-enable the form.
  */
-function showErrorLogIn() {
+export function showErrorLogIn() {
     const errorLogIn = document.getElementById("login_error_id");
     errorLogIn.classList.remove("hidden");
     setTimeout(() => {
@@ -229,7 +232,7 @@ function showErrorLogIn() {
  * Display the sign-up error message matching the given error and re-enable the form.
  * @param {{code?: string}} [error] - The error thrown by the registration call.
  */
-function showErrorSignUp(error) {
+export function showErrorSignUp(error) {
     const errorSignUp = document.getElementById("sign_up_error_id");
     errorSignUp.textContent = signUpErrorMessage(error);
     errorSignUp.classList.remove("hidden");

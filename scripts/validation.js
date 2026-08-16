@@ -1,4 +1,4 @@
-
+import { signUpElements, showErrorLogIn, showErrorSignUp } from "./index.js";
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -8,19 +8,44 @@ const MIN_PASSWORD_LENGTH = 8;
 
 // Old Version
 
-/**
- * Validate sign-up data and start the user registration process.
- * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
- * @returns {Promise<void>}
- */
-async function userData (confirmPassword) {
+export function userData() {
+      const nameMsg = validateName(signUpElements.username.input.value);
+      const emailMsg = validateEmail(signUpElements.email.input.value);
+      const passwordMsg = validatePassword(signUpElements.password.input.value);
+      const confirmMsg = validateConfirmPassword(
+        signUpElements.password.input.value,
+        signUpElements.confirmPassword.input.value
+      );
+      const termsMsg = validateTerms(signUpElements.privacyCheckbox.input.checked);
+      showError(signUpElements.username.error, nameMsg);
+      showError(signUpElements.email.error, emailMsg);
+      showError(signUpElements.password.error, passwordMsg);
+      showError(signUpElements.confirmPassword.error, confirmMsg);
+      showError(signUpElements.privacyCheckbox.error, termsMsg);
+  
+      const isValid = !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
+  
+      if (isValid) {
+        console.log("Validierung passt");
+        getNewUserData();
+      };
+      if (!isValid) {
+        showErrorSignUp("Check Inputs above");
+        console.log("Nix gut validierung");
+        
+      }
+
+  }
+
+function getNewUserData() {
     const form = document.getElementById("sign_log_in_id");
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries())
     form.reset();
-    registerNewUser(values);
+    console.log(values);
+    
+    // registerNewUser(values);
 }
-
 
 // Main Function
   export function getSignUpErrorElements() {
@@ -149,6 +174,12 @@ function validatePassword(value) {
     return '';
   }
 
+  function validateTerms(checked) {
+    if (!checked) {
+      return 'Please accept the privacy policy.';
+    }
+    return '';
+  }
 
   // Checkbox noch überprüfen
 
