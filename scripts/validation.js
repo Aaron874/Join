@@ -134,7 +134,7 @@ export function attachSignUpValidation(elements) {
         elements.confirmPassword.input,
         elements.confirmPassword.error,
         (value) => validateConfirmPassword(elements.password.input.value, value),
-        'Confirm Password must not be empty.'
+        'Confirm Pwd must not be empty.'
     );
     confirmPasswordListener(elements);
     checkBoxListener(elements);
@@ -279,7 +279,7 @@ function validatePassword(value) {
  */
 function validateConfirmPassword(password, confirmPassword) {
     if (!confirmPassword) {
-        return 'Confirm Password must not be empty.';
+        return 'Confirm Pwd must not be empty.';
     }
     if (password !== confirmPassword) {
         return 'Passwords do not match.';

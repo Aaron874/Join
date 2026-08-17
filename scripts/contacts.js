@@ -1,10 +1,10 @@
-import { getFirstLetterForSeperator } from './contactListBuilder.js';
+import { getFirstLetterForSeperator, seperatIdFromContactList, removeContactListFromDom, } from './contactListBuilder.js';
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
 import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
 import { getUserProfile } from '../firebase/user.service.js';
 import { renderSingleContactView } from '../templates/contactsTemplate.js';
-import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog, contactListInitials } from './contactsAddandEdit.js';
+import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog, contactListInitials, } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
@@ -373,7 +373,6 @@ export async function writeNewContact(contact) {
 /**
  * Re-fetches the contacts list and updates the global `contactsList`.
  * Shows an error dialog if the fetch fails.
- *
  * @async
  * @returns {Promise<void>}
  *
@@ -391,49 +390,11 @@ async function getContactsAfterCreation() {
 /**
  * Retrieves the ID of the recently added contact from the global `contactsList`.
  * Assumes the newest contact is the last entry in the list.
- *
  * @returns {string|number} The ID of the last contact in `contactsList`.
- *
  * @example
  * const newId = idNewContact();
  */
 function idNewContact() {
     const newContactId = contactsList[contactsList.length - 1].id;
     return newContactId;
-}
-
-/**
- * Removes all rendered contact list items and letter separator elements from the DOM,
- * clearing the contact list container for a fresh re-render.
- *
- * @returns {void}
- *
- * @example
- * removeContactListFromDom();
- */
-function removeContactListFromDom() {
-    const contactListElements = document.querySelectorAll(
-        '.contacts_list_items_container, .contacts_list_letter_seperator'
-    );
-    contactListElements.forEach((element) => {
-        element.remove();
-    });
-}
-
-/**
- * Extracts the ID from the first contact list item in the DOM by removing
- * the `'contact_id_'` prefix, or `null` if the list is empty.
- *
- * @returns {string|null} The first contact's ID, or `null` if none exist.
- *
- * @example
- * const firstId = seperatIdFromContactList();
- */
-function seperatIdFromContactList() {
-    const firstContactListItem = document.querySelector('.contacts_list_items_container');
-    if (!firstContactListItem) {
-        return null;
-    }
-    const contactId = firstContactListItem.id.replace('contact_id_', '');
-    return contactId;
 }

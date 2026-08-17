@@ -140,4 +140,38 @@ function pushContactsToList(shortName, person, email, firstLetter, color, id) {
     targetElement.after(renderContactsListItems(shortName, person, email, color, id));
 }
 
+/**
+ * Extracts the ID from the first contact list item in the DOM by removing
+ * the `'contact_id_'` prefix, or `null` if the list is empty.
+ *
+ * @returns {string|null} The first contact's ID, or `null` if none exist.
+ *
+ * @example
+ * const firstId = seperatIdFromContactList();
+ */
+export function seperatIdFromContactList() {
+    const firstContactListItem = document.querySelector('.contacts_list_items_container');
+    if (!firstContactListItem) {
+        return null;
+    }
+    const contactId = firstContactListItem.id.replace('contact_id_', '');
+    return contactId;
+}
 
+/**
+ * Removes all rendered contact list items and letter separator elements from the DOM,
+ * clearing the contact list container for a fresh re-render.
+ *
+ * @returns {void}
+ *
+ * @example
+ * removeContactListFromDom();
+ */
+export function removeContactListFromDom() {
+    const contactListElements = document.querySelectorAll(
+        '.contacts_list_items_container, .contacts_list_letter_seperator'
+    );
+    contactListElements.forEach((element) => {
+        element.remove();
+    });
+}
