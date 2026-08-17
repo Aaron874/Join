@@ -398,3 +398,9 @@ dialog::backdrop {
         top: 30px;
     }
 }
+
+@media (max-height: 630px) {
+    .sign_up_btn_wrapper_footer {
+        padding-top: 164px;
+    }
+}
