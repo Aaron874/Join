@@ -269,26 +269,6 @@ dialog::backdrop {
     margin-bottom: 30px;
 }
 
-
-/* Review ob noch benötigt wird  */
-/* These two alerts always keep their space reserved in the form so that
-   showing/hiding them (via the shared .hidden class) never shifts the
-   surrounding inputs and buttons. Only their visibility/opacity toggles. */
-#login_error_id,
-#sign_up_error_id {
-    display: block !important;
-    visibility: hidden;
-    opacity: 0;
-}
-
-#login_error_id:not(.hidden),
-#sign_up_error_id:not(.hidden) {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Review !!!!! siehe oben */
-
 .sign_up_btn_wrapper_footer {
     display: none;
 }

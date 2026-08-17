@@ -1,7 +1,7 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 import { logout } from '../firebase/auth.js';
-import { getSignUpErrorElements, attachSignUpValidation, userData } from '../scripts/validation.js';
+import { getSignUpErrorElements, attachSignUpValidation, attachLogInValidation, userData, getLogInErrorElements, validationBeforLogIn } from '../scripts/validation.js';
 
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
@@ -9,6 +9,7 @@ const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_heade
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
 export let signUpElements = null;
+export let logInElements = null;
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
@@ -80,6 +81,8 @@ document.addEventListener('click', (event) => {
 async function initLoginPage() {
     await logout();
     animateLogo();
+    logInElements = getLogInErrorElements();
+    attachLogInValidation(logInElements);
 }
 
 /**
@@ -131,7 +134,8 @@ function changeLogOrSignForm(LogOrSign) {
         signUpContainerHeader.classList.remove("hidden");
         signUpContainerFooter.classList.remove("hidden");
         logSignContainer.innerHTML += signInTemplate();
-
+        logInElements = getLogInErrorElements();
+        attachLogInValidation(logInElements);
     }
 }
 
@@ -141,15 +145,16 @@ function changeLogOrSignForm(LogOrSign) {
  * @returns {Promise<void>}
  */
 async function loginCurrentUser() {
-    let formValues = dataFromForm();
-    setFormDisabled(true);
+    if (validationBeforLogIn()) {
+        let formValues = dataFromForm();
+        setFormDisabled(true);
     try {
         await loginUser(formValues.email, formValues.password);
         setFormDisabled(false);
         window.location.href = "summary.html";
     } catch (error) {
-        showErrorLogIn();
-    }
+        showErrorLogIn('');
+    }}
 }
 
 /**
@@ -171,7 +176,7 @@ function dataFromForm() {
  * @param {{email: string, password: string, username: string}} values - Registration details.
  * @returns {Promise<void>}
  */
-async function registerNewUser(values) {
+export async function registerNewUser(values) {
     setFormDisabled(true);
     try {
         await registerUser(values.email, values.password);
@@ -219,11 +224,12 @@ function successDialogOpen() {
 /**
  * Display the login error message and re-enable the form.
  */
-export function showErrorLogIn() {
-    const errorLogIn = document.getElementById("login_error_id");
-    errorLogIn.classList.remove("hidden");
+export function showErrorLogIn(error) {
+    const errorLogIn = document.getElementById("error_log_in_password_or_both");
+    errorLogIn.textContent = "Username or Password incorrect";
+    errorLogIn.classList.remove("hidden_errors");
     setTimeout(() => {
-        errorLogIn.classList.add("hidden");
+        errorLogIn.classList.add("hidden_errors");
         setFormDisabled(false);
     }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
@@ -235,9 +241,8 @@ export function showErrorLogIn() {
 export function showErrorSignUp(error) {
     const errorSignUp = document.getElementById("sign_up_error_id");
     errorSignUp.textContent = signUpErrorMessage(error);
-    errorSignUp.classList.remove("hidden");
     setTimeout(() => {
-        errorSignUp.classList.add("hidden");
+        errorSignUp.classList.add("hidden_errors");
         setFormDisabled(false);
     }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
@@ -260,9 +265,9 @@ function setFormDisabled(disabled) {
   function showErrorGuestLogin() {
     const errorLogIn = document.getElementById("login_error_id");
     errorLogIn.textContent = "Guest login failed. Please try again.";
-    errorLogIn.classList.remove("hidden");
+    errorLogIn.classList.remove("hidden_errors");
     setTimeout(() => {
-        errorLogIn.classList.add("hidden");
+        errorLogIn.classList.add("hidden_errors");
         setFormDisabled(false);
         errorLogIn.textContent = "Username or Password incorrect";
     }, MAXIMUM_ERROR_DISPLAY_TIME);

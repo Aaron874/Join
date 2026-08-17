@@ -94,8 +94,8 @@ function signInTemplate() {
                     >
                 <img src="assets/img/mail_login_sign.webp" alt="E-Mail Icon">
                 </div>
-                <div id="login_error_id" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
-                    Username required
+                <div id="error_log_in_email" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
+                    Email required
                 </div>
                 <div class="login_input_wrapper">
                     <input  type="password" 
@@ -106,8 +106,8 @@ function signInTemplate() {
                 <img src="assets/img/lock.webp" alt="password lock sign">
                 </div>
                 <div
-                    id="login_error_id"
-                    class="alert_log_in hidden"
+                    id="error_log_in_password_or_both"
+                    class="alert_log_in hidden_errors"
                     role="alert"
                     aria-live="assertive"
                 >
