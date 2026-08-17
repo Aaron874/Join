@@ -788,7 +788,7 @@ footer {
     font-size: 24px;
   }
   .contacts_icon {
-    width: 60px;
+    min-width: 60px;
     height: 60px;
     font-size: 27px;
   }
