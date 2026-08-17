@@ -266,7 +266,7 @@ dialog::backdrop {
     padding: 10px;
     background-color: #FEE2E2;
     color: #991B1B;
-    margin-bottom: 30px;
+    margin: 8px 0 8px 0;
 }
 
 .sign_up_btn_wrapper_footer {
