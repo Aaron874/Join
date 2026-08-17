@@ -1,11 +1,15 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
-import { logout } from '../firebase/auth.js'
+import { logout } from '../firebase/auth.js';
+import { getSignUpErrorElements, attachSignUpValidation, attachLogInValidation, signUpValidation, getLogInErrorElements, validationBeforLogIn } from '../scripts/validation.js';
+
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
+export let signUpElements = null;
+export let logInElements = null;
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
 
@@ -30,9 +34,7 @@ document.addEventListener('submit', (event) => {
             loginCurrentUser();
             break;
         case 'signUp':
-            let confirmPassword = document.getElementById('confirm_password');
-            confirmPassword.setCustomValidity('');
-            userData(confirmPassword);
+            signUpValidation();
             break;
     }
 });
@@ -67,18 +69,16 @@ document.addEventListener('click', (event) => {
 });
 
 /**
- * Initialize the login page.
- * Logs out any existing user session and starts the logo animation.
- * @returns {Promise<void>}
- */
-/**
- * Initialize the login page.
- * Logs out any existing user session and starts the logo animation.
+ * Initializes the login page.
+ * Logs out any existing user session, starts the logo animation,
+ * and sets up validation for the login form fields.
  * @returns {Promise<void>}
  */
 async function initLoginPage() {
     await logout();
     animateLogo();
+    logInElements = getLogInErrorElements();
+    attachLogInValidation(logInElements);
 }
 
 /**
@@ -114,8 +114,11 @@ async function createGuestUser() {
 }
 
 /**
- * Toggle the log in / sign up form state.
- * @param {string} LogOrSign - The form mode, either "Sign up" or "Log in".
+ * Switches the container between the sign-up and log-in forms.
+ * Clears the current form, toggles the sign-up header/footer visibility,
+ * renders the selected form template, and sets up its validation.
+ * @param {"Sign up" | "Log in"} LogOrSign - Which form to display.
+ * @returns {void}
  */
 function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
@@ -124,10 +127,14 @@ function changeLogOrSignForm(LogOrSign) {
         signUpContainerHeader.classList.add("hidden");
         signUpContainerFooter.classList.add("hidden");
         logSignContainer.innerHTML += signUpTemplate();
+        signUpElements = getSignUpErrorElements();   
+        attachSignUpValidation(signUpElements);   
     } if (LogOrSign === "Log in") {
         signUpContainerHeader.classList.remove("hidden");
         signUpContainerFooter.classList.remove("hidden");
         logSignContainer.innerHTML += signInTemplate();
+        logInElements = getLogInErrorElements();
+        attachLogInValidation(logInElements);
     }
 }
 
@@ -137,15 +144,16 @@ function changeLogOrSignForm(LogOrSign) {
  * @returns {Promise<void>}
  */
 async function loginCurrentUser() {
-    let formValues = dataFromForm();
-    setFormDisabled(true);
+    if (validationBeforLogIn()) {
+        let formValues = dataFromForm();
+        setFormDisabled(true);
     try {
         await loginUser(formValues.email, formValues.password);
         setFormDisabled(false);
         window.location.href = "summary.html";
     } catch (error) {
         showErrorLogIn();
-    }
+    }}
 }
 
 /**
@@ -161,31 +169,13 @@ function dataFromForm() {
 }
 
 
-/**
- * Validate sign-up data and start the user registration process.
- * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
- * @returns {Promise<void>}
- */
-async function userData (confirmPassword) {
-    resetValidation(confirmPassword);
-    const form = document.getElementById("sign_log_in_id");
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries())
-    if (values.password !== values.confirmPassword) {
-        confirmPassword.setCustomValidity("Passwords do not match");
-        confirmPassword.reportValidity();
-        return;
-      }
-    form.reset();
-    registerNewUser(values);
-}
 
 /**
  * Register a new user and create their profile.
  * @param {{email: string, password: string, username: string}} values - Registration details.
  * @returns {Promise<void>}
  */
-async function registerNewUser(values) {
+export async function registerNewUser(values) {
     setFormDisabled(true);
     try {
         await registerUser(values.email, values.password);
@@ -198,33 +188,26 @@ async function registerNewUser(values) {
 }
 
 /**
- * Map a Firebase Auth registration error to a user-facing message.
- * @param {{code?: string}} error - The error thrown by the registration call.
- * @returns {string} A message describing what went wrong.
+ * Maps a sign-up error to a user-friendly message.
+ * @param {{ code?: string } | string} error - The error object (with a Firebase error code) or a plain error string.
+ * @returns {string} A user-friendly error message corresponding to the error.
  */
 function signUpErrorMessage(error) {
-    switch (error?.code) {
+    switch (error?.code || error) {
         case 'auth/email-already-in-use':
             return 'This email address is already registered.';
         case 'auth/invalid-email':
             return 'Please enter a valid, complete email address.';
         case 'auth/weak-password':
             return 'Password is too weak. Please choose a stronger one.';
+        case 'Check Inputs above':
+            return 'Check Inputs above';
         default:
             return 'Sign up failed. Please try again.';
     }
 }
 
-/**
- * Reset validation state for the confirm password input when the user types.
- * @param {HTMLInputElement} confirmPassword - The password confirmation input element.
- */
-function resetValidation (confirmPassword ) {
-    confirmPassword.addEventListener("input", () => {
-        confirmPassword.setCustomValidity("");
-        confirmPassword.checkValidity()
-        });
-}
+
 
 /**
  * Show the success dialog and return the user to the login form after a delay.
@@ -238,27 +221,32 @@ function successDialogOpen() {
 }
 
 /**
- * Display the login error message and re-enable the form.
+ * Displays a generic "username or password incorrect" error on the login form,
+ * then hides it and re-enables the form after a fixed delay.
+ * @returns {void}
  */
 function showErrorLogIn() {
-    const errorLogIn = document.getElementById("login_error_id");
-    errorLogIn.classList.remove("hidden");
+    const errorLogIn = document.getElementById("error_log_in_password_or_both");
+    errorLogIn.textContent = "Username or Password incorrect";
+    errorLogIn.classList.remove("hidden_errors");
     setTimeout(() => {
-        errorLogIn.classList.add("hidden");
+        errorLogIn.classList.add("hidden_errors");
         setFormDisabled(false);
     }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
 
 /**
- * Display the sign-up error message matching the given error and re-enable the form.
- * @param {{code?: string}} [error] - The error thrown by the registration call.
+ * Displays a sign-up error message on the form, mapped to a user-friendly text,
+ * then hides it and re-enables the form after a fixed delay.
+ * @param {{ code?: string } | string} error - The error object (with a Firebase error code) or a plain error string.
+ * @returns {void}
  */
-function showErrorSignUp(error) {
+export function showErrorSignUp(error) {
     const errorSignUp = document.getElementById("sign_up_error_id");
     errorSignUp.textContent = signUpErrorMessage(error);
-    errorSignUp.classList.remove("hidden");
+    errorSignUp.classList.remove("hidden_errors");
     setTimeout(() => {
-        errorSignUp.classList.add("hidden");
+        errorSignUp.classList.add("hidden_errors");
         setFormDisabled(false);
     }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
@@ -276,14 +264,16 @@ function setFormDisabled(disabled) {
   }
 
 /**
- * Show the guest login error message and restore the form state.
+ * Displays a "guest login failed" error message on the login form,
+ * then hides it and re-enables the form after a fixed delay.
+ * @returns {void}
  */
   function showErrorGuestLogin() {
     const errorLogIn = document.getElementById("login_error_id");
     errorLogIn.textContent = "Guest login failed. Please try again.";
-    errorLogIn.classList.remove("hidden");
+    errorLogIn.classList.remove("hidden_errors");
     setTimeout(() => {
-        errorLogIn.classList.add("hidden");
+        errorLogIn.classList.add("hidden_errors");
         setFormDisabled(false);
         errorLogIn.textContent = "Username or Password incorrect";
     }, MAXIMUM_ERROR_DISPLAY_TIME);

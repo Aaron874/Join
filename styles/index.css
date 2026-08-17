@@ -103,7 +103,7 @@ footer a {
     display: flex;
     align-items: center;
     border: 1px solid #686868;
-    margin: 8px 0 8px 0;
+    margin: 4px 0 4px 0;
     border-radius: 10px;
 }
 
@@ -159,7 +159,7 @@ footer a {
 .privacy_checkbox {
     display: flex;
     gap: 8px;
-    margin: 25px 0 32px 0;
+    margin: 25px 0 8px 0;
 }
 
 .privacy_checkbox input {
@@ -246,12 +246,19 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
 }
 
+
+
 .alert_log_in {
-    border: 2px solid #FCA5A5;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #FEE2E2;
-    color: #991B1B;
+    display: block;
+    color: #E60026;
+    visibility: visible;
+    opacity: 1;
+    min-height: 20px;
+}
+
+.hidden_errors {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .alert_sign_up {
@@ -260,23 +267,7 @@ dialog::backdrop {
     padding: 10px;
     background-color: #FEE2E2;
     color: #991B1B;
-    margin-bottom: 30px;
-}
-
-/* These two alerts always keep their space reserved in the form so that
-   showing/hiding them (via the shared .hidden class) never shifts the
-   surrounding inputs and buttons. Only their visibility/opacity toggles. */
-#login_error_id,
-#sign_up_error_id {
-    display: block !important;
-    visibility: hidden;
-    opacity: 0;
-}
-
-#login_error_id:not(.hidden),
-#sign_up_error_id:not(.hidden) {
-    visibility: visible;
-    opacity: 1;
+    margin: 8px 0 8px 0;
 }
 
 .sign_up_btn_wrapper_footer {
