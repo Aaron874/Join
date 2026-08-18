@@ -54,7 +54,7 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
+  align-items: flex-start;
   margin-left: 232px;
   padding-top: 96px;
   width: calc(100% - 232px);
@@ -89,7 +89,6 @@ footer {
 
 .header {
   width: 100%;
-  max-width: 1440px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -101,8 +100,7 @@ footer {
 }
 
 .header-content {
-  width: 100%;
-  max-width: 720px;
+  width: 50%;
   margin-left: 232px;
   padding-left: 20px;
   display: flex;
@@ -429,5 +427,6 @@ footer {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    z-index: 4;
   }
 }
