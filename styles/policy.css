@@ -1,3 +1,19 @@
+/* style.css already declares this same @font-face (with a `./` path, since
+   it lives in the project root), but nothing on legal.html/policy.html
+   actually sets `font-family: "Inter"` on `body`, so headings/sidebar/
+   footer text fall back to the browser's serif default. Declaring it again
+   here (path is `../` since this file lives in `styles/`) plus the `body`
+   rule below is what actually makes Inter apply across these two pages. */
+@font-face {
+    font-family: "Inter";
+    src: url(../assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf);
+    font-display: swap;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
 /* `header` is centered independently within the full viewport width in
    style.css, while `main` is offset by the sidebar's 232px first and only
    centers *within* what's left. That mismatch is why "Kanban Project
