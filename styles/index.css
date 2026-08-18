@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "Inter";
+    font-family: 'Inter';
     src: url(../assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf);
     font-display: swap;
 }
@@ -15,7 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #f6f7f8;
 }
 
@@ -75,7 +75,7 @@ footer a {
     box-shadow: 0 0 14px 3px rgba(0, 0, 0, 0.14);
     border-radius: 10px;
     padding: 48px 115px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     position: relative;
     margin: 0 15px;
     opacity: 0;
@@ -92,7 +92,7 @@ footer a {
     font-size: 61px;
     font-weight: 700;
     border-bottom: none;
-    background-image: linear-gradient(to right, #29ABE2, #29ABE2);
+    background-image: linear-gradient(to right, #29abe2, #29abe2);
     background-position: center bottom;
     background-size: 150px 3px;
     background-repeat: no-repeat;
@@ -122,7 +122,6 @@ footer a {
     padding: 10px 10px 10px 15px;
     color: #686868;
     font-size: 20px;
-
 }
 
 .login_input_wrapper img {
@@ -140,21 +139,21 @@ footer a {
 .guest_login_btn {
     font-size: 21px;
     font-weight: 700;
-    color: #2A3647;
+    color: #2a3647;
     background-color: white;
     display: flex;
     align-items: center;
     gap: 5px;
-    border: #2A3647 1px solid;
+    border: #2a3647 1px solid;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;
 }
 
 .login_btn {
-    background-color: #2A3647;
+    background-color: #2a3647;
     padding: 10px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 21px;
     font-weight: 700;
     display: flex;
@@ -167,7 +166,6 @@ footer a {
 .privacy_checkbox {
     display: flex;
     gap: 8px;
-    margin: 25px 0 8px 0;
 }
 
 .privacy_checkbox input {
@@ -175,16 +173,16 @@ footer a {
     width: 20px;
     height: 20px;
     border-radius: 3px;
-    border: 2px solid #2A3647;
+    border: 2px solid #2a3647;
     appearance: none;
 }
 
-input[type="checkbox"]:checked {
+input[type='checkbox']:checked {
     background: black;
-  }
-  
-input[type="checkbox"]:checked::after {
-    content: "✓";
+}
+
+input[type='checkbox']:checked::after {
+    content: '✓';
     color: white;
     display: block;
     text-align: center;
@@ -206,9 +204,9 @@ input[type="checkbox"]:checked::after {
 }
 
 .sign_up_btn {
-    background-color: #2A3647;
+    background-color: #2a3647;
     padding: 15px 24px;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 21px;
     font-weight: 700;
     display: flex;
@@ -220,7 +218,7 @@ input[type="checkbox"]:checked::after {
 
 .back_to_log_in_btn {
     border: none;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     padding: 0;
     display: flex;
     position: absolute;
@@ -233,20 +231,34 @@ input[type="checkbox"]:checked::after {
     display: none !important;
 }
 
+/* Dialogs are `display:none` while closed and only switch to their real
+   display value on `showModal()`, so an `animation` declared here replays
+   from scratch every time it opens — no extra JS state needed. */
+@keyframes sign_up_success_slide_in {
+    from {
+        transform: translate(-50%, 120px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
 .sign_up_success_dialog {
     position: fixed;
-    top: 0px;
-    background-color: #2A3647;
+    background-color: #2a3647;
     color: white;
     font-size: 20px;
     font-weight: 400;
     top: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 0);
     border: none;
     border-radius: 20px;
     padding: 25px;
     text-align: center;
+    animation: sign_up_success_slide_in 350ms ease-out;
 }
 
 dialog::backdrop {
@@ -254,11 +266,9 @@ dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
 }
 
-
-
 .alert_log_in {
     display: block;
-    color: #E60026;
+    color: #e60026;
     visibility: visible;
     opacity: 1;
     min-height: 20px;
@@ -270,12 +280,22 @@ dialog::backdrop {
 }
 
 .alert_sign_up {
-    border: 2px solid #FCA5A5;
+    border: 2px solid #fca5a5;
     border-radius: 10px;
     padding: 10px;
-    background-color: #FEE2E2;
-    color: #991B1B;
+    background-color: #fee2e2;
+    color: #991b1b;
     margin: 8px 0 8px 0;
+}
+
+/* Unlike `.alert_log_in` (a compact single line reserved so field errors
+   don't shift focus/layout), this box has its own border/background/padding
+   and reserved ~60px even while empty — there's nothing like it in Figma.
+   Collapsing it to `display: none` while hidden removes that dead space;
+   `showErrorSignUp()`/`setTimeout` in index.js already toggle the
+   `hidden_errors` class that drives this, so no JS change is needed. */
+.alert_sign_up.hidden_errors {
+    display: none;
 }
 
 .sign_up_btn_wrapper_footer {
@@ -295,8 +315,6 @@ dialog::backdrop {
     .back_to_log_in_btn {
         left: 50px;
     }
-
-    
 }
 
 @media (max-width: 462px) {
@@ -312,20 +330,42 @@ dialog::backdrop {
     .login_btn {
         font-size: 16px;
     }
+
     .login_section {
-        padding: 8px 8px;
+        width: calc(100% - 32px);
+        max-width: 396px;
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 30px;
     }
     .login_section h1 {
-        font-size: 40px;
+        font-size: 47px;
+        background-size: 88px 3px;
+    }
+
+    .login_input_wrapper {
+        width: 100%;
+        margin: 4px 0 4px 0;
     }
     .login_input_wrapper input {
-        width: 280px;
+        width: 100%;
         font-size: 16px;
     }
+    .alert_log_in {
+        min-height: 8px;
+    }
     .login_btn_wrapper {
-        margin-top: 16px;
-        gap: 8px;
+        margin-top: 12px;
+        gap: 16px;
         flex-direction: column;
+    }
+    .guest_login_btn,
+    .login_btn {
+        border-radius: 8px;
+        height: 48px;
+    }
+    .sign_up_btn {
+        padding: 10px 20px;
     }
     .guest_login_btn {
         width: 180px;
@@ -337,35 +377,32 @@ dialog::backdrop {
         justify-content: center;
     }
     header img {
-        width: 32px;
+        width: 64px;
     }
     header {
         height: 80px;
-        margin: 0;
     }
     .sign_up_btn_wrapper_header {
         display: none;
     }
+
     main {
-        height: 420px;
-    }
-    main.sign-up-active {
-        height: 520px;
+        width: 100%;
+        height: auto;
+        align-items: flex-start;
+        padding: 0;
     }
     .sign_up_btn_wrapper_footer {
         display: flex;
         gap: 35px;
         align-items: center;
     }
-    /* `height: 55px` was fixed too small to fit both rows (sign-up prompt +
-       Privacy Policy/Legal notice links) stacked with a 35px gap, so the
-       links rendered past the footer's own box and were hard to reach.
-       `height: auto` lets the footer size itself to its content instead. */
+
     footer {
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
         height: auto;
-        padding: 12px 0;
+        padding: 8px 0;
         justify-content: center;
     }
 
@@ -377,8 +414,6 @@ dialog::backdrop {
         left: 20px;
         top: 30px;
     }
-   
-
 }
 
 @media (orientation: landscape) and (max-height: 590px) {
