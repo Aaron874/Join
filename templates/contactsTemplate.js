@@ -44,7 +44,7 @@ export function renderContactsListItems(shortName, person, email, color = '#BDBD
     newContact.id = 'contact_id_' + id;
     newContact.innerHTML = `
           <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
-          <div>
+          <div class="contacts_List_name_container">
             <h4>${person}</h4>
             <p><a href="mailto:${email}">${email}</a></p>
           </div>

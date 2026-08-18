@@ -2,12 +2,13 @@
     background-color: var(--bg-gray);
     display: flex;
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
     margin-left: 232px;
-    padding-top: 96px;
+    margin-top: 96px;
     width: calc(100% - 232px);
     flex-direction: row;
     font-family: 'Inter', sans-serif;
+    padding: 0;
 }
 
 body {
@@ -83,8 +84,13 @@ body {
     font-weight: 400;
 }
 
+.contacts_List_name_container {
+  text-align: left;
+}
+
 .contacts_single_view_container {
     flex: 7;
+    height: calc(100dvh - 96px);
     min-height: calc(100dvh - 96px);
     display: flex;
     flex-direction: column;
@@ -95,6 +101,7 @@ body {
     flex: 3;
     min-width: 320px;
     height: calc(100dvh - 96px);
+    min-height: calc(100dvh - 96px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +137,7 @@ align-items: center;
 background-color: #2A3647;
 padding: 8px;
 justify-content: center;
-width: calc(100dvw - 16px);
+width: calc(100% - 16px);
 border-radius: 5px;
 margin: 16px 0 16px 0;
 max-width: 350px;
@@ -687,6 +694,18 @@ dialog::backdrop {
 .main_contacts {
   margin-left: 0;
   width: 100%;
+  margin-bottom: 80px;
+  height: calc(100dvh - 96px - 80px);
+}
+
+.contacts_single_view_container {
+  height: calc(100dvh - 96px - 80px);
+  min-height: calc(100dvh - 96px - 80px);
+}
+
+.contacts_list_container {
+  height: calc(100dvh - 96px - 80px);
+  min-height: calc(100dvh - 96px - 80px);
 }
 
 }
