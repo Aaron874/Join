@@ -82,20 +82,66 @@ async function initLoginPage() {
 }
 
 /**
- * Animate the page logo into place from the center of the viewport.
+ * Animates the logo on page load by scaling it from the center and fading in the login section.
+ * Creates and triggers the logo animation, then schedules the login section to appear just before the animation completes.
+ * @returns {void}
  */
 function animateLogo() {
     const logo = document.querySelector('header img');
     if (!logo) return;
+
+    const animation = createLogoAnimation(logo);
+    showLoginBeforeAnimationEnds(animation);
+    animation.onfinish = () => logo.style.zIndex = '';
+}
+
+/**
+ * Calculates the CSS transform string to animate the logo from center of viewport.
+ * Computes the translation needed to move the logo to the viewport center, scaled 8x larger.
+ * @param {HTMLImageElement} logo - The logo image element to transform.
+ * @returns {string} CSS transform string for centering and scaling the logo (e.g., 'translate(100px, 50px) scale(8)').
+ */
+function getLogoStartTransform(logo) {
     const { left, top, width, height } = logo.getBoundingClientRect();
     const x = innerWidth / 2 - left - width / 2;
     const y = innerHeight / 2 - top - height / 2;
+    const scale = innerHeight > innerWidth ? 4 : 8;
+    return `translate(${x}px, ${y}px) scale(${scale})`;
+}
+
+/**
+ * Creates and returns a Web Animations API animation that scales the logo from 8x to normal size.
+ * Sets the logo's position to relative and z-index to 1000 to ensure it appears above other content.
+ * @param {HTMLImageElement} logo - The logo image element to animate.
+ * @returns {Animation} The Web Animations API animation object with 2 second duration and ease-in-out timing.
+ */
+function createLogoAnimation(logo) {
+    const startTransform = getLogoStartTransform(logo);
     logo.style.cssText += 'position:relative; z-index:1000;';
-    const animation = logo.animate([
-        { transform: `translate(${x}px, ${y}px) scale(8)` },
+
+    return logo.animate([
+        { transform: startTransform },
         { transform: 'translate(0) scale(1)' }
-    ], { duration: 2000, easing: 'ease-in-out', fill: 'forwards' });
-    animation.onfinish = () => logo.style.zIndex = '';
+    ], {
+        duration: 2000,
+        easing: 'ease-in-out',
+        fill: 'forwards'
+    });
+}
+
+/**
+ * Shows the login form after a delay, just before the logo animation completes (125ms before the end).
+ * This creates the effect of the login form appearing as the logo animation finishes.
+ * @param {Animation} animation - The logo animation object with timing information.
+ * @returns {void}
+ */
+function showLoginBeforeAnimationEnds(animation) {
+    const loginSection = document.querySelector('.login_section');
+    if (!loginSection) return;
+
+    setTimeout(() => {
+        loginSection.classList.add('visible');
+    }, animation.effect.getTiming().duration - 125);
 }
 
 

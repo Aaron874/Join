@@ -256,7 +256,7 @@ body {
 @media (max-width: 780px) {
     .footer {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         flex-wrap: wrap;
         width: 100%;
     }
@@ -306,7 +306,7 @@ body {
     }
 
     .summary-card strong {
-        font-size: 48px;
+        font-size: 24px;
     }
 
     .summary-card span {
@@ -375,6 +375,21 @@ body {
     }
 }
 
+@media(max-width: 502px){
+
+    .summary-card {
+        padding: 20px 24px;
+    }
+
+    .summary-card strong {
+        font-size: 16px;
+    }
+
+    .summary-urgent-count {
+        gap: 12px;
+    }
+}
+
 @media (max-width: 390px) {
     .summary-heading h1 {
         padding-left: 10px;
@@ -387,6 +402,7 @@ body {
     .summary-content {
         padding: 0;
     }
+    
 
     .summary-metrics {
         align-items: center;
@@ -394,6 +410,10 @@ body {
 
     .summary-greeting {
         padding-left: 10px;
+    }
+
+    .summary-card {
+        padding: 8px 8px;
     }
 
     .summary-card-wide {

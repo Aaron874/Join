@@ -1,13 +1,27 @@
+/* `header` is centered independently within the full viewport width in
+   style.css, while `main` is offset by the sidebar's 232px first and only
+   centers *within* what's left. That mismatch is why "Kanban Project
+   Management Tool" didn't line up with the heading/body below it. Giving
+   `header` the same offset box model as `main` (shift right by the sidebar
+   width, then let the existing max-width centering happen inside that
+   reduced area) makes both align at any viewport width. */
 header {
     align-items: center;
+    margin-left: 232px;
+    width: calc(100% - 232px);
 }
 
 .mobile-joinLogo {
     display: none;
 }
 
+/* The 232px sidebar offset now lives on `header` itself (matching `main`),
+   so `.header-content` only needs the same left padding as `.main-content`/
+   `.legal-page` (48px) to start at the exact same x position as the
+   heading/body text below it. */
 .header-content {
-    width: calc(720px - 232px);
+    margin-left: 0;
+    padding-left: 48px;
 }
 
 .legal-main {
@@ -26,6 +40,16 @@ aside {
 body.logged-in aside,
 body.logged-out aside {
     display: flex;
+}
+
+/* aside is `position: fixed` with only a `min-height`, so on short
+   viewports its content (logo + nav + bottom links) can extend past the
+   bottom of the screen with no way to reach it — fixed elements aren't
+   part of the page's scroll flow. Capping it to the viewport height and
+   letting it scroll internally keeps the bottom links reachable. */
+aside {
+    max-height: 100dvh;
+    overflow-y: auto;
 }
 
 .aside-content-guest {
@@ -49,10 +73,29 @@ body.logged-out .aside-content-guest {
     height: 24px;
 }
 
-.sidebar-link {
+/* `.aside-content` uses `align-items: flex-start` in style.css, so its
+   `.options` rows shrink-wrap to their content instead of filling the
+   232px sidebar — that's why the active link's highlight only spanned the
+   text, not the full sidebar width. Stretching both makes the highlight
+   reach edge to edge, matching the design. */
+.aside-content {
+    width: 100%;
+    align-items: stretch;
+}
+
+.options {
+    width: 100%;
+}
+
+/* `.options a` in style.css sets `padding-bottom: 40px` at higher
+   specificity (class + type) than a plain `.sidebar-link` class would, so
+   the override is scoped through `.options` here to win the cascade and
+   keep the active background's padding symmetric (text was sitting at
+   the top of the highlight instead of centered). No `border-radius`: the
+   highlight now runs flush to both sidebar edges. */
+.options a.sidebar-link {
     width: 100%;
     padding: 8px 16px;
-    border-radius: 8px;
 }
 
 .sidebar-link-active {
@@ -68,7 +111,7 @@ body.logged-out .aside-content-guest {
 }
 
 .legal-back-arrow {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -151,6 +194,13 @@ body.logged-out .aside-content-guest {
         padding-bottom: 96px;
     }
 
+    /* aside is hidden below this width, so header no longer needs to make
+       room for it. */
+    header {
+        margin-left: 0;
+        width: 100%;
+    }
+
     .header-content {
         display: none;
     }
@@ -171,10 +221,6 @@ body.logged-out .aside-content-guest {
         display: none;
     }
 
-    .legal-back-arrow {
-        display: flex;
-    }
-
     body.logged-in .footer-app {
         display: flex;
         width: 100%;
@@ -191,14 +237,20 @@ body.logged-out .aside-content-guest {
         width: 25%;
         height: 76px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 4px;
     }
 
-    .footer-link-icons img {
-        display: block;
-        max-width: 100%;
-        height: auto;
+    .footer-link-icons svg {
+        flex-shrink: 0;
+    }
+
+    .footer-link-icons span {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #e7e7e7;
     }
 }
 
