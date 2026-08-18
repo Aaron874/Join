@@ -332,7 +332,7 @@ dialog::backdrop {
         display: none;
     }
     main {
-        height: calc(100dvh - 190px);
+        height: 552px;
     }
     .sign_up_btn_wrapper_footer {
         display: flex;
@@ -350,6 +350,11 @@ dialog::backdrop {
         padding: 12px 0;
         justify-content: center;
     }
+
+    .policy-div {
+        padding-top: 16px;
+    }
+
     .back_to_log_in_btn {
         left: 20px;
         top: 30px;
@@ -412,8 +417,8 @@ dialog::backdrop {
     }
 }
 
-@media (max-height: 630px) {
+/* @media (max-height: 630px) {
     .sign_up_btn_wrapper_footer {
         padding-top: 164px;
     }
-}
+} */
