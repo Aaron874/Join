@@ -16,12 +16,14 @@ header {
 }
 
 /* The 232px sidebar offset now lives on `header` itself (matching `main`),
-   so `.header-content` only needs the same left padding as `.main-content`/
-   `.legal-page` (48px) to start at the exact same x position as the
-   heading/body text below it. */
+   so `.header-content` just needs to land on the same x position as the
+   heading text below it: `.legal-page`'s 48px padding, plus the `.legal-card`
+   that wraps the heading has its own 32px padding on top of that (80px
+   total) — matching only the outer `.content-wrapper` left the two headings
+   still 32px out of line. */
 .header-content {
     margin-left: 0;
-    padding-left: 48px;
+    padding-left: 80px;
 }
 
 .legal-main {
@@ -73,18 +75,28 @@ body.logged-out .aside-content-guest {
     height: 24px;
 }
 
-/* `.aside-content` uses `align-items: flex-start` in style.css, so its
-   `.options` rows shrink-wrap to their content instead of filling the
-   232px sidebar — that's why the active link's highlight only spanned the
-   text, not the full sidebar width. Stretching both makes the highlight
-   reach edge to edge, matching the design. */
+/* Checked against the Figma prototype directly: every sidebar row (nav
+   icons, "Log In", "Privacy Policy"/"Legal Notice") sits at the same fixed
+   left inset from the sidebar edge — they're not a centered "island" and
+   not flush to the edge either. `.aside-content` uses `align-items:
+   flex-start` from style.css (left-aligned, correct), it just needs to
+   fill the full 232px sidebar width so that alignment has something to be
+   flush *against*. */
 .aside-content {
     width: 100%;
-    align-items: stretch;
 }
 
 .options {
+    padding-left: 56px;
+}
+
+/* The active-page highlight still needs to run edge to edge, so the inset
+   lives on the row content itself (padding-left below) rather than on
+   `.options-legal-links`, which stays full width/unpadded. */
+.options-legal-links {
     width: 100%;
+    align-self: stretch;
+    padding-left: 0;
 }
 
 /* `.options a` in style.css sets `padding-bottom: 40px` at higher
@@ -92,14 +104,25 @@ body.logged-out .aside-content-guest {
    the override is scoped through `.options` here to win the cascade and
    keep the active background's padding symmetric (text was sitting at
    the top of the highlight instead of centered). No `border-radius`: the
-   highlight now runs flush to both sidebar edges. */
+   highlight runs flush to both sidebar edges; `padding-left` matches the
+   56px inset used by the other rows above. */
 .options a.sidebar-link {
     width: 100%;
-    padding: 8px 16px;
+    padding: 8px 16px 8px 56px;
 }
 
 .sidebar-link-active {
     background-color: #19202b;
+    color: var(--bg-white);
+}
+
+/* `.aside-content a:hover` in style.css also scales the element 1.2x on
+   hover, which looks broken on these full-width rows (a full-width flex
+   row scaling from its center overflows the sidebar). Sidebar links only
+   get a color change on hover, no transform. */
+.options a.sidebar-link:hover,
+.options a.sidebar-login-link:hover {
+    transform: none;
     color: var(--bg-white);
 }
 
