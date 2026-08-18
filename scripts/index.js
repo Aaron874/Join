@@ -105,8 +105,8 @@ function getLogoStartTransform(logo) {
     const { left, top, width, height } = logo.getBoundingClientRect();
     const x = innerWidth / 2 - left - width / 2;
     const y = innerHeight / 2 - top - height / 2;
-
-    return `translate(${x}px, ${y}px) scale(8)`;
+    const scale = innerHeight > innerWidth ? 4 : 8;
+    return `translate(${x}px, ${y}px) scale(${scale})`;
 }
 
 /**
