@@ -78,6 +78,14 @@ footer a {
     background-color: #FFFFFF;
     position: relative;
     margin: 0 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 100ms ease;
+}
+
+.login_section.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 .login_section h1 {
