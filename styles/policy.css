@@ -191,14 +191,20 @@ body.logged-out .aside-content-guest {
         width: 25%;
         height: 76px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 4px;
     }
 
-    .footer-link-icons img {
-        display: block;
-        max-width: 100%;
-        height: auto;
+    .footer-link-icons svg {
+        flex-shrink: 0;
+    }
+
+    .footer-link-icons span {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        color: #e7e7e7;
     }
 }
 
