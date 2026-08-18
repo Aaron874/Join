@@ -54,7 +54,7 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: flex-start;
+  align-items: center;
   margin-left: 232px;
   padding-top: 96px;
   width: calc(100% - 232px);
@@ -85,21 +85,26 @@ aside {
 
 footer {
   background-color: var(--bg-blue);
-  position: fixed;
-  z-index: 4;
-  bottom: 0;
-  width: 100%;
 }
 
 .header {
   width: 100%;
-  padding-left: 240px;
+  max-width: 1440px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .header a {
+  display: flex;
+  align-items: center;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 720px;
+  margin-left: 232px;
+  padding-left: 20px;
   display: flex;
   align-items: center;
 }
@@ -147,11 +152,10 @@ footer {
 
 .header-content {
   width: 50%;
-  /* max-width: 720px; */
+  max-width: 720px;
   font-size: var(--fs-standard);
   font-weight: 400;
   display: flex;
-  justify-content: flex-start;
 }
 
 .logo {
@@ -300,13 +304,13 @@ footer {
 .legal-card h2 {
   font-size: 24px;
   margin-bottom: 16px;
-  color: #29abe2;
+  color: var(--color-black);
 }
 
 .legal-card p {
   font-size: 16px;
   line-height: 1.7;
-  color: #42526e;
+  color: var(--color-black);
 }
 
 @media (max-width: 768px) {
@@ -337,7 +341,7 @@ footer {
   font-size: 28px;
   margin-top: 40px;
   margin-bottom: 16px;
-  color: #29abe2;
+  color: var(--color-black);
 }
 
 .full-card h3 {
@@ -350,7 +354,7 @@ footer {
 .full-card li {
   font-size: 16px;
   line-height: 1.8;
-  color: #42526e;
+  color: var(--color-black);
 }
 
 .full-card ul {
@@ -425,13 +429,5 @@ footer {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-  }
-
-  main {
-    padding-bottom: 80px;
-  }
-
-  .footer a {
-    width: 76px;
   }
 }

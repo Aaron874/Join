@@ -67,7 +67,7 @@
                     </svg>
                 </a>
             </div>
-            <section class="aside-content">
+            <section class="aside-content aside-content-app">
                 <div class="options">
                     <a href="summary.html">
                         <svg
@@ -135,8 +135,36 @@
                     </a>
                 </div>
                 <div class="options">
-                    <a href="policy.html">Privacy Policy</a>
-                    <a href="legal.html">Legal Notice</a>
+                    <a href="policy.html" class="sidebar-link">Privacy Policy</a>
+                    <a href="legal.html" class="sidebar-link sidebar-link-active">Legal Notice</a>
+                </div>
+            </section>
+            <section class="aside-content aside-content-guest">
+                <div class="options">
+                    <a href="index.html" class="sidebar-login-link">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7.5 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5H7.5"
+                                stroke="#CDCDCD"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path
+                                d="M13.3333 14.1667L17.5 10L13.3333 5.83333"
+                                stroke="#CDCDCD"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                            <path d="M17.5 10H7.5" stroke="#CDCDCD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Log In
+                    </a>
+                </div>
+                <div class="options">
+                    <a href="policy.html" class="sidebar-link">Privacy Policy</a>
+                    <a href="legal.html" class="sidebar-link sidebar-link-active">Legal Notice</a>
                 </div>
             </section>
         </aside>
@@ -149,52 +177,32 @@
                             <a
                                 href="index.html"
                                 class="legal-back-arrow"
-                                onclick="
-                                    history.back();
-                                    return false;
-                                "
+                                onclick="history.back(); return false;"
                                 aria-label="Zurück"
                             >
                                 <img src="./assets/img/arrow-left-line.webp" alt="" />
                             </a>
                         </div>
 
-                        <h2>Angaben gemäß § 5 DDG</h2>
+                        <h2>Angaben gemäß § 5 TMG</h2>
 
                         <p>
-                            Christian Noack<br />
-                            Eggestr. 4a<br />
-                            32758 Detmold<br />
-                            Deutschland
-                        </p>
-
-                        <p>
-                            Jens Baumeister<br />
-                            Schillerstr. 51<br />
-                            31812 Bad Pyrmont<br />
-                            Deutschland
-                        </p>
-
-                        <p>
-                            Aaron Zumstrull<br />
-                            Lerchenstraße 14<br />
-                            49134 Wallenhorst<br />
+                            Max Mustermann<br />
+                            Musterstraße 12<br />
+                            12345 Musterstadt<br />
                             Deutschland
                         </p>
 
                         <h2>Vertreten durch</h2>
 
-                        <p>Christian Noack</p>
-                        <p>Jens Baumeister</p>
-                        <p>Aaron Zumstrull</p>
+                        <p>Max Mustermann</p>
 
                         <h2>Kontakt</h2>
 
-                        <p>E-Mail: admin@christian-noack.com</p>
-
-                        <p>jens.baumeister@gmx.net</p>
-
-                        <p>a.zumstrull@gmx.de</p>
+                        <p>
+                            Telefon: +49 (0) 123 456789<br />
+                            E-Mail: info@deinedomain.de
+                        </p>
 
                         <h2>Umsatzsteuer-ID</h2>
 
@@ -206,9 +214,9 @@
                         <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 
                         <p>
-                            Christin Noack<br />
-                            Eggestr. 4a<br />
-                            32758 Detmold
+                            Max Mustermann<br />
+                            Musterstraße 12<br />
+                            12345 Musterstadt
                         </p>
 
                         <h2>EU-Streitschlichtung</h2>
@@ -301,28 +309,14 @@
             </section>
         </main>
         <footer class="footer footer-app" id="footer_app_id">
-            <a class="footer-link-icons" href="summary.html"
-                ><img src="./assets/img/mobile-summary.png" alt=""
-            /></a>
-            <a class="footer-link-icons" href="add_task.html"
-                ><img src="./assets/img/mobile-addTask.png" alt=""
-            /></a>
-            <a class="footer-link-icons" href="board.html"
-                ><img src="./assets/img/mobile-board.png" alt=""
-            /></a>
-            <a class="footer-link-icons" href="contacts.html"
-                ><img src="./assets/img/mobile-contacts.png" alt=""
-            /></a>
+            <a class="footer-link-icons" href="summary.html"><img src="./assets/img/mobile-summary.png" alt="" /></a>
+            <a class="footer-link-icons" href="add_task.html"><img src="./assets/img/mobile-addTask.png" alt="" /></a>
+            <a class="footer-link-icons" href="board.html"><img src="./assets/img/mobile-board.png" alt="" /></a>
+            <a class="footer-link-icons" href="contacts.html"><img src="./assets/img/mobile-contacts.png" alt="" /></a>
         </footer>
         <footer class="footer footer-guest" id="footer_guest_id">
             <a class="footer-guest-link footer-guest-link-login" href="index.html">
-                <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M7.5 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V4.16667C2.5 3.24619 3.24619 2.5 4.16667 2.5H7.5"
                         stroke="white"
@@ -337,21 +331,13 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
-                    <path
-                        d="M17.5 10H7.5"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
+                    <path d="M17.5 10H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <span>Log In</span>
             </a>
             <div class="footer-guest-right">
                 <a class="footer-guest-link" href="policy.html">Privacy Policy</a>
-                <a class="footer-guest-link footer-guest-link-active" href="legal.html"
-                    >Legal Notice</a
-                >
+                <a class="footer-guest-link footer-guest-link-active" href="legal.html">Legal Notice</a>
             </div>
         </footer>
     </body>

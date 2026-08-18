@@ -15,15 +15,49 @@ header {
     font-family: "Inter", sans-serif;
 }
 
-/* Sidebar is only shown once the auth state is confirmed to be logged in
-   (registered user or guest). This avoids a flash of the full app menu
-   before Firebase reports that no one is signed in. */
+/* The sidebar is only shown once the auth state is confirmed (logged in or
+   logged out). This avoids a flash of the wrong menu before Firebase
+   reports the actual auth state. On desktop, both states show the aside
+   (with different content); on mobile, both use the footer nav instead. */
 aside {
     display: none;
 }
 
-body.logged-in aside {
+body.logged-in aside,
+body.logged-out aside {
     display: flex;
+}
+
+.aside-content-guest {
+    display: none;
+}
+
+body.logged-in .aside-content-app {
+    display: flex;
+}
+
+body.logged-out .aside-content-app {
+    display: none;
+}
+
+body.logged-out .aside-content-guest {
+    display: flex;
+}
+
+.sidebar-login-link svg {
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar-link {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.sidebar-link-active {
+    background-color: #19202b;
+    color: var(--bg-white);
 }
 
 .legal-heading-row {
@@ -34,7 +68,7 @@ body.logged-in aside {
 }
 
 .legal-back-arrow {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -132,8 +166,13 @@ body.logged-in aside {
         padding-top: 32px;
     }
 
-    body.logged-in aside {
+    body.logged-in aside,
+    body.logged-out aside {
         display: none;
+    }
+
+    .legal-back-arrow {
+        display: flex;
     }
 
     body.logged-in .footer-app {
@@ -213,7 +252,7 @@ body.logged-in aside {
     }
 
     .footer-guest-link {
-        font-size: 13px;
+        font-size: 16px;
         padding: 8px 10px;
     }
 }
@@ -225,18 +264,18 @@ body.logged-in aside {
     }
 
     .full-card h2 {
-        font-size: 15px;
+        font-size: 16px;
         margin-top: 20px;
         margin-bottom: 12px;
     }
 
     .full-card h3 {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .full-card p,
     .full-card li {
-        font-size: 13px;
+        font-size: 16px;
         line-height: 1.6;
     }
 
