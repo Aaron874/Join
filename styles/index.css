@@ -347,6 +347,9 @@ dialog::backdrop {
         display: none;
     }
     main {
+        height: 420px;
+    }
+    main.sign-up-active {
         height: 520px;
     }
     .sign_up_btn_wrapper_footer {

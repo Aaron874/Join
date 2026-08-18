@@ -59,11 +59,13 @@ document.addEventListener('click', (event) => {
     }
     if (event.target.matches('#change_to_sign_up_btn')) {
         document.getElementById('back_to_log_in_btn_id').classList.remove('hidden');
+        document.querySelector('main').classList.add('sign-up-active');
         changeLogOrSignForm('Sign up');
         return;
     }
     if (event.target.closest('#back_to_log_in_btn_id') || event.target.closest('.back_to_log_in_btn')) {
         document.getElementById('back_to_log_in_btn_id').classList.add('hidden');
+        document.querySelector('main').classList.remove('sign-up-active');
         changeLogOrSignForm('Log in');
     }
 });
