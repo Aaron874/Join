@@ -339,10 +339,15 @@ dialog::backdrop {
         gap: 35px;
         align-items: center;
     }
+    /* `height: 55px` was fixed too small to fit both rows (sign-up prompt +
+       Privacy Policy/Legal notice links) stacked with a 35px gap, so the
+       links rendered past the footer's own box and were hard to reach.
+       `height: auto` lets the footer size itself to its content instead. */
     footer {
         flex-direction: column;
-        gap: 35px;
-        height: 55px;
+        gap: 16px;
+        height: auto;
+        padding: 12px 0;
         justify-content: center;
     }
     .back_to_log_in_btn {

@@ -28,6 +28,16 @@ body.logged-out aside {
     display: flex;
 }
 
+/* aside is `position: fixed` with only a `min-height`, so on short
+   viewports its content (logo + nav + bottom links) can extend past the
+   bottom of the screen with no way to reach it — fixed elements aren't
+   part of the page's scroll flow. Capping it to the viewport height and
+   letting it scroll internally keeps the bottom links reachable. */
+aside {
+    max-height: 100dvh;
+    overflow-y: auto;
+}
+
 .aside-content-guest {
     display: none;
 }
@@ -49,7 +59,12 @@ body.logged-out .aside-content-guest {
     height: 24px;
 }
 
-.sidebar-link {
+/* `.options a` in style.css sets `padding-bottom: 40px` at higher
+   specificity (class + type) than a plain `.sidebar-link` class would, so
+   the override is scoped through `.options` here to win the cascade and
+   keep the active background's padding symmetric (text was sitting at
+   the top of the highlight instead of centered). */
+.options a.sidebar-link {
     width: 100%;
     padding: 8px 16px;
     border-radius: 8px;
@@ -68,7 +83,7 @@ body.logged-out .aside-content-guest {
 }
 
 .legal-back-arrow {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -169,10 +184,6 @@ body.logged-out .aside-content-guest {
     body.logged-in aside,
     body.logged-out aside {
         display: none;
-    }
-
-    .legal-back-arrow {
-        display: flex;
     }
 
     body.logged-in .footer-app {
