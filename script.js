@@ -39,15 +39,18 @@ function initLoggedInUserIcon() {
  */
 async function updateLoggedInUserIcon(userIcon, user) {
     if (!user) {
+        window.currentUserName = '';
         userIcon.hidden = true;
-        return;
-    }
+        return;    }
+
     userIcon.hidden = false;
     if (user.isAnonymous) {
+        window.currentUserName = '';
         setGuestIcon(userIcon);
         return;
     }
     const userName = await getLoggedInUserName(user);
+    window.currentUserName = userName;
     const initials = getUserInitials(userName);
     userIcon.textContent = initials || getEmailInitials(user.email);
     userIcon.title = userName || user.email || 'User';

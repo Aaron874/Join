@@ -137,17 +137,18 @@ return `
  * @returns {string} HTML string for the detailed contact entry.
  */
 function getTaskDetailsContactTemplate(contact) {
-return `
-<div class="task-details-contact">
-    <span class="task-details-contact-icon" style="--contact-color: ${contact.color};">
-        ${contact.shortName}
-    </span>
-
-    <span class="task-details-contact-name">
-        ${contact.name}
-    </span>
-</div>
-`;
+    const isCurrentUser = contact.name === window.currentUserName;
+    const contactName = isCurrentUser ? `${contact.name} (You)` : contact.name;
+    return `
+        <div class="task-details-contact">
+            <span class="task-details-contact-icon" style="--contact-color: ${contact.color};">
+                ${contact.shortName}
+            </span>
+            <span class="task-details-contact-name">
+                ${contactName}
+            </span>
+        </div>
+    `;
 }
 
 /**
