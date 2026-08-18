@@ -269,7 +269,7 @@ function setFormDisabled(disabled) {
  * @returns {void}
  */
   function showErrorGuestLogin() {
-    const errorLogIn = document.getElementById("login_error_id");
+    const errorLogIn = document.getElementById("error_log_in_password_or_both");
     errorLogIn.textContent = "Guest login failed. Please try again.";
     errorLogIn.classList.remove("hidden_errors");
     setTimeout(() => {

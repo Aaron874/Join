@@ -3,7 +3,7 @@ import { signUpElements, logInElements, showErrorSignUp, registerNewUser } from 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
 const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-zA-Z]{2,}$/;
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_EMAIL_LENGTH = 254;
 
@@ -175,17 +175,19 @@ function checkBoxListener(elements) {
 }
 
 /**
- * Attaches focus and input listeners to a field for live validation.
- * Shows an "empty" message on focus if the field is empty, and runs
- * the validation function on every input change.
+ * Attaches blur and input listeners to a field for live validation.
+ * Shows an "empty" message only once the user leaves the field without
+ * having filled it in (blur), so no warning appears the moment the user
+ * merely enters an untouched field. While typing, the validation
+ * function runs on every input change.
  * @param {HTMLInputElement} input - The input element to validate.
  * @param {HTMLElement} errorEl - The element that displays the error message.
  * @param {(value: string) => string} validateFn - Function that validates the input value and returns an error message or empty string.
- * @param {string} emptyMessage - Message shown when the field is focused while empty.
+ * @param {string} emptyMessage - Message shown when the field is left empty.
  * @returns {void}
  */
 function enableValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
-    input.addEventListener('focus', () => {
+    input.addEventListener('blur', () => {
         if (!input.value) {
             showError(errorEl, emptyMessage);
         }
