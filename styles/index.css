@@ -300,14 +300,27 @@ dialog::backdrop {
 }
 
 @media (max-width: 462px) {
+    footer a {
+        padding: 0 16px 0 16px;
+    }
+    .sign_up_txt {
+        font-size: 16px;
+    }
+    .sign_up_btn {
+        font-size: 16px;
+    }
+    .login_btn {
+        font-size: 16px;
+    }
     .login_section {
         padding: 8px 8px;
     }
     .login_section h1 {
-        font-size: 47px;
+        font-size: 40px;
     }
     .login_input_wrapper input {
         width: 280px;
+        font-size: 16px;
     }
     .login_btn_wrapper {
         margin-top: 16px;
@@ -317,22 +330,24 @@ dialog::backdrop {
     .guest_login_btn {
         width: 180px;
         justify-content: center;
+        font-size: 16px;
     }
     .login_btn {
         width: 180px;
         justify-content: center;
     }
     header img {
-        width: 64px;
+        width: 32px;
     }
     header {
         height: 80px;
+        margin: 0;
     }
     .sign_up_btn_wrapper_header {
         display: none;
     }
     main {
-        height: 552px;
+        height: 520px;
     }
     .sign_up_btn_wrapper_footer {
         display: flex;
