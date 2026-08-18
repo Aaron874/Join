@@ -256,7 +256,7 @@ body {
 @media (max-width: 780px) {
     .footer {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         flex-wrap: wrap;
         width: 100%;
     }
