@@ -60,7 +60,7 @@ body {
     color: #FFFFFF;
 }
 
-.contacts_list_items_container p {
+.contacts_list_items_container p a {
     font-weight: 400;
     font-size: 16px;
     color: #007CEE;
