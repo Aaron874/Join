@@ -109,7 +109,7 @@ footer {
   align-items: center;
 }
 
-.mobile-joinLogo {
+.header svg {
   display: none;
   position: fixed;
   left: 48px;
@@ -411,7 +411,7 @@ footer {
     display: none;
   }
 
-  .mobile-joinLogo {
+  .header svg {
     display: flex;
     position: fixed;
     left: 48px;
