@@ -1290,6 +1290,10 @@ priority-icon {
 @media(max-width: 780px){
   .footer {
     display: flex;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    right: 0;
   }
 }
 
@@ -1426,6 +1430,7 @@ priority-icon {
   main {
     width: 100%;
     margin: 0;
+    padding-bottom: 100px;
   }
 
   aside {
