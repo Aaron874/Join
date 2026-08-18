@@ -155,6 +155,7 @@ function showLoginBeforeAnimationEnds(animation) {
 async function createGuestUser() {
     try {
         await loginGuest();
+        resizeObserver?.disconnect()
         window.location.href = "summary.html";
     } catch (error) {
         showErrorGuestLogin();
@@ -172,19 +173,69 @@ function changeLogOrSignForm(LogOrSign) {
     let logSignContainer = document.getElementById("sign_log_in_id");
     logSignContainer.innerHTML = "";
     if (LogOrSign === "Sign up") {
-        signUpContainerHeader.classList.add("hidden");
-        signUpContainerFooter.classList.add("hidden");
+        changeStylesLogOrSignForm(LogOrSign)
         logSignContainer.innerHTML += signUpTemplate();
         signUpElements = getSignUpErrorElements();   
         attachSignUpValidation(signUpElements);   
     } if (LogOrSign === "Log in") {
-        signUpContainerHeader.classList.remove("hidden");
-        signUpContainerFooter.classList.remove("hidden");
+        changeStylesLogOrSignForm(LogOrSign)
         logSignContainer.innerHTML += signInTemplate();
         logInElements = getLogInErrorElements();
         attachLogInValidation(logInElements);
     }
 }
+
+function changeStylesLogOrSignForm(LogOrSign) {
+    if (LogOrSign === "Sign up") {
+        signUpContainerHeader.classList.add("hidden");
+        signUpContainerFooter.classList.add("hidden");
+        // document.querySelector('main').style.minHeight = '585px';
+        renderSignup()
+    } if (LogOrSign === "Log in") {
+        signUpContainerHeader.classList.remove("hidden");
+        signUpContainerFooter.classList.remove("hidden");
+        // document.querySelector('main').style.minHeight = '385px';
+        renderLogin()
+    }
+}
+
+// Test
+const container = document.querySelector('main');
+const content = document.querySelector('.login_section');
+
+let resizeObserver;
+
+function renderLogin() {
+  // Observer stoppen, falls er lief
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+    resizeObserver = null;
+  }
+
+  // inline min-height entfernen, damit das CSS wieder greift
+  container.style.minHeight = '';
+
+}
+
+function renderSignup() {
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+  resizeObserver = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      container.style.minHeight = `${entry.target.scrollHeight}px`;
+    }
+  });
+
+  resizeObserver.observe(content);
+}
+
+
+
+
+// Ende Test
+
 
 
 /**
@@ -198,6 +249,7 @@ async function loginCurrentUser() {
     try {
         await loginUser(formValues.email, formValues.password);
         setFormDisabled(false);
+        resizeObserver?.disconnect()
         window.location.href = "summary.html";
     } catch (error) {
         showErrorLogIn();

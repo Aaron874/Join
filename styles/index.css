@@ -25,6 +25,7 @@ header {
     display: flex;
     justify-content: space-between;
     width: calc(100dvw - 60px);
+    height: 120px;
 }
 
 header img {
@@ -50,9 +51,11 @@ header img {
 }
 
 main {
-    height: calc(100dvh - 282px);
+    height: calc(100dvh - 280px);
     display: flex;
     align-items: center;
+    min-height: 385px;
+    /* min-height: 453px;for sign up */
 }
 
 footer {
@@ -60,6 +63,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding: 8px 0 8px 0;
 }
 
 footer a {
@@ -388,9 +392,10 @@ dialog::backdrop {
 
     main {
         width: 100%;
-        height: auto;
-        align-items: flex-start;
+        /* height: auto; */
+        align-items: center;
         padding: 0;
+        height: calc(100dvh - 250px);
     }
     .sign_up_btn_wrapper_footer {
         display: flex;
@@ -407,7 +412,8 @@ dialog::backdrop {
     }
 
     .policy-div {
-        padding-top: 16px;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 
     .back_to_log_in_btn {
@@ -417,12 +423,12 @@ dialog::backdrop {
 }
 
 @media (orientation: landscape) and (max-height: 590px) {
-    body {
+    /* body {
         min-height: 584px;
     }
-    main {
+    /* main {
         min-height: 680px;
-    }
+    } */
     .login_section h1 {
         font-size: 47px;
     }
@@ -463,6 +469,7 @@ dialog::backdrop {
         flex-direction: column;
         gap: 35px;
         height: 110px;
+        justify-content: center;
     }
     .back_to_log_in_btn {
         left: 20px;
@@ -475,3 +482,9 @@ dialog::backdrop {
         padding-top: 164px;
     }
 } */
+
+@media (max-height: 650px) and (max-width: 462px) {
+    main {
+        height: auto;
+    }
+}
