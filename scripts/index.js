@@ -224,7 +224,7 @@ function renderSignup() {
         resizeObserver.disconnect();
         resizeObserver = null;
       }
-    footer.style.height = '58px';
+    footer.style.height = '50px';
   resizeObserver = new ResizeObserver(entries => {
     for (const entry of entries) {
       container.style.minHeight = `${entry.target.scrollHeight}px`;

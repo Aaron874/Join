@@ -54,14 +54,14 @@ main {
     height: calc(100dvh - 336px);
     display: flex;
     align-items: center;
-    min-height: 385px;
+    min-height: 420px;
 }
 
 footer {
-    height: 156px;
+    height: 149px;
     display: flex;
     align-items: center;
-    gap: 42px;
+    gap: 35px;
     padding: 8px 0 22px 0;
     margin-top: auto;
 }
@@ -385,7 +385,7 @@ dialog::backdrop {
 
     main {
         width: 100%;
-        /* height: auto; */
+        min-height: 363px;
         align-items: center;
         padding: 0;
         height: calc(100dvh - 296px);
@@ -399,6 +399,7 @@ dialog::backdrop {
     footer {
         flex-direction: column;
         justify-content: flex-end;
+        padding: 0 0 11px 0;
     }
 
     .policy-div {
