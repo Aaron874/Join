@@ -51,28 +51,28 @@ header img {
 }
 
 main {
-    height: calc(100dvh - 280px);
+    height: calc(100dvh - 336px);
     display: flex;
     align-items: center;
     min-height: 385px;
-    /* min-height: 453px;for sign up */
 }
 
 footer {
-    height: 100px;
+    height: 156px;
     display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 8px 0 8px 0;
+    align-items: end;
+    gap: 42px;
+    padding: 8px 0 22px 0;
 }
 
 footer a {
     color: #686868;
     font-size: 16px;
     font-weight: 400;
-    padding: 16px;
     text-decoration: none;
     cursor: pointer;
+    padding: 8px;
+    font-family: 'Inter', sans-serif;
 }
 
 .login_section {
@@ -209,7 +209,7 @@ input[type='checkbox']:checked::after {
 
 .sign_up_btn {
     background-color: #2a3647;
-    padding: 15px 24px;
+    padding: 15px 16px;
     color: #ffffff;
     font-size: 21px;
     font-weight: 700;
@@ -322,12 +322,7 @@ dialog::backdrop {
 }
 
 @media (max-width: 462px) {
-    footer a {
-        padding: 0 16px 0 16px;
-    }
-    .sign_up_txt {
-        font-size: 16px;
-    }
+
     .sign_up_btn {
         font-size: 16px;
     }
@@ -368,9 +363,6 @@ dialog::backdrop {
         border-radius: 8px;
         height: 48px;
     }
-    .sign_up_btn {
-        padding: 10px 20px;
-    }
     .guest_login_btn {
         width: 180px;
         justify-content: center;
@@ -395,7 +387,7 @@ dialog::backdrop {
         /* height: auto; */
         align-items: center;
         padding: 0;
-        height: calc(100dvh - 250px);
+        height: calc(100dvh - 296px);
     }
     .sign_up_btn_wrapper_footer {
         display: flex;
@@ -405,10 +397,7 @@ dialog::backdrop {
 
     footer {
         flex-direction: column;
-        gap: 8px;
-        height: auto;
-        padding: 8px 0;
-        justify-content: center;
+        justify-content: flex-end;
     }
 
     .policy-div {
@@ -469,7 +458,7 @@ dialog::backdrop {
         flex-direction: column;
         gap: 35px;
         height: 110px;
-        justify-content: center;
+        justify-content: flex-end;
     }
     .back_to_log_in_btn {
         left: 20px;
