@@ -139,10 +139,12 @@ function createLogoAnimation(logo) {
  */
 function showLoginBeforeAnimationEnds(animation) {
     const loginSection = document.querySelector('.login_section');
+    const footer = document.querySelector('footer');
     if (!loginSection) return;
 
     setTimeout(() => {
-        loginSection.classList.add('visible');
+        loginSection?.classList.add('visible');
+        footer?.classList.add('visible');
     }, animation.effect.getTiming().duration - 125);
 }
 

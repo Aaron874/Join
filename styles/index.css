@@ -64,6 +64,9 @@ footer {
     gap: 35px;
     padding: 8px 0 22px 0;
     margin-top: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 100ms ease;
 }
 
 footer a {
@@ -88,7 +91,7 @@ footer a {
     transition: opacity 100ms ease;
 }
 
-.login_section.visible {
+.login_section.visible, footer.visible {
     opacity: 1;
     visibility: visible;
 }
