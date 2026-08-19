@@ -133,7 +133,7 @@ function createLogoAnimation(logo) {
 
 /**
  * Shows the login form after a delay, just before the logo animation completes (125ms before the end).
- * This creates the effect of the login form appearing as the logo animation finishes.
+ * This creates the effect of the login and footer form appearing as the logo animation finishes.
  * @param {Animation} animation - The logo animation object with timing information.
  * @returns {void}
  */
