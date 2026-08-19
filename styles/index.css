@@ -60,9 +60,10 @@ main {
 footer {
     height: 156px;
     display: flex;
-    align-items: end;
+    align-items: center;
     gap: 42px;
     padding: 8px 0 22px 0;
+    margin-top: auto;
 }
 
 footer a {
@@ -457,7 +458,6 @@ dialog::backdrop {
     footer {
         flex-direction: column;
         gap: 35px;
-        height: 110px;
         justify-content: flex-end;
     }
     .back_to_log_in_btn {

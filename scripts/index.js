@@ -201,6 +201,7 @@ function changeStylesLogOrSignForm(LogOrSign) {
 
 // Test
 const container = document.querySelector('main');
+const footer = document.querySelector('footer')
 const content = document.querySelector('.login_section');
 
 let resizeObserver;
@@ -214,6 +215,7 @@ function renderLogin() {
 
   // inline min-height entfernen, damit das CSS wieder greift
   container.style.minHeight = '';
+  footer.style.height = '';
 
 }
 
@@ -222,6 +224,7 @@ function renderSignup() {
         resizeObserver.disconnect();
         resizeObserver = null;
       }
+    footer.style.height = '58px';
   resizeObserver = new ResizeObserver(entries => {
     for (const entry of entries) {
       container.style.minHeight = `${entry.target.scrollHeight}px`;
