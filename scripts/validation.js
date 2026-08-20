@@ -318,24 +318,54 @@ export function getLogInErrorElements() {
     };
 }
 
+/** Whether the login form has been submitted at least once. Login fields
+ *  stay silent until then, so typing without losing focus never triggers
+ *  a warning before Log in is pressed. */
+let loginAttempted = false;
+
 /**
  * Attaches live validation to the log-in form fields (email and password).
  * @param {{ email: FieldElements, password: FieldElements }} elements
  * @returns {void}
  */
 export function attachLogInValidation(elements) {
-    enableValidationOnFocus(
+    loginAttempted = false;
+    enableLogInValidationOnFocus(
         elements.email.input,
         elements.email.error,
         validateEmail,
         'Field must not be empty.'
     );
-    enableValidationOnFocus(
+    enableLogInValidationOnFocus(
         elements.password.input,
         elements.password.error,
         validateLogInPassword,
         'Password must not be empty.'
     );
+}
+
+/**
+ * Same as `enableValidationOnFocus`, but stays silent until the login form
+ * has been submitted once (`loginAttempted`); after that first attempt it
+ * validates live like any other field, so the user gets immediate feedback
+ * while fixing the reported error.
+ * @param {HTMLInputElement} input - The input element to validate.
+ * @param {HTMLElement} errorEl - The element that displays the error message.
+ * @param {(value: string) => string} validateFn - Function that validates the input value and returns an error message or empty string.
+ * @param {string} emptyMessage - Message shown when the field is left empty.
+ * @returns {void}
+ */
+function enableLogInValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
+    input.addEventListener('blur', () => {
+        if (!loginAttempted) return;
+        if (!input.value) {
+            showError(errorEl, emptyMessage);
+        }
+    });
+    input.addEventListener('input', () => {
+        if (!loginAttempted) return;
+        showError(errorEl, validateFn(input.value));
+    });
 }
 
 /**
@@ -356,6 +386,7 @@ function validateLogInPassword(value) {
  * @returns {boolean} True if both fields are valid, false otherwise.
  */
 export function validationBeforLogIn() {
+    loginAttempted = true;
     const emailMsg = validateEmail(logInElements.email.input.value);
     const passwordMsg = validateLogInPassword(logInElements.password.input.value);
     showError(logInElements.email.error, emailMsg);
