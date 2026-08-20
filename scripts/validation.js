@@ -242,6 +242,11 @@ function checkBoxListener(elements) {
  */
 function enableValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
     input.addEventListener('blur', () => {
+        // Submitting disables the field, which also blurs it. By then the
+        // form has already been reset (value === ''), so without this guard
+        // a successful submit briefly flashes an "empty" error right before
+        // the page navigates away.
+        if (input.disabled) return;
         if (!input.value) {
             showError(errorEl, emptyMessage);
         }
@@ -412,6 +417,11 @@ export function attachLogInValidation(elements) {
 function enableLogInValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
     input.addEventListener('blur', () => {
         if (!loginAttempted) return;
+        // Submitting disables the field, which also blurs it. By then the
+        // form has already been reset (value === ''), so without this guard
+        // a successful login briefly flashes an "empty" error right before
+        // the page navigates away.
+        if (input.disabled) return;
         if (!input.value) {
             showError(errorEl, emptyMessage);
         }
