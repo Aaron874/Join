@@ -1,4 +1,4 @@
-import { signUpElements, logInElements, showErrorSignUp, registerNewUser } from './index.js';
+import { signUpElements, logInElements, errorDialogOpenClose, registerNewUser } from './index.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -6,6 +6,7 @@ const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-zA-Z]{2,}$/;
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_EMAIL_LENGTH = 254;
+let signUpForm = null;
 
 /**
  * Validates all sign-up form fields, displays any resulting errors,
@@ -52,8 +53,61 @@ function errorOrValidAfterSubmit(isValid) {
         handleNewUserSignUp();
     }
     if (!isValid) {
-        showErrorSignUp('Check Inputs above');
+        errorDialogOpenClose('Please Check Inputs');
     }
+}
+
+
+/**
+ * Enables or disables the sign-up submit button based on whether the form is currently valid.
+ *
+ * @returns {void}
+ */
+function updateSubmitButtonState() {
+    const submitButton = document.getElementById('sign_up_button_id');
+    submitButton.disabled = !isSignUpFormValid();
+}
+
+
+/**
+ * Binds the input listener to the sign-up form that keeps the submit button's disabled state in sync with form validity.
+ *
+ * @returns {void}
+ */
+export function setupSignUpValidationListener() {
+    signUpForm = document.getElementById('sign_log_in_id');
+    signUpForm.addEventListener('input', updateSubmitButtonState);
+    updateSubmitButtonState();
+}
+
+/**
+ * Removes the input listener from the sign-up form and clears the stored reference.
+ *
+ * @returns {void}
+ */
+export function stopSignUpValidationListener() {
+    if (signUpForm) {
+        signUpForm.removeEventListener('input', updateSubmitButtonState);
+        signUpForm = null;
+    }
+}
+
+/**
+ * Checks whether all sign-up form fields currently pass validation, without displaying any error messages.
+ *
+ * @returns {boolean} True if name, email, password, confirm password, and terms are all valid.
+ */
+function isSignUpFormValid() {
+    const nameMsg = validateName(signUpElements.username.input.value);
+    const emailMsg = validateEmail(signUpElements.email.input.value);
+    const passwordMsg = validatePassword(signUpElements.password.input.value);
+    const confirmMsg = validateConfirmPassword(
+        signUpElements.password.input.value,
+        signUpElements.confirmPassword.input.value
+    );
+    const termsMsg = validateTerms(signUpElements.privacyCheckbox.input.checked);
+
+    return !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
 }
 
 /**

@@ -175,6 +175,7 @@ footer a {
 .privacy_checkbox {
     display: flex;
     gap: 8px;
+    margin: 8px 0;
 }
 
 .privacy_checkbox input {
@@ -223,7 +224,13 @@ input[type='checkbox']:checked::after {
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    margin-top: 8px;
 }
+
+#sign_up_button_id:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
 .back_to_log_in_btn {
     border: none;
@@ -252,6 +259,22 @@ input[type='checkbox']:checked::after {
         transform: translate(-50%, 0);
         opacity: 1;
     }
+}
+
+.sign_up_error_dialog {
+    position: fixed;
+    font-size: 20px;
+    font-weight: 400;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 25px;
+    text-align: center;
+    border: 2px solid #fca5a5;
+    border-radius: 10px;
+    background-color: #fee2e2;
+    color: #991b1b;
+
 }
 
 .sign_up_success_dialog {
@@ -291,10 +314,10 @@ dialog::backdrop {
 .alert_sign_up {
     border: 2px solid #fca5a5;
     border-radius: 10px;
-    padding: 10px;
+    padding: 2px;
     background-color: #fee2e2;
     color: #991b1b;
-    margin: 8px 0 8px 0;
+    margin: 4px 0 4px 0;
 }
 
 /* Unlike `.alert_log_in` (a compact single line reserved so field errors

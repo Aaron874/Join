@@ -66,15 +66,7 @@ function signUpTemplate() {
                     <div id="error_sign_up_privacy_checkbox" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
                     Please accept privacy for sign up
                     </div>
-                <div
-                    id="sign_up_error_id"
-                    class="alert_sign_up hidden_errors"
-                    role="alert"
-                    aria-live="assertive"
-                >
-                    Sign up failed. Please try again.
-                </div>
-                    <button class="sign_up_btn" type="submit" data-action="signUp">Sign up</button>
+                    <button class="sign_up_btn" id="sign_up_button_id" type="submit" data-action="signUp">Sign up</button>
 `;
     
 }

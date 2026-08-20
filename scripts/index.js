@@ -1,13 +1,18 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 import { logout } from '../firebase/auth.js';
-import { getSignUpErrorElements, attachSignUpValidation, attachLogInValidation, signUpValidation, getLogInErrorElements, validationBeforLogIn } from '../scripts/validation.js';
+import { getSignUpErrorElements, attachSignUpValidation, attachLogInValidation, signUpValidation, getLogInErrorElements, validationBeforLogIn, setupSignUpValidationListener, stopSignUpValidationListener } from '../scripts/validation.js';
 
 
 const successDialog = document.getElementById("sign_up_success_dialog_id");
+const errorDialog = document.getElementById("sign_up_error_id");
 const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
 const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
+const container = document.querySelector('main');
+const footer = document.querySelector('footer')
+const content = document.querySelector('.login_section');
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
+let resizeObserver;
 export let signUpElements = null;
 export let logInElements = null;
 
@@ -180,49 +185,57 @@ function changeLogOrSignForm(LogOrSign) {
         changeStylesLogOrSignForm(LogOrSign)
         logSignContainer.innerHTML += signUpTemplate();
         signUpElements = getSignUpErrorElements();   
-        attachSignUpValidation(signUpElements);   
+        attachSignUpValidation(signUpElements);
+        setupSignUpValidationListener();   
     } if (LogOrSign === "Log in") {
         changeStylesLogOrSignForm(LogOrSign)
         logSignContainer.innerHTML += signInTemplate();
         logInElements = getLogInErrorElements();
         attachLogInValidation(logInElements);
+        stopSignUpValidationListener();
     }
 }
 
+
+/**
+ * Toggles between the sign-up and login view by showing/hiding the shared header and footer and rendering the matching form.
+ *
+ * @param {"Sign up"|"Log in"} LogOrSign - Which view to switch to.
+ * @returns {void}
+ */
 function changeStylesLogOrSignForm(LogOrSign) {
     if (LogOrSign === "Sign up") {
         signUpContainerHeader.classList.add("hidden");
         signUpContainerFooter.classList.add("hidden");
-        // document.querySelector('main').style.minHeight = '585px';
         renderSignup()
     } if (LogOrSign === "Log in") {
         signUpContainerHeader.classList.remove("hidden");
         signUpContainerFooter.classList.remove("hidden");
-        // document.querySelector('main').style.minHeight = '385px';
         renderLogin()
     }
 }
 
-// Test
-const container = document.querySelector('main');
-const footer = document.querySelector('footer')
-const content = document.querySelector('.login_section');
 
-let resizeObserver;
-
+/**
+ * Resets the sign-up resize observer and clears the inline min-height/height overrides on the container and footer so the CSS-defined login layout applies again.
+ *
+ * @returns {void}
+ */
 function renderLogin() {
-  // Observer stoppen, falls er lief
   if (resizeObserver) {
     resizeObserver.disconnect();
     resizeObserver = null;
   }
-
-  // inline min-height entfernen, damit das CSS wieder greift
   container.style.minHeight = '';
   footer.style.height = '';
 
 }
 
+/**
+ * Sets up the sign-up layout by fixing the footer height and (re)starting a ResizeObserver that keeps the container's min-height in sync with the content's scroll height.
+ *
+ * @returns {void}
+ */
 function renderSignup() {
     if (resizeObserver) {
         resizeObserver.disconnect();
@@ -237,13 +250,6 @@ function renderSignup() {
 
   resizeObserver.observe(content);
 }
-
-
-
-
-// Ende Test
-
-
 
 /**
  * Log in the current user using form values and navigate to summary on success.
@@ -290,7 +296,7 @@ export async function registerNewUser(values) {
         successDialogOpen();
         setFormDisabled(false);
     } catch (error) {
-        showErrorSignUp(error);
+        errorDialogOpenClose(error);
     }
 }
 
@@ -307,8 +313,8 @@ function signUpErrorMessage(error) {
             return 'Please enter a valid, complete email address.';
         case 'auth/weak-password':
             return 'Password is too weak. Please choose a stronger one.';
-        case 'Check Inputs above':
-            return 'Check Inputs above';
+        case 'Please Check Inputs':
+            return 'Please Check Inputs';
         default:
             return 'Sign up failed. Please try again.';
     }
@@ -328,6 +334,21 @@ function successDialogOpen() {
 }
 
 /**
+ * Displays the error dialog with a matching error message and automatically closes it after MAXIMUM_ERROR_DISPLAY_TIME.
+ *
+ * @param {*} error - The error that occurred (e.g. a Firebase Auth error), passed to signUpErrorMessage.
+ * @returns {void}
+ */
+export function errorDialogOpenClose(error) {
+    const errorHeader = errorDialog.querySelector('h1');
+    errorHeader.textContent = signUpErrorMessage(error);
+    errorDialog.showModal();
+    setTimeout(() => {
+        errorDialog.close();
+        setFormDisabled(false)
+    }, MAXIMUM_ERROR_DISPLAY_TIME);
+}
+/**
  * Displays a generic "username or password incorrect" error on the login form,
  * then hides it and re-enables the form after a fixed delay.
  * @returns {void}
@@ -339,23 +360,7 @@ function showErrorLogIn() {
     setTimeout(() => {
         errorLogIn.classList.add("hidden_errors");
         setFormDisabled(false);
-    }, MAXIMUM_ERROR_DISPLAY_TIME);
-}
-
-/**
- * Displays a sign-up error message on the form, mapped to a user-friendly text,
- * then hides it and re-enables the form after a fixed delay.
- * @param {{ code?: string } | string} error - The error object (with a Firebase error code) or a plain error string.
- * @returns {void}
- */
-export function showErrorSignUp(error) {
-    const errorSignUp = document.getElementById("sign_up_error_id");
-    errorSignUp.textContent = signUpErrorMessage(error);
-    errorSignUp.classList.remove("hidden_errors");
-    setTimeout(() => {
-        errorSignUp.classList.add("hidden_errors");
-        setFormDisabled(false);
-    }, MAXIMUM_ERROR_DISPLAY_TIME);
+    }, 800);
 }
 
 /**
@@ -369,6 +374,7 @@ function setFormDisabled(disabled) {
         element.disabled = disabled;
       });
   }
+
 
 /**
  * Displays a "guest login failed" error message on the login form,
