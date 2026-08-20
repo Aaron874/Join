@@ -133,18 +133,20 @@ function createLogoAnimation(logo) {
 
 /**
  * Shows the login form after a delay, just before the logo animation completes (125ms before the end).
- * This creates the effect of the login and footer form appearing as the logo animation finishes.
+ * This creates the effect of the header, login and footer form appearing as the logo animation finishes.
  * @param {Animation} animation - The logo animation object with timing information.
  * @returns {void}
  */
 function showLoginBeforeAnimationEnds(animation) {
     const loginSection = document.querySelector('.login_section');
     const footer = document.querySelector('footer');
+    const header = document.querySelector('.sign_up_btn_wrapper_header')
     if (!loginSection) return;
 
     setTimeout(() => {
         loginSection?.classList.add('visible');
         footer?.classList.add('visible');
+        header?.classList.add('visible')
     }, animation.effect.getTiming().duration - 125);
 }
 
