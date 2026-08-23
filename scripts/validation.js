@@ -1,9 +1,5 @@
 import { signUpElements, logInElements } from './index.js';
-import {
-    showErrorAfterSubmitIfNeeded,
-    errorOrValidAfterSubmit,
-    showError,
-} from './SignUpOrLogInErrors.js';
+import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError } from './SignUpOrLogInErrors.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -120,39 +116,63 @@ export function attachSignUpValidation(elements) {
         (value) => validateConfirmPassword(elements.password.input.value, value),
         'Confirm Pwd must not be empty.'
     );
+    startSignUpListener(elements);
+}
+
+/**
+ * Sets up all sign-up form listeners: confirm password sync,
+ * password visibility icons, and privacy checkbox validation.
+ * @param {Object} elements - The sign-up form elements.
+ * @returns {void}
+ */
+function startSignUpListener(elements) {
     confirmPasswordListener(elements);
-    passwordIconListener(elements.password.input, "password")
-    passwordIconListener(elements.confirmPassword.input, "confirm_password")
+    passwordIconListener(elements.password.input, 'password');
+    passwordIconListener(elements.confirmPassword.input, 'confirm_password');
     checkBoxListener(elements);
 }
 
+/**
+ * Toggles the password field's lock/visibility icon based on its content
+ * and current type, and attaches the click-to-toggle behavior.
+ * @param {HTMLInputElement} input - The password input element.
+ * @param {string} whichPassword - Prefix used to locate the icon element (e.g. "password", "confirm_password").
+ * @returns {void}
+ */
 function passwordIconListener(input, whichPassword) {
-    let icon = document.getElementById(whichPassword + '_lock_icon')
+    let icon = document.getElementById(whichPassword + '_lock_icon');
     input.addEventListener('input', () => {
-      if (!input.value) {
-        icon.src = 'assets/img/lock.webp';
-        icon.classList.remove('clickable');
-        return
-      } 
-      icon.classList.add('clickable');
-      icon.src = input.type === 'password'
-        ? 'assets/img/visibility_off.webp'
-        : 'assets/img/visibility.webp';
+        if (!input.value) {
+            icon.src = 'assets/img/lock.webp';
+            icon.classList.remove('clickable');
+            return;
+        }
+        icon.classList.add('clickable');
+        icon.src =
+            input.type === 'password'
+                ? 'assets/img/visibility_off.webp'
+                : 'assets/img/visibility.webp';
     });
-    passwordToggleListener(input, icon)
-  }
+    passwordToggleListener(input, icon);
+}
 
-  function passwordToggleListener(input, icon) {
+/**
+ * Toggles a password input's visibility between masked and plain text
+ * when its icon is clicked, updating the icon accordingly and
+ * restoring focus to the input.
+ * @param {HTMLInputElement} input - The password input element.
+ * @param {HTMLElement} icon - The icon element that toggles visibility on click.
+ * @returns {void}
+ */
+function passwordToggleListener(input, icon) {
     icon.addEventListener('click', () => {
-      if (!input.value) return; 
-      const isPassword = input.type === 'password';
-      input.type = isPassword ? 'text' : 'password';
-      icon.src = isPassword
-        ? 'assets/img/visibility.webp'
-        : 'assets/img/visibility_off.webp';
-    input.focus();
+        if (!input.value) return;
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        icon.src = isPassword ? 'assets/img/visibility.webp' : 'assets/img/visibility_off.webp';
+        input.focus();
     });
-  }
+}
 
 /**
  * Re-validates the confirm password field whenever the password field
@@ -202,10 +222,6 @@ function checkBoxListener(elements) {
  */
 function enableValidationOnBlurOrInput(input, errorEl, validateFn, emptyMessage) {
     input.addEventListener('blur', () => {
-        // Submitting disables the field, which also blurs it. By then the
-        // form has already been reset (value === ''), so without this guard
-        // a successful submit briefly flashes an "empty" error right before
-        // the page navigates away.
         if (input.disabled) return;
         if (!input.value) {
             showError(errorEl, emptyMessage);
@@ -328,7 +344,7 @@ export function attachLogInValidation(elements) {
         validateLogInPassword,
         'Password must not be empty.'
     );
-    passwordIconListener(elements.password.input, 'log_in_password')
+    passwordIconListener(elements.password.input, 'log_in_password');
 }
 
 /**
