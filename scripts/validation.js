@@ -1,4 +1,5 @@
-import { signUpElements, logInElements, errorDialogOpenClose, registerNewUser } from './index.js';
+import { signUpElements, logInElements, registerNewUser } from './index.js';
+import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError } from './SignUpOrLogInErrors.js'
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -7,6 +8,11 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-zA-Z]{2,}$/;
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_EMAIL_LENGTH = 254;
 let signUpForm = null;
+
+/** Whether the login form has been submitted at least once. Login fields
+ *  stay silent until then, so typing without losing focus never triggers
+ *  a warning before Log in is pressed. */
+let loginAttempted = false;
 
 /**
  * Validates all sign-up form fields, displays any resulting errors,
@@ -26,37 +32,6 @@ export function signUpValidation() {
     const isValid = !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
     errorOrValidAfterSubmit(isValid);
 }
-/**
- * Displays the error messages for all sign-up form fields.
- * @param {string} nameMsg - Error message for the username field, or empty if valid.
- * @param {string} emailMsg - Error message for the email field, or empty if valid.
- * @param {string} passwordMsg - Error message for the password field, or empty if valid.
- * @param {string} confirmMsg - Error message for the confirm password field, or empty if valid.
- * @param {string} termsMsg - Error message for the privacy checkbox, or empty if valid.
- * @returns {void}
- */
-function showErrorAfterSubmitIfNeeded(nameMsg, emailMsg, passwordMsg, confirmMsg, termsMsg) {
-    showError(signUpElements.username.error, nameMsg);
-    showError(signUpElements.email.error, emailMsg);
-    showError(signUpElements.password.error, passwordMsg);
-    showError(signUpElements.confirmPassword.error, confirmMsg);
-    showError(signUpElements.privacyCheckbox.error, termsMsg);
-}
-
-/**
- * Proceeds with sign-up if the form is valid, otherwise shows an error.
- * @param {boolean} isValid - Whether all sign-up form fields are valid.
- * @returns {void}
- */
-function errorOrValidAfterSubmit(isValid) {
-    if (isValid) {
-        handleNewUserSignUp();
-    }
-    if (!isValid) {
-        errorDialogOpenClose('Please Check Inputs');
-    }
-}
-
 
 /**
  * Enables or disables the sign-up submit button based on whether the form is currently valid.
@@ -67,7 +42,6 @@ function updateSubmitButtonState() {
     const submitButton = document.getElementById('sign_up_button_id');
     submitButton.disabled = !isSignUpFormValid();
 }
-
 
 /**
  * Binds the input listener to the sign-up form that keeps the submit button's disabled state in sync with form validity.
@@ -115,7 +89,7 @@ function isSignUpFormValid() {
  * and registers a new user with the collected data.
  * @returns {void}
  */
-function handleNewUserSignUp() {
+export function handleNewUserSignUp() {
     const form = document.getElementById('sign_log_in_id');
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
@@ -166,25 +140,25 @@ export function getSignUpErrorElements() {
  * @returns {void}
  */
 export function attachSignUpValidation(elements) {
-    enableValidationOnFocus(
+    enableValidationOnBlurOrInput(
         elements.username.input,
         elements.username.error,
         validateName,
         'Name must not be empty.'
     );
-    enableValidationOnFocus(
+    enableValidationOnBlurOrInput(
         elements.email.input,
         elements.email.error,
         validateEmail,
         'Email must not be empty.'
     );
-    enableValidationOnFocus(
+    enableValidationOnBlurOrInput(
         elements.password.input,
         elements.password.error,
         validatePassword,
         'Password must not be empty.'
     );
-    enableValidationOnFocus(
+    enableValidationOnBlurOrInput(
         elements.confirmPassword.input,
         elements.confirmPassword.error,
         (value) => validateConfirmPassword(elements.password.input.value, value),
@@ -240,7 +214,7 @@ function checkBoxListener(elements) {
  * @param {string} emptyMessage - Message shown when the field is left empty.
  * @returns {void}
  */
-function enableValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
+function enableValidationOnBlurOrInput(input, errorEl, validateFn, emptyMessage) {
     input.addEventListener('blur', () => {
         // Submitting disables the field, which also blurs it. By then the
         // form has already been reset (value === ''), so without this guard
@@ -256,16 +230,7 @@ function enableValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
     });
 }
 
-/**
- * Displays or hides an error message for a given element.
- * @param {HTMLElement} errorEl - The element that displays the error message.
- * @param {string} errorMessage - The error message to show. An empty string hides it.
- * @returns {void}
- */
-function showError(errorEl, errorMessage) {
-    errorEl.classList.toggle('hidden_errors', !errorMessage);
-    errorEl.textContent = errorMessage;
-}
+
 
 /**
  * Validates a name value.
@@ -377,10 +342,7 @@ export function getLogInErrorElements() {
     };
 }
 
-/** Whether the login form has been submitted at least once. Login fields
- *  stay silent until then, so typing without losing focus never triggers
- *  a warning before Log in is pressed. */
-let loginAttempted = false;
+
 
 /**
  * Attaches live validation to the log-in form fields (email and password).
@@ -404,7 +366,7 @@ export function attachLogInValidation(elements) {
 }
 
 /**
- * Same as `enableValidationOnFocus`, but stays silent until the login form
+ * Same as `enableValidationOnBlurOrInput`, but stays silent until the login form
  * has been submitted once (`loginAttempted`); after that first attempt it
  * validates live like any other field, so the user gets immediate feedback
  * while fixing the reported error.
@@ -417,10 +379,6 @@ export function attachLogInValidation(elements) {
 function enableLogInValidationOnFocus(input, errorEl, validateFn, emptyMessage) {
     input.addEventListener('blur', () => {
         if (!loginAttempted) return;
-        // Submitting disables the field, which also blurs it. By then the
-        // form has already been reset (value === ''), so without this guard
-        // a successful login briefly flashes an "empty" error right before
-        // the page navigates away.
         if (input.disabled) return;
         if (!input.value) {
             showError(errorEl, emptyMessage);

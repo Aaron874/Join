@@ -1,23 +1,33 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 import { logout } from '../firebase/auth.js';
-import { getSignUpErrorElements, attachSignUpValidation, attachLogInValidation, signUpValidation, getLogInErrorElements, validationBeforLogIn, setupSignUpValidationListener, stopSignUpValidationListener } from '../scripts/validation.js';
+import {
+    getSignUpErrorElements,
+    attachSignUpValidation,
+    attachLogInValidation,
+    signUpValidation,
+    getLogInErrorElements,
+    validationBeforLogIn,
+    setupSignUpValidationListener,
+    stopSignUpValidationListener,
+} from '../scripts/validation.js';
+import {
+    errorDialogOpenClose,
+    showErrorGuestLogin,
+    showErrorLogIn,
+} from './SignUpOrLogInErrors.js';
 
-
-const successDialog = document.getElementById("sign_up_success_dialog_id");
-const errorDialog = document.getElementById("sign_up_error_id");
-const signUpContainerHeader = document.getElementById("sign_up_btn_wrapper_header_id");
-const signUpContainerFooter = document.getElementById("sign_up_btn_wrapper_footer_id");
+const successDialog = document.getElementById('sign_up_success_dialog_id');
+const signUpContainerHeader = document.getElementById('sign_up_btn_wrapper_header_id');
+const signUpContainerFooter = document.getElementById('sign_up_btn_wrapper_footer_id');
 const container = document.querySelector('main');
-const footer = document.querySelector('footer')
+const footer = document.querySelector('footer');
 const content = document.querySelector('.login_section');
-const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
 let resizeObserver;
 export let signUpElements = null;
 export let logInElements = null;
 
 document.addEventListener('DOMContentLoaded', initLoginPage);
-
 
 /**
  * Registers a global submit event listener for the login/sign-up form.
@@ -68,7 +78,10 @@ document.addEventListener('click', (event) => {
         changeLogOrSignForm('Sign up');
         return;
     }
-    if (event.target.closest('#back_to_log_in_btn_id') || event.target.closest('.back_to_log_in_btn')) {
+    if (
+        event.target.closest('#back_to_log_in_btn_id') ||
+        event.target.closest('.back_to_log_in_btn')
+    ) {
         document.getElementById('back_to_log_in_btn_id').classList.add('hidden');
         document.querySelector('main').classList.remove('sign-up-active');
         changeLogOrSignForm('Log in');
@@ -99,7 +112,7 @@ function animateLogo() {
 
     const animation = createLogoAnimation(logo);
     showLoginBeforeAnimationEnds(animation);
-    animation.onfinish = () => logo.style.zIndex = '';
+    animation.onfinish = () => (logo.style.zIndex = '');
 }
 
 /**
@@ -126,13 +139,10 @@ function createLogoAnimation(logo) {
     const startTransform = getLogoStartTransform(logo);
     logo.style.cssText += 'position:relative; z-index:1000;';
 
-    return logo.animate([
-        { transform: startTransform },
-        { transform: 'translate(0) scale(1)' }
-    ], {
+    return logo.animate([{ transform: startTransform }, { transform: 'translate(0) scale(1)' }], {
         duration: 2000,
         easing: 'ease-in-out',
-        fill: 'forwards'
+        fill: 'forwards',
     });
 }
 
@@ -145,16 +155,15 @@ function createLogoAnimation(logo) {
 function showLoginBeforeAnimationEnds(animation) {
     const loginSection = document.querySelector('.login_section');
     const footer = document.querySelector('footer');
-    const header = document.querySelector('.sign_up_btn_wrapper_header')
+    const header = document.querySelector('.sign_up_btn_wrapper_header');
     if (!loginSection) return;
 
     setTimeout(() => {
         loginSection?.classList.add('visible');
         footer?.classList.add('visible');
-        header?.classList.add('visible')
+        header?.classList.add('visible');
     }, animation.effect.getTiming().duration - 125);
 }
-
 
 /**
  * Log in as a guest user and navigate to the summary page.
@@ -164,8 +173,8 @@ function showLoginBeforeAnimationEnds(animation) {
 async function createGuestUser() {
     try {
         await loginGuest();
-        resizeObserver?.disconnect()
-        window.location.href = "summary.html";
+        resizeObserver?.disconnect();
+        window.location.href = 'summary.html';
     } catch (error) {
         showErrorGuestLogin();
     }
@@ -179,23 +188,23 @@ async function createGuestUser() {
  * @returns {void}
  */
 function changeLogOrSignForm(LogOrSign) {
-    let logSignContainer = document.getElementById("sign_log_in_id");
-    logSignContainer.innerHTML = "";
-    if (LogOrSign === "Sign up") {
-        changeStylesLogOrSignForm(LogOrSign)
+    let logSignContainer = document.getElementById('sign_log_in_id');
+    logSignContainer.innerHTML = '';
+    if (LogOrSign === 'Sign up') {
+        changeStylesLogOrSignForm(LogOrSign);
         logSignContainer.innerHTML += signUpTemplate();
-        signUpElements = getSignUpErrorElements();   
+        signUpElements = getSignUpErrorElements();
         attachSignUpValidation(signUpElements);
-        setupSignUpValidationListener();   
-    } if (LogOrSign === "Log in") {
-        changeStylesLogOrSignForm(LogOrSign)
+        setupSignUpValidationListener();
+    }
+    if (LogOrSign === 'Log in') {
+        changeStylesLogOrSignForm(LogOrSign);
         logSignContainer.innerHTML += signInTemplate();
         logInElements = getLogInErrorElements();
         attachLogInValidation(logInElements);
         stopSignUpValidationListener();
     }
 }
-
 
 /**
  * Toggles between the sign-up and login view by showing/hiding the shared header and footer and rendering the matching form.
@@ -204,17 +213,17 @@ function changeLogOrSignForm(LogOrSign) {
  * @returns {void}
  */
 function changeStylesLogOrSignForm(LogOrSign) {
-    if (LogOrSign === "Sign up") {
-        signUpContainerHeader.classList.add("hidden");
-        signUpContainerFooter.classList.add("hidden");
-        renderSignup()
-    } if (LogOrSign === "Log in") {
-        signUpContainerHeader.classList.remove("hidden");
-        signUpContainerFooter.classList.remove("hidden");
-        renderLogin()
+    if (LogOrSign === 'Sign up') {
+        signUpContainerHeader.classList.add('hidden');
+        signUpContainerFooter.classList.add('hidden');
+        renderSignup();
+    }
+    if (LogOrSign === 'Log in') {
+        signUpContainerHeader.classList.remove('hidden');
+        signUpContainerFooter.classList.remove('hidden');
+        renderLogin();
     }
 }
-
 
 /**
  * Resets the sign-up resize observer and clears the inline min-height/height overrides on the container and footer so the CSS-defined login layout applies again.
@@ -222,13 +231,12 @@ function changeStylesLogOrSignForm(LogOrSign) {
  * @returns {void}
  */
 function renderLogin() {
-  if (resizeObserver) {
-    resizeObserver.disconnect();
-    resizeObserver = null;
-  }
-  container.style.minHeight = '';
-  footer.style.height = '';
-
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+    }
+    container.style.minHeight = '';
+    footer.style.height = '';
 }
 
 /**
@@ -240,15 +248,15 @@ function renderSignup() {
     if (resizeObserver) {
         resizeObserver.disconnect();
         resizeObserver = null;
-      }
-    footer.style.height = '50px';
-  resizeObserver = new ResizeObserver(entries => {
-    for (const entry of entries) {
-      container.style.minHeight = `${entry.target.scrollHeight}px`;
     }
-  });
+    footer.style.height = '50px';
+    resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            container.style.minHeight = `${entry.target.scrollHeight}px`;
+        }
+    });
 
-  resizeObserver.observe(content);
+    resizeObserver.observe(content);
 }
 
 /**
@@ -259,14 +267,15 @@ async function loginCurrentUser() {
     if (validationBeforLogIn()) {
         let formValues = dataFromForm();
         setFormDisabled(true);
-    try {
-        await loginUser(formValues.email, formValues.password);
-        setFormDisabled(false);
-        resizeObserver?.disconnect()
-        window.location.href = "summary.html";
-    } catch (error) {
-        showErrorLogIn();
-    }}
+        try {
+            await loginUser(formValues.email, formValues.password);
+            setFormDisabled(false);
+            resizeObserver?.disconnect();
+            window.location.href = 'summary.html';
+        } catch (error) {
+            showErrorLogIn();
+        }
+    }
 }
 
 /**
@@ -274,14 +283,12 @@ async function loginCurrentUser() {
  * @returns {Object<string, string>} The submitted form values.
  */
 function dataFromForm() {
-    const form = document.getElementById("sign_log_in_id");
+    const form = document.getElementById('sign_log_in_id');
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
     form.reset();
     return values;
 }
-
-
 
 /**
  * Register a new user and create their profile.
@@ -301,65 +308,13 @@ export async function registerNewUser(values) {
 }
 
 /**
- * Maps a sign-up error to a user-friendly message.
- * @param {{ code?: string } | string} error - The error object (with a Firebase error code) or a plain error string.
- * @returns {string} A user-friendly error message corresponding to the error.
- */
-function signUpErrorMessage(error) {
-    switch (error?.code || error) {
-        case 'auth/email-already-in-use':
-            return 'This email address is already registered.';
-        case 'auth/invalid-email':
-            return 'Please enter a valid, complete email address.';
-        case 'auth/weak-password':
-            return 'Password is too weak. Please choose a stronger one.';
-        case 'Please Check Inputs':
-            return 'Please Check Inputs';
-        default:
-            return 'Sign up failed. Please try again.';
-    }
-}
-
-
-
-/**
  * Show the success dialog and return the user to the login form after a delay.
  */
 function successDialogOpen() {
     successDialog.showModal();
     setTimeout(() => {
         successDialog.close();
-        changeLogOrSignForm("Log in");
-    }, 800);
-}
-
-/**
- * Displays the error dialog with a matching error message and automatically closes it after MAXIMUM_ERROR_DISPLAY_TIME.
- *
- * @param {*} error - The error that occurred (e.g. a Firebase Auth error), passed to signUpErrorMessage.
- * @returns {void}
- */
-export function errorDialogOpenClose(error) {
-    const errorHeader = errorDialog.querySelector('h1');
-    errorHeader.textContent = signUpErrorMessage(error);
-    errorDialog.showModal();
-    setTimeout(() => {
-        errorDialog.close();
-        setFormDisabled(false)
-    }, MAXIMUM_ERROR_DISPLAY_TIME);
-}
-/**
- * Displays a generic "username or password incorrect" error on the login form,
- * then hides it and re-enables the form after a fixed delay.
- * @returns {void}
- */
-function showErrorLogIn() {
-    const errorLogIn = document.getElementById("error_log_in_password_or_both");
-    errorLogIn.textContent = "Username or Password incorrect";
-    errorLogIn.classList.remove("hidden_errors");
-    setTimeout(() => {
-        errorLogIn.classList.add("hidden_errors");
-        setFormDisabled(false);
+        changeLogOrSignForm('Log in');
     }, 800);
 }
 
@@ -369,25 +324,8 @@ function showErrorLogIn() {
  */
 function setFormDisabled(disabled) {
     document
-      .querySelectorAll("#sign_log_in_id input, #sign_log_in_id button")
-      .forEach(element => {
-        element.disabled = disabled;
-      });
-  }
-
-
-/**
- * Displays a "guest login failed" error message on the login form,
- * then hides it and re-enables the form after a fixed delay.
- * @returns {void}
- */
-  function showErrorGuestLogin() {
-    const errorLogIn = document.getElementById("error_log_in_password_or_both");
-    errorLogIn.textContent = "Guest login failed. Please try again.";
-    errorLogIn.classList.remove("hidden_errors");
-    setTimeout(() => {
-        errorLogIn.classList.add("hidden_errors");
-        setFormDisabled(false);
-        errorLogIn.textContent = "Username or Password incorrect";
-    }, MAXIMUM_ERROR_DISPLAY_TIME);
-  }
+        .querySelectorAll('#sign_log_in_id input, #sign_log_in_id button')
+        .forEach((element) => {
+            element.disabled = disabled;
+        });
+}
