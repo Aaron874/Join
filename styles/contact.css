@@ -661,6 +661,13 @@ dialog::backdrop {
   .add_contact_btn_cancel {
     display: none;
   }
+  .icon_mobile_close {
+    display: unset;
+  }
+  
+  .icon_desktop_close {
+    display: none;
+  }
   
   
 }
@@ -768,13 +775,7 @@ dialog::backdrop {
   display: block;
 }
 
-.icon_mobile_close {
-  display: unset;
-}
 
-.icon_desktop_close {
-  display: none;
-}
 
 .add_contact_closing_btn {
   right: 20px;
