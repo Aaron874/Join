@@ -668,6 +668,9 @@ dialog::backdrop {
   .icon_desktop_close {
     display: none;
   }
+  .add_contact_closing_btn {
+    right: 20px;
+  }
   
   
 }
