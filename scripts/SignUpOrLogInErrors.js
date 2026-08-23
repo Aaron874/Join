@@ -1,9 +1,7 @@
-import { handleNewUserSignUp } from './validation.js'
+import { handleNewUserSignUp } from './index.js';
 
-const errorDialog = document.getElementById("sign_up_error_id");
+const errorDialog = document.getElementById('sign_up_error_id');
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
-
-
 
 /**
  * Displays the error messages for all sign-up form fields.
@@ -59,7 +57,7 @@ export function errorDialogOpenClose(error) {
     errorDialog.showModal();
     setTimeout(() => {
         errorDialog.close();
-        setFormDisabled(false)
+        setFormDisabled(false);
     }, MAXIMUM_ERROR_DISPLAY_TIME);
 }
 
@@ -69,27 +67,27 @@ export function errorDialogOpenClose(error) {
  * @returns {void}
  */
 export function showErrorGuestLogin() {
-    const errorLogIn = document.getElementById("error_log_in_password_or_both");
-    errorLogIn.textContent = "Guest login failed. Please try again.";
-    errorLogIn.classList.remove("hidden_errors");
+    const errorLogIn = document.getElementById('error_log_in_password_or_both');
+    errorLogIn.textContent = 'Guest login failed. Please try again.';
+    errorLogIn.classList.remove('hidden_errors');
     setTimeout(() => {
-        errorLogIn.classList.add("hidden_errors");
+        errorLogIn.classList.add('hidden_errors');
         setFormDisabled(false);
-        errorLogIn.textContent = "Username or Password incorrect";
+        errorLogIn.textContent = 'Username or Password incorrect';
     }, MAXIMUM_ERROR_DISPLAY_TIME);
-  }
+}
 
-  /**
+/**
  * Displays a generic "username or password incorrect" error on the login form,
  * then hides it and re-enables the form after a fixed delay.
  * @returns {void}
  */
 export function showErrorLogIn() {
-    const errorLogIn = document.getElementById("error_log_in_password_or_both");
-    errorLogIn.textContent = "Username or Password incorrect";
-    errorLogIn.classList.remove("hidden_errors");
+    const errorLogIn = document.getElementById('error_log_in_password_or_both');
+    errorLogIn.textContent = 'Username or Password incorrect';
+    errorLogIn.classList.remove('hidden_errors');
     setTimeout(() => {
-        errorLogIn.classList.add("hidden_errors");
+        errorLogIn.classList.add('hidden_errors');
         setFormDisabled(false);
     }, 800);
 }
@@ -112,4 +110,55 @@ function signUpErrorMessage(error) {
         default:
             return 'Sign up failed. Please try again.';
     }
+}
+
+/**
+ * @typedef {Object} FieldElements
+ * @property {HTMLInputElement} input - The input element.
+ * @property {HTMLElement} error - The element showing the error message.
+ */
+/**
+ * Retrieves the input and error elements for all sign-up form fields.
+ * @returns {{ username: FieldElements, email: FieldElements, password: FieldElements, confirmPassword: FieldElements, privacyCheckbox: FieldElements }}
+ */
+export function getSignUpErrorElements() {
+    return {
+        username: {
+            input: document.getElementById('sign_up_username_input'),
+            error: document.getElementById('error_sign_up_username'),
+        },
+        email: {
+            input: document.getElementById('sign_up_email_input'),
+            error: document.getElementById('error_sign_up_email'),
+        },
+        password: {
+            input: document.getElementById('sign_up_password_input'),
+            error: document.getElementById('error_sign_up_password'),
+        },
+        confirmPassword: {
+            input: document.getElementById('sign_up_confirm_password_input'),
+            error: document.getElementById('error_sign_up_password_match'),
+        },
+        privacyCheckbox: {
+            input: document.getElementById('sign_up_checkbox'),
+            error: document.getElementById('error_sign_up_privacy_checkbox'),
+        },
+    };
+}
+
+/**
+ * Retrieves the input and error elements for all log-in form fields.
+ * @returns {{ email: FieldElements, password: FieldElements }}
+ */
+export function getLogInErrorElements() {
+    return {
+        email: {
+            input: document.getElementById('login_email_id'),
+            error: document.getElementById('error_log_in_email'),
+        },
+        password: {
+            input: document.getElementById('login_password_id'),
+            error: document.getElementById('error_log_in_password_or_both'),
+        },
+    };
 }

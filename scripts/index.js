@@ -2,7 +2,6 @@ import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 import { logout } from '../firebase/auth.js';
 import {
-    getSignUpErrorElements,
     attachSignUpValidation,
     attachLogInValidation,
     signUpValidation,
@@ -15,6 +14,7 @@ import {
     errorDialogOpenClose,
     showErrorGuestLogin,
     showErrorLogIn,
+    getSignUpErrorElements,
 } from './SignUpOrLogInErrors.js';
 
 const successDialog = document.getElementById('sign_up_success_dialog_id');
@@ -288,6 +288,19 @@ function dataFromForm() {
     const values = Object.fromEntries(formData.entries());
     form.reset();
     return values;
+}
+
+/**
+ * Reads the sign-up form's input values, resets the form,
+ * and registers a new user with the collected data.
+ * @returns {void}
+ */
+export function handleNewUserSignUp() {
+    const form = document.getElementById('sign_log_in_id');
+    const formData = new FormData(form);
+    const values = Object.fromEntries(formData.entries());
+    form.reset();
+    registerNewUser(values);
 }
 
 /**

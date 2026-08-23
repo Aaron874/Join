@@ -1,5 +1,9 @@
-import { signUpElements, logInElements, registerNewUser } from './index.js';
-import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError } from './SignUpOrLogInErrors.js'
+import { signUpElements, logInElements } from './index.js';
+import {
+    showErrorAfterSubmitIfNeeded,
+    errorOrValidAfterSubmit,
+    showError,
+} from './SignUpOrLogInErrors.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -82,54 +86,6 @@ function isSignUpFormValid() {
     const termsMsg = validateTerms(signUpElements.privacyCheckbox.input.checked);
 
     return !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
-}
-
-/**
- * Reads the sign-up form's input values, resets the form,
- * and registers a new user with the collected data.
- * @returns {void}
- */
-export function handleNewUserSignUp() {
-    const form = document.getElementById('sign_log_in_id');
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries());
-    form.reset();
-    registerNewUser(values);
-}
-
-/**
- * @typedef {Object} FieldElements
- * @property {HTMLInputElement} input - The input element.
- * @property {HTMLElement} error - The element showing the error message.
- */
-
-/**
- * Retrieves the input and error elements for all sign-up form fields.
- * @returns {{ username: FieldElements, email: FieldElements, password: FieldElements, confirmPassword: FieldElements, privacyCheckbox: FieldElements }}
- */
-export function getSignUpErrorElements() {
-    return {
-        username: {
-            input: document.getElementById('sign_up_username_input'),
-            error: document.getElementById('error_sign_up_username'),
-        },
-        email: {
-            input: document.getElementById('sign_up_email_input'),
-            error: document.getElementById('error_sign_up_email'),
-        },
-        password: {
-            input: document.getElementById('sign_up_password_input'),
-            error: document.getElementById('error_sign_up_password'),
-        },
-        confirmPassword: {
-            input: document.getElementById('sign_up_confirm_password_input'),
-            error: document.getElementById('error_sign_up_password_match'),
-        },
-        privacyCheckbox: {
-            input: document.getElementById('sign_up_checkbox'),
-            error: document.getElementById('error_sign_up_privacy_checkbox'),
-        },
-    };
 }
 
 /**
@@ -230,8 +186,6 @@ function enableValidationOnBlurOrInput(input, errorEl, validateFn, emptyMessage)
     });
 }
 
-
-
 /**
  * Validates a name value.
  * @param {string} value - The name to validate.
@@ -324,25 +278,6 @@ function validateTerms(checked) {
     }
     return '';
 }
-
-/**
- * Retrieves the input and error elements for all log-in form fields.
- * @returns {{ email: FieldElements, password: FieldElements }}
- */
-export function getLogInErrorElements() {
-    return {
-        email: {
-            input: document.getElementById('login_email_id'),
-            error: document.getElementById('error_log_in_email'),
-        },
-        password: {
-            input: document.getElementById('login_password_id'),
-            error: document.getElementById('error_log_in_password_or_both'),
-        },
-    };
-}
-
-
 
 /**
  * Attaches live validation to the log-in form fields (email and password).
