@@ -1,4 +1,4 @@
-import { handleNewUserSignUp, signUpElements } from './index.js';
+import { handleNewUserSignUp, signUpElements, MAXIMUM_TIME_DIALOGS } from './index.js';
 
 const errorDialog = document.getElementById('sign_up_error_id');
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
@@ -89,7 +89,7 @@ export function showErrorLogIn() {
     setTimeout(() => {
         errorLogIn.classList.add('hidden_errors');
         setFormDisabled(false);
-    }, 800);
+    }, MAXIMUM_TIME_DIALOGS);
 }
 
 /**

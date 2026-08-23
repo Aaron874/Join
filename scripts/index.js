@@ -8,14 +8,13 @@ import {
     validationBeforLogIn,
     setupSignUpValidationListener,
     stopSignUpValidationListener,
- 
 } from '../scripts/validation.js';
 import {
     errorDialogOpenClose,
     showErrorGuestLogin,
     showErrorLogIn,
     getSignUpErrorElements,
-    getLogInErrorElements
+    getLogInErrorElements,
 } from './SignUpOrLogInErrors.js';
 
 const successDialog = document.getElementById('sign_up_success_dialog_id');
@@ -25,6 +24,7 @@ const container = document.querySelector('main');
 const footer = document.querySelector('footer');
 const content = document.querySelector('.login_section');
 let resizeObserver;
+export const MAXIMUM_TIME_DIALOGS = 800;
 export let signUpElements = null;
 export let logInElements = null;
 
@@ -183,8 +183,8 @@ async function createGuestUser() {
 
 /**
  * Switches the container between the sign-up and log-in forms.
- * Clears the current form, toggles the sign-up header/footer visibility,
- * renders the selected form template, and sets up its validation.
+ * Clears the current form, toggles the container styles, renders the
+ * selected form template, and sets up its validation and listeners.
  * @param {"Sign up" | "Log in"} LogOrSign - Which form to display.
  * @returns {void}
  */
@@ -271,7 +271,7 @@ async function loginCurrentUser() {
         try {
             await loginUser(formValues.email, formValues.password);
             setFormDisabled(false);
-            resetSinglePasswordIcon('login_password_id', 'log_in_password_lock_icon')
+            resetSinglePasswordIcon('login_password_id', 'log_in_password_lock_icon');
             resizeObserver?.disconnect();
             window.location.href = 'summary.html';
         } catch (error) {
@@ -306,8 +306,9 @@ export function handleNewUserSignUp() {
 }
 
 /**
- * Register a new user and create their profile.
- * @param {{email: string, password: string, username: string}} values - Registration details.
+ * Registers a new user with the given form values, creates their profile,
+ * and shows a success dialog, or displays an error dialog on failure.
+ * @param {{ username: string, email: string, password: string }} values - The sign-up form values.
  * @returns {Promise<void>}
  */
 export async function registerNewUser(values) {
@@ -317,24 +318,36 @@ export async function registerNewUser(values) {
         await createUserProfile(values.username, values.email);
         successDialogOpen();
         setFormDisabled(false);
-        resetPasswordIcon()
+        resetPasswordIcon();
     } catch (error) {
         errorDialogOpenClose(error);
     }
 }
 
+/**
+ * Resets the password and confirm password fields and their icons
+ * to their default (masked, lock icon) state.
+ * @returns {void}
+ */
 function resetPasswordIcon() {
     resetSinglePasswordIcon('sign_up_password_input', 'password_lock_icon');
     resetSinglePasswordIcon('sign_up_confirm_password_input', 'confirm_password_lock_icon');
-  }
-  
-  function resetSinglePasswordIcon(inputId, iconId) {
+}
+
+/**
+ * Resets a single password field and its icon to the default
+ * (masked, lock icon) state.
+ * @param {string} inputId - The ID of the password input element.
+ * @param {string} iconId - The ID of the icon element.
+ * @returns {void}
+ */
+function resetSinglePasswordIcon(inputId, iconId) {
     let input = document.getElementById(inputId);
     let icon = document.getElementById(iconId);
     input.type = 'password';
     icon.src = 'assets/img/lock.webp';
     icon.classList.remove('clickable');
-  }
+}
 
 /**
  * Show the success dialog and return the user to the login form after a delay.
@@ -344,7 +357,7 @@ function successDialogOpen() {
     setTimeout(() => {
         successDialog.close();
         changeLogOrSignForm('Log in');
-    }, 800);
+    }, MAXIMUM_TIME_DIALOGS);
 }
 
 /**
