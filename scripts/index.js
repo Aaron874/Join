@@ -5,16 +5,17 @@ import {
     attachSignUpValidation,
     attachLogInValidation,
     signUpValidation,
-    getLogInErrorElements,
     validationBeforLogIn,
     setupSignUpValidationListener,
     stopSignUpValidationListener,
+ 
 } from '../scripts/validation.js';
 import {
     errorDialogOpenClose,
     showErrorGuestLogin,
     showErrorLogIn,
     getSignUpErrorElements,
+    getLogInErrorElements
 } from './SignUpOrLogInErrors.js';
 
 const successDialog = document.getElementById('sign_up_success_dialog_id');
@@ -270,6 +271,7 @@ async function loginCurrentUser() {
         try {
             await loginUser(formValues.email, formValues.password);
             setFormDisabled(false);
+            resetSinglePasswordIcon('login_password_id', 'log_in_password_lock_icon')
             resizeObserver?.disconnect();
             window.location.href = 'summary.html';
         } catch (error) {
@@ -315,10 +317,24 @@ export async function registerNewUser(values) {
         await createUserProfile(values.username, values.email);
         successDialogOpen();
         setFormDisabled(false);
+        resetPasswordIcon()
     } catch (error) {
         errorDialogOpenClose(error);
     }
 }
+
+function resetPasswordIcon() {
+    resetSinglePasswordIcon('sign_up_password_input', 'password_lock_icon');
+    resetSinglePasswordIcon('sign_up_confirm_password_input', 'confirm_password_lock_icon');
+  }
+  
+  function resetSinglePasswordIcon(inputId, iconId) {
+    let input = document.getElementById(inputId);
+    let icon = document.getElementById(iconId);
+    input.type = 'password';
+    icon.src = 'assets/img/lock.webp';
+    icon.classList.remove('clickable');
+  }
 
 /**
  * Show the success dialog and return the user to the login form after a delay.

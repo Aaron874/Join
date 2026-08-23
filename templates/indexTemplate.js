@@ -41,7 +41,7 @@ function signUpTemplate() {
                             placeholder="Password"
                             autocomplete="off"
                         />
-                        <img src="assets/img/lock.webp" alt="Lock Icon" />
+                        <img id="password_lock_icon" src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
                     <div id="error_sign_up_password" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
                     Password required
@@ -54,7 +54,7 @@ function signUpTemplate() {
                             placeholder="Confirm Password"
                             autocomplete="off"
                         />
-                        <img src="assets/img/lock.webp" alt="Lock Icon" />
+                        <img id="confirm_password_lock_icon" src="assets/img/lock.webp" alt="Lock Icon" />
                     </div>
                     <div id="error_sign_up_password_match" class="alert_log_in hidden_errors" role="alert" aria-live="assertive">
                     Passwords do not match
@@ -95,7 +95,7 @@ function signInTemplate() {
                     id="login_password_id"
                     placeholder="Password"
                     >
-                <img src="assets/img/lock.webp" alt="password lock sign">
+                <img id="log_in_password_lock_icon" src="assets/img/lock.webp" alt="password lock sign">
                 </div>
                 <div
                     id="error_log_in_password_or_both"

@@ -327,6 +327,11 @@ dialog::backdrop {
     margin: 4px 0 4px 0;
 }
 
+.clickable {
+    cursor: pointer;
+    pointer-events: unset !important ;
+}
+
 /* Unlike `.alert_log_in` (a compact single line reserved so field errors
    don't shift focus/layout), this box has its own border/background/padding
    and reserved ~60px even while empty — there's nothing like it in Figma.

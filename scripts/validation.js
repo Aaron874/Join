@@ -121,8 +121,38 @@ export function attachSignUpValidation(elements) {
         'Confirm Pwd must not be empty.'
     );
     confirmPasswordListener(elements);
+    passwordIconListener(elements.password.input, "password")
+    passwordIconListener(elements.confirmPassword.input, "confirm_password")
     checkBoxListener(elements);
 }
+
+function passwordIconListener(input, whichPassword) {
+    let icon = document.getElementById(whichPassword + '_lock_icon')
+    input.addEventListener('input', () => {
+      if (!input.value) {
+        icon.src = 'assets/img/lock.webp';
+        icon.classList.remove('clickable');
+        return
+      } 
+      icon.classList.add('clickable');
+      icon.src = input.type === 'password'
+        ? 'assets/img/visibility_off.webp'
+        : 'assets/img/visibility.webp';
+    });
+    passwordToggleListener(input, icon)
+  }
+
+  function passwordToggleListener(input, icon) {
+    icon.addEventListener('click', () => {
+      if (!input.value) return; 
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      icon.src = isPassword
+        ? 'assets/img/visibility.webp'
+        : 'assets/img/visibility_off.webp';
+    input.focus();
+    });
+  }
 
 /**
  * Re-validates the confirm password field whenever the password field
@@ -298,6 +328,7 @@ export function attachLogInValidation(elements) {
         validateLogInPassword,
         'Password must not be empty.'
     );
+    passwordIconListener(elements.password.input, 'log_in_password')
 }
 
 /**
