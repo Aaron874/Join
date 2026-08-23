@@ -309,7 +309,7 @@ dialog::backdrop {
     color: #e60026;
     visibility: visible;
     opacity: 1;
-    min-height: 19.5px;
+    min-height: 20px;
     font-weight: 400;
 }
 

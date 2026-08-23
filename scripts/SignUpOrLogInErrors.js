@@ -1,4 +1,4 @@
-import { handleNewUserSignUp } from './index.js';
+import { handleNewUserSignUp, signUpElements } from './index.js';
 
 const errorDialog = document.getElementById('sign_up_error_id');
 const MAXIMUM_ERROR_DISPLAY_TIME = 3000;
