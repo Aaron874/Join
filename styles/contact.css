@@ -815,10 +815,19 @@ footer {
     width: calc(100% - 8px);
     margin: 0 auto 0 auto;
   }
+  .mobile_back_btn {
+    right: 5px;
+}
 }
 
 @media (max-height: 720px) and (max-width: 700px) {
   .contacts_single_view_container {
-    min-height: calc(100dvh - 16px);
+    min-height: calc(100dvh - 176px);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 400px) {
+  .mobile_back_btn {
+    top: 100px
   }
 }
