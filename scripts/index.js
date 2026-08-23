@@ -56,16 +56,10 @@ document.addEventListener('submit', (event) => {
 });
 
 /**
- * Registers a global click event listener that handles the login/registration
- * form interactions. Creates a guest user when the guest login button is
- * clicked, switches to the sign-up form and reveals the "back to login" button
- * when the sign-up link is clicked, or switches back to the login form and
- * hides the "back to login" button when it is clicked.
- *
+ * Delegated click handler for guest login, switching to the sign-up
+ * form, and switching back to the log-in form.
+ * @param {MouseEvent} event - The click event.
  * @returns {void}
- *
- * @example
- * // Registered once at module load; no manual invocation needed.
  */
 document.addEventListener('click', (event) => {
     if (event.target.matches('.guest_login_btn')) {
@@ -74,20 +68,30 @@ document.addEventListener('click', (event) => {
         return;
     }
     if (event.target.matches('#change_to_sign_up_btn')) {
-        document.getElementById('back_to_log_in_btn_id').classList.remove('hidden');
-        document.querySelector('main').classList.add('sign-up-active');
-        changeLogOrSignForm('Sign up');
+        signOrLogBtns('Sign up');
         return;
     }
     if (
         event.target.closest('#back_to_log_in_btn_id') ||
         event.target.closest('.back_to_log_in_btn')
     ) {
-        document.getElementById('back_to_log_in_btn_id').classList.add('hidden');
-        document.querySelector('main').classList.remove('sign-up-active');
-        changeLogOrSignForm('Log in');
+        signOrLogBtns('Log in');
     }
 });
+
+/**
+ * Toggles the visibility of the "back to login" button and the
+ * sign-up-active state on the main container, then renders the
+ * selected form.
+ * @param {"Sign up" | "Log in"} showForm - Which form to display.
+ * @returns {void}
+ */
+function signOrLogBtns(showForm) {
+    const isSignUp = showForm === 'Sign up';
+    document.getElementById('back_to_log_in_btn_id').classList.toggle('hidden', !isSignUp);
+    document.querySelector('main').classList.toggle('sign-up-active', isSignUp);
+    changeLogOrSignForm(showForm);
+}
 
 /**
  * Initializes the login page.
@@ -189,18 +193,16 @@ async function createGuestUser() {
  * @returns {void}
  */
 function changeLogOrSignForm(LogOrSign) {
+    const isSignUp = LogOrSign === 'Sign up';
     let logSignContainer = document.getElementById('sign_log_in_id');
     logSignContainer.innerHTML = '';
-    if (LogOrSign === 'Sign up') {
-        changeStylesLogOrSignForm(LogOrSign);
-        logSignContainer.innerHTML += signUpTemplate();
+    changeStylesLogOrSignForm(LogOrSign);
+    logSignContainer.innerHTML = isSignUp ? signUpTemplate() : signInTemplate();
+    if (isSignUp) {
         signUpElements = getSignUpErrorElements();
         attachSignUpValidation(signUpElements);
         setupSignUpValidationListener();
-    }
-    if (LogOrSign === 'Log in') {
-        changeStylesLogOrSignForm(LogOrSign);
-        logSignContainer.innerHTML += signInTemplate();
+    } else {
         logInElements = getLogInErrorElements();
         attachLogInValidation(logInElements);
         stopSignUpValidationListener();
@@ -217,12 +219,12 @@ function changeStylesLogOrSignForm(LogOrSign) {
     if (LogOrSign === 'Sign up') {
         signUpContainerHeader.classList.add('hidden');
         signUpContainerFooter.classList.add('hidden');
-        renderSignup();
+        observerSignUp();
     }
     if (LogOrSign === 'Log in') {
         signUpContainerHeader.classList.remove('hidden');
         signUpContainerFooter.classList.remove('hidden');
-        renderLogin();
+        observerLogIn();
     }
 }
 
@@ -231,7 +233,7 @@ function changeStylesLogOrSignForm(LogOrSign) {
  *
  * @returns {void}
  */
-function renderLogin() {
+function observerLogIn() {
     if (resizeObserver) {
         resizeObserver.disconnect();
         resizeObserver = null;
@@ -245,7 +247,7 @@ function renderLogin() {
  *
  * @returns {void}
  */
-function renderSignup() {
+function observerSignUp() {
     if (resizeObserver) {
         resizeObserver.disconnect();
         resizeObserver = null;
