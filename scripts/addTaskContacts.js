@@ -1,5 +1,9 @@
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { getAllContacts } from "../firebase/contacts.service.js";
+import { 
+    contactsTemplate,
+    templateSelectedContacts
+ } from "../templates/addTaskTemplates.js";
 
 let selectedContacts = [];
 let contactsList = [];
@@ -54,7 +58,7 @@ function renderSearchedContacts(searchedContacts, results) {
         const contactName =
             results[index].name[0].toUpperCase() + results[index].name.slice(1);
         searchedContacts.innerHTML +=
-            contactsTemplate(contactName, results[index].color, shortName);
+            contactsTemplate(contactName, results[index].color, shortName, selectedContacts);
     }
 }
 
@@ -96,7 +100,7 @@ function renderContacts(dropdown) {
         const person =
             contactsList[index].name[0].toUpperCase() + contactsList[index].name.slice(1);
         const color = contactsList[index].color;
-        dropdown.innerHTML += contactsTemplate(person, color, shortName);
+        dropdown.innerHTML += contactsTemplate(person, color, shortName, selectedContacts);
     }
 }
 
@@ -132,20 +136,20 @@ function clearInput() {
  * @param {string} shortName - The initials of the contact.
  * @returns {string} The HTML template for the contact.
  */
-function contactsTemplate(contactName, color, shortName) {
-    const checked = selectedContacts.some(
-        contact => contact.name.trim() === contactName.trim()
-    );
-    return `
-        <div class="contacts_div">
-            <div class="contacts_dropdown_initials-plus-name_style">
-                <div class="contacts_list_name_symbol" style="--contact-color: ${color};">${shortName}</div>
-                <span>${contactName}</span>
-            </div>
-            <input class="contacts_input" type="checkbox" ${checked ? 'checked' : ''}
-                onchange="toggleContact('${contactName}', '${shortName}', '${color}')"/>
-        </div>`;
-}
+// function contactsTemplate(contactName, color, shortName) {
+//     const checked = selectedContacts.some(
+//         contact => contact.name.trim() === contactName.trim()
+//     );
+//     return `
+//         <div class="contacts_div">
+//             <div class="contacts_dropdown_initials-plus-name_style">
+//                 <div class="contacts_list_name_symbol" style="--contact-color: ${color};">${shortName}</div>
+//                 <span>${contactName}</span>
+//             </div>
+//             <input class="contacts_input" type="checkbox" ${checked ? 'checked' : ''}
+//                 onchange="toggleContact('${contactName}', '${shortName}', '${color}')"/>
+//         </div>`;
+// }
 
 /**
  * Adds or removes a contact from the selected contacts.
@@ -208,13 +212,13 @@ function showSelectedContacts() {
  * @param {string} color - The color assigned to the contact.
  * @returns {string} The HTML template for the selected contact.
  */
-function templateSelectedContacts(shortName, color) {
-    return `<div>
-        <div class="contacts_list_name_symbol" style="--contact-color: ${color};">
-            ${shortName}
-        </div>
-    </div>`;
-}
+// function templateSelectedContacts(shortName, color) {
+//     return `<div>
+//         <div class="contacts_list_name_symbol" style="--contact-color: ${color};">
+//             ${shortName}
+//         </div>
+//     </div>`;
+// }
 
 /**
  * Returns the selected contacts in the format used for task assignment.

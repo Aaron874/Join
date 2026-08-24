@@ -17,13 +17,13 @@ export function contactsTemplate(
         contact => contact.name.trim() === contactName.trim()
     );
     return `
-        <div class="contacts_div">
+        <label class="contacts_div">
             <div class="contacts_dropdown_initials-plus-name_style">
                 <div class="contacts_list_name_symbol" style="--contact-color: ${color};" >${shortName}</div>
                 <span>${contactName}</span>
             </div>
             <input class="contacts_input" type="checkbox" ${checked ? 'checked' : ''} onchange="toggleContact('${contactName}', '${shortName}', '${color}')"/>
-        </div>`;
+        </label>`;
 }
 
 /**

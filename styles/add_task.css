@@ -339,6 +339,20 @@ input::placeholder {
     align-items: center;
     min-height: 46px;
     padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+}
+
+.contacts_div:hover {
+    background-color: #f5f6f7;
+}
+
+.contacts_div:has(.contacts_input:checked) {
+    background-color: #2A3647;
+    color: white;
+}
+
+.contacts_div:has(.contacts_input:checked):hover {
+    background-color: #091931;
 }
 
 .div_contacts_initials {
