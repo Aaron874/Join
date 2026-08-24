@@ -645,13 +645,14 @@ input::placeholder {
     display: none;
     align-items: center;
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 16px;
     transform: translateY(-50%);
 }
 
 .position-buttons-subtask-input {
     position: relative;
+    padding-bottom: 16px;
 }
 
 .input-right:not(:placeholder-shown) + .subtask-edit-actions {
@@ -688,7 +689,7 @@ input::placeholder {
     height: 24px;
     background-color: #D1D1D1;
 }
-
+/* 
 .subtask-item {
   min-height: 40px;
   display: flex;
@@ -705,6 +706,110 @@ input::placeholder {
 .subtask-item:hover .subtask-actions {
     opacity: 1;
     visibility: visible;
+} */
+
+
+#subtasks-list {
+    width: 100%;
+}
+
+.subtask-item {
+    width: 100%;
+    min-height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 4px 16px 4px 22px;
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    transition: background-color 100ms ease;
+}
+
+.subtask-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-width: 0;
+}
+
+.subtask-bullet {
+    width: 5px;
+    height: 5px;
+
+    flex-shrink: 0;
+
+    color: #000000;
+}
+
+.subtask-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subtask-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 100ms ease;
+}
+
+.subtask-item:hover {
+    background-color: #eeeeee;
+}
+
+.subtask-item:hover .subtask-actions {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subtask-action-btn + .subtask-action-btn {
+    position: relative;
+    margin-left: 8px;
+}
+
+.subtask-action-btn + .subtask-action-btn::before {
+    content: "";
+
+    position: absolute;
+    left: -8px;
+
+    width: 1px;
+    height: 24px;
+
+    background-color: #d1d1d1;
+}
+
+.subtask-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    background: transparent;
+
+    color: #2a3647;
+
+    cursor: pointer;
+}
+
+.subtask-action-btn:hover {
+    transform: scale(1.08);
 }
 
 @media (max-height: 900px) {
