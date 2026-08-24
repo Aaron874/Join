@@ -316,6 +316,7 @@ input::placeholder {
     flex-direction: column;
     max-height: calc(3 * 46px);
     overflow-y: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .contacts_list_name_symbol {
@@ -347,7 +348,7 @@ input::placeholder {
 }
 
 .contacts_div:has(.contacts_input:checked) {
-    background-color: #2A3647;
+    background-color: #2a3647;
     color: white;
 }
 
@@ -357,10 +358,67 @@ input::placeholder {
 
 .div_contacts_initials {
     display: none;
+    align-items: center;
 }
 
 .contacts_input {
     margin-bottom: 0;
+}
+
+.contacts_div:has(.contacts_input:checked) {
+    background-color: #2a3647;
+    color: white;
+}
+
+.contacts_input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 2px solid #2a3647;
+    border-radius: 3px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    padding-left: 0 !important;
+}
+
+.contacts_input:checked {
+    border-color: white;
+}
+
+.contacts_input:checked::before {
+    content: '';
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    right: -3px;
+    top: -3px;
+
+    background-color: #2a3647;
+}
+
+.contacts_input:checked::before:hover {
+    background-color: #091931;
+}
+
+.contacts_input:checked::after {
+    content: '';
+    position: absolute;
+
+    width: 5px;
+    height: 12px;
+
+    left: 5px;
+    top: -5px;
+
+    border: solid white;
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(38deg);
 }
 
 .dropdown-arrow {
@@ -603,7 +661,7 @@ input::placeholder {
         width: auto;
         padding-right: 48px;
         left: 0;
-        right: 0;
+        right: max(48px, calc((100vw - 1440px)));
         padding-top: 14px;
         padding-bottom: 14px;
     }

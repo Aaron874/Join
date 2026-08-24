@@ -132,7 +132,7 @@ function colorChangePriority(element) {
  * Sets the default priority to medium.
  *
  * @returns {void}
- */
+ */ 
 function setDefaultPriority() {
     colorChangePriority(document.getElementById('priority-medium'));
 }

@@ -35,10 +35,40 @@ export function contactsTemplate(
  */
 export function templateSelectedContacts(shortName, color) {
     return `<div>
+    <div>
         <div class="contacts_list_name_symbol"
             style="--contact-color: ${color};">
             ${shortName}
         </div>
+    </div>
     </div>`;
+}
+
+export function templatePlusSymbole() {
+    return `
+        <div class="your_element">
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M12 4.5V19.5"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M4.5 12H19.5"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </div>
+    `;
+
 }
 

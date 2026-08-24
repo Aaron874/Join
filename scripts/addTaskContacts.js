@@ -2,7 +2,8 @@ import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { getAllContacts } from "../firebase/contacts.service.js";
 import { 
     contactsTemplate,
-    templateSelectedContacts
+    templateSelectedContacts,
+    templatePlusSymbole
  } from "../templates/addTaskTemplates.js";
 
 let selectedContacts = [];
@@ -197,11 +198,15 @@ function showSelectedContacts() {
     const contactsDiv = document.getElementById('div_contacts_initials');
     contactsDiv.style.display = 'flex';
     contactsDiv.innerHTML = '';
-    for (let index = 0; index < selectedContacts.length; index++) {
+    const maxVisibleContacts = Math.min(selectedContacts.length, 4);
+    for (let index = 0; index < maxVisibleContacts; index++) {
         contactsDiv.innerHTML += templateSelectedContacts(
             selectedContacts[index].shortName,
             selectedContacts[index].color
         );
+    }
+    if (selectedContacts.length > 4) {
+        contactsDiv.innerHTML += templatePlusSymbole();
     }
 }
 
