@@ -311,6 +311,10 @@ footer {
   color: var(--color-black);
 }
 
+.button_pushed_color {
+  background-color: #091931;
+}
+
 @media (max-width: 768px) {
   .legal-page {
     padding: 24px;

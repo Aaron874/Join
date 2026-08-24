@@ -106,6 +106,7 @@ body {
     align-items: center;
     overflow-y: scroll;
     scrollbar-color: #a8a8a8 transparent;
+    background-color: #ffffff;
 }
 
 .contacts_single_view_header {
@@ -146,6 +147,8 @@ body {
     font-size: 21px;
     font-weight: 700;
     color: #ffffff;
+    font-family: 'Inter', sans-serif;;
+
 }
 
 .contacts_list_letter_seperator {
@@ -154,7 +157,7 @@ body {
     border-bottom: 1px solid #d1d1d1;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 38px;
     font-size: 20px;
     font-weight: 400;
     flex-shrink: 0;
@@ -174,6 +177,10 @@ body {
     justify-content: center;
     color: white;
     font-size: 47px;
+    font-weight: 400;
+    border: 3px solid #ffffff;
+    box-shadow: 0px 0px 4px 0px #00000066;
+    font-family: 'Inter', sans-serif;;
 }
 
 .contacts_single_view_content_header {
@@ -535,6 +542,8 @@ dialog::backdrop {
     display: unset;
 }
 
+
+
 @media (max-width: 1300px) {
     .contacts_single_view_container {
         align-items: center;
@@ -739,10 +748,20 @@ dialog::backdrop {
 
     .contacts_single_view_content_header {
         flex-direction: row;
+        margin-top: 25px;
     }
 
     .contacts_single_view_name {
         text-align: unset;
+        font-weight: 700;
+        font-size: 36px;
+    }
+    .contacts_single_view_header h2 {
+        font-size: 47px;
+    }
+    .contacts_single_view_header h3 {
+        font-size: 20px;
+        background-size: 90px 3px;
     }
 
     .contacts_single_view_actions {
@@ -763,6 +782,7 @@ dialog::backdrop {
 
     .mobile_back_btn {
         display: block;
+        right: 16px;
     }
 
     .add_contact_closing_btn {
@@ -774,6 +794,15 @@ dialog::backdrop {
         flex-wrap: wrap;
         width: 100%;
     }
+    .header svg {
+      left: 16px;
+    }
+    .contacts_icon {
+        min-width: 80px;
+        height: 80px;
+        font-size: 27px;
+    }
+
 }
 
 @media (max-width: 370px) {
@@ -791,16 +820,9 @@ dialog::backdrop {
     .contacts_single_view_name {
         font-size: 24px;
     }
-    .contacts_icon {
-        min-width: 60px;
-        height: 60px;
-        font-size: 27px;
-    }
+
     .add_contact_form_section {
         width: calc(100% - 8px);
-    }
-    .mobile_back_btn {
-        right: 5px;
     }
     .add_contact_text_left p {
         font-size: 20px;
@@ -808,6 +830,7 @@ dialog::backdrop {
     .add_contact_text_left h3 {
         font-size: 45px;
     }
+
 }
 
 @media (max-height: 720px) and (max-width: 700px) {
