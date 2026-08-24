@@ -206,9 +206,9 @@
                     <p>Assigned to</p>
 
                     <div class="assigned-dropdown" id="contacts-dropdown-wrapper">
-                        <input oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
+                        <input onclick="dropdownContactsDown()" oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
                             class="assigned-trigger">
-                        <span class="span_selected_contacts font-size" id="selected_contacts">Select contacts to
+                        <span onclick="dropdownContactsDown()" class="span_selected_contacts font-size" id="selected_contacts">Select contacts to
                             assign</span>
 
                         <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
@@ -238,7 +238,7 @@
 
                     <div class="assigned-dropdown" id="category-dropdown-wrapper">
                         <button type="button" class="assigned-trigger">
-                            <span class="font-size" id="selected_category_text">Select task category</span>
+                            <span onclick="dropdownCategoryDown()" class="font-size" id="selected_category_text">Select task category</span>
 
                             <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_category"
                                 onclick="dropdownCategoryDown()">
