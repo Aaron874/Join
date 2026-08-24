@@ -246,12 +246,17 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 5;
     border: none;
     padding: 0;
     border-radius: 20px;
+    transform: translate(-50%, calc(-50% + 100vh));
+    transition: transform 500ms ease-out;
 }
+
+.contact_dialog.open {
+    transform: translate(-50%, -50%);
+  }
 
 dialog::backdrop {
     background: rgba(0, 0, 0, 0.3);
@@ -339,6 +344,11 @@ dialog::backdrop {
     padding: 10px 10px 10px 15px;
 }
 
+.contact_input_wrapper input:focus-visible {
+    outline: 1px solid #124658;
+    
+}
+
 .contact_input_wrapper input::placeholder {
     color: #d1d1d1;
 }
@@ -356,7 +366,7 @@ dialog::backdrop {
 
 .contact_btn_submit {
     background-color: #2a3647;
-    padding: 10px;
+    padding: 10px 18px;
     color: #ffffff;
     font-size: 21px;
     font-weight: 700;
@@ -396,7 +406,7 @@ dialog::backdrop {
     align-items: center;
     gap: 5px;
     border: #2a3647 1px solid;
-    padding: 10px 17.5px 10px 17.5px;
+    padding: 10px 18px 10px 18px;
     border-radius: 10px;
 }
 
@@ -416,6 +426,8 @@ dialog::backdrop {
     cursor: pointer;
     overflow: hidden;
     margin: 50px 30px 0 30px;
+    border: 3px solid #ffffff;
+    box-shadow: 0px 0px 4px 0px #00000066;
 }
 
 .contact_color_picker img {
@@ -748,7 +760,6 @@ dialog::backdrop {
 
     .contacts_single_view_content_header {
         flex-direction: row;
-        margin-top: 25px;
     }
 
     .contacts_single_view_name {
@@ -786,7 +797,7 @@ dialog::backdrop {
     }
 
     .add_contact_closing_btn {
-        right: 20px;
+        right: 16px;
     }
     footer {
         display: flex;
@@ -801,6 +812,9 @@ dialog::backdrop {
         min-width: 80px;
         height: 80px;
         font-size: 27px;
+    }
+    .contact_input_wrapper {
+        margin-bottom: 20px;
     }
 
 }

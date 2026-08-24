@@ -10,7 +10,7 @@ import {
     writeNewContact,
     MOBILE_BREAKPOINT,
     searchIndex,
-    removeContactFromDom
+    removeContactFromDom,
 } from './contacts.js';
 
 import { deleteContact } from '../firebase/contacts.service.js';
@@ -54,7 +54,7 @@ document.addEventListener('click', (e) => {
  * openAddContactDialog();
  */
 function openAddContactDialog() {
-    contactDialog.showModal();
+    openContactDialog();
     contactDialogHeaderSwitch();
     contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
     openEditInput();
@@ -202,7 +202,7 @@ export function closeAddContactDialog() {
     document.documentElement.style.setProperty('--contact-color', DEFAULT_CONTACT_COLOR);
     deleteInputValues();
     resetPersonInitials();
-    contactDialog.close();
+    closeContactDialog();
 }
 
 /**
@@ -297,7 +297,7 @@ export function contactListInitials(contactListName) {
  * openEditContactDialog(contact.id);
  */
 export function openEditContactDialog(id) {
-    contactDialog.showModal();
+    openContactDialog();
     contactDialogHeaderSwitch(true);
     openEditInput('edit', id);
     startEventListenerColorPicker();
@@ -391,10 +391,55 @@ export function eventListenerDeleteContactDialog(
         removeContactFromDom(contactId);
         deleteDialog.close();
         if (contactDialog.open) {
-            contactDialog.close();
+            closeContactDialog();
         }
     });
     cancelButton.addEventListener('click', () => {
         deleteDialog.close();
+    });
+}
+
+/**
+ * Opens the contact dialog and triggers its entrance animation.
+ * @returns {void}
+ */
+function openContactDialog() {
+    contactDialog.showModal();
+    requestAnimationFrame(() => {
+        contactDialog.classList.add('open');
+    });
+}
+/**
+ * Closes the contact dialog, waiting for its exit animation to finish
+ * before actually closing it.
+ * @returns {void}
+ */
+function closeContactDialog() {
+    contactDialog.classList.remove('open');
+    setTimeout(() => {
+        contactDialog.close();
+    }, 300);
+}
+/**
+ * Starts the contact dialog's close listeners (Escape key and backdrop click).
+ * @returns {void}
+ */
+startContactDialogCloseListeners();
+
+/**
+ * Attaches close listeners to the contact dialog: intercepts the
+ * Escape key to close it with the animation, and closes it when
+ * the backdrop (outside the dialog content) is clicked.
+ * @returns {void}
+ */
+function startContactDialogCloseListeners() {
+    contactDialog.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        closeContactDialog();
+    });
+    contactDialog.addEventListener('click', (event) => {
+        if (event.target === contactDialog) {
+            closeContactDialog();
+        }
     });
 }
