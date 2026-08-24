@@ -173,7 +173,7 @@ input::placeholder {
 }
 
 .input-right:hover {
-    border: none;
+    border: 1px solid white;
 }
 
 .style-buttons {
@@ -248,7 +248,7 @@ input::placeholder {
 }
 
 .assigned-trigger:hover {
-    border: none;
+    border: 1px solid white;
 }
 
 .assigned-menu {
