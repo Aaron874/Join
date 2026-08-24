@@ -1,9 +1,13 @@
 body {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 h1 .layout {
     display: flex;
+}
+
+.main-content {
+    max-width: 1208px !important;
 }
 
 .add_task-h1 {
@@ -64,7 +68,7 @@ input {
 }
 
 input::placeholder {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     line-height: 20px;
     color: #d9d9d9;
@@ -73,7 +77,7 @@ input::placeholder {
 }
 
 .date-input {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 400;
     color: #d9d9d9;
@@ -93,7 +97,7 @@ input::placeholder {
     display: flex;
     position: fixed;
     bottom: 32px;
-    right: 48px;
+    right: max(48px, calc((100vw - 1392px)));
     gap: 8px;
 }
 
@@ -153,7 +157,7 @@ input::placeholder {
 }
 
 .textarea-description::placeholder {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 20px;
@@ -161,7 +165,6 @@ input::placeholder {
     letter-spacing: 0;
     opacity: 1;
 }
-
 
 .input-right {
     height: 45px;
@@ -480,7 +483,7 @@ input::placeholder {
     border: 1px solid #d1d1d1;
     border-radius: 10px;
 
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 20px;
     color: #2a3647;
 
@@ -534,16 +537,13 @@ input::placeholder {
     opacity: 1;
 }
 
-
 .description-padding {
     padding-top: 16px !important;
 }
 
-
 .error {
     border: 1px solid #ff8190 !important;
 }
-
 
 .footer {
     display: none;
@@ -639,7 +639,6 @@ input::placeholder {
 }
 
 @media (max-width: 755px) {
-
     .header-content {
         display: none !important;
     }
@@ -688,7 +687,6 @@ input::placeholder {
 }
 
 @media (max-width: 520px) {
-
     .mobile-joinLogo {
         left: 24px;
     }
@@ -732,14 +730,12 @@ input::placeholder {
 }
 
 @media (max-width: 485px) {
-
     .style-priority {
         gap: 0;
     }
 }
 
 @media (max-width: 450px) {
-
     .mobile-joinLogo {
         left: 16px;
     }

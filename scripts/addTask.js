@@ -6,7 +6,7 @@ import {
     resetContacts
 } from "./addTaskContacts.js";
 
-let priority = "";
+let priority = "medium";
 
 const priorityConfig = {
     urgent: {
@@ -24,6 +24,7 @@ const priorityConfig = {
 };
 
 window.addEventListener('DOMContentLoaded', initAddTask);
+document.addEventListener('DOMContentLoaded', setDefaultPriority);
 
 document.addEventListener('click', event => {
     if (!event.target.closest('#category-dropdown-wrapper')) {
@@ -125,6 +126,15 @@ function colorChangePriority(element) {
     elements.font.classList.add(config.colorClass);
     elements.icon.classList.add(config.colorClass);
     priority = priorityName;
+}
+
+/**
+ * Sets the default priority to medium.
+ *
+ * @returns {void}
+ */
+function setDefaultPriority() {
+    colorChangePriority(document.getElementById('priority-medium'));
 }
 
 /**
@@ -240,6 +250,7 @@ function clearTaskform() {
     resetInputErrors();
     resetTaskFields();
     resetTaskUI();
+    setDefaultPriority();
 }
 
 const titleInput = document.getElementById("task-title");
