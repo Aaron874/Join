@@ -170,6 +170,7 @@ input::placeholder {
     height: 45px;
     border-radius: 10px;
     border: 1px solid #d1d1d1;
+    width: 100%;
 }
 
 .input-right:hover {
@@ -638,6 +639,67 @@ input::placeholder {
 .header-content {
     /* padding-left: 163px !important; */
     width: calc(100% - 232px) !important;
+}
+
+.subtask-edit-actions {
+    display: none;
+    align-items: center;
+    position: absolute;
+    top: 117px;
+    left: 340px;
+}
+
+.input-right:not(:placeholder-shown) + .subtask-edit-actions {
+    display: flex;
+}
+
+.subtask-icon-button {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+
+    color: #2A3647;
+    cursor: pointer;
+}
+
+.subtask-icon-button:hover {
+    background-color: #EEEEEE;
+}
+
+.subtask-icon {
+    display: block;
+}
+
+.subtask-action-separator {
+    width: 1px;
+    height: 24px;
+    background-color: #D1D1D1;
+}
+
+.subtask-item {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.subtask-item>span {
+  flex: 1;
+  text-align: left;
+}
+
+.subtask-item:hover .subtask-actions {
+    opacity: 1;
+    visibility: visible;
 }
 
 @media (max-height: 900px) {

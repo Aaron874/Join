@@ -2,24 +2,46 @@ window.subtasks = [];
 
 document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
 
+function createSubtask() {
+    const input = document.getElementById('task-subtasks');
+    const title = input.value.trim();
+
+    if (!title) return;
+
+    window.subtasks.push({
+        title,
+        completed: false
+    });
+
+    input.value = '';
+    renderAddTaskSubtasks();
+}
+
+function addSubtask(event) {
+    if (event.key !== 'Enter') return;
+
+    event.preventDefault();
+    createSubtask();
+}
+
 /**
  * Handle Enter key presses to add a new subtask.
  *
  * @param {KeyboardEvent} event - The keyboard event from the subtask input.
  */
-function addSubtask(event) {
-    if (event.key !== 'Enter') return;
-    event.preventDefault();
-    const input = event.target;
-    const title = input.value.trim();
-    if (!title) return;
-    window.subtasks.push({
-        title,
-        completed: false
-    });
-    input.value = '';
-    renderAddTaskSubtasks();
-}
+// function addSubtask(event) {
+//     if (event.key !== 'Enter') return;
+//     event.preventDefault();
+//     const input = event.target;
+//     const title = input.value.trim();
+//     if (!title) return;
+//     window.subtasks.push({
+//         title,
+//         completed: false
+//     });
+//     input.value = '';
+//     renderAddTaskSubtasks();
+// }
 
 /**
  * Render the current subtask list inside the add task form.
@@ -119,8 +141,16 @@ function resetSubtasks() {
     renderAddTaskSubtasks();
 }
 
+function deleteSubtaskInput() {
+    const subtaskInput = document.getElementById('task-subtasks');
+    subtaskInput.value = '';
+
+}
+
 window.addSubtask = addSubtask;
 window.resetSubtasks = resetSubtasks;
 window.editSubtask = editSubtask;
 window.saveSubtaskEdit = saveSubtaskEdit;
 window.deleteSubtask = deleteSubtask;
+window.deleteSubtaskInput = deleteSubtaskInput;
+window.createSubtask = createSubtask;
