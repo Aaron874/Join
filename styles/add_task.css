@@ -645,8 +645,13 @@ input::placeholder {
     display: none;
     align-items: center;
     position: absolute;
-    top: 117px;
-    left: 340px;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+}
+
+.position-buttons-subtask-input {
+    position: relative;
 }
 
 .input-right:not(:placeholder-shown) + .subtask-edit-actions {
@@ -772,6 +777,12 @@ input::placeholder {
     }
 }
 
+@media (max-width: 780px) {
+    .footer {
+        display: none !important;
+    }
+}
+
 @media (max-width: 755px) {
     .header-content {
         display: none !important;
@@ -784,7 +795,7 @@ input::placeholder {
     }
 
     .footer {
-        display: flex;
+        display: flex !important;
         position: fixed;
         background-color: #2a3647;
         justify-content: space-around;
