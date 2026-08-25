@@ -143,12 +143,28 @@ body {
     width: 69px;
     height: 69px;
     flex-shrink: 0;
+    border-radius: 50%;
+    color: white;
 }
 
 .summary-icon svg {
     display: block;
     width: 100%;
     height: 100%;
+}
+
+
+
+.summary-icon .summary-icon-bg {
+    fill: #2a3647;
+}
+
+.summary-card:hover .summary-icon {
+    color: #2a3647;
+}
+
+.summary-card:hover .summary-icon .summary-icon-bg {
+    fill: white;
 }
 
 .summary-card:hover .summary-icon {
@@ -238,11 +254,6 @@ body {
 }
 
 @media (max-width: 997px) {
-    /* .summary-top-cards,
-  .summary-bottom-cards {
-    flex-direction: column;
-    align-items: center;
-  } */
 
     .summary-content {
         padding: 16px;
@@ -285,6 +296,11 @@ body {
         left: 16px;
     }
 
+    .summary-heading h1 {
+        font-size: 48px;
+        margin-top: 20px;
+    }
+
     .summary-content {
         align-items: flex-start;
     }
@@ -299,14 +315,18 @@ body {
 
     .summary-card-wide {
         width: calc((100% - 12px) / 2);
-        min-height: 140px;
+        min-height: 110px;
         padding: 16px 8px;
         gap: 10px;
     }
 
+    .summary-urgent-card {
+        min-height: 110px;
+    }
+
     .summary-card-small {
         width: calc((100% - 24px) / 3);
-        min-height: 140px;
+        min-height: 110px;
         padding: 16px 6px;
     }
 
@@ -318,6 +338,10 @@ body {
         font-size: 16px;
     }
 
+    .summary-divider{
+        height: 80px;
+    }
+
     .summary-icon {
         width: 48px;
         height: 48px;
@@ -325,12 +349,14 @@ body {
 
     .summary-dashboard {
         position: relative;
+        gap: 32px;
     }
 
     .summary-metrics {
         opacity: 0;
         animation: showSummary 500ms ease forwards;
         animation-delay: 2s;
+        gap: 16px;
     }
 
     .summary-greeting {
@@ -376,7 +402,21 @@ body {
     }
 
     .summary-greeting strong {
-        font-size: 48px;
+        font-size: 36px;
+    }
+}
+
+@media(max-width: 600px){
+
+    .summary-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        margin-bottom: 32px;
+    }
+
+    .summary-heading span {
+        display: none;
     }
 }
 
@@ -400,7 +440,8 @@ body {
     }
 
     .summary-heading p {
-        font-size: 24px;
+        font-size: 18px;
+        padding-left: 10px;
     }
 
     .summary-content {
@@ -416,7 +457,8 @@ body {
     }
 
     .summary-card {
-        padding: 8px 8px;
+        padding: 8px 10px;
+        height: 110px;
     }
 
     .summary-card-wide {

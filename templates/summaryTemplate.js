@@ -1,9 +1,9 @@
 /**
- * Build the main summary page HTML template.
- *
- * @param {Object} summaryData - Data used to populate the summary view.
- * @returns {string} HTML string for the summary page.
- */
+* Build the main summary page HTML template.
+*
+* @param {Object} summaryData - Data used to populate the summary view.
+* @returns {string} HTML string for the summary page.
+*/
 function getSummaryTemplate(summaryData) {
 return `
 <section class="summary-wrapper">
@@ -27,18 +27,18 @@ return `
 }
 
 /**
- * Build the top summary cards section.
- *
- * @param {Object} summaryData - Data used to populate the top summary cards.
- * @returns {string} HTML string for the top cards section.
- */
+* Build the top summary cards section.
+*
+* @param {Object} summaryData - Data used to populate the top summary cards.
+* @returns {string} HTML string for the top cards section.
+*/
 function getSummaryTopCardsTemplate(summaryData) {
 return `
 <div class="summary-top-cards">
     <a class="summary-card summary-card-wide" href="board.html">
         <span class="summary-icon summary-icon-todo">
             <svg width="69" height="69" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="34.5" cy="34.5" r="34.5" fill="#2A3647" />
+                <circle class="summary-icon-bg" cx="34.5" cy="34.5" r="34.5" />
 
                 <mask id="todo-icon-mask" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="18" y="18" width="33"
                     height="33">
@@ -48,7 +48,7 @@ return `
                 <g mask="url(#todo-icon-mask)">
                     <path
                         d="M25.1667 43.8332H27.0333L38.5333 32.3332L36.6667 30.4665L25.1667 41.9665V43.8332ZM44.2333 30.3998L38.5667 24.7998L40.4333 22.9332C40.9444 22.4221 41.5722 22.1665 42.3167 22.1665C43.0611 22.1665 43.6889 22.4221 44.2 22.9332L46.0667 24.7998C46.5778 25.3109 46.8444 25.9276 46.8667 26.6498C46.8889 27.3721 46.6444 27.9887 46.1333 28.4998L44.2333 30.3998ZM42.3 32.3665L28.1667 46.4998H22.5V40.8332L36.6333 26.6998L42.3 32.3665Z"
-                        fill="white" />
+                        fill="currentColor" />
                 </g>
             </svg>
         </span>
@@ -62,9 +62,9 @@ return `
     <a class="summary-card summary-card-wide" href="board.html">
         <span class="summary-icon summary-icon-done">
             <svg width="69" height="69" viewBox="0 0 69 69" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="34.5" cy="34.5" r="34.5" fill="#2A3647" />
+                <circle class="summary-icon-bg" cx="34.5" cy="34.5" r="34.5" />
 
-                <path d="M19.5283 34.5001L30.7571 45.5662L49.4717 23.4341" stroke="white" stroke-width="7"
+                <path d="M19.5283 34.5001L30.7571 45.5662L49.4717 23.4341" stroke="currentColor" stroke-width="7"
                     stroke-linecap="round" stroke-linejoin="round" />
             </svg>
         </span>
@@ -79,11 +79,11 @@ return `
 }
 
 /**
- * Build the urgent summary card section.
- *
- * @param {Object} summaryData - Data used to populate the urgent card.
- * @returns {string} HTML string for the urgent summary card.
- */
+* Build the urgent summary card section.
+*
+* @param {Object} summaryData - Data used to populate the urgent card.
+* @returns {string} HTML string for the urgent summary card.
+*/
 function getSummaryUrgentTemplate(summaryData) {
 return `
 <a class="summary-card summary-urgent-card" href="board.html">
@@ -125,11 +125,11 @@ return `
 }
 
 /**
- * Build the bottom summary cards section.
- *
- * @param {Object} summaryData - Data used to populate the bottom summary cards.
- * @returns {string} HTML string for the bottom cards section.
- */
+* Build the bottom summary cards section.
+*
+* @param {Object} summaryData - Data used to populate the bottom summary cards.
+* @returns {string} HTML string for the bottom cards section.
+*/
 function getSummaryBottomCardsTemplate(summaryData) {
 return `
 <div class="summary-bottom-cards">
@@ -152,19 +152,19 @@ return `
 }
 
 /**
- * Build the summary greeting block.
- *
- * @param {Object} summaryData - Data used to populate the greeting section.
- * @param {string} [summaryData.userName] - Optional user name for personalization.
- * @param {string} summaryData.greeting - Greeting text to display.
- * @returns {string} HTML string for the greeting block.
- */
+* Build the summary greeting block.
+*
+* @param {Object} summaryData - Data used to populate the greeting section.
+* @param {string} [summaryData.userName] - Optional user name for personalization.
+* @param {string} summaryData.greeting - Greeting text to display.
+* @returns {string} HTML string for the greeting block.
+*/
 function getSummaryGreetingTemplate(summaryData) {
-    const punctuation = summaryData.userName ? ',' : '!';
-    return `
-        <div class="summary-greeting">
-            <span>${summaryData.greeting}${punctuation}</span>
-            ${summaryData.userName ? `<strong>${summaryData.userName}</strong>` : ''}
-        </div>
-    `;
+const punctuation = summaryData.userName ? ',' : '!';
+return `
+<div class="summary-greeting">
+    <span>${summaryData.greeting}${punctuation}</span>
+    ${summaryData.userName ? `<strong>${summaryData.userName}</strong>` : ''}
+</div>
+`;
 }
