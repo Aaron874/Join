@@ -321,24 +321,120 @@ input::placeholder {
 }
 
 .dropdown_contacts {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  background: white;
-  flex-direction: column;
-  max-height: calc(3 * 46px);
-  overflow-y: auto;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: white;
+    flex-direction: column;
+    max-height: calc(3 * 46px);
+    overflow-y: auto;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.contacts_list_name_symbol {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--contact-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 2px solid white;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 .contacts_div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 46px;
-  padding: 0.3rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 46px;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+}
+
+.contacts_div:hover,
+.category_div:hover {
+    background-color: #f5f6f7;
+}
+
+.contacts_div:has(.contacts_input:checked) {
+    background-color: #2a3647;
+    color: white;
+}
+
+.contacts_div:has(.contacts_input:checked):hover {
+    background-color: #091931;
+}
+
+.div_contacts_initials {
+    display: none;
+    align-items: center;
+}
+
+.contacts_input {
+    margin-bottom: 0;
+}
+
+.contacts_div:has(.contacts_input:checked) {
+    background-color: #2a3647;
+    color: white;
+}
+
+.contacts_input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 2px solid #2a3647;
+    border-radius: 3px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    padding-left: 0 !important;
+}
+
+.contacts_input:checked {
+    border-color: white;
+}
+
+.contacts_input:checked::before {
+    content: '';
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    right: -3px;
+    top: -3px;
+
+    background-color: #2a3647;
+}
+
+.contacts_input:checked::before:hover {
+    background-color: #091931;
+}
+
+.contacts_input:checked::after {
+    content: '';
+    position: absolute;
+
+    width: 5px;
+    height: 12px;
+
+    left: 5px;
+    top: -5px;
+
+    border: solid white;
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(38deg);
 }
 
 .div_contacts_initials {
@@ -835,6 +931,17 @@ input::placeholder {
   justify-content: center;
   flex-shrink: 0;
   font-weight: 400;
+}
+
+.your_element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  border-radius: 50%;
+  border: 2px solid black;
 }
 
 .task-card-contact:first-child {

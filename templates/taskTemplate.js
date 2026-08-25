@@ -115,16 +115,31 @@ return `
  * @param {Array<Object>} assignedTo - Array of assigned contact objects.
  * @returns {string} HTML string for the task details contact section.
  */
-function getTaskDetailsContactsTemplate(assignedTo) {
-const contacts = normalizeContacts(assignedTo);
-if (!contacts.length) {
-return '<p>No contacts assigned</p>';
+function getTaskContactIconsTemplate(assignedTo) {
+    const contacts = normalizeContacts(assignedTo);
+    const visibleContacts = contacts.slice(0, 4);
+    const hiddenCount = contacts.length - visibleContacts.length;
+
+    return `
+        <div class="task-card-contacts">
+            ${visibleContacts.map(getTaskContactIconTemplate).join('')}
+            ${hiddenCount > 0 ? templatePlusSymbole(hiddenCount) : ''}
+        </div>
+    `;
 }
-return `
-<div class="task-details-contacts">
-    ${contacts.map(getTaskDetailsContactTemplate).join('')}
-</div>
-`;
+
+function getTaskDetailsContactsTemplate(assignedTo) {
+    const contacts = normalizeContacts(assignedTo);
+
+    if (!contacts.length) {
+        return '<p>No contacts assigned</p>';
+    }
+
+    return `
+        <div class="task-details-contacts">
+            ${contacts.map(getTaskDetailsContactTemplate).join('')}
+        </div>
+    `;
 }
 
 /**
