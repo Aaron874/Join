@@ -732,14 +732,14 @@ input::placeholder {
 }
 
 .subtask-input-divider {
-    width: 1px;
-    height: 24px;
-    background-color: #d1d1d1;
+  width: 1px;
+  height: 24px;
+  background-color: #d1d1d1;
 }
 
 .subtask-input-actions button:hover {
-    background-color: #eeeeee;
-    border-radius: 50%;
+  background-color: #eeeeee;
+  border-radius: 50%;
 }
 
 
@@ -994,9 +994,9 @@ input::placeholder {
 }
 
 .div_contacts_initials .your_element {
-    width: 42px;
-    height: 42px;
-    font-size: 18px;
+  width: 42px;
+  height: 42px;
+  font-size: 18px;
 }
 
 .task-card-contact:first-child {
@@ -1008,6 +1008,8 @@ input::placeholder {
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
+  max-height: 256px;
+  overflow-y: auto;
 }
 
 .task-details-contact {
@@ -1209,6 +1211,42 @@ priority-icon {
   color: var(--color-darkblue);
   font-size: 20px;
   font-weight: 400;
+}
+
+.subtask-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border: 3px solid #2a3647;
+    border-radius: 7px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    padding: 0 !important;
+}
+
+.subtask-checkbox:checked::before {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    right: -5px;
+    top: -5px;
+    background-color: white;
+}
+
+.subtask-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    left: 7px;
+    top: -6px;
+    border: solid #2a3647;
+    border-width: 0 4px 4px 0;
+    transform: rotate(40deg);
 }
 
 .task-dialog-priority {

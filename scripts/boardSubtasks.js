@@ -14,7 +14,7 @@ function getTaskDetailSubtasksTemplate(taskSubtasks) {
         .map((subtask, index) => `
         <label class="task-detail-subtask">
             <span>${subtask.title}</span>
-            <input
+            <input class="subtask-checkbox"
                 type="checkbox"
                 ${subtask.completed ? 'checked' : ''}
                 onchange="toggleTaskSubtask(${index})"
