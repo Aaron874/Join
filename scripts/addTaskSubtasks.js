@@ -46,13 +46,29 @@ function addSubtask(event) {
 /**
  * Render the current subtask list inside the add task form.
  */
+
 function renderAddTaskSubtasks() {
     const list = document.getElementById('subtasks-list');
     if (!list) return;
-    list.innerHTML = window.subtasks
+
+    const visibleSubtasks = window.subtasks.slice(0, 4);
+
+    list.innerHTML = visibleSubtasks
         .map((subtask, index) => getSubtaskTemplate(subtask, index))
         .join('');
+
+    if (window.subtasks.length > 4) {
+        list.innerHTML += getMoreSubtasksTemplate();
+    }
 }
+
+// function renderAddTaskSubtasks() {
+//     const list = document.getElementById('subtasks-list');
+//     if (!list) return;
+//     list.innerHTML = window.subtasks
+//         .map((subtask, index) => getSubtaskTemplate(subtask, index))
+//         .join('');
+// }
 
 /**
  * Set the current subtasks from provided data and refresh the UI.

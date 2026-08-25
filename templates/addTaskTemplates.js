@@ -44,7 +44,7 @@ export function templateSelectedContacts(shortName, color) {
     </div>`;
 }
 
-export function templatePlusSymbole() {
+export function templatePlusSymbole(hiddenCount) {
     return `
         <div class="your_element">
             <svg
@@ -67,6 +67,7 @@ export function templatePlusSymbole() {
                     stroke-linecap="round"
                 />
             </svg>
+            <span class="hidden-contacts-count">${hiddenCount}</span>
         </div>
     `;
 

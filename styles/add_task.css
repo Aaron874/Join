@@ -639,7 +639,6 @@ input::placeholder {
 }
 
 .header-content {
-    /* padding-left: 163px !important; */
     width: calc(100% - 232px) !important;
 }
 
@@ -696,12 +695,6 @@ input::placeholder {
     height: 24px;
 }
 
-/* .subtask-edit-btn svg {
-    display: block;
-    max-width: 20px;
-    max-height: 20px;
-} */
-
 .input-right:not(:placeholder-shown) + .subtask-edit-actions {
     display: flex;
 }
@@ -737,24 +730,6 @@ input::placeholder {
     flex-shrink: 0;
     background-color: #d1d1d1;
 }
-/* 
-.subtask-item {
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.subtask-item>span {
-  flex: 1;
-  text-align: left;
-}
-
-.subtask-item:hover .subtask-actions {
-    opacity: 1;
-    visibility: visible;
-} */
 
 #subtasks-list {
     width: 100%;
@@ -870,6 +845,29 @@ input::placeholder {
 
 .subtask-action-btn:hover {
     transform: scale(1.08);
+}
+
+.more-subtasks {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 16px;
+
+    color: #2a3647;
+}
+
+.your_element {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.hidden-contacts-count {
+    font-size: 16px;
 }
 
 @media (max-height: 900px) {
