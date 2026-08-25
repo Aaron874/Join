@@ -8,6 +8,7 @@ import {
 
 let selectedContacts = [];
 let contactsList = [];
+let currentUser = null;
 
 document.addEventListener('click', (event) => {
     if (!event.target.closest('#contacts-dropdown-wrapper')) {
@@ -21,9 +22,21 @@ document.addEventListener('click', (event) => {
  * @returns {Promise<void>}
  */
 export async function initContacts() {
-    await waitForAuthenticatedUser();
+    currentUser = await waitForAuthenticatedUser();
     contactsList = await getAllContacts();
+
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+}
+
+// export async function initContacts() {
+//     await waitForAuthenticatedUser();
+//     contactsList = await getAllContacts();
+//     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
+// }
+
+function isLoggedInUser(contact) {
+    return currentUser?.email?.toLowerCase() ===
+        contact.email?.toLowerCase();
 }
 
 /**
@@ -52,17 +65,35 @@ function searchContacts() {
  */
 function renderSearchedContacts(searchedContacts, results) {
     searchedContacts.style.display = 'flex';
+
     for (let index = 0; index < results.length; index++) {
-        const shortName = contactListInitials(results[index].name);
-        const contactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
+        const contact = results[index];
+        const shortName = contactListInitials(contact.name);
+        const contactName = contact.name[0].toUpperCase() + contact.name.slice(1);
+
         searchedContacts.innerHTML += contactsTemplate(
             contactName,
-            results[index].color,
+            contact.color,
             shortName,
-            selectedContacts
+            selectedContacts,
+            isLoggedInUser(contact)
         );
     }
 }
+
+// function renderSearchedContacts(searchedContacts, results) {
+//     searchedContacts.style.display = 'flex';
+//     for (let index = 0; index < results.length; index++) {
+//         const shortName = contactListInitials(results[index].name);
+//         const contactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
+//         searchedContacts.innerHTML += contactsTemplate(
+//             contactName,
+//             results[index].color,
+//             shortName,
+//             selectedContacts
+//         );
+//     }
+// }
 
 /**
  * Creates initials from the first two words of a contact name.
@@ -101,12 +132,21 @@ function dropdownContactsDown() {
  */
 function renderContacts(dropdown) {
     dropdown.innerHTML = '';
+
     for (let index = 0; index < contactsList.length; index++) {
-        const shortName = contactListInitials(contactsList[index].name);
+        const contact = contactsList[index];
+
+        const shortName = contactListInitials(contact.name);
         const person =
-            contactsList[index].name[0].toUpperCase() + contactsList[index].name.slice(1);
-        const color = contactsList[index].color;
-        dropdown.innerHTML += contactsTemplate(person, color, shortName, selectedContacts);
+            contact.name[0].toUpperCase() + contact.name.slice(1);
+
+        dropdown.innerHTML += contactsTemplate(
+            person,
+            contact.color,
+            shortName,
+            selectedContacts,
+            isLoggedInUser(contact)
+        );
     }
 }
 
@@ -133,29 +173,6 @@ function clearInput() {
     document.getElementById('assigned-trigger').value = '';
     document.getElementById('selected_contacts').textContent = '';
 }
-
-/**
- * Creates the HTML template for a contact in the contacts dropdown.
- *
- * @param {string} contactName - The name of the contact.
- * @param {string} color - The color assigned to the contact.
- * @param {string} shortName - The initials of the contact.
- * @returns {string} The HTML template for the contact.
- */
-// function contactsTemplate(contactName, color, shortName) {
-//     const checked = selectedContacts.some(
-//         contact => contact.name.trim() === contactName.trim()
-//     );
-//     return `
-//         <div class="contacts_div">
-//             <div class="contacts_dropdown_initials-plus-name_style">
-//                 <div class="contacts_list_name_symbol" style="--contact-color: ${color};">${shortName}</div>
-//                 <span>${contactName}</span>
-//             </div>
-//             <input class="contacts_input" type="checkbox" ${checked ? 'checked' : ''}
-//                 onchange="toggleContact('${contactName}', '${shortName}', '${color}')"/>
-//         </div>`;
-// }
 
 /**
  * Adds or removes a contact from the selected contacts.
@@ -212,21 +229,6 @@ function showSelectedContacts() {
         contactsDiv.innerHTML += templatePlusSymbole(hiddenCount);
     }
 }
-
-/**
- * Creates the HTML template for a selected contact.
- *
- * @param {string} shortName - The initials of the selected contact.
- * @param {string} color - The color assigned to the contact.
- * @returns {string} The HTML template for the selected contact.
- */
-// function templateSelectedContacts(shortName, color) {
-//     return `<div>
-//         <div class="contacts_list_name_symbol" style="--contact-color: ${color};">
-//             ${shortName}
-//         </div>
-//     </div>`;
-// }
 
 /**
  * Returns the selected contacts in the format used for task assignment.
