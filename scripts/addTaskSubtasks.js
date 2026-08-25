@@ -46,13 +46,29 @@ function addSubtask(event) {
 /**
  * Render the current subtask list inside the add task form.
  */
+
 function renderAddTaskSubtasks() {
     const list = document.getElementById('subtasks-list');
     if (!list) return;
-    list.innerHTML = window.subtasks
+
+    const visibleSubtasks = window.subtasks.slice(0, 4);
+
+    list.innerHTML = visibleSubtasks
         .map((subtask, index) => getSubtaskTemplate(subtask, index))
         .join('');
+
+    if (window.subtasks.length > 4) {
+        list.innerHTML += getMoreSubtasksTemplate();
+    }
 }
+
+// function renderAddTaskSubtasks() {
+//     const list = document.getElementById('subtasks-list');
+//     if (!list) return;
+//     list.innerHTML = window.subtasks
+//         .map((subtask, index) => getSubtaskTemplate(subtask, index))
+//         .join('');
+// }
 
 /**
  * Set the current subtasks from provided data and refresh the UI.
@@ -91,10 +107,32 @@ function editSubtask(index) {
             class="subtask-edit-input"
             value="${title}"
             onkeydown="if(event.key === 'Enter') saveSubtaskEdit(${index})">
-        <button type="button" onclick="saveSubtaskEdit(${index})">✓</button>
+        <div class="subtask-edit-buttons">
+            <button class="subtask-edit-btn" type="button" onclick="deleteSubtask(${index})">
+                    ${getDeleteSubtaskIcon()}
+            </button>
+            <div class="subtask-action-separator"></div>
+            <button onclick="saveSubtaskEdit(${index})" class="subtask-edit-btn" type="button">
+                <svg
+                class="subtask-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.5 12.5L10.2 16L17.5 8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+                </svg>
+            </button>
+        <div/>
     `;
     item.querySelector('input').focus();
 }
+
+{/* <button type="button" onclick="saveSubtaskEdit(${index})">✓</button> */}
 
 /**
  * Save the edited subtask and refresh the UI.

@@ -219,7 +219,11 @@
                         <div class="dropdown_contacts" id="dropdown_contacts"></div>
                     </div>
                     <div class="div_contacts_initials" id="div_contacts_initials"></div>
-                    <p class="padding-top">Category</p>
+                    <div class="div-star padding-top">
+                    <p>Category
+                        <p class="star-style">*</p>
+                    </p>
+                    </div>
 
                     <div class="assigned-dropdown" id="category-dropdown-wrapper">
                         <button onclick="dropdownCategoryDown()" type="button" class="assigned-trigger">
@@ -246,6 +250,9 @@
                                 <span class="font-size">User Story</span>
                             </div>
                         </div>
+                        <div id="categoryError" class="error-message">
+                        This field is required
+                    </div>
                         <p class="padding-top">Subtasks</p>
                         <div class="position-buttons-subtask-input">
                         <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">

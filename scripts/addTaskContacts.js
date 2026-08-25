@@ -1,15 +1,15 @@
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
-import { getAllContacts } from "../firebase/contacts.service.js";
-import { 
+import { getAllContacts } from '../firebase/contacts.service.js';
+import {
     contactsTemplate,
     templateSelectedContacts,
-    templatePlusSymbole
- } from "../templates/addTaskTemplates.js";
+    templatePlusSymbole,
+} from '../templates/addTaskTemplates.js';
 
 let selectedContacts = [];
 let contactsList = [];
 
-document.addEventListener('click', event => {
+document.addEventListener('click', (event) => {
     if (!event.target.closest('#contacts-dropdown-wrapper')) {
         dropdownContactsUp();
     }
@@ -23,7 +23,7 @@ document.addEventListener('click', event => {
 export async function initContacts() {
     await waitForAuthenticatedUser();
     contactsList = await getAllContacts();
-    document.getElementById("symbole_down_dropdown_contacts").style.display = "flex";
+    document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
 }
 
 /**
@@ -39,9 +39,7 @@ function searchContacts() {
         searchedContacts.style.display = 'none';
         return;
     }
-    const results = contactsList.filter(contact =>
-        contact.name.toLowerCase().includes(input)
-    );
+    const results = contactsList.filter((contact) => contact.name.toLowerCase().includes(input));
     renderSearchedContacts(searchedContacts, results);
 }
 
@@ -56,10 +54,13 @@ function renderSearchedContacts(searchedContacts, results) {
     searchedContacts.style.display = 'flex';
     for (let index = 0; index < results.length; index++) {
         const shortName = contactListInitials(results[index].name);
-        const contactName =
-            results[index].name[0].toUpperCase() + results[index].name.slice(1);
-        searchedContacts.innerHTML +=
-            contactsTemplate(contactName, results[index].color, shortName, selectedContacts);
+        const contactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
+        searchedContacts.innerHTML += contactsTemplate(
+            contactName,
+            results[index].color,
+            shortName,
+            selectedContacts
+        );
     }
 }
 
@@ -70,8 +71,12 @@ function renderSearchedContacts(searchedContacts, results) {
  * @returns {string} The initials of the contact.
  */
 function contactListInitials(contactName) {
-    return contactName.trim().split(/\s+/).slice(0, 2)
-        .map(word => word[0].toUpperCase()).join('');
+    return contactName
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((word) => word[0].toUpperCase())
+        .join('');
 }
 
 /**
@@ -161,9 +166,7 @@ function clearInput() {
  * @returns {void}
  */
 function toggleContact(contactName, shortName, color) {
-    const contactExists = selectedContacts.some(
-        contact => contact.name === contactName
-    );
+    const contactExists = selectedContacts.some((contact) => contact.name === contactName);
     if (contactExists) {
         removeSelectedContact(contactName);
         return;
@@ -171,7 +174,7 @@ function toggleContact(contactName, shortName, color) {
     selectedContacts.push({
         name: contactName,
         shortName: shortName,
-        color: color
+        color: color,
     });
     showSelectedContacts();
 }
@@ -183,9 +186,7 @@ function toggleContact(contactName, shortName, color) {
  * @returns {void}
  */
 function removeSelectedContact(contactName) {
-    selectedContacts = selectedContacts.filter(
-        contact => contact.name !== contactName
-    );
+    selectedContacts = selectedContacts.filter((contact) => contact.name !== contactName);
     showSelectedContacts();
 }
 
@@ -206,7 +207,9 @@ function showSelectedContacts() {
         );
     }
     if (selectedContacts.length > 4) {
-        contactsDiv.innerHTML += templatePlusSymbole();
+        const hiddenCount = selectedContacts.length - 4;
+
+        contactsDiv.innerHTML += templatePlusSymbole(hiddenCount);
     }
 }
 
@@ -231,10 +234,10 @@ function showSelectedContacts() {
  * @returns {Array} The contacts assigned to the task.
  */
 export function getAssignedContacts() {
-    return selectedContacts.map(contact => ({
+    return selectedContacts.map((contact) => ({
         name: contact.name,
         shortName: contact.shortName,
-        color: contact.color
+        color: contact.color,
     }));
 }
 
@@ -254,9 +257,9 @@ export function getSelectedContacts() {
  */
 export function resetContacts() {
     selectedContacts = [];
-    document.getElementById("assigned-trigger").value = "";
-    document.getElementById("selected_contacts").textContent = "Select contacts to assign";
-    document.getElementById("div_contacts_initials").innerHTML = "";
+    document.getElementById('assigned-trigger').value = '';
+    document.getElementById('selected_contacts').textContent = 'Select contacts to assign';
+    document.getElementById('div_contacts_initials').innerHTML = '';
     dropdownContactsUp();
 }
 
@@ -267,9 +270,7 @@ export function resetContacts() {
  * @returns {void}
  */
 function setSelectedContacts(contacts) {
-    selectedContacts = Array.isArray(contacts)
-        ? contacts.map(contact => ({ ...contact }))
-        : [];
+    selectedContacts = Array.isArray(contacts) ? contacts.map((contact) => ({ ...contact })) : [];
     showSelectedContacts();
 }
 

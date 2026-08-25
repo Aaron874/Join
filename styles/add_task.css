@@ -246,6 +246,7 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 10px;
 }
 
 .assigned-trigger:hover {
@@ -344,7 +345,8 @@ input::placeholder {
     border-radius: 10px;
 }
 
-.contacts_div:hover {
+.contacts_div:hover,
+.category_div:hover {
     background-color: #f5f6f7;
 }
 
@@ -490,6 +492,7 @@ input::placeholder {
     min-height: 46px;
     padding: 0.3rem 0.5rem;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .style-priorities-red {
@@ -596,7 +599,7 @@ input::placeholder {
 
 .error-message {
     height: 18px;
-    font-size: 12px;
+    font-size: 16px;
     color: #ff8190;
 
     visibility: hidden;
@@ -608,6 +611,15 @@ input::placeholder {
 .error-message.show {
     visibility: visible;
     opacity: 1;
+}
+
+#category-dropdown-wrapper.error {
+    border: none !important;
+}
+
+#category-dropdown-wrapper.error > .assigned-trigger {
+    border: 1px solid #ff8190 !important;
+    border-radius: 10px;
 }
 
 .description-padding {
@@ -637,7 +649,6 @@ input::placeholder {
 }
 
 .header-content {
-    /* padding-left: 163px !important; */
     width: calc(100% - 232px) !important;
 }
 
@@ -652,7 +663,46 @@ input::placeholder {
 
 .position-buttons-subtask-input {
     position: relative;
-    padding-bottom: 16px;
+    padding-bottom: 8px;
+}
+
+.subtask-edit-buttons {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    align-items: center;
+    gap: 4px;
+}
+
+.subtask-edit-btn {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+
+    color: #2a3647;
+
+    cursor: pointer;
+    transition: background-color 100ms ease, transform 100ms ease;
+}
+
+.subtask-edit-btn:hover {
+    background-color: #eeeeee;
+    transform: scale(1.1);
+}
+
+.subtask-edit-btn .subtask-icon {
+    width: 24px;
+    height: 24px;
 }
 
 .input-right:not(:placeholder-shown) + .subtask-edit-actions {
@@ -672,12 +722,12 @@ input::placeholder {
     border-radius: 50%;
     background-color: transparent;
 
-    color: #2A3647;
+    color: #2a3647;
     cursor: pointer;
 }
 
 .subtask-icon-button:hover {
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
 }
 
 .subtask-icon {
@@ -687,27 +737,9 @@ input::placeholder {
 .subtask-action-separator {
     width: 1px;
     height: 24px;
-    background-color: #D1D1D1;
+    flex-shrink: 0;
+    background-color: #d1d1d1;
 }
-/* 
-.subtask-item {
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.subtask-item>span {
-  flex: 1;
-  text-align: left;
-}
-
-.subtask-item:hover .subtask-actions {
-    opacity: 1;
-    visibility: visible;
-} */
-
 
 #subtasks-list {
     width: 100%;
@@ -725,8 +757,21 @@ input::placeholder {
     box-sizing: border-box;
 
     border-radius: 10px;
+    position: relative;
 
     transition: background-color 100ms ease;
+}
+
+.subtask-edit-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 32px;
+    outline: none;
+}
+
+.subtask-item:has(.subtask-edit-input) {
+    padding: 0;
 }
 
 .subtask-content {
@@ -782,7 +827,7 @@ input::placeholder {
 }
 
 .subtask-action-btn + .subtask-action-btn::before {
-    content: "";
+    content: '';
 
     position: absolute;
     left: -8px;
@@ -810,6 +855,29 @@ input::placeholder {
 
 .subtask-action-btn:hover {
     transform: scale(1.08);
+}
+
+.more-subtasks {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 16px;
+
+    color: #2a3647;
+}
+
+.your_element {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.hidden-contacts-count {
+    font-size: 16px;
 }
 
 @media (max-height: 900px) {
