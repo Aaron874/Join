@@ -25,6 +25,7 @@ const priorityConfig = {
 
 window.addEventListener('DOMContentLoaded', initAddTask);
 document.addEventListener('DOMContentLoaded', setDefaultPriority);
+document.addEventListener('DOMContentLoaded', setMinDate);
 
 document.addEventListener('click', event => {
     if (!event.target.closest('#category-dropdown-wrapper')) {
@@ -74,12 +75,17 @@ function dropdownCategoryUp() {
  * @param {HTMLElement} element - The selected category element.
  * @returns {void}
  */
+
 function selectedCatgeory(element) {
-    document.getElementById("selected_category_text").textContent =
+    document.getElementById('selected_category_text').textContent =
         element.innerText;
-    document
-        .getElementById('categoryError')
+
+    document.getElementById('category-dropdown-wrapper')
+        .classList.remove('error');
+
+    document.getElementById('categoryError')
         ?.classList.remove('show');
+
     dropdownCategoryUp();
 }
 
@@ -164,13 +170,13 @@ function getTaskData(element) {
  */
 function isTaskValid(task) {
     return task.title &&
-        task.description &&
+        // task.description &&
         task.date &&
-        task.subtasks &&
-        task.priority &&
+        // task.subtasks &&
+        // task.priority &&
         task.category !== "Select task category" &&
-        task.category &&
-        getSelectedContacts().length > 0;
+        task.category 
+        // getSelectedContacts().length > 0;
 }
 
 /**
@@ -213,6 +219,8 @@ function resetInputErrors() {
     titleError.classList.remove("show");
     dateDisplay.classList.remove("error");
     dateError.classList.remove("show");
+    document.getElementById('category-dropdown-wrapper').classList.remove('error');
+    document.getElementById('categoryError').classList.remove('show');
 }
 
 /**
@@ -295,6 +303,9 @@ function formRequired() {
     if (!validateDate()) {
         formIsValid = false;
     }
+    if (!validateCategory()) {
+        formIsValid = false;
+    }
     return formIsValid;
 }
 
@@ -327,6 +338,34 @@ function validateDate() {
     }
     dateDisplay.classList.remove("error");
     dateError.classList.remove("show");
+    return true;
+}
+
+function setMinDate() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    dateInput.min = `${year}-${month}-${day}`;
+}
+
+function validateCategory() {
+    const categoryInput = document.getElementById('category-dropdown-wrapper');
+    const categoryText = document.getElementById('selected_category_text');
+    const categoryError = document.getElementById('categoryError');
+
+    if (categoryText.textContent.trim() === 'Select task category') {
+        categoryInput.classList.add('error');
+        categoryError.classList.add('show');
+
+        return false;
+    }
+
+    categoryInput.classList.remove('error');
+    categoryError.classList.remove('show');
+
     return true;
 }
 
