@@ -9,6 +9,9 @@ subtaskInput.addEventListener('blur', hideSubtaskActions);
 document.getElementById('cancel-subtask-btn').addEventListener('click', cancelSubtask);
 document.getElementById('confirm-subtask-btn').addEventListener('click', confirmSubtask);
 
+/**
+ * Create a new subtask from the current input value.
+ */
 function createSubtask() {
     const input = document.getElementById('task-subtasks');
     const title = input.value.trim();
@@ -21,12 +24,20 @@ function createSubtask() {
     renderAddTaskSubtasks();
 }
 
+/**
+ * Confirm the current subtask when the Enter key is pressed.
+ *
+ * @param {KeyboardEvent} event - The keyboard event triggered by the input.
+ */
 function addSubtask(event) {
     if (event.key !== 'Enter') return;
     event.preventDefault();
     confirmSubtask();
 }
 
+/**
+ * Add the current input value to the subtask list and clear the input.
+ */
 function confirmSubtask() {
     const title = subtaskInput.value.trim();
     if (!title) return;
@@ -38,15 +49,24 @@ function confirmSubtask() {
     }
 }
 
+/**
+ * Cancel subtask creation and reset the subtask input.
+ */
 function cancelSubtask() {
     resetSubtaskInput();
 }
 
+/**
+ * Clear the subtask input and hide its action buttons.
+ */
 function resetSubtaskInput() {
     subtaskInput.value = '';
     subtaskActions.classList.remove('visible');
 }
 
+/**
+ * Hide the subtask action buttons after the input loses focus.
+ */
 function hideSubtaskActions() {
     setTimeout(() => {
         if (document.activeElement !== subtaskInput) {
@@ -55,6 +75,9 @@ function hideSubtaskActions() {
     }, 100);
 }
 
+/**
+ * Show the subtask action buttons when the input receives focus.
+ */
 function showSubtaskActions() {
     subtaskActions.classList.add('visible');
 }

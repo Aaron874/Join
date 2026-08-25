@@ -56,6 +56,11 @@ function getDeleteSubtaskIcon() {
     `;
 }
 
+/**
+ * Generates an SVG bullet icon for a subtask item.
+ *
+ * @returns {string} SVG markup for the subtask bullet icon
+ */
 function getSubtaskBulletIcon() {
     return `
         <svg
@@ -70,6 +75,11 @@ function getSubtaskBulletIcon() {
     `;
 }
 
+/**
+ * Generates a template displaying the number of hidden subtasks.
+ *
+ * @returns {string} HTML template showing the hidden subtask count
+ */
 function getMoreSubtasksTemplate() {
     const hiddenCount = window.subtasks.length - 4;
 
