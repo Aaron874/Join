@@ -23,7 +23,7 @@ function renderSubtasks() {
         .join('');
 }
 
-// ...existing code...
+
 /**
  * Determine whether a task matches the current search filter.
  * Returns true for search terms shorter than three characters.

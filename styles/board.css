@@ -993,6 +993,12 @@ input::placeholder {
   border: 2px solid black;
 }
 
+.div_contacts_initials .your_element {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+}
+
 .task-card-contact:first-child {
   margin-left: 0;
 }

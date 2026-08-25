@@ -60,25 +60,6 @@ function showSubtaskActions() {
 }
 
 /**
- * Handle Enter key presses to add a new subtask.
- *
- * @param {KeyboardEvent} event - The keyboard event from the subtask input.
- */
-// function addSubtask(event) {
-//     if (event.key !== 'Enter') return;
-//     event.preventDefault();
-//     const input = event.target;
-//     const title = input.value.trim();
-//     if (!title) return;
-//     window.subtasks.push({
-//         title,
-//         completed: false
-//     });
-//     input.value = '';
-//     renderAddTaskSubtasks();
-// }
-
-/**
  * Render the current subtask list inside the add task form.
  */
 
@@ -96,14 +77,6 @@ function renderAddTaskSubtasks() {
         list.innerHTML += getMoreSubtasksTemplate();
     }
 }
-
-// function renderAddTaskSubtasks() {
-//     const list = document.getElementById('subtasks-list');
-//     if (!list) return;
-//     list.innerHTML = window.subtasks
-//         .map((subtask, index) => getSubtaskTemplate(subtask, index))
-//         .join('');
-// }
 
 /**
  * Set the current subtasks from provided data and refresh the UI.
@@ -166,8 +139,6 @@ function editSubtask(index) {
     `;
     item.querySelector('input').focus();
 }
-
-{/* <button type="button" onclick="saveSubtaskEdit(${index})">✓</button> */}
 
 /**
  * Save the edited subtask and refresh the UI.

@@ -4,7 +4,7 @@ import { getContacts } from '../firebase/contacts.service.js';
 
 window.boardContacts = [];
 window.contactsList = [];
-// 
+ 
 
 /**
  * Load contacts for the board and ensure an authenticated session exists.
