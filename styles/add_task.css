@@ -630,6 +630,94 @@ input::placeholder {
     border: 1px solid #ff8190 !important;
 }
 
+.subtask-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
+}
+
+.subtask-item:hover .subtask-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+.subtask-actions button,
+.subtask-item>button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  background: transparent;
+  color: #2a3647;
+  cursor: pointer;
+}
+
+.subtask-actions button:hover,
+.subtask-item>button:hover {
+  color: #29abe2;
+}
+
+.subtask-edit-input {
+  flex: 1;
+  height: 36px;
+  border: none;
+  border-bottom: 1px solid #29abe2;
+  outline: none;
+}
+
+.subtask-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.subtask-input-wrapper .input-right {
+  width: 100%;
+  padding-right: 100px;
+  box-sizing: border-box;
+}
+
+.subtask-input-actions {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.subtask-input-actions.visible {
+  display: flex;
+}
+
+.subtask-input-actions button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-darkblue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.subtask-input-divider {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d1d1;
+}
+
+.subtask-input-actions button:hover {
+    background-color: #eeeeee;
+    border-radius: 50%;
+}
+
 .footer {
     display: none;
 }

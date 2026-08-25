@@ -1,27 +1,62 @@
 window.subtasks = [];
 
-document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
+const subtaskInput = document.getElementById('task-subtasks');
+const subtaskActions = document.getElementById('subtask-input-actions');
+
+subtaskInput.addEventListener('keydown', addSubtask);
+subtaskInput.addEventListener('focus', showSubtaskActions);
+subtaskInput.addEventListener('blur', hideSubtaskActions);
+document.getElementById('cancel-subtask-btn').addEventListener('click', cancelSubtask);
+document.getElementById('confirm-subtask-btn').addEventListener('click', confirmSubtask);
 
 function createSubtask() {
     const input = document.getElementById('task-subtasks');
     const title = input.value.trim();
-
     if (!title) return;
-
     window.subtasks.push({
         title,
         completed: false
     });
-
     input.value = '';
     renderAddTaskSubtasks();
 }
 
 function addSubtask(event) {
     if (event.key !== 'Enter') return;
-
     event.preventDefault();
-    createSubtask();
+    confirmSubtask();
+}
+
+function confirmSubtask() {
+    const title = subtaskInput.value.trim();
+    if (!title) return;
+    window.subtasks.push({ title, completed: false });
+    subtaskInput.value = '';
+    renderAddTaskSubtasks();
+    if (document.activeElement !== subtaskInput) {
+        subtaskActions.classList.remove('visible');
+    }
+}
+
+function cancelSubtask() {
+    resetSubtaskInput();
+}
+
+function resetSubtaskInput() {
+    subtaskInput.value = '';
+    subtaskActions.classList.remove('visible');
+}
+
+function hideSubtaskActions() {
+    setTimeout(() => {
+        if (document.activeElement !== subtaskInput) {
+            subtaskActions.classList.remove('visible');
+        }
+    }, 100);
+}
+
+function showSubtaskActions() {
+    subtaskActions.classList.add('visible');
 }
 
 /**
@@ -192,3 +227,4 @@ window.saveSubtaskEdit = saveSubtaskEdit;
 window.deleteSubtask = deleteSubtask;
 window.deleteSubtaskInput = deleteSubtaskInput;
 window.createSubtask = createSubtask;
+window.resetSubtaskInput = resetSubtaskInput;

@@ -26,11 +26,17 @@
             <a href="index.html">
                 <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.927 0H15.8389V8.15477H22.927V0Z" fill="#2A3647"></path>
-                    <path d="M15.8392 14.7871H22.9273V26.2881C22.9597 29.0556 22.1721 31.7702 20.6646 34.0869C19.1761 36.3378 16.3027 39.0159 10.9866 39.0159C5.19613 39.0159 1.8211 36.2776 0 34.777L4.47096 29.262C6.24844 30.7133 7.96049 31.9072 11.0138 31.9072C13.3256 31.9072 14.2471 30.9652 14.7869 30.1437C15.5207 29.0027 15.9003 27.6683 15.8774 26.31L15.8392 14.7871Z" fill="#2A3647"></path>
+                    <path
+                        d="M15.8392 14.7871H22.9273V26.2881C22.9597 29.0556 22.1721 31.7702 20.6646 34.0869C19.1761 36.3378 16.3027 39.0159 10.9866 39.0159C5.19613 39.0159 1.8211 36.2776 0 34.777L4.47096 29.262C6.24844 30.7133 7.96049 31.9072 11.0138 31.9072C13.3256 31.9072 14.2471 30.9652 14.7869 30.1437C15.5207 29.0027 15.9003 27.6683 15.8774 26.31L15.8392 14.7871Z"
+                        fill="#2A3647"></path>
                     <path d="M12.2239 9.63867H5.13574V16.7584H12.2239V9.63867Z" fill="#29ABE2"></path>
-                    <path d="M26.6409 35.6748C26.6409 37.1918 25.8721 38.0079 24.798 38.0079C23.7239 38.0079 23.0205 37.0385 23.0205 35.7515C23.0205 34.4645 23.7457 33.4458 24.858 33.4458C25.9703 33.4458 26.6409 34.448 26.6409 35.6748ZM23.8438 35.7351C23.8438 36.6497 24.2091 37.3233 24.8362 37.3233C25.4632 37.3233 25.8176 36.6113 25.8176 35.6803C25.8176 34.8643 25.4904 34.0975 24.8362 34.0975C24.1819 34.0975 23.8438 34.8369 23.8438 35.7351Z" fill="#2A3647"></path>
+                    <path
+                        d="M26.6409 35.6748C26.6409 37.1918 25.8721 38.0079 24.798 38.0079C23.7239 38.0079 23.0205 37.0385 23.0205 35.7515C23.0205 34.4645 23.7457 33.4458 24.858 33.4458C25.9703 33.4458 26.6409 34.448 26.6409 35.6748ZM23.8438 35.7351C23.8438 36.6497 24.2091 37.3233 24.8362 37.3233C25.4632 37.3233 25.8176 36.6113 25.8176 35.6803C25.8176 34.8643 25.4904 34.0975 24.8362 34.0975C24.1819 34.0975 23.8438 34.8369 23.8438 35.7351Z"
+                        fill="#2A3647"></path>
                     <path d="M28.0478 33.5117V37.9369H27.2627V33.5117H28.0478Z" fill="#2A3647"></path>
-                    <path d="M28.8975 37.9369V33.5117H29.7698L30.7077 35.3355C30.9491 35.8123 31.1639 36.3023 31.351 36.8032C31.302 36.2555 31.2802 35.6257 31.2802 34.9247V33.5117H31.9999V37.9369H31.1875L30.2387 36.0748C29.9876 35.5857 29.7637 35.0828 29.5681 34.5687C29.5681 35.1164 29.6063 35.7353 29.6063 36.4965V37.9314L28.8975 37.9369Z" fill="#2A3647"></path>
+                    <path
+                        d="M28.8975 37.9369V33.5117H29.7698L30.7077 35.3355C30.9491 35.8123 31.1639 36.3023 31.351 36.8032C31.302 36.2555 31.2802 35.6257 31.2802 34.9247V33.5117H31.9999V37.9369H31.1875L30.2387 36.0748C29.9876 35.5857 29.7637 35.0828 29.5681 34.5687C29.5681 35.1164 29.6063 35.7353 29.6063 36.4965V37.9314L28.8975 37.9369Z"
+                        fill="#2A3647"></path>
                 </svg>
             </a>
             <section class="right-header">
@@ -199,9 +205,10 @@
                     <p>Assigned to</p>
 
                     <div class="assigned-dropdown" id="contacts-dropdown-wrapper">
-                        <input onclick="dropdownContactsDown()" oninput="searchContacts()" onclick="clearInput()" type="text" id="assigned-trigger"
-                            class="assigned-trigger">
-                        <span onclick="dropdownContactsDown()" class="span_selected_contacts font-size" id="selected_contacts">Select contacts to
+                        <input onclick="dropdownContactsDown()" oninput="searchContacts()" onclick="clearInput()"
+                            type="text" id="assigned-trigger" class="assigned-trigger">
+                        <span onclick="dropdownContactsDown()" class="span_selected_contacts font-size"
+                            id="selected_contacts">Select contacts to
                             assign</span>
 
                         <button type="button" class="dropdown-arrow" id="symbole_down_dropdown_contacts"
@@ -220,9 +227,9 @@
                     </div>
                     <div class="div_contacts_initials" id="div_contacts_initials"></div>
                     <div class="div-star padding-top">
-                    <p>Category
+                        <p>Category
                         <p class="star-style">*</p>
-                    </p>
+                        </p>
                     </div>
 
                     <div class="assigned-dropdown" id="category-dropdown-wrapper">
@@ -251,51 +258,52 @@
                             </div>
                         </div>
                         <div id="categoryError" class="error-message">
-                        This field is required
-                    </div>
+                            This field is required
+                        </div>
                         <p class="padding-top">Subtasks</p>
                         <div class="position-buttons-subtask-input">
-                        <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
+                            <div class="subtask-input-wrapper">
+                                <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
+
+                                <div class="subtask-input-actions" id="subtask-input-actions">
+                                    <button id="cancel-subtask-btn" type="button" aria-label="Cancel subtask">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" />
+                                        </svg>
+                                    </button>
+
+                                    <span class="subtask-input-divider"></span>
+
+                                    <button id="confirm-subtask-btn" type="button" aria-label="Add subtask">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M5 12L10 17L19 7" stroke="currentColor" stroke-width="2.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="subtask-edit-actions">
-    <button onclick="deleteSubtaskInput()" class="subtask-icon-button" type="button">
-        <svg
-            class="subtask-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path d="M7.5 7.5L16.5 16.5"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"/>
-            <path d="M16.5 7.5L7.5 16.5"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"/>
-        </svg>
-    </button>
+                                <button onclick="deleteSubtaskInput()" class="subtask-icon-button" type="button">
+                                    <svg class="subtask-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.5 7.5L16.5 16.5" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                        <path d="M16.5 7.5L7.5 16.5" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </button>
 
-    <div class="subtask-action-separator"></div>
+                                <div class="subtask-action-separator"></div>
 
-    <button onclick="createSubtask()" class="subtask-icon-button" type="button">
-        <svg
-            class="subtask-icon"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path d="M6.5 12.5L10.2 16L17.5 8"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-    </button>
-                        </div>
+                                <button onclick="createSubtask()" class="subtask-icon-button" type="button">
+                                    <svg class="subtask-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.5 12.5L10.2 16L17.5 8" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div id="subtasks-list"></div>
 
@@ -333,8 +341,8 @@
                                     fill="white" />
                             </svg>
                         </a>
-                        <a class="footer-link-icons button_pushed_color" href="add_task.html"><svg width="76" height="76"
-                                viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <a class="footer-link-icons button_pushed_color" href="add_task.html"><svg width="76"
+                                height="76" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <mask id="mask0_495616_5050" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="26"
                                     y="14" width="24" height="25">
                                     <rect x="26" y="14.5" width="24" height="24" fill="#D9D9D9" />

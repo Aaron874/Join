@@ -67,6 +67,7 @@ function openCreateTaskDialog(status = 'todo') {
     setTaskFormMode('create');
     setFormStatus(status);
     openDialog('add-task-dialog');
+    resetSubtaskInput();
 }
 
 /**

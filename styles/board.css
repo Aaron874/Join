@@ -15,7 +15,7 @@ body {
 }
 
 body.dialog-open {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 h1 .layout {
@@ -321,120 +321,120 @@ input::placeholder {
 }
 
 .dropdown_contacts {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    z-index: 9999;
-    background: white;
-    flex-direction: column;
-    max-height: calc(3 * 46px);
-    overflow-y: auto;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background: white;
+  flex-direction: column;
+  max-height: calc(3 * 46px);
+  overflow-y: auto;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .contacts_list_name_symbol {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background-color: var(--contact-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border: 2px solid white;
-    font-size: 16px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--contact-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 2px solid white;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
 }
 
 .contacts_div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 46px;
-    padding: 0.3rem 0.5rem;
-    border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 46px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
 }
 
 .contacts_div:hover,
 .category_div:hover {
-    background-color: #f5f6f7;
+  background-color: #f5f6f7;
 }
 
 .contacts_div:has(.contacts_input:checked) {
-    background-color: #2a3647;
-    color: white;
+  background-color: #2a3647;
+  color: white;
 }
 
 .contacts_div:has(.contacts_input:checked):hover {
-    background-color: #091931;
+  background-color: #091931;
 }
 
 .div_contacts_initials {
-    display: none;
-    align-items: center;
+  display: none;
+  align-items: center;
 }
 
 .contacts_input {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .contacts_div:has(.contacts_input:checked) {
-    background-color: #2a3647;
-    color: white;
+  background-color: #2a3647;
+  color: white;
 }
 
 .contacts_input {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    border: 2px solid #2a3647;
-    border-radius: 3px;
-    background-color: transparent;
-    position: relative;
-    cursor: pointer;
-    padding-left: 0 !important;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border: 2px solid #2a3647;
+  border-radius: 3px;
+  background-color: transparent;
+  position: relative;
+  cursor: pointer;
+  padding-left: 0 !important;
 }
 
 .contacts_input:checked {
-    border-color: white;
+  border-color: white;
 }
 
 .contacts_input:checked::before {
-    content: '';
-    position: absolute;
+  content: '';
+  position: absolute;
 
-    width: 7px;
-    height: 7px;
+  width: 7px;
+  height: 7px;
 
-    right: -3px;
-    top: -3px;
+  right: -3px;
+  top: -3px;
 
-    background-color: #2a3647;
+  background-color: #2a3647;
 }
 
 .contacts_input:checked::before:hover {
-    background-color: #091931;
+  background-color: #091931;
 }
 
 .contacts_input:checked::after {
-    content: '';
-    position: absolute;
+  content: '';
+  position: absolute;
 
-    width: 5px;
-    height: 12px;
+  width: 5px;
+  height: 12px;
 
-    left: 5px;
-    top: -5px;
+  left: 5px;
+  top: -5px;
 
-    border: solid white;
-    border-width: 0 2px 2px 0;
+  border: solid white;
+  border-width: 0 2px 2px 0;
 
-    transform: rotate(38deg);
+  transform: rotate(38deg);
 }
 
 .div_contacts_initials {
@@ -655,17 +655,17 @@ input::placeholder {
 }
 
 .subtask-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 120ms ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms ease;
 }
 
 .subtask-item:hover .subtask-actions {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .subtask-actions button,
@@ -691,6 +691,55 @@ input::placeholder {
   border: none;
   border-bottom: 1px solid #29abe2;
   outline: none;
+}
+
+.subtask-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.subtask-input-wrapper .input-right {
+  width: 100%;
+  padding-right: 100px;
+  box-sizing: border-box;
+}
+
+.subtask-input-actions {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.subtask-input-actions.visible {
+  display: flex;
+}
+
+.subtask-input-actions button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-darkblue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.subtask-input-divider {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d1d1;
+}
+
+.subtask-input-actions button:hover {
+    background-color: #eeeeee;
+    border-radius: 50%;
 }
 
 
@@ -1200,18 +1249,18 @@ priority-icon {
 }
 
 .task-dialog-footer button {
-    border: none;
-    background: transparent;
-    color: var(--color-darkblue);
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-darkblue);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .task-dialog-footer button:hover {
-    color: var(--color-blue);
+  color: var(--color-blue);
 }
 
 .delete-edit {
@@ -1394,7 +1443,7 @@ priority-icon {
   }
 }
 
-@media(max-width: 780px){
+@media(max-width: 780px) {
   .footer {
     display: flex;
     position: fixed;
@@ -1560,8 +1609,8 @@ priority-icon {
 }
 
 @media (hover: none) {
-    .subtask-actions {
-        opacity: 1;
-        visibility: visible;
-    }
+  .subtask-actions {
+    opacity: 1;
+    visibility: visible;
+  }
 }
