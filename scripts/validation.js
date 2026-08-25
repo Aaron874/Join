@@ -7,6 +7,7 @@ const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-zA-Z]{2,}$/;
 const MIN_PASSWORD_LENGTH = 8;
 const MAX_EMAIL_LENGTH = 254;
+const PASSWORD_REQUIREMENTS_MSG = `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
 let signUpForm = null;
 
 /** Whether the login form has been submitted at least once. Login fields
@@ -104,11 +105,10 @@ export function attachSignUpValidation(elements) {
         validateEmail,
         'Email must not be empty.'
     );
-    enableValidationOnBlurOrInput(
+    enablePasswordValidationOnBlur(
         elements.password.input,
         elements.password.error,
-        validatePassword,
-        'Password must not be empty.'
+        validatePassword
     );
     enableValidationOnBlurOrInput(
         elements.confirmPassword.input,
@@ -233,6 +233,25 @@ function enableValidationOnBlurOrInput(input, errorEl, validateFn, emptyMessage)
 }
 
 /**
+ * Validates the sign-up password field only once the user leaves it
+ * (blur), never while typing — the password has several rules (length,
+ * upper/lower case, a number), and validating on every keystroke made
+ * the message switch from one rule to the next as the user typed.
+ * `validatePassword` returns a single combined requirements message
+ * instead of one message per rule.
+ * @param {HTMLInputElement} input - The password input element.
+ * @param {HTMLElement} errorEl - The element that displays the error message.
+ * @param {(value: string) => string} validateFn - Function that validates the input value and returns an error message or empty string.
+ * @returns {void}
+ */
+function enablePasswordValidationOnBlur(input, errorEl, validateFn) {
+    input.addEventListener('blur', () => {
+        if (input.disabled) return;
+        showError(errorEl, validateFn(input.value));
+    });
+}
+
+/**
  * Validates a name value.
  * @param {string} value - The name to validate.
  * @returns {string} An error message if invalid, or an empty string if valid.
@@ -274,7 +293,9 @@ function validateEmail(value) {
 }
 
 /**
- * Validates a password value.
+ * Validates a password value. Only the minimum length is enforced —
+ * no uppercase/lowercase/number rules — so there is only ever this one
+ * short message to show, instead of a long combined requirements text.
  * @param {string} value - The password to validate.
  * @returns {string} An error message if invalid, or an empty string if valid.
  */
@@ -282,19 +303,7 @@ function validatePassword(value) {
     if (!value) {
         return 'Password must not be empty.';
     }
-    if (value.length < MIN_PASSWORD_LENGTH) {
-        return `Password must >${MIN_PASSWORD_LENGTH} characters.`;
-    }
-    if (!/[A-Z]/.test(value)) {
-        return 'Needs a uppercase letter.';
-    }
-    if (!/[a-z]/.test(value)) {
-        return 'Needs a lowercase letter';
-    }
-    if (!/[0-9]/.test(value)) {
-        return 'Needs a number.';
-    }
-    return '';
+    return value.length >= MIN_PASSWORD_LENGTH ? '' : PASSWORD_REQUIREMENTS_MSG;
 }
 
 /**
