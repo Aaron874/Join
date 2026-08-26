@@ -221,7 +221,7 @@ export function renderContactInput(mode, contactId) {
                   minlength="2"
                   maxlength="50"
                   pattern="[\\p{L}' \\-]{2,100}"
-                  title="Der Name darf nur Buchstaben, Leerzeichen, Apostrophe und Bindestriche enthalten."
+                  title="Only letters, spaces, apostrophes, and hyphens allowed."
                   required
                 />
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
@@ -231,7 +231,7 @@ export function renderContactInput(mode, contactId) {
                   type="email" 
                   name="email" 
                   id="contact_email_id" 
-                  placeholder="E-Mail" 
+                  placeholder="Email" 
                   value="${contactsList[contactId]?.email ?? ''}" 
                   required/>
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
@@ -241,11 +241,11 @@ export function renderContactInput(mode, contactId) {
                   type="tel" 
                   name="phone" 
                   id="contact_phone_id" 
-                  placeholder="+49 12345678910"
+                  placeholder="Phone"
                   minlength="6"
                   maxlength="20"
                   pattern="\\+?[0-9 ]{6,20}"
-                  title= "Bitte geben Sie eine gültige Telefonnummer ein, z. B. +49 171 1234567."
+                  title= "Please enter a valid phone number, e.g. +49 171 1234567."
                   value="${contactsList[contactId]?.phone ?? ''}" 
                   required/>
                 <img src="assets/img/call.webp" alt="Phone Icon" />

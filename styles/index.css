@@ -149,13 +149,23 @@ footer a {
     display: flex;
     align-items: center;
     gap: 5px;
-    border: #2a3647 1px solid;
+    border: none; /* echte Border entfernen */
+    outline: 1px solid #2a3647; /* Border optisch simuliert */
+    outline-offset: -1px; /* nach innen ziehen */
     padding: 15px 24px;
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
+    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
 
 }
+
+.guest_login_btn:hover {
+    outline: 2px solid #2a3647;
+    outline-offset: -2px;
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  }
 
 .login_btn {
     background-color: #2a3647;
@@ -169,8 +179,14 @@ footer a {
     border: none;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
+    transition: transform 200ms ease-in-out;
 
 }
+
+.login_btn:hover {
+    background-color: #124658;
+    transform: scale(1.05);
+  }
 
 .privacy_checkbox {
     display: flex;
@@ -227,12 +243,18 @@ input[type='checkbox']:checked::after {
     border: none;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
+    transition: transform 200ms ease-in-out
 
 }
 
 #sign_up_button_id:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .sign_up_btn:hover {
+    background-color: #124658;
+    transform: scale(1.05);
   }
 
 .back_to_log_in_btn {

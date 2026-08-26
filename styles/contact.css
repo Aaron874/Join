@@ -366,14 +366,14 @@ dialog::backdrop {
 
 .contact_btn_submit {
     background-color: #2a3647;
-    padding: 10px 18px;
+    padding: 18px 10px;
     color: #ffffff;
     font-size: 21px;
     font-weight: 700;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    gap: 5px;
+    gap: 10px;
     font-family: 'Inter', sans-serif;
 }
 
