@@ -118,6 +118,7 @@ body {
     overflow-y: scroll;
     scrollbar-color: #a8a8a8 transparent;
     background-color: #ffffff;
+    max-width: 453px;
 }
 
 .contacts_single_view_header {
@@ -361,7 +362,7 @@ dialog::backdrop {
 }
 
 .contact_input_wrapper input::placeholder {
-    color: #d1d1d1;
+    color: #686868;
 }
 
 .contact_input_wrapper img {
@@ -549,6 +550,10 @@ dialog::backdrop {
     padding: 0;
 }
 
+.mobile_edit_btn:active {
+    background-color: #124658;
+}
+
 .mobile_back_btn {
     display: none;
     position: absolute;
@@ -563,6 +568,23 @@ dialog::backdrop {
 
 .icon_desktop_close {
     display: unset;
+}
+.add_contact_mobile {
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    background-color: #2A3647;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid #2A3647;
+    right: 16px;
+    bottom: 132px;
+}
+
+.add_contact_mobile:active {
+    background-color: #124658;
 }
 
 
@@ -747,6 +769,12 @@ dialog::backdrop {
 
 @media (max-width: 700px) {
     .contacts_single_view_container {
+        display: none;
+    }
+    .add_contact_mobile {
+        display: block;
+    }
+    .contacts_list_header {
         display: none;
     }
 
