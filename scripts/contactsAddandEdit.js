@@ -58,6 +58,7 @@ function openAddContactDialog() {
     contactDialogHeaderSwitch();
     contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
     openEditInput();
+    resetPersonInitials();
     startEventListenerColorPicker();
     startEventListenersAddContactDialog();
 }
