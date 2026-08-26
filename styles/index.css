@@ -252,7 +252,7 @@ input[type='checkbox']:checked::after {
     cursor: not-allowed;
   }
 
-  .sign_up_btn:hover {
+  .sign_up_btn:hover:not(:disabled) {
     background-color: #124658;
     transform: scale(1.05);
   }

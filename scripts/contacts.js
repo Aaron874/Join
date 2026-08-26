@@ -160,6 +160,7 @@ export function createListenerForContactInList(newContact, id) {
  * openSingleViewContact(contact.id);
  */
 export function openSingleViewContact(id) {
+    contactListMarkedContact (id)
     const contactIndex = searchIndex(id);
     switchListToSingleViewAndBack();
     const contact = contactsList[contactIndex];
@@ -174,6 +175,13 @@ export function openSingleViewContact(id) {
             contact.id
         )
     );
+}
+
+function contactListMarkedContact (id) {
+    const allContacts = document.querySelectorAll('.contacts_list_items_container');
+    allContacts.forEach(contact => contact.classList.remove('selected'));
+    const selectedContact = document.getElementById('contact_id_' + id)
+    selectedContact.classList.add('selected');
 }
 
 /**

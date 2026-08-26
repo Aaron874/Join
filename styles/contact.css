@@ -40,25 +40,36 @@ body {
     width: calc(100% - 16px);
     display: flex;
     padding: 15px 24px 15px 24px;
-    border-radius: 5px;
+    border-radius: 10px;
     gap: 20px;
     overflow-wrap: anywhere;
+    background-color: #ffffff;
 }
 
-.contacts_list_items_container:hover {
+.contacts_list_items_container:hover:not(.contacts_list_items_container.selected) {
+    background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);
+    
+
+}
+
+.contacts_list_items_container.selected {
     background-color: #2a3647;
+
 }
 
-.contacts_list_items_container h4 {
+.contacts_list_items_container.selected .contacts_list_name {
+    color: #ffffff;
+
+}
+
+.contacts_list_name {
     text-align: left;
     font-weight: 400;
     font-size: 20px;
     font-family: 'Inter', sans-serif;
 }
 
-.contacts_list_items_container:hover h4 {
-    color: #ffffff;
-}
+
 
 .contacts_list_items_container p a {
     font-weight: 400;
