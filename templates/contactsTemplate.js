@@ -145,12 +145,22 @@ export function renderSingleContactView(
             <button id="mobile_edit_btn_id" class="mobile_edit_btn">
               <img
                 src="assets/img/more_vert.webp"
-                alt="Edit Contact"
+                alt="Edit Contact">
             </button>
+            <div class="mobile_contact_menu_wrapper" >
+              <button id="edit_mobile_btn_id" >
+                <img src="assets/img/edit.webp" alt="Edit Contact Mobile">
+                <span>Edit</span>
+              </button>
+              <button id="delete_mobile_btn_id" >
+                <img src="assets/img/delete.webp" alt="Delete Contact Mobile">
+                <span>Delete</span>
+              </button>
+            </div>
             <button id="mobile_back_btn_id" class="mobile_back_btn">
               <img
                 src="assets/img/arrow-left-line.webp"
-                alt="Back to Contact List Button"
+                alt="Back to Contact List Button">
             </button>
             `;
     openEditDialogBtnListener(newSingleView, id);

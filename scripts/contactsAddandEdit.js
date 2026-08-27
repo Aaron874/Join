@@ -11,6 +11,8 @@ import {
     MOBILE_BREAKPOINT,
     searchIndex,
     removeContactFromDom,
+    deleteContactDialog,
+    contactsList,
 } from './contacts.js';
 
 import { deleteContact } from '../firebase/contacts.service.js';
@@ -316,7 +318,7 @@ export function openEditContactDialog(id) {
  * @example
  * openEditDialogBtnListener(singleViewElement, contact.id);
  */
-export function openEditDialogBtnListener(newSingleView, id) {
+export function openEditDialogBtnListener(newSingleView, id, person) {
     let screenSize = window.innerWidth;
     let editButton;
     if (screenSize < MOBILE_BREAKPOINT) {
@@ -324,9 +326,58 @@ export function openEditDialogBtnListener(newSingleView, id) {
     } else {
         editButton = newSingleView.querySelector('#edit_btn_id');
     }
-    editButton.addEventListener('click', () => {
-        openEditContactDialog(id);
+    editButton.addEventListener('click', (e) => {
+        if (screenSize < MOBILE_BREAKPOINT) {
+            console.log('Hallo');
+            openEditOrDeleteMenuMobile(id, e, person);
+        } else {
+            openEditContactDialog(id);
+        }
     });
+}
+
+/**
+ * Opens the mobile edit/delete menu for a contact.
+ * @param {string|number} id - Contact ID.
+ * @param {Event} e - Triggering event (propagation stopped).
+ * @param {Object} person - Contact data.
+ */
+function openEditOrDeleteMenuMobile(id, e, person) {
+    e.stopPropagation();
+    const mobileEditContainer = document.querySelector('.mobile_contact_menu_wrapper');
+    mobileEditContainer.classList.add('open');
+    listenerMobileEditMenu(id, mobileEditContainer, person);
+}
+
+/**
+ * Sets up click listener for the mobile edit/delete menu (edit, delete, or close on outside click).
+ * @param {string|number} id - Contact ID.
+ * @param {HTMLElement} mobileEditContainer - Menu container element.
+ */
+function listenerMobileEditMenu(id, mobileEditContainer) {
+    const controller = new AbortController();
+    const { signal } = controller;
+    document.addEventListener(
+        'click',
+        (e) => {
+            if (!mobileEditContainer.contains(e.target)) {
+                closeAndCleanup();
+                return;
+            }
+            if (e.target.closest('#edit_mobile_btn_id')) {
+                openEditContactDialog(id);
+            }
+            if (e.target.closest('#delete_mobile_btn_id')) {
+                deleteContactDialog(id, contactsList[searchIndex(id)].name);
+                closeAndCleanup();
+            }
+        },
+        { signal }
+    );
+    function closeAndCleanup() {
+        mobileEditContainer.classList.remove('open');
+        controller.abort();
+    }
 }
 
 /**
