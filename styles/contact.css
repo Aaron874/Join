@@ -220,6 +220,12 @@ body {
     color: #2a3647;
     display: flex;
     align-items: center;
+    transition: transform 200ms ease-in-out font-weight 200ms ease-in-out;
+}
+
+.contacts_single_view_actions button:hover {
+    transform: scale(1.05);
+    font-weight: 700;
 }
 
 .contacts_single_view_actions button img {
