@@ -1,5 +1,5 @@
 import { signUpElements, logInElements } from './index.js';
-import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError } from './SignUpOrLogInErrors.js';
+import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError } from './signUpOrLogInErrors.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;

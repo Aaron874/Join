@@ -15,7 +15,7 @@ import {
     showErrorLogIn,
     getSignUpErrorElements,
     getLogInErrorElements,
-} from './SignUpOrLogInErrors.js';
+} from './signUpOrLogInErrors.js';
 
 const successDialog = document.getElementById('sign_up_success_dialog_id');
 const signUpContainerHeader = document.getElementById('sign_up_btn_wrapper_header_id');
