@@ -107,6 +107,10 @@ export function openSingleViewContact(id) {
     );
 }
 
+/**
+ * Marks a contact as selected in the contacts list.
+ * @param {string|number} id - Contact ID.
+ */
 function contactListMarkedContact(id) {
     const allContacts = document.querySelectorAll('.contacts_list_items_container');
     allContacts.forEach((contact) => contact.classList.remove('selected'));
