@@ -1,13 +1,15 @@
 window.subtasks = [];
 
-const subtaskInput = document.getElementById('task-subtasks');
-const subtaskActions = document.getElementById('subtask-input-actions');
+document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
 
-subtaskInput.addEventListener('keydown', addSubtask);
-subtaskInput.addEventListener('focus', showSubtaskActions);
-subtaskInput.addEventListener('blur', hideSubtaskActions);
-document.getElementById('cancel-subtask-btn').addEventListener('click', cancelSubtask);
-document.getElementById('confirm-subtask-btn').addEventListener('click', confirmSubtask);
+// const subtaskInput = document.getElementById('task-subtasks');
+// const subtaskActions = document.getElementById('subtask-input-actions');
+
+// subtaskInput.addEventListener('keydown', addSubtask);
+// subtaskInput.addEventListener('focus', showSubtaskActions);
+// subtaskInput.addEventListener('blur', hideSubtaskActions);
+// document.getElementById('cancel-subtask-btn').addEventListener('click', cancelSubtask);
+// document.getElementById('confirm-subtask-btn').addEventListener('click', confirmSubtask);
 
 /**
  * Create a new subtask from the current input value.
@@ -32,54 +34,7 @@ function createSubtask() {
 function addSubtask(event) {
     if (event.key !== 'Enter') return;
     event.preventDefault();
-    confirmSubtask();
-}
-
-/**
- * Add the current input value to the subtask list and clear the input.
- */
-function confirmSubtask() {
-    const title = subtaskInput.value.trim();
-    if (!title) return;
-    window.subtasks.push({ title, completed: false });
-    subtaskInput.value = '';
-    renderAddTaskSubtasks();
-    if (document.activeElement !== subtaskInput) {
-        subtaskActions.classList.remove('visible');
-    }
-}
-
-/**
- * Cancel subtask creation and reset the subtask input.
- */
-function cancelSubtask() {
-    resetSubtaskInput();
-}
-
-/**
- * Clear the subtask input and hide its action buttons.
- */
-function resetSubtaskInput() {
-    subtaskInput.value = '';
-    subtaskActions.classList.remove('visible');
-}
-
-/**
- * Hide the subtask action buttons after the input loses focus.
- */
-function hideSubtaskActions() {
-    setTimeout(() => {
-        if (document.activeElement !== subtaskInput) {
-            subtaskActions.classList.remove('visible');
-        }
-    }, 100);
-}
-
-/**
- * Show the subtask action buttons when the input receives focus.
- */
-function showSubtaskActions() {
-    subtaskActions.classList.add('visible');
+    createSubtask();
 }
 
 /**
@@ -210,8 +165,10 @@ function resetSubtasks() {
 
 function deleteSubtaskInput() {
     const subtaskInput = document.getElementById('task-subtasks');
-    subtaskInput.value = '';
 
+    if (!subtaskInput) return;
+
+    subtaskInput.value = '';
 }
 
 window.addSubtask = addSubtask;
@@ -221,4 +178,3 @@ window.saveSubtaskEdit = saveSubtaskEdit;
 window.deleteSubtask = deleteSubtask;
 window.deleteSubtaskInput = deleteSubtaskInput;
 window.createSubtask = createSubtask;
-window.resetSubtaskInput = resetSubtaskInput;
