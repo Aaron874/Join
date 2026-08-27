@@ -5,7 +5,10 @@ import {
     renderPersonInitialsForAddContact,
 } from '../templates/contactsTemplate.js';
 
-import { DEFAULT_CONTACT_COLOR, writeNewContact, searchIndex, contactsList } from './contacts.js';
+import { DEFAULT_CONTACT_COLOR, writeNewContact, searchIndex, removeContactFromDom,
+} from './contacts.js';
+import { deleteContact } from '../firebase/contacts.service.js';
+
 
 import {
     startEventListenerColorPicker,
@@ -315,5 +318,39 @@ function startContactDialogCloseListeners() {
         if (event.target === contactDialog) {
             closeContactDialog();
         }
+    });
+}
+
+/**
+ * Registers the click event listeners for the delete confirmation dialog's action buttons.
+ * On confirm, deletes the contact remotely, removes it from the DOM, closes the delete
+ * dialog, and also closes the contact edit dialog if it is currently open.
+ * On cancel, simply closes the delete dialog without further action.
+ *
+ * @param {string|number} contactId - The ID of the contact to be deleted.
+ * @param {HTMLElement} deleteButton - The button element that confirms the deletion.
+ * @param {HTMLElement} cancelButton - The button element that cancels the deletion.
+ * @param {HTMLDialogElement} deleteDialog - The dialog element to be closed after confirm or cancel.
+ * @returns {void}
+ *
+ * @example
+ * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
+ */
+export function eventListenerDeleteContactDialog(
+    contactId,
+    deleteButton,
+    cancelButton,
+    deleteDialog
+) {
+    deleteButton.addEventListener('click', async () => {
+        await deleteContact(contactId);
+        removeContactFromDom(contactId);
+        deleteDialog.close();
+        if (contactDialog.open) {
+            closeContactDialog();
+        }
+    });
+    cancelButton.addEventListener('click', () => {
+        deleteDialog.close();
     });
 }

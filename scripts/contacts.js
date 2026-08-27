@@ -13,8 +13,8 @@ import {
     errorMessageDialog,
     contactSuccessfullyCreatedDialog,
     contactListInitials,
+    eventListenerDeleteContactDialog
 } from './contactsAddandEdit.js';
-import { eventListenerDeleteContactDialog } from './contactsListener.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
