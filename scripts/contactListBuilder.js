@@ -1,29 +1,11 @@
-import { contactsList, } from './contacts.js';
+import { contactsList } from './contacts.js';
 import {
     renderContactsListLetterSeperator,
     renderContactsListItems,
 } from '../templates/contactsTemplate.js';
 
 let firstLetterList = [];
-const DESKTOP_BREAKPOINT = 702;
 const contactsListContainer = document.querySelector('.contacts_list_container');
-const desktopMediaQuery = window.matchMedia(`(min-width: ${DESKTOP_BREAKPOINT}px)`);
-
-
-/**
- * Listens for changes to the desktop media query and resets the list/single
- * view visibility classes once the viewport matches the desktop breakpoint.
- *
- * @returns {void}
- *
- * @example
- * // Registered once at module load; no manual invocation needed.
- */
-desktopMediaQuery.addEventListener('change', (event) => {
-    if (event.matches) {
-        resetListAndSingleViewVisibility();
-    }
-});
 
 /**
  * Resets the mobile toggle classes on the single view and list containers
@@ -34,7 +16,7 @@ desktopMediaQuery.addEventListener('change', (event) => {
  * @example
  * resetListAndSingleViewVisibility();
  */
-function resetListAndSingleViewVisibility() {
+export function resetListAndSingleViewVisibility() {
     const viewContainer = document.querySelector('.contacts_single_view_container');
     const listContainer = document.querySelector('.contacts_list_container');
     viewContainer.classList.remove('visible_flex');

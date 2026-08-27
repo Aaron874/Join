@@ -1,14 +1,13 @@
-import {
-    createListenerForContactInList,
-    contactsList,
-    openDeleteDialogBtnListener,
-    updateContactBtnListener,
-    deleteBtnListener,
-    returnToListBtnListener,
-    DEFAULT_CONTACT_COLOR,
-} from '../scripts/contacts.js';
+import { contactsList, DEFAULT_CONTACT_COLOR } from '../scripts/contacts.js';
 
-import { openEditDialogBtnListener } from '../scripts/contactsAddandEdit.js';
+import {
+    openEditDialogBtnListener,
+    updateContactBtnListener,
+    createListenerForContactInList,
+    openDeleteDialogBtnListener,
+    returnToListBtnListener,
+    deleteBtnListener,
+} from '../scripts/contactsListener.js';
 
 /**
  * Renders the HTML markup for a single letter separator used in the contact list.

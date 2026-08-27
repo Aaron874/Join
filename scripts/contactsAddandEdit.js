@@ -5,44 +5,18 @@ import {
     renderPersonInitialsForAddContact,
 } from '../templates/contactsTemplate.js';
 
-import {
-    DEFAULT_CONTACT_COLOR,
-    writeNewContact,
-    MOBILE_BREAKPOINT,
-    searchIndex,
-    removeContactFromDom,
-    deleteContactDialog,
-    contactsList,
-} from './contacts.js';
+import { DEFAULT_CONTACT_COLOR, writeNewContact, searchIndex, contactsList } from './contacts.js';
 
-import { deleteContact } from '../firebase/contacts.service.js';
+import {
+    startEventListenerColorPicker,
+    startEventListenersAddContactDialog,
+    listenerMobileEditMenu,
+} from './contactsListener.js';
+
 const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
 const SUCCESS_DIALOG_TIMEOUT = 2000;
-
-/**
- * Registers a global click event listener that handles elements with a
- * `data-action` attribute. Opens the add contact dialog for the
- * `'open_dialog_contact'` action, or closes it for the `'close_dialog_contact'`
- * action.
- *
- * @returns {void}
- *
- * @example
- * // Registered once at module load; no manual invocation needed.
- */
-document.addEventListener('click', (e) => {
-    const element = e.target.closest('[data-action]');
-    if (!element) return;
-    const action = element.dataset.action;
-    if (action === 'open_dialog_contact') {
-        openAddContactDialog();
-    }
-    if (action === 'close_dialog_contact') {
-        closeAddContactDialog();
-    }
-});
 
 /**
  * Opens the add contact dialog and initializes it for creating a new contact.
@@ -55,7 +29,7 @@ document.addEventListener('click', (e) => {
  * @example
  * openAddContactDialog();
  */
-function openAddContactDialog() {
+export function openAddContactDialog() {
     openContactDialog();
     contactDialogHeaderSwitch();
     contactDialogHeader.appendChild(renderUnderlineHeaderContactDialog());
@@ -108,44 +82,6 @@ function openEditInput(mode, id) {
 }
 
 /**
- * Registers an input event listener on the color picker element inside the contact form.
- * Updates the `--contact-color` CSS custom property on the picker's parent element
- * in real time to reflect the currently selected color.
- *
- * @returns {void}
- *
- * @example
- * startEventListenerColorPicker();
- */
-function startEventListenerColorPicker() {
-    document.getElementById('contact_color_picker_id').addEventListener('input', (event) => {
-        event.target.parentElement.style.setProperty('--contact-color', event.target.value);
-    });
-}
-
-/**
- * Registers a blur event listener on the contact name input field inside the add contact dialog.
- * If a name has been entered, derives the initials from the input value and updates the
- * avatar preview to display them. If the field is left empty, resets the avatar preview
- * to its default state.
- *
- * @returns {void}
- *
- * @example
- * startEventListenersAddContactDialog();
- */
-function startEventListenersAddContactDialog() {
-    document.getElementById('contact_name_id').addEventListener('blur', (event) => {
-        if (event.target.value != '') {
-            let showFirstLetters = contactListInitials(event.target.value);
-            changeImgToInitials(showFirstLetters);
-        } else {
-            resetPersonInitials();
-        }
-    });
-}
-
-/**
  * Updates the contact avatar preview to display the given initials instead of the
  * default person icon. If the initials element already exists in the DOM, updates
  * its text content directly; otherwise replaces the default icon element with a
@@ -157,7 +93,7 @@ function startEventListenersAddContactDialog() {
  * @example
  * changeImgToInitials('JD');
  */
-function changeImgToInitials(initials) {
+export function changeImgToInitials(initials) {
     let imgElement = document.getElementById('person_icon_id');
     if (imgElement === null) {
         document.getElementById('person_initials_id').textContent = initials;
@@ -178,7 +114,7 @@ function changeImgToInitials(initials) {
  * @example
  * resetPersonInitials();
  */
-function resetPersonInitials() {
+export function resetPersonInitials() {
     let initialsElement = document.getElementById('person_initials_id');
     if (initialsElement === null) {
         return;
@@ -226,27 +162,6 @@ function deleteInputValues() {
 }
 
 /**
- * Registers a global submit event listener for the contact form. Prevents the
- * default form submission and, when the submitter's `data-action` is
- * `'create_contact'`, reads the entered contact values and creates a new
- * contact. Currently has no effect for the `'update_contact'` action.
- *
- * @returns {void}
- *
- * @example
- * // Registered once at module load; no manual invocation needed.
- */
-document.addEventListener('submit', (event) => {
-    if (!event.target.matches('#contact_form_id')) return;
-    event.preventDefault();
-    switch (event.submitter.dataset.action) {
-        case 'create_contact':
-            getNewContactValues();
-            break;
-    }
-});
-
-/**
  * Reads the current values from the contact form's input fields, derives the
  * contact's initials from the entered name, assembles a new contact object,
  * and passes it to `writeNewContact` for persistence.
@@ -256,7 +171,7 @@ document.addEventListener('submit', (event) => {
  * @example
  * getNewContactValues();
  */
-function getNewContactValues() {
+export function getNewContactValues() {
     let contact = {
         name: document.getElementById('contact_name_id').value,
         email: document.getElementById('contact_email_id').value,
@@ -307,77 +222,16 @@ export function openEditContactDialog(id) {
 }
 
 /**
- * Registers a click event listener on the edit button of a contact's single view.
- * Selects either the mobile or desktop edit button depending on the current screen width,
- * and opens the edit dialog for the given contact when clicked.
- *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
- * @param {string|number} id - The ID of the contact to be opened in the edit dialog.
- * @returns {void}
- *
- * @example
- * openEditDialogBtnListener(singleViewElement, contact.id);
- */
-export function openEditDialogBtnListener(newSingleView, id, person) {
-    let screenSize = window.innerWidth;
-    let editButton;
-    if (screenSize < MOBILE_BREAKPOINT) {
-        editButton = newSingleView.querySelector('#mobile_edit_btn_id');
-    } else {
-        editButton = newSingleView.querySelector('#edit_btn_id');
-    }
-    editButton.addEventListener('click', (e) => {
-        if (screenSize < MOBILE_BREAKPOINT) {
-            console.log('Hallo');
-            openEditOrDeleteMenuMobile(id, e, person);
-        } else {
-            openEditContactDialog(id);
-        }
-    });
-}
-
-/**
  * Opens the mobile edit/delete menu for a contact.
  * @param {string|number} id - Contact ID.
  * @param {Event} e - Triggering event (propagation stopped).
  * @param {Object} person - Contact data.
  */
-function openEditOrDeleteMenuMobile(id, e, person) {
+export function openEditOrDeleteMenuMobile(id, e, person) {
     e.stopPropagation();
     const mobileEditContainer = document.querySelector('.mobile_contact_menu_wrapper');
     mobileEditContainer.classList.add('open');
     listenerMobileEditMenu(id, mobileEditContainer, person);
-}
-
-/**
- * Sets up click listener for the mobile edit/delete menu (edit, delete, or close on outside click).
- * @param {string|number} id - Contact ID.
- * @param {HTMLElement} mobileEditContainer - Menu container element.
- */
-function listenerMobileEditMenu(id, mobileEditContainer) {
-    const controller = new AbortController();
-    const { signal } = controller;
-    document.addEventListener(
-        'click',
-        (e) => {
-            if (!mobileEditContainer.contains(e.target)) {
-                closeAndCleanup();
-                return;
-            }
-            if (e.target.closest('#edit_mobile_btn_id')) {
-                openEditContactDialog(id);
-            }
-            if (e.target.closest('#delete_mobile_btn_id')) {
-                deleteContactDialog(id, contactsList[searchIndex(id)].name);
-                closeAndCleanup();
-            }
-        },
-        { signal }
-    );
-    function closeAndCleanup() {
-        mobileEditContainer.classList.remove('open');
-        controller.abort();
-    }
 }
 
 /**
@@ -417,39 +271,6 @@ export function errorMessageDialog(message) {
         successDialog.close();
     }, SUCCESS_DIALOG_TIMEOUT);
 }
-/**
- * Registers the click event listeners for the delete confirmation dialog's action buttons.
- * On confirm, deletes the contact remotely, removes it from the DOM, closes the delete
- * dialog, and also closes the contact edit dialog if it is currently open.
- * On cancel, simply closes the delete dialog without further action.
- *
- * @param {string|number} contactId - The ID of the contact to be deleted.
- * @param {HTMLElement} deleteButton - The button element that confirms the deletion.
- * @param {HTMLElement} cancelButton - The button element that cancels the deletion.
- * @param {HTMLDialogElement} deleteDialog - The dialog element to be closed after confirm or cancel.
- * @returns {void}
- *
- * @example
- * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
- */
-export function eventListenerDeleteContactDialog(
-    contactId,
-    deleteButton,
-    cancelButton,
-    deleteDialog
-) {
-    deleteButton.addEventListener('click', async () => {
-        await deleteContact(contactId);
-        removeContactFromDom(contactId);
-        deleteDialog.close();
-        if (contactDialog.open) {
-            closeContactDialog();
-        }
-    });
-    cancelButton.addEventListener('click', () => {
-        deleteDialog.close();
-    });
-}
 
 /**
  * Opens the contact dialog and triggers its entrance animation.
@@ -466,32 +287,9 @@ function openContactDialog() {
  * before actually closing it.
  * @returns {void}
  */
-function closeContactDialog() {
+export function closeContactDialog() {
     contactDialog.classList.remove('open');
     setTimeout(() => {
         contactDialog.close();
     }, 300);
-}
-/**
- * Starts the contact dialog's close listeners (Escape key and backdrop click).
- * @returns {void}
- */
-startContactDialogCloseListeners();
-
-/**
- * Attaches close listeners to the contact dialog: intercepts the
- * Escape key to close it with the animation, and closes it when
- * the backdrop (outside the dialog content) is clicked.
- * @returns {void}
- */
-function startContactDialogCloseListeners() {
-    contactDialog.addEventListener('cancel', (event) => {
-        event.preventDefault();
-        closeContactDialog();
-    });
-    contactDialog.addEventListener('click', (event) => {
-        if (event.target === contactDialog) {
-            closeContactDialog();
-        }
-    });
 }

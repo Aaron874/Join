@@ -1,10 +1,20 @@
-import { getFirstLetterForSeperator, seperatIdFromContactList, removeContactListFromDom, } from './contactListBuilder.js';
+import {
+    getFirstLetterForSeperator,
+    seperatIdFromContactList,
+    removeContactListFromDom,
+} from './contactListBuilder.js';
 import { waitForAuthenticatedUser } from '../firebase/auth-state.js';
 import { createContact } from '../firebase/contacts.service.js';
 import { getContacts, updateContact, getContact } from '../firebase/contacts.service.js';
 import { getUserProfile } from '../firebase/user.service.js';
 import { renderSingleContactView } from '../templates/contactsTemplate.js';
-import { closeAddContactDialog, errorMessageDialog, eventListenerDeleteContactDialog, contactSuccessfullyCreatedDialog, contactListInitials, } from './contactsAddandEdit.js';
+import {
+    closeAddContactDialog,
+    errorMessageDialog,
+    contactSuccessfullyCreatedDialog,
+    contactListInitials,
+} from './contactsAddandEdit.js';
+import { eventListenerDeleteContactDialog } from './contactsListener.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
 export const MOBILE_BREAKPOINT = 701;
@@ -68,86 +78,6 @@ async function ensureSelfContactExists() {
 }
 
 /**
- * Registers a click listener on the delete button of the single contact view,
- * but only above the mobile breakpoint (button not available on mobile).
- * Opens the delete confirmation dialog for the contact when clicked.
- *
- * @param {HTMLElement} newSingleView - The single contact view element containing the button.
- * @param {string|number} id - The ID of the contact to be deleted.
- * @param {Object} person - The contact data passed to the delete dialog.
- * @returns {void}
- *
- * @example
- * openDeleteDialogBtnListener(singleViewElement, contact.id, contact);
- */
-export function openDeleteDialogBtnListener(newSingleView, id, person) {
-    let screenSize = window.innerWidth;
-    if (screenSize > MOBILE_BREAKPOINT) {
-        const deleteButton = newSingleView.querySelector('#delete_btn_id');
-        deleteButton.addEventListener('click', () => {
-            deleteContactDialog(id, person);
-        });
-    }
-}
-
-/**
- * Registers a click listener on the delete button in the edit contact form
- * that opens the delete confirmation dialog for the contact.
- *
- * @param {string|number} contactId - Index/key to look up the contact in `contactsList`.
- * @param {Object} person - The contact data passed to the delete dialog.
- * @param {HTMLElement} editContactInput - The edit contact form element containing the button.
- * @returns {void}
- *
- * @example
- * deleteBtnListener(contactId, contact, editFormElement);
- */
-export function deleteBtnListener(contactId, person, editContactInput) {
-    const deleteBtn = editContactInput.querySelector('#edit_contact_btn_delete_id');
-    if (deleteBtn) {
-        let contactIdent = contactsList[contactId].id;
-        deleteBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            deleteContactDialog(contactIdent, person);
-        });
-    }
-}
-
-/**
- * Registers a click event listener on the mobile "back to list" button of the contact's single view.
- * Switches the view back from the single contact view to the contact list when clicked.
- *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
- * @returns {void}
- *
- * @example
- * returnToListBtnListener(singleViewElement);
- */
-export function returnToListBtnListener(newSingleView) {
-    const returnToListBtn = newSingleView.querySelector('#mobile_back_btn_id');
-    returnToListBtn.addEventListener('click', () => {
-        switchListToSingleViewAndBack();
-    });
-}
-
-/**
- * Registers a click event listener on a contact list item element.
- * Opens the single contact view for the given contact when clicked.
- *
- * @param {HTMLElement} newContact - The DOM element representing the contact list item.
- * @param {string|number} id - The ID of the contact to be opened in the single view.
- * @returns {void}
- *
- * @example
- * createListenerForContactInList(contactListItemElement, contact.id);
- */
-export function createListenerForContactInList(newContact, id) {
-    newContact.addEventListener('click', () => {
-        openSingleViewContact(id);
-    });
-}
-
-/**
  * Opens and renders the single contact view for the given contact.
  * Looks up the contact's index in the global `contactsList`, switches the UI from
  * list view to single view, clears the current single view container, and renders
@@ -160,7 +90,7 @@ export function createListenerForContactInList(newContact, id) {
  * openSingleViewContact(contact.id);
  */
 export function openSingleViewContact(id) {
-    contactListMarkedContact (id)
+    contactListMarkedContact(id);
     const contactIndex = searchIndex(id);
     switchListToSingleViewAndBack();
     const contact = contactsList[contactIndex];
@@ -177,10 +107,10 @@ export function openSingleViewContact(id) {
     );
 }
 
-function contactListMarkedContact (id) {
+function contactListMarkedContact(id) {
     const allContacts = document.querySelectorAll('.contacts_list_items_container');
-    allContacts.forEach(contact => contact.classList.remove('selected'));
-    const selectedContact = document.getElementById('contact_id_' + id)
+    allContacts.forEach((contact) => contact.classList.remove('selected'));
+    const selectedContact = document.getElementById('contact_id_' + id);
     selectedContact.classList.add('selected');
 }
 
@@ -194,7 +124,7 @@ function contactListMarkedContact (id) {
  * @example
  * switchListToSingleViewAndBack();
  */
-function switchListToSingleViewAndBack() {
+export function switchListToSingleViewAndBack() {
     let width = window.innerWidth;
     if (width < MOBILE_BREAKPOINT) {
         const viewContainer = document.querySelector('.contacts_single_view_container');
@@ -224,36 +154,6 @@ export function searchIndex(contactId) {
 }
 
 /**
- * Registers a click event listener on the update/save button inside the edit contact form.
- * On click, reads the current values from the name, email, phone, and color input fields,
- * builds an updated contact object, and passes it along with the resolved contact identifier
- * to `updateContactInList`.
- *
- * @param {HTMLElement} editContactInput - The DOM element of the edit contact form in which the button is searched for.
- * @param {string|number} contactId - The index or key used to look up the contact in `contactsList`.
- * @returns {void}
- *
- * @example
- * updateContactBtnListener(editFormElement, contactId);
- */
-export function updateContactBtnListener(editContactInput, contactId) {
-    const changeBtn = editContactInput.querySelector('#change_contact_btn_id');
-    if (changeBtn) {
-        let contactIdent = contactsList[contactId].id;
-        changeBtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            const updatedContact = {
-                name: document.getElementById('contact_name_id').value,
-                email: document.getElementById('contact_email_id').value,
-                phone: document.getElementById('contact_phone_id').value,
-                color: document.getElementById('contact_color_picker_id').value,
-            };
-            updateContactInList(contactIdent, updatedContact);
-        });
-    }
-}
-
-/**
  * Updates a contact with the given data, both remotely and in the local application state.
  * Persists the updated contact via `updateContact`, re-fetches the updated contact data,
  * replaces the corresponding entry in the global `contactsList`, updates the contact's
@@ -267,7 +167,7 @@ export function updateContactBtnListener(editContactInput, contactId) {
  * @example
  * await updateContactInList(contact.id, { name: 'John Doe', email: 'john@example.com', phone: '123456', color: '#FF5733' });
  */
-async function updateContactInList(contactId, updatedContact) {
+export async function updateContactInList(contactId, updatedContact) {
     await updateContact(contactId, updatedContact);
     const contactNumber = searchIndex(contactId);
     let changedContact = await getContact(contactId);
