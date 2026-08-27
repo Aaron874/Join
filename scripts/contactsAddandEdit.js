@@ -293,3 +293,27 @@ export function closeContactDialog() {
         contactDialog.close();
     }, 300);
 }
+/**
+ * Starts the contact dialog's close listeners (Escape key and backdrop click).
+ * @returns {void}
+ */
+startContactDialogCloseListeners();
+
+
+/**
+ * Attaches close listeners to the contact dialog: intercepts the
+ * Escape key to close it with the animation, and closes it when
+ * the backdrop (outside the dialog content) is clicked.
+ * @returns {void}
+ */
+function startContactDialogCloseListeners() {
+    contactDialog.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        closeContactDialog();
+    });
+    contactDialog.addEventListener('click', (event) => {
+        if (event.target === contactDialog) {
+            closeContactDialog();
+        }
+    });
+}
