@@ -370,26 +370,74 @@
                             <div id="categoryError" class="error-message">
                                 This field is required
                             </div>
+
                             <p class="padding-top">Subtasks</p>
-                            <div class="subtask-input-wrapper">
-                                <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
-                                <div class="subtask-input-actions" id="subtask-input-actions">
-                                    <button id="cancel-subtask-btn" type="button" aria-label="Cancel subtask">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                    </button>
-                                    <span class="subtask-input-divider"></span>
-                                    <button id="confirm-subtask-btn" type="button" aria-label="Add subtask">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M5 12L10 17L19 7" stroke="currentColor" stroke-width="2.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="subtasks-list"></div>
+
+<div class="position-buttons-subtask-input">
+    <input
+        id="task-subtasks"
+        class="input-right"
+        type="text"
+        placeholder="Add new subtask"
+    >
+
+    <div class="subtask-edit-actions">
+        <button
+            onclick="deleteSubtaskInput()"
+            class="subtask-icon-button"
+            type="button"
+        >
+            <svg
+                class="subtask-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M7.5 7.5L16.5 16.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M16.5 7.5L7.5 16.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+            </svg>
+        </button>
+
+        <div class="subtask-action-separator"></div>
+
+        <button
+            onclick="createSubtask()"
+            class="subtask-icon-button"
+            type="button"
+        >
+            <svg
+                class="subtask-icon"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.5 12.5L10.2 16L17.5 8"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div id="subtasks-list"></div>
                         </div>
                     </div>
                 </form>
