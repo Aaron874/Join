@@ -187,7 +187,7 @@ input::placeholder {
 }
 
 .input-right:hover {
-    border: none;
+    border: 1px solid white;
 }
 
 .style-buttons {
@@ -262,7 +262,7 @@ input::placeholder {
 }
 
 .assigned-trigger:hover {
-    border: none;
+    border: 1px solid white;
 }
 
 .assigned-menu {
@@ -504,7 +504,12 @@ input::placeholder {
 }
 
 #category-dropdown-wrapper.error {
-    border: none;
+    border: none !important;
+}
+
+#category-dropdown-wrapper.error > .assigned-trigger {
+    border: 1px solid #ff8190 !important;
+    border-radius: 10px;
 }
 
 .category_div {
