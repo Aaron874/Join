@@ -463,5 +463,9 @@ footer {
     justify-content: space-around;
     flex-wrap: wrap;
     z-index: 4;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
