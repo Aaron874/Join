@@ -20,6 +20,13 @@ h1 .layout {
     display: flex;
 }
 
+.addTask-p {
+    margin: 0;
+    padding-bottom: 8px;
+    font-size: 20px;
+    color: #2a3647;
+}
+
 .page-title {
     display: flex;
     align-items: center;
@@ -647,7 +654,6 @@ input::placeholder {
     border: 1px solid #ff8190 !important;
 }
 
-
 .subtask-edit-actions {
     display: none;
     align-items: center;
@@ -688,7 +694,9 @@ input::placeholder {
     color: #2a3647;
 
     cursor: pointer;
-    transition: background-color 100ms ease, transform 100ms ease;
+    transition:
+        background-color 100ms ease,
+        transform 100ms ease;
 }
 
 .subtask-edit-btn:hover {

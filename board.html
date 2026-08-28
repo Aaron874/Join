@@ -246,7 +246,7 @@
                 <form class="style-content" id="add_task_form" onsubmit="saveTask(event)">
                     <div class="style-form-left" action="">
                         <div class="div-star">
-                            <p>Title
+                            <p class="addTask-p">Title
                             <p class="star-style">*</p>
                             </p>
                         </div>
@@ -254,11 +254,11 @@
                         <div id="titleError" class="error-message">
                             This field is required
                         </div>
-                        <p class="padding-top description-padding">Description</p>
+                        <p class="padding-top description-padding addTask-p">Description</p>
                         <textarea id="task-description" class="textarea-description"
                             placeholder="Enter a description"></textarea>
                         <div class="div-star">
-                            <p>Due Date
+                            <p class="addTask-p">Due Date
                             <p class="star-style">*</p>
                             </p>
                         </div>
@@ -283,7 +283,7 @@
                     <div class="content-divider"></div>
                     <div class="style-form-right">
 
-                        <p style="color: #000000" ;>Priority</p>
+                        <p class="addTask-p" style="color: #000000" ;>Priority</p>
                         <div class="style-priority">
                             <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
                                 <p id="urgent-font" class="style-priorities-p">Urgent</p>
@@ -314,7 +314,7 @@
                                 </svg>
                             </div>
                         </div>
-                        <p>Assigned to</p>
+                        <p class="addTask-p">Assigned to</p>
                         <div class="assigned-dropdown" id="contacts-dropdown-wrapper">
                             <input oninput="searchContacts()" onclick="clearInput(); dropdownContactsDown()" type="text"
                                 id="assigned-trigger" class="assigned-trigger">
@@ -339,7 +339,7 @@
                         </div>
                         <div class="div_contacts_initials" id="div_contacts_initials"></div>
                         <div class="div-star padding-top">
-                            <p>Category
+                            <p class="addTask-p">Category
                             <p class="star-style">*</p>
                             </p>
                         </div>
@@ -373,7 +373,7 @@
                                 This field is required
                             </div>
 
-                            <p class="padding-top">Subtasks</p>
+                            <p class="padding-top addTask-p">Subtasks</p>
 
                             <div class="position-buttons-subtask-input">
                                 <input id="task-subtasks" class="input-right" type="text" placeholder="Add new subtask">
