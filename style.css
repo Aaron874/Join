@@ -169,12 +169,12 @@ footer {
 .user-menu {
   position: absolute;
   top: calc(100% + 12px);
-  right: 0;
+  right: 8px;
   width: 150px;
-  padding: 20px 18px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
   background-color: var(--bg-blue);
   border-radius: 20px 0 20px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -196,7 +196,7 @@ footer {
 
 .user-menu a,
 .user-menu button {
-  padding: 0;
+  padding: 8px 16px;
   font-family: "Inter";
   font-size: 16px;
   color: var(--color-gray);
@@ -206,7 +206,7 @@ footer {
 
 .user-menu a:hover,
 .user-menu button:hover {
-  color: var(--bg-white);
+  background-color:  #2A3D59;
 }
 
 .user-menu-help {
