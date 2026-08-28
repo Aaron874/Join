@@ -99,6 +99,7 @@ footer {
   align-items: center;
 }
 
+
 .header-content {
   width: 50%;
   margin-left: 232px;
@@ -142,6 +143,10 @@ footer {
   font-size: var(--fs-standard);
   font-weight: 800;
   color: var(--color-blue);
+}
+
+.loged-in-user-icon:hover {
+  background-color: #e2e6ec;
 }
 
 .loged-in-user-icon[hidden]{
