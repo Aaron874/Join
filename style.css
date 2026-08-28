@@ -120,6 +120,10 @@ footer {
   position: unset;
 }
 
+.help-icon svg:hover {
+  scale: 1.15;
+} 
+
 .right-header {
   width: 50%;
   display: flex;
