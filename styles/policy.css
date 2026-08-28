@@ -102,9 +102,9 @@ body.logged-out .aside-content-guest {
     width: 100%;
 }
 
-.options {
+/* .options {
     padding-left: 56px;
-}
+} */
 
 /* The active-page highlight still needs to run edge to edge, so the inset
    lives on the row content itself (padding-left below) rather than on

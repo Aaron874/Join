@@ -247,9 +247,15 @@ footer {
   font-weight: 400;
 }
 
-.aside-content-menu-options:hover {
+.aside-content-menu-options:hover:not(.button-pushed-color-legal) {
   color: #124658;
   font-weight: 700;
+}
+
+.button-pushed-color-legal {
+  background-color: #091931;
+  padding: 8px 60px 8px 55px;
+  margin: 15px 0 15px 0;
 }
 
 .main-content {
