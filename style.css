@@ -115,6 +115,11 @@ footer {
   left: 48px;
 }
 
+.help-icon svg {
+  display: unset;
+  position: unset;
+}
+
 .right-header {
   width: 50%;
   display: flex;
