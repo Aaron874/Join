@@ -17,8 +17,6 @@ h1 .layout {
     font-weight: 700;
 }
 
-.main-add_task {
-}
 
 .style-header-content {
     display: flex;
@@ -214,7 +212,9 @@ input::placeholder {
 }
 
 .bt-right:hover {
-    background-color: #29abe2;
+    background-color: #124658;
+    box-shadow: 0px 4px 4px 0px #00000040;
+
 }
 
 .bt-left:hover {
