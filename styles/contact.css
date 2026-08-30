@@ -405,6 +405,12 @@ dialog::backdrop {
     border-radius: 10px;
     gap: 10px;
     font-family: 'Inter', sans-serif;
+    transition: transform 200ms ease-in-out;
+}
+
+.contact_btn_submit:hover {
+    background-color: #124658;
+    transform: scale(1.01);
 }
 
 .contact_btn_submit span {
@@ -424,6 +430,8 @@ dialog::backdrop {
     border: #2a3647 1px solid;
     padding: 10px;
     border-radius: 10px;
+    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
+
 }
 
 .edit_contact_btn_cancel {
@@ -438,6 +446,15 @@ dialog::backdrop {
     border: #2a3647 1px solid;
     padding: 10px 18px 10px 18px;
     border-radius: 10px;
+    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
+}
+
+.add_contact_btn_cancel:hover, 
+.edit_contact_btn_cancel:hover {
+    outline: 2px solid #2a3647;
+    outline-offset: -2px;
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .add_contact_btn_cancel span {
