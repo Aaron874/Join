@@ -205,8 +205,8 @@ async function createTask(element) {
  * @returns {void}
  */
 function taskCreatedSuccessfully() {
-    priority = "";
     clearTaskform();
+    window.location.href = 'board.html';
 }
 
 /**
@@ -231,6 +231,7 @@ function resetInputErrors() {
 function resetTaskFields() {
     document.getElementById("task-title").value = "";
     document.getElementById("task-description").value = "";
+    document.getElementById("dateInput").value = "";
     document.getElementById("dateDisplay").value = "";
     document.getElementById("task-subtasks").value = "";
     document.getElementById("selected_category_text").textContent = "Select task category";
@@ -331,7 +332,7 @@ function validateTitle() {
  * @returns {boolean} True if the date is valid, otherwise false.
  */
 function validateDate() {
-    if (dateDisplay.value.trim() === "") {
+    if (dateInput.value.trim() === "") {
         dateDisplay.classList.add("error");
         dateError.classList.add("show");
         return false;
@@ -343,11 +344,9 @@ function validateDate() {
 
 function setMinDate() {
     const today = new Date();
-
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
-
     dateInput.min = `${year}-${month}-${day}`;
 }
 
@@ -355,17 +354,13 @@ function validateCategory() {
     const categoryInput = document.getElementById('category-dropdown-wrapper');
     const categoryText = document.getElementById('selected_category_text');
     const categoryError = document.getElementById('categoryError');
-
     if (categoryText.textContent.trim() === 'Select task category') {
         categoryInput.classList.add('error');
         categoryError.classList.add('show');
-
         return false;
     }
-
     categoryInput.classList.remove('error');
     categoryError.classList.remove('show');
-
     return true;
 }
 
@@ -376,6 +371,8 @@ window.colorChangePriority = colorChangePriority;
 window.clearTaskform = clearTaskform;
 window.formRequired = formRequired;
 window.createTask = createTask;
+window.validateTitle = validateTitle;
+window.validateDate = validateDate;
 
 /**
  * Saves a task directly to Firebase.

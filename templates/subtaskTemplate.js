@@ -9,7 +9,7 @@
  */
 function getSubtaskTemplate(subtask, index) {
     return `
-        <div class="subtask-item">
+        <div ondblclick="editSubtask(${index})" class="subtask-item">
             <div class="subtask-content">
                 ${getSubtaskBulletIcon()}
                 <span class="subtask-title">${subtask.title}</span>
@@ -72,20 +72,5 @@ function getSubtaskBulletIcon() {
         >
             <circle cx="2.5" cy="2.5" r="2.5" fill="currentColor"/>
         </svg>
-    `;
-}
-
-/**
- * Generates a template displaying the number of hidden subtasks.
- *
- * @returns {string} HTML template showing the hidden subtask count
- */
-function getMoreSubtasksTemplate() {
-    const hiddenCount = window.subtasks.length - 4;
-
-    return `
-        <div class="more-subtasks">
-            +${hiddenCount}
-        </div>
     `;
 }

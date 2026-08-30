@@ -2,15 +2,6 @@ window.subtasks = [];
 
 document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
 
-// const subtaskInput = document.getElementById('task-subtasks');
-// const subtaskActions = document.getElementById('subtask-input-actions');
-
-// subtaskInput.addEventListener('keydown', addSubtask);
-// subtaskInput.addEventListener('focus', showSubtaskActions);
-// subtaskInput.addEventListener('blur', hideSubtaskActions);
-// document.getElementById('cancel-subtask-btn').addEventListener('click', cancelSubtask);
-// document.getElementById('confirm-subtask-btn').addEventListener('click', confirmSubtask);
-
 /**
  * Create a new subtask from the current input value.
  */
@@ -40,20 +31,15 @@ function addSubtask(event) {
 /**
  * Render the current subtask list inside the add task form.
  */
-
 function renderAddTaskSubtasks() {
     const list = document.getElementById('subtasks-list');
     if (!list) return;
 
-    const visibleSubtasks = window.subtasks.slice(0, 4);
-
-    list.innerHTML = visibleSubtasks
+    list.innerHTML = window.subtasks
         .map((subtask, index) => getSubtaskTemplate(subtask, index))
         .join('');
 
-    if (window.subtasks.length > 4) {
-        list.innerHTML += getMoreSubtasksTemplate();
-    }
+    list.classList.toggle('scrollable', window.subtasks.length > 4);
 }
 
 /**

@@ -135,10 +135,12 @@ input::placeholder {
     display: flex;
     align-items: center;
     height: 52px;
-    width: 128px;
+    min-width: 128px;
+    width: 100%;
     justify-content: space-around;
     background-color: #ffffff;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .urgent-icon {
@@ -747,6 +749,12 @@ input::placeholder {
 
 #subtasks-list {
     width: 100%;
+    max-height: 120px;
+    overflow-y: hidden;
+}
+
+#subtasks-list.scrollable {
+    overflow-y: auto;
 }
 
 .subtask-item {
@@ -1542,10 +1550,6 @@ priority-icon {
     transition: width 120ms ease;
 }
 
-.style-priority {
-    flex-wrap: wrap;
-}
-
 .task_dialog_delete {
     position: absolute;
     top: 96px;
@@ -1752,6 +1756,7 @@ priority-icon {
 
     .style-priorities {
         height: 44px;
+        min-width: 0;
     }
 
     .input-right {
