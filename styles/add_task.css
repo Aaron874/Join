@@ -17,7 +17,6 @@ h1 .layout {
     font-weight: 700;
 }
 
-
 .style-header-content {
     display: flex;
     flex-direction: column;
@@ -214,7 +213,6 @@ input::placeholder {
 .bt-right:hover {
     background-color: #124658;
     box-shadow: 0px 4px 4px 0px #00000040;
-
 }
 
 .bt-left:hover {
@@ -897,6 +895,16 @@ input::placeholder {
     font-size: 16px;
 }
 
+@media (min-height: 1070px) {
+    .style-div-buttons {
+        position: absolute;
+        top: 1000px;
+    }
+    .div-text-required {
+        top: 1000px;
+    }
+}
+
 @media (max-height: 900px) {
     .style-content {
         flex-direction: column;
@@ -908,7 +916,7 @@ input::placeholder {
 
     .div-text-required {
         position: relative;
-        bottom: -470px;
+        bottom: -580px;
     }
 
     .style-div-buttons {
@@ -938,12 +946,12 @@ input::placeholder {
     }
 
     .main-content-padding-bottom {
-        padding-bottom: 380px !important;
+        padding-bottom: 450px !important;
     }
 
     .div-text-required {
         position: relative;
-        bottom: -470px;
+        bottom: -650px;
     }
 
     .style-div-buttons {
@@ -1019,6 +1027,10 @@ input::placeholder {
     .style-div-buttons {
         bottom: 80px;
     }
+    .div-text-required {
+        position: relative;
+        bottom: -578px;
+    }
 }
 
 @media (max-width: 520px) {
@@ -1040,11 +1052,11 @@ input::placeholder {
 
     .div-text-required {
         position: relative;
-        bottom: -445px;
+        bottom: -556px;
     }
 
     .main-content {
-        padding: 24px 24px 380px 24px !important;
+        padding: 24px 24px 450px 24px !important;
     }
 
     .bt-right {
@@ -1097,11 +1109,12 @@ input::placeholder {
     }
 
     .div-text-required {
-        bottom: -90px;
+        position: relative;
+        bottom: -556px;
     }
 
     .main-content {
-        padding: 16px 8px 380px 8px !important;
+        padding: 16px 8px 450px 8px !important;
     }
 
     .bt-right {
@@ -1110,11 +1123,6 @@ input::placeholder {
 
     .bt-left {
         width: 85px !important;
-    }
-
-    .div-text-required {
-        position: relative;
-        bottom: -425px;
     }
 
     .text-required {
