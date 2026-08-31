@@ -1114,7 +1114,7 @@ input::placeholder {
     }
 
     .main-content {
-        padding: 16px 8px 450px 8px !important;
+        padding: 16px 8px 450px 12px !important;
     }
 
     .bt-right {

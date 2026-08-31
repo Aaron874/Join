@@ -403,6 +403,9 @@ body {
     .summary-greeting strong {
         font-size: 36px;
     }
+    .summary-wrapper {
+        margin: 0 12px;
+    }
 }
 
 @media(max-width: 600px){
@@ -434,13 +437,8 @@ body {
 }
 
 @media (max-width: 390px) {
-    .summary-heading h1 {
-        padding-left: 10px;
-    }
-
     .summary-heading p {
         font-size: 18px;
-        padding-left: 10px;
     }
 
     .summary-content {

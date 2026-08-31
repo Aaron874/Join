@@ -445,6 +445,7 @@ footer {
   .right-header {
     width: 100%;
     justify-content: flex-end;
+    padding-right: 9px;
   }
 
   .help-icon {
@@ -468,7 +469,7 @@ footer {
   .header svg {
     display: flex;
     position: fixed;
-    left: 48px;
+    left: 12px;
   }
 
   .header {
