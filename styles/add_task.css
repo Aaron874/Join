@@ -895,7 +895,7 @@ input::placeholder {
     font-size: 16px;
 }
 
-@media (min-height: 1070px) {
+@media (min-height: 1070px) and (min-width: 1135px) {
     .style-div-buttons {
         position: absolute;
         top: 1000px;
