@@ -991,7 +991,7 @@ input::placeholder {
     flex-wrap: wrap;
     width: 100%;
     max-width: 1440px;
-    padding-left: 64px;
+    padding-left: 48px;
     font-size: var(--fs-standard);
     font-weight: bold;
 }

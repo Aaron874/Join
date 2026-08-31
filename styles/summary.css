@@ -31,7 +31,7 @@ body {
     max-width: 1440px;
     min-width: 0;
     min-height: calc(100dvh - 96px);
-    padding: 110px 48px 48px 48px;
+    padding: 110px 48px 48px 70px;
     display: flex;
     justify-content: center;
     font-family: 'Inter';

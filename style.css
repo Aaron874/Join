@@ -104,7 +104,7 @@ footer {
 .header-content {
   width: 50%;
   margin-left: 232px;
-  padding-left: 20px;
+  padding-left: 80px;
   display: flex;
   align-items: center;
 }
@@ -278,7 +278,7 @@ footer {
   display: flex;
   flex-direction: column;
   max-width: 1440px;
-  padding: 48px;
+  padding: 48px 48px 48px 80px;
   width: 100%;
 }
 
