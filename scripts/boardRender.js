@@ -41,6 +41,7 @@ function taskMatchesSearch(task, searchTerm) {
         : task.subtasks ?? '';
     return [
         task.title ?? '',
+        task.description ?? '',
         assignedTo,
         subtasks
     ].some(value =>
@@ -131,7 +132,10 @@ function filterTasks(searchText) {
         const assignedMatch = task.assignedTo
             ?.toLowerCase()
             .includes(search);
-        return titleMatch || assignedMatch
+        const descriptonMatch = task.description
+        ?.toLowerCase()
+        .includes(search);
+        return titleMatch || assignedMatch || descriptonMatch
     });
 }
 
