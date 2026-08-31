@@ -1443,7 +1443,9 @@ priority-icon {
 }
 
 .task-dialog-footer button:hover {
-    color: var(--color-blue);
+    color: #124658;
+    scale: 1.05;
+    font-weight: 700;
 }
 
 .delete-edit {
@@ -1465,7 +1467,13 @@ priority-icon {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding: 6px 0;
+    padding: 6px 16px;
+    border-radius: 10px;
+    transition: background-color 100ms ease-out;
+}
+
+.task-detail-subtask:hover {
+    background-color: #EEEEEE;
 }
 
 .task-detail-subtask span {
