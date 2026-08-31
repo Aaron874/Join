@@ -54,6 +54,7 @@ async function initBoard() {
     await loadBoardContacts();
     await reloadBoard();
     initDragAndDrop();
+    initDialogEvents()
 }
 
 /**

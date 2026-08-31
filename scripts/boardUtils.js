@@ -60,6 +60,13 @@ function openDialog(id) {
     document.body.classList.add('dialog-open');
 }
 
+function initDialogEvents(){
+    const dialogIds = ['add-task-dialog', 'task-dialog'];
+    dialogIds.forEach(id => {
+        getElement(id)?.addEventListener('click', closeDialogOnBackdrop);
+    });
+}
+
 /**
  * Close a native dialog element by id.
  * @param {string} id
@@ -67,6 +74,12 @@ function openDialog(id) {
 function closeDialog(id) {
     getElement(id)?.close();
     document.body.classList.remove('dialog-open');
+}
+
+function closeDialogOnBackdrop(event){
+    if (event.target === event.currentTarget) {
+        closeDialog(event.currentTarget.id)
+    }
 }
 
 /**
