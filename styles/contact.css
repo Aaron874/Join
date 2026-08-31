@@ -351,6 +351,16 @@ dialog::backdrop {
     color: #ffffff;
     width: 32px;
     height: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 100ms ease-in-out, scale 100ms ease-in-out;
+}
+
+.add_contact_closing_btn:hover {
+    background-color: #e2e6ec;
+    scale: 1.05;
 }
 
 .contact_input_wrapper {
