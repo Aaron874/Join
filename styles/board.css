@@ -940,14 +940,21 @@ input::placeholder {
     align-items: center;
     width: 100%;
     max-width: 300px;
-    border: 2px solid #ccc;
+    border: 1px solid #A8A8A8;
     border-radius: 10px;
     background-color: #fff;
     overflow: hidden;
+    cursor: pointer;
+    transition: border-color 100ms ease-out;
+}
+
+.search-wrapper:hover {
+    border-color: #E7E7E7;
+    transition: border-color 100ms ease-out;
 }
 
 .search-wrapper:focus-within {
-    border-color: var(--color-blue);
+    border-color: #124658;
 }
 
 .search-input {
@@ -957,6 +964,7 @@ input::placeholder {
     padding: 10px 15px;
     font-size: 16px;
     color: var(--color-black);
+    cursor: pointer;
 }
 
 .search-divider {
@@ -971,13 +979,15 @@ input::placeholder {
     justify-content: center;
     border: none;
     background-color: transparent;
-    padding: 10px 15px;
+    padding: 5px 5px;
+    margin: 5px 10px;
+    border-radius: 50%;
     cursor: pointer;
 }
 
 .search-button:hover {
-    color: #007bff;
-    transform: scale(1.2);
+    background-color: #e2e6ec;
+    transform: scale(1.05);
 }
 
 .search-button:active {
