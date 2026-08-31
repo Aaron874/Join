@@ -218,6 +218,7 @@ input::placeholder {
     width: 183px;
     padding-left: 8px;
     padding-right: 8px;
+    transition: transform 200ms ease-in-out;
 }
 
 .bt-left {
@@ -228,6 +229,7 @@ input::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
 }
 
 .bt-left svg {
@@ -235,11 +237,16 @@ input::placeholder {
 }
 
 .bt-right:hover {
-    background-color: #29abe2;
+    background-color: #124658;
+    transform: scale(1.01);
 }
 
 .bt-left:hover {
-    color: #29abe2;
+    outline: 2px solid #2a3647;
+    outline-offset: -2px;
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out, outline 100ms ease-in-out;
 }
 
 .div-star {
@@ -1058,11 +1065,24 @@ input::placeholder {
     position: absolute;
     top: 32px;
     right: 32px;
+    width: 40px;
+    height: 40px;
     border: none;
     background: transparent;
     color: var(--color-darkblue);
-    font-size: 40px;
+    font-size: 32px;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 6px;
+    transition: background-color 100ms ease-in-out, scale 100ms ease-in-out;
+}
+
+.dialog-close-btn:hover {
+    background-color: #e2e6ec;
+    scale: 1.05;
 }
 
 .dialog-head {
@@ -1305,16 +1325,23 @@ priority-icon {
 
 .task-dialog-close {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     top: 48px;
     right: 48px;
     border: none;
     background: transparent;
     color: var(--color-darkblue);
-    font-size: 24px;
+    font-size: 32px;
     line-height: 1;
+    border-radius: 50%;
     cursor: pointer;
+    transition: background-color 100ms ease-in-out, scale 100ms ease-in-out;
+}
+
+.task-dialog-close:hover {
+    background-color: #e2e6ec;
+    scale: 1.05;
 }
 
 .task-dialog-content .card-head {

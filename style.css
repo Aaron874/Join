@@ -293,13 +293,24 @@ footer {
   justify-content: center;
   align-items: center;
   background-color: var(--bg-blue);
-  color: var(--color-gray);
+  color: var(--bg-white);
   border-radius: 10px;
   border: 1px solid var(--bg-blue);
   padding: 8px 16px 8px 16px;
   margin-left: 32px;
   white-space: nowrap;
   width: auto;
+  transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+}
+
+.btn-filled:hover {
+  box-shadow: 0px 4px 4px 0px #00000040;
+  background-color: #29ABE2;
+  transition: background-color 100ms ease-in-out;
+}
+
+.btn-filled:active {
+  background-color: #091931;
 }
 
 .btn-clear {
