@@ -8,10 +8,6 @@
     pointer-events: none;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-}
-
 body.dialog-open {
     overflow: hidden;
 }
@@ -1654,6 +1650,28 @@ priority-icon {
     }
 }
 
+@media (max-width: 1024px) {
+    .board {
+
+        flex-direction: column;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .task-queue {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+        margin-right: 10px;
+        width: max-content;
+    }
+
+    .task-queue::after {
+        content: '';
+        flex: 0 0 5px;
+    }
+}
+
 @media (max-width: 990px) {
     .add-button {
         display: none;
@@ -1692,22 +1710,6 @@ priority-icon {
 
     .board {
         padding: 0 5px;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
-
-    .task-queue {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 10px;
-        margin-right: 10px;
-        width: max-content;
-    }
-
-    .task-queue::after {
-        content: '';
-        flex: 0 0 5px;
     }
 
     .status-head {
@@ -1740,10 +1742,6 @@ priority-icon {
     .content-divider {
         display: none;
     }
-
-    /* .footer {
-    display: flex;
-  } */
 }
 
 @media (max-width: 520px) {
@@ -1785,6 +1783,9 @@ priority-icon {
     .task-dialog-close {
         top: 16px;
         right: 16px;
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
     }
 
     .mobile-joinLogo {
@@ -1831,6 +1832,17 @@ priority-icon {
     .style-div-buttons {
         justify-content: center;
         padding: 12px 16px;
+    }
+
+    .card-head {
+        padding: 4px 12px;
+    }
+
+    .task-dialog-content,
+    .task-dialog span,
+    .card-head,
+    .task-dialog-footer button {
+        font-size: 16px !important;
     }
 }
 
