@@ -1841,6 +1841,7 @@ priority-icon {
     .task-dialog-content,
     .task-dialog span,
     .card-head,
+    .task-card h3,
     .task-dialog-footer button {
         font-size: 16px !important;
     }
