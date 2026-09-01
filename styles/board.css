@@ -1124,7 +1124,8 @@ input::placeholder {
 }
 
 .task-card span {
-    font-size: var(--fs-options);
+    
+    font-size: 16px;
     font-weight: 400;
 }
 
@@ -1746,6 +1747,11 @@ priority-icon {
 }
 
 @media (max-width: 520px) {
+
+    input {
+        font-size: 16px;
+    }
+
     .mobile-joinLogo {
         left: 24px;
     }
