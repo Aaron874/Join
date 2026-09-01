@@ -390,6 +390,7 @@ input::placeholder {
 .div_contacts_initials {
     display: none;
     align-items: center;
+    margin-top: 4px;
 }
 
 .contacts_input {
