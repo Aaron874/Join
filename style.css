@@ -231,6 +231,7 @@ footer {
   justify-content: space-between;
   align-items: flex-start;
   flex: 1;
+  gap: 32px;
 }
 
 .aside-content-menu-links {
@@ -489,5 +490,38 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
+  }
+}
+
+@media (min-width: 756px) and (max-height: 719px) {
+  .aside-content {
+    padding: 32px 0 32px 0;
+  }
+}
+
+@media (min-width: 756px) and (max-height: 651px) {
+  .aside-content {
+    padding: 16px 0 16px 0;
+    gap: 20px;
+  }
+}
+
+@media (min-width: 756px) and (max-height: 607px) {
+  .aside-content {
+    padding: 10px 0 16px 0;
+    gap: 8px;
+  }
+}
+
+@media (min-width: 756px) and (max-height: 590px) {
+  aside {
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: 756px) and (max-height: 546px) {
+  aside {
+    height: 100dvh;
+    overflow-y: scroll;
   }
 }
