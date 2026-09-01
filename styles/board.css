@@ -1821,6 +1821,7 @@ priority-icon {
     .style-priorities {
         height: 44px;
         padding: 4px 4px;
+        min-width: 0;
     }
 
     .style-priority {
@@ -1828,7 +1829,7 @@ priority-icon {
     }
 
     .input-right {
-        font-size: 12px;
+        font-size: 16px;
     }
 
     .bt-right {
