@@ -220,7 +220,7 @@ footer {
 }
 
 .user-menu-help {
-  display: none;
+  display: none !important;
 }
 
 .aside-content {
@@ -453,7 +453,7 @@ footer {
   }
 
   .user-menu-help {
-    display: block;
+    display: block !important;
   }
 
   .user-menu {
