@@ -16,6 +16,10 @@ h1 .layout {
     display: flex;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .addTask-p {
     margin: 0;
     padding-bottom: 8px;
@@ -131,7 +135,6 @@ input::placeholder {
     display: flex;
     align-items: center;
     height: 52px;
-    min-width: 128px;
     width: 100%;
     justify-content: space-around;
     background-color: #ffffff;
@@ -1793,11 +1796,7 @@ priority-icon {
     }
 
     .style-priorities-p {
-        font-size: 8px !important;
-    }
-
-    .font-size {
-        font-size: 12px !important;
+        font-size: 16px !important;
     }
 
     .add_task-h1 {
@@ -1806,7 +1805,11 @@ priority-icon {
 
     .style-priorities {
         height: 44px;
-        min-width: 0;
+        padding: 4px 4px;
+    }
+
+    .style-priority {
+        gap: 4px;
     }
 
     .input-right {
@@ -1814,7 +1817,7 @@ priority-icon {
     }
 
     .bt-right {
-        width: 135px;
+        max-width: 135px;
     }
 
     .bt-left {
@@ -1830,19 +1833,30 @@ priority-icon {
     }
 
     .style-div-buttons {
-        justify-content: center;
-        padding: 12px 16px;
+        justify-content: flex-end;
+        padding: 6px 8px;
+        height: 24px;
     }
 
     .card-head {
         padding: 4px 12px;
     }
 
+    .main-content {
+        padding: 8px;
+    }
+
+    .add-dialog {
+        width: calc(100vw - 8px);
+        height: calc(100dvh - 8px);
+    }
+
     .task-dialog-content,
     .task-dialog span,
     .card-head,
     .task-card h3,
-    .task-dialog-footer button {
+    .task-dialog-footer button,
+    .date-display {
         font-size: 16px !important;
     }
 }

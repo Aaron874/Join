@@ -250,7 +250,8 @@
                             <p class="star-style">*</p>
                             </p>
                         </div>
-                        <input oninput="validateTitle()" id="task-title" class="input-left" type="text" placeholder="Enter a title">
+                        <input oninput="validateTitle()" id="task-title" class="input-left" type="text"
+                            placeholder="Enter a title">
                         <div id="titleError" class="error-message">
                             This field is required
                         </div>
@@ -407,7 +408,7 @@
                 </form>
             </section>
             <div class="style-div-buttons">
-                <button onclick="clearTaskform()" type="button" class="style-buttons bt-left">
+                <button id="clear-task-button" onclick="clearTaskform()" type="button" class="style-buttons bt-left">
                     <span class="font-size-buttons">Clear</span>
                     <span class="close-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

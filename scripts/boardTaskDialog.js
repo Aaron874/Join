@@ -133,17 +133,16 @@ function setAssignedContacts(assignedTo) {
  * @param {string} mode
  */
 function setTaskFormMode(mode) {
-    const isEditMode = mode === 'edit';
-    setTextContent(
-        '.add_task-h1',
-        isEditMode ? 'Edit Task' : 'Add Task',
-        true
-    );
-    setTextContent(
-        '#save-task-button .font-size-buttons',
-        isEditMode ? 'Save' : 'Create Task',
-        true
-    );
+    const clearButton = getElement('clear-task-button');
+    const saveButton = getElement('save-task-button');
+    const saveButtonText = saveButton.querySelector('.font-size-buttons')
+    clearButton.classList.toggle('hidden', mode === 'edit');
+    if (saveButtonText) {
+        saveButtonText.textContent = mode === 'edit' ? 'Ok' : 'Create Task';
+    }
+    if (saveButton) {
+        saveButton.style.width = mode === 'edit' ? '85px' : '135px';
+    }
 }
 
 /**
