@@ -286,86 +286,38 @@
 
                         <p class="addTask-p" style="color: #000000" ;>Priority</p>
                         <div class="style-priority">
-    <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
-        <p id="urgent-font" class="style-priorities-p">Urgent</p>
-        <svg id="urgent-icon" class="urgent-icon" width="30" height="18"
-            viewBox="0 0 18 18" fill="none">
-            <path d="M1 8L9 3L17 8"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-            <path d="M1 13.5L9 8.5L17 13.5"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-        </svg>
-    </div>
-
-    <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
-        <p id="medium-font" class="style-priorities-p">Medium</p>
-        <svg id="medium-icon" class="medium-icon" width="30" height="18"
-            viewBox="0 0 18 18" fill="none">
-            <path d="M1 6.5H17"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round" />
-            <path d="M1 11.5H17"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round" />
-        </svg>
-    </div>
-
-    <div id="priority-low" onclick="colorChangePriority(this)" class="style-priorities">
-        <p id="low-font" class="style-priorities-p">Low</p>
-        <svg id="low-icon" class="low-icon" width="30" height="18"
-            viewBox="0 0 18 18" fill="none">
-            <path d="M1 4.5L9 7.5L17 4.5"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-            <path d="M1 10L9 13L17 10"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round" />
-        </svg>
-    </div>
-</div>
-
-                        <!-- <div class="style-priority">
                             <div id="priority-urgent" onclick="colorChangePriority(this)" class="style-priorities">
                                 <p id="urgent-font" class="style-priorities-p">Urgent</p>
                                 <svg id="urgent-icon" class="urgent-icon" width="30" height="18" viewBox="0 0 18 18"
                                     fill="none">
-                                    <path class="priority-svg" d="M1 10.5L9 5.5L17 10.5" stroke="currentColor" stroke-width="2"
+                                    <path d="M1 8L9 3L17 8" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                    <path class="priority-svg" d="M1 16L9 11L17 16" stroke="currentColor" stroke-width="2"
+                                    <path d="M1 13.5L9 8.5L17 13.5" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
+
                             <div id="priority-medium" onclick="colorChangePriority(this)" class="style-priorities">
                                 <p id="medium-font" class="style-priorities-p">Medium</p>
                                 <svg id="medium-icon" class="medium-icon" width="30" height="18" viewBox="0 0 18 18"
                                     fill="none">
-                                    <path class="priority-svg" d="M5 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    <path class="priority-svg" d="M5 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M1 6.5H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M1 11.5H17" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" />
                                 </svg>
                             </div>
+
                             <div id="priority-low" onclick="colorChangePriority(this)" class="style-priorities">
                                 <p id="low-font" class="style-priorities-p">Low</p>
                                 <svg id="low-icon" class="low-icon" width="30" height="18" viewBox="0 0 18 18"
                                     fill="none">
-                                    <path class="priority-svg" d="M1 9.5L9 12.5L17 9.5" stroke="currentColor" stroke-width="2"
+                                    <path d="M1 4.5L9 7.5L17 4.5" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
-                                    <path class="priority-svg" d="M1 4L9 7L17 4" stroke="currentColor" stroke-width="2"
+                                    <path d="M1 10L9 13L17 10" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
-                        </div> -->
+                        </div>
                         <p class="addTask-p">Assigned to</p>
                         <div class="assigned-dropdown" id="contacts-dropdown-wrapper">
                             <input oninput="searchContacts()" onclick="clearInput(); dropdownContactsDown()" type="text"
@@ -455,10 +407,10 @@
 
                             <div id="subtasks-list"></div>
                             <div class="div-star div-text-required-mobile">
-                        <p class="star-style">*
-                        <p class="text-required">This field is required</p>
-                        </p>
-                    </div>
+                                <p class="star-style">*
+                                <p class="text-required">This field is required</p>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </form>

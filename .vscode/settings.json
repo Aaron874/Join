@@ -21,6 +21,9 @@
 
     "prettier.htmlWhitespaceSensitivity": "css",
 
-    "prettier.endOfLine": "lf"
+    "prettier.endOfLine": "lf",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    }
 }
 
