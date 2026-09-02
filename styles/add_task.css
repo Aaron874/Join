@@ -112,7 +112,7 @@ input::placeholder {
     display: flex;
     align-items: center;
     height: 52px;
-    min-width: 128px;
+    /* min-width: 128px; */
     width: 100%;
     justify-content: space-around;
     background-color: #ffffff;
@@ -204,7 +204,11 @@ input::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
+    transition:
+        transform 200ms ease-in-out,
+        outline-width 200ms ease-in-out,
+        outline-offset 200ms ease-in-out,
+        box-shadow 200ms ease-in-out;
 }
 
 .bt-left svg {
@@ -221,7 +225,10 @@ input::placeholder {
     outline-offset: -2px;
     transform: scale(1.02);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out, outline 100ms ease-in-out;
+    transition:
+        background-color 100ms ease-in-out,
+        box-shadow 100ms ease-in-out,
+        outline 100ms ease-in-out;
 }
 
 .div-star {
@@ -552,6 +559,10 @@ input::placeholder {
 .div-text-required {
     position: absolute;
     bottom: 50px;
+}
+
+.div-text-required-mobile {
+    display: none;
 }
 
 .text-required {
@@ -902,6 +913,14 @@ input::placeholder {
     font-size: 16px;
 }
 
+.urgent-icon,
+.medium-icon,
+.low-icon {
+    width: 30px;
+    height: auto;
+    flex-shrink: 0;
+}
+
 @media (min-height: 1070px) and (min-width: 1135px) {
     .style-div-buttons {
         position: absolute;
@@ -957,8 +976,12 @@ input::placeholder {
     }
 
     .div-text-required {
-        position: relative;
-        bottom: -650px;
+        display: none;
+    }
+
+    .div-text-required-mobile {
+        display: flex;
+        padding-top: 16px;
     }
 
     .style-div-buttons {
@@ -1034,10 +1057,6 @@ input::placeholder {
     .style-div-buttons {
         bottom: 80px;
     }
-    .div-text-required {
-        position: relative;
-        bottom: -578px;
-    }
 }
 
 @media (max-width: 520px) {
@@ -1055,11 +1074,6 @@ input::placeholder {
 
     .font-size-buttons {
         font-size: 16px !important;
-    }
-
-    .div-text-required {
-        position: relative;
-        bottom: -556px;
     }
 
     .main-content {
@@ -1090,6 +1104,12 @@ input::placeholder {
 }
 
 @media (max-width: 450px) {
+    .urgent-icon,
+    .medium-icon,
+    .low-icon {
+        width: 24px;
+        height: auto;
+    }
     .mobile-joinLogo {
         left: 16px;
     }
@@ -1113,11 +1133,6 @@ input::placeholder {
 
     .input-right {
         font-size: 16px;
-    }
-
-    .div-text-required {
-        position: relative;
-        bottom: -545px;
     }
 
     .main-content {

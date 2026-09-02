@@ -229,7 +229,11 @@ input::placeholder {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
+    transition:
+        transform 200ms ease-in-out,
+        outline-width 200ms ease-in-out,
+        outline-offset 200ms ease-in-out,
+        box-shadow 200ms ease-in-out;
 }
 
 .bt-left svg {
@@ -246,7 +250,10 @@ input::placeholder {
     outline-offset: -2px;
     transform: scale(1.02);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    transition: background-color 100ms ease-in-out, box-shadow 100ms ease-in-out, outline 100ms ease-in-out;
+    transition:
+        background-color 100ms ease-in-out,
+        box-shadow 100ms ease-in-out,
+        outline 100ms ease-in-out;
 }
 
 .div-star {
@@ -525,7 +532,7 @@ input::placeholder {
     border: none !important;
 }
 
-#category-dropdown-wrapper.error>.assigned-trigger {
+#category-dropdown-wrapper.error > .assigned-trigger {
     border: 1px solid #ff8190 !important;
     border-radius: 10px;
 }
@@ -583,7 +590,11 @@ input::placeholder {
 
 .div-text-required {
     position: absolute;
-    bottom: 10px;
+    bottom: -170px;
+}
+
+.div-text-required-mobile {
+    display: none;
 }
 
 .text-required {
@@ -720,7 +731,7 @@ input::placeholder {
     height: 24px;
 }
 
-.input-right:not(:placeholder-shown)+.subtask-edit-actions {
+.input-right:not(:placeholder-shown) + .subtask-edit-actions {
     display: flex;
 }
 
@@ -842,12 +853,12 @@ input::placeholder {
     visibility: visible;
 }
 
-.subtask-action-btn+.subtask-action-btn {
+.subtask-action-btn + .subtask-action-btn {
     position: relative;
     margin-left: 8px;
 }
 
-.subtask-action-btn+.subtask-action-btn::before {
+.subtask-action-btn + .subtask-action-btn::before {
     content: '';
 
     position: absolute;
@@ -942,7 +953,7 @@ input::placeholder {
     align-items: center;
     width: 100%;
     max-width: 300px;
-    border: 1px solid #A8A8A8;
+    border: 1px solid #a8a8a8;
     border-radius: 10px;
     background-color: #fff;
     overflow: hidden;
@@ -951,7 +962,7 @@ input::placeholder {
 }
 
 .search-wrapper:hover {
-    border-color: #E7E7E7;
+    border-color: #e7e7e7;
     transition: border-color 100ms ease-out;
 }
 
@@ -1089,7 +1100,9 @@ input::placeholder {
     justify-content: center;
     border-radius: 50%;
     padding: 6px;
-    transition: background-color 100ms ease-in-out, scale 100ms ease-in-out;
+    transition:
+        background-color 100ms ease-in-out,
+        scale 100ms ease-in-out;
 }
 
 .dialog-close-btn:hover {
@@ -1126,7 +1139,6 @@ input::placeholder {
 }
 
 .task-card span {
-    
     font-size: 16px;
     font-weight: 400;
 }
@@ -1350,7 +1362,9 @@ priority-icon {
     line-height: 1;
     border-radius: 50%;
     cursor: pointer;
-    transition: background-color 100ms ease-in-out, scale 100ms ease-in-out;
+    transition:
+        background-color 100ms ease-in-out,
+        scale 100ms ease-in-out;
 }
 
 .task-dialog-close:hover {
@@ -1514,7 +1528,7 @@ priority-icon {
 }
 
 .task-detail-subtask:hover {
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
 }
 
 .task-detail-subtask span {
@@ -1590,6 +1604,14 @@ priority-icon {
     border-radius: 10px;
 }
 
+.urgent-icon,
+.medium-icon,
+.low-icon {
+    width: 30px;
+    height: auto;
+    flex-shrink: 0;
+}
+
 @media (max-width: 1156px) {
     .board {
         justify-content: flex-start;
@@ -1644,7 +1666,12 @@ priority-icon {
     }
 
     .div-text-required {
-        position: static;
+        display: none;
+    }
+
+    .div-text-required-mobile {
+        display: flex;
+        padding-top: 16px;
     }
 
     .style-div-buttons {
@@ -1663,7 +1690,6 @@ priority-icon {
 
 @media (max-width: 1024px) {
     .board {
-
         flex-direction: column;
         flex-wrap: nowrap;
         overflow-x: auto;
@@ -1756,7 +1782,6 @@ priority-icon {
 }
 
 @media (max-width: 520px) {
-
     input {
         font-size: 16px;
     }
@@ -1806,9 +1831,16 @@ priority-icon {
     .style-priorities-p {
         font-size: 16px !important;
     }
-    
+
     .style-priority {
         gap: 0;
+    }
+
+    .urgent-icon,
+    .medium-icon,
+    .low-icon {
+        width: 24px;
+        height: auto;
     }
 
     .font-size {
@@ -1831,10 +1863,6 @@ priority-icon {
 
     .input-right {
         font-size: 16px;
-    }
-
-    .bt-right {
-        max-width: 135px;
     }
 
     .bt-left {
@@ -1902,6 +1930,12 @@ priority-icon {
     }
     .dropdown-arrow {
         right: 5px;
+    }
+    .urgent-icon,
+    .medium-icon,
+    .low-icon {
+        width: 20px;
+        height: auto;
     }
 }
 
