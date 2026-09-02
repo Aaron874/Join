@@ -1,5 +1,7 @@
 window.subtasks = [];
 
+let editingSubtaskIndex = null;
+
 document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
 
 /**
@@ -72,6 +74,12 @@ function deleteSubtask(index) {
  * @param {number} index - The index of the subtask to edit.
  */
 function editSubtask(index) {
+if (editingSubtaskIndex !== null) {
+        return;
+    }
+
+    editingSubtaskIndex = index;
+
     const item = document.querySelectorAll('.subtask-item')[index];
     const title = window.subtasks[index].title;
     item.innerHTML = `
@@ -114,6 +122,7 @@ function saveSubtaskEdit(index) {
         .querySelector('input');
     if (!input.value.trim()) return;
     window.subtasks[index].title = input.value.trim();
+    editingSubtaskIndex = null;
     renderAddTaskSubtasks();
 }
 

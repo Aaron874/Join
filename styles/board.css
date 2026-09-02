@@ -215,7 +215,7 @@ input::placeholder {
     align-items: center;
     font-size: 21px;
     font-weight: bold;
-    width: 183px;
+    width: 183px !important;
     padding-left: 8px;
     padding-right: 8px;
     transition: transform 200ms ease-in-out;
@@ -1807,7 +1807,7 @@ priority-icon {
     }
 
     .bt-right {
-        width: 150px;
+        width: 150px !important;
     }
 
     .content-divider {
