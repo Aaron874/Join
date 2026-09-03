@@ -39,7 +39,6 @@ header img {
     font-weight: 400;
 }
 
-
 main {
     height: calc(100dvh - 336px);
     display: flex;
@@ -81,7 +80,8 @@ footer a {
     transition: opacity 100ms ease;
 }
 
-.login_section.visible, footer.visible,
+.login_section.visible,
+footer.visible,
 .sign_up_btn_wrapper_header.visible {
     opacity: 1;
     visibility: visible;
@@ -121,12 +121,10 @@ footer a {
     font-size: 20px;
     border: 1px solid #686868;
     font-family: 'Inter', sans-serif;
-
 }
 
 .login_input_wrapper input:focus-visible {
     outline: 1px solid #124658;
-    
 }
 
 .login_input_wrapper img {
@@ -156,8 +154,11 @@ footer a {
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    transition: transform 200ms ease-in-out, outline-width 200ms ease-in-out, outline-offset 200ms ease-in-out, box-shadow 200ms ease-in-out;
-
+    transition:
+        transform 200ms ease-in-out,
+        outline-width 200ms ease-in-out,
+        outline-offset 200ms ease-in-out,
+        box-shadow 200ms ease-in-out;
 }
 
 .guest_login_btn:hover {
@@ -165,7 +166,7 @@ footer a {
     outline-offset: -2px;
     transform: scale(1.02);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-  }
+}
 
 .login_btn {
     background-color: #2a3647;
@@ -180,13 +181,12 @@ footer a {
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     transition: transform 200ms ease-in-out;
-
 }
 
 .login_btn:hover {
     background-color: #124658;
     transform: scale(1.05);
-  }
+}
 
 .privacy_checkbox {
     display: flex;
@@ -228,7 +228,6 @@ input[type='checkbox']:checked::after {
     font-weight: 400;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-
 }
 
 .sign_up_btn {
@@ -243,19 +242,18 @@ input[type='checkbox']:checked::after {
     border: none;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    transition: transform 200ms ease-in-out
-
+    transition: transform 200ms ease-in-out;
 }
 
 #sign_up_button_id:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-  }
+}
 
-  .sign_up_btn:hover:not(:disabled) {
+.sign_up_btn:hover:not(:disabled) {
     background-color: #124658;
     transform: scale(1.05);
-  }
+}
 
 .back_to_log_in_btn {
     border: none;
@@ -272,9 +270,6 @@ input[type='checkbox']:checked::after {
     display: none !important;
 }
 
-/* Dialogs are `display:none` while closed and only switch to their real
-   display value on `showModal()`, so an `animation` declared here replays
-   from scratch every time it opens — no extra JS state needed. */
 @keyframes sign_up_success_slide_in {
     from {
         transform: translate(-50%, 120px);
@@ -299,7 +294,6 @@ input[type='checkbox']:checked::after {
     border-radius: 10px;
     background-color: #fee2e2;
     color: #991b1b;
-
 }
 
 .sign_up_success_dialog {
@@ -384,7 +378,6 @@ dialog::backdrop {
 }
 
 @media (max-width: 462px) {
-
     .sign_up_btn {
         font-size: 16px;
     }
@@ -467,7 +460,6 @@ dialog::backdrop {
         left: 20px;
         top: 30px;
     }
-
 }
 
 @media (orientation: landscape) and (max-height: 590px) {
