@@ -1393,7 +1393,7 @@ priority-icon {
 
 .task-dialog-row {
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 100px 1fr;
     gap: 16px;
     margin-bottom: 24px;
     font-size: 20px;
@@ -1402,7 +1402,7 @@ priority-icon {
 .task-dialog-row span:first-child,
 .task-dialog-section h3 {
     margin: 0;
-    color: var(--color-darkblue);
+    color: #42526E;
     font-size: 20px;
     font-weight: 400;
 }
@@ -1489,7 +1489,7 @@ priority-icon {
 .task-dialog-footer button {
     border: none;
     background: transparent;
-    color: var(--color-darkblue);
+    color: #2A3647;
     font-size: 20px;
     cursor: pointer;
     display: flex;
