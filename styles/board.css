@@ -1688,7 +1688,7 @@ priority-icon {
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1415px) {
     .board {
         flex-direction: column;
         flex-wrap: nowrap;
