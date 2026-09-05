@@ -3,7 +3,7 @@ import {
     showErrorAfterSubmitIfNeeded,
     errorOrValidAfterSubmit,
     showError,
-} from './signUpOrLogInErrors.js';
+} from './SignUpOrLogInErrors.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
