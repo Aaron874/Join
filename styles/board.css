@@ -69,7 +69,7 @@ h1 .layout {
 
 .style-content {
     display: flex;
-    gap: 48px;
+    gap: 16px;
     width: 100%;
 }
 
@@ -382,7 +382,7 @@ input::placeholder {
 
 .contacts_div:hover,
 .category_div:hover {
-    background-color: #f5f6f7;
+    background-color: #65666824;;
 }
 
 .contacts_div:has(.contacts_input:checked) {
@@ -1155,7 +1155,7 @@ input::placeholder {
     width: 32px;
     height: 32px;
     padding: 10px;
-    margin-left: -8px;
+    margin-left: -4px;
     border: 2px solid var(--bg-white);
     border-radius: 50%;
     background-color: var(--contact-color);
@@ -1790,6 +1790,13 @@ priority-icon {
     .mobile-joinLogo {
         left: 24px;
     }
+    .textarea-description {
+        font-size: 16px;
+    }
+
+    .textarea-description::placeholder {
+        font-size: 16px;
+    }
 
     p {
         font-size: 16px !important;
@@ -1818,6 +1825,9 @@ priority-icon {
     .dialog-close-btn {
         top: 38px;
         right: 5px;
+    }
+    .padding-top {
+        padding-top: 16px;
     }
 }
 
