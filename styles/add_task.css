@@ -104,6 +104,12 @@ input::placeholder {
     color: #000000;
 }
 
+.priority-title {
+    padding-bottom: 8px;
+    font-size: 20px;
+    color: #000000;
+}
+
 .style-priorities {
     border: 1px solid #ccc;
     padding-left: 8px;
@@ -1014,6 +1020,12 @@ input::placeholder {
 @media (max-width: 755px) {
     .header-content {
         display: none !important;
+    }
+
+    .priority-title {
+        color: #42526e;
+        padding-top: 24px;
+        padding-bottom: 12px;
     }
 
     .mobile-joinLogo {
