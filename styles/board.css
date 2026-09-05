@@ -27,6 +27,12 @@ h1 .layout {
     color: #2a3647;
 }
 
+.priority-title {
+    padding-bottom: 8px;
+    font-size: 20px;
+    color: #000000;
+}
+
 .page-title {
     display: flex;
     align-items: center;
@@ -382,7 +388,7 @@ input::placeholder {
 
 .contacts_div:hover,
 .category_div:hover {
-    background-color: #65666824;;
+    background-color: #65666824;
 }
 
 .contacts_div:has(.contacts_input:checked) {
@@ -1092,7 +1098,7 @@ input::placeholder {
     height: 45px;
     border: none;
     background: transparent;
-    color: #2A3647;
+    color: #2a3647;
     font-size: 40px;
     line-height: 1;
     display: flex;
@@ -1403,7 +1409,7 @@ priority-icon {
 .task-dialog-row span:first-child,
 .task-dialog-section h3 {
     margin: 0;
-    color: #42526E;
+    color: #42526e;
     font-size: 20px;
     font-weight: 400;
 }
@@ -1490,7 +1496,7 @@ priority-icon {
 .task-dialog-footer button {
     border: none;
     background: transparent;
-    color: #2A3647;
+    color: #2a3647;
     font-size: 20px;
     cursor: pointer;
     display: flex;
@@ -1780,6 +1786,11 @@ priority-icon {
     .content-divider {
         display: none;
     }
+
+    .priority-title {
+        color: #42526E;
+        padding-bottom: 12px;
+    }
 }
 
 @media (max-width: 520px) {
@@ -1926,7 +1937,6 @@ priority-icon {
         font-size: 32px;
         width: 40px;
         height: 40px;
-
     }
 }
 
