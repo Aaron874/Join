@@ -9,6 +9,8 @@ import {
     deleteBtnListener,
 } from '../scripts/contactsListener.js';
 
+import { startValidationContactInput } from '../scripts/contactsvalidation.js';
+
 /**
  * Renders the HTML markup for a single letter separator used in the contact list.
  *
@@ -230,7 +232,7 @@ export function renderContactInput(mode, contactId) {
                 />
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
               </div>
-              <div id="error_contacts_name" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+              <div id="error_contact_name" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
                 Username required
               </div>
               <div class="contact_input_wrapper">
@@ -243,7 +245,7 @@ export function renderContactInput(mode, contactId) {
                   />
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
               </div>
-              <div id="error_contacts_email" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+              <div id="error_contact_email" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
                 Email required
               </div>
               <div class="contact_input_wrapper">
@@ -256,7 +258,7 @@ export function renderContactInput(mode, contactId) {
                   />
                 <img src="assets/img/call.webp" alt="Phone Icon" />
               </div>
-              <div id="error_contacts_phone" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+              <div id="error_contact_phone" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
                 Phone required
               </div>
               ${renderButtons(mode)}
@@ -264,6 +266,7 @@ export function renderContactInput(mode, contactId) {
 `;
     updateContactBtnListener(editContactInput, contactId);
     deleteBtnListener(contactId, contactsList[contactId]?.name, editContactInput);
+    startValidationContactInput(editContactInput);
     return editContactInput;
 }
 
