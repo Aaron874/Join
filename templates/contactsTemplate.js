@@ -315,7 +315,7 @@ function renderButtons(mode) {
                       alt="Delete Icon"
                   /></span>
                 </button>
-                <button class="contact_btn_submit" type="submit" data-action="create_contact">
+                <button class="contact_btn_submit" type="submit" data-action="create_contact" disabled>
                   Create contact
                   <span
                     ><img src="assets/img/check.webp" alt="Check Icon"

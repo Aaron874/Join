@@ -417,7 +417,12 @@ dialog::backdrop {
     transition: transform 200ms ease-in-out;
 }
 
-.contact_btn_submit:hover {
+.contact_btn_submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.contact_btn_submit:hover:not(:disabled) {
     background-color: #124658;
     transform: scale(1.01);
 }
