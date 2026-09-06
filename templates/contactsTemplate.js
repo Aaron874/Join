@@ -227,13 +227,11 @@ export function renderContactInput(mode, contactId) {
                   name="name"
                   id="contact_name_id"
                   placeholder="Name"
-                  minlength="2"
-                  maxlength="50"
-                  pattern="[\\p{L}' \\-]{2,100}"
-                  title="Only letters, spaces, apostrophes, and hyphens allowed."
-                  required
                 />
                 <img src="assets/img/person24x24.webp" alt="Person Icon" />
+              </div>
+              <div id="error_contacts_name" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+                Username required
               </div>
               <div class="contact_input_wrapper">
                 <input 
@@ -242,8 +240,11 @@ export function renderContactInput(mode, contactId) {
                   id="contact_email_id" 
                   placeholder="Email" 
                   value="${contactsList[contactId]?.email ?? ''}" 
-                  required/>
+                  />
                 <img src="assets/img/mail.webp" alt="E-Mail Icon" />
+              </div>
+              <div id="error_contacts_email" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+                Email required
               </div>
               <div class="contact_input_wrapper">
                 <input 
@@ -251,13 +252,12 @@ export function renderContactInput(mode, contactId) {
                   name="phone" 
                   id="contact_phone_id" 
                   placeholder="Phone"
-                  minlength="6"
-                  maxlength="20"
-                  pattern="\\+?[0-9 ]{6,20}"
-                  title= "Please enter a valid phone number, e.g. +49 171 1234567."
                   value="${contactsList[contactId]?.phone ?? ''}" 
-                  required/>
+                  />
                 <img src="assets/img/call.webp" alt="Phone Icon" />
+              </div>
+              <div id="error_contacts_phone" class="alert_contacts hidden_errors" role="alert" aria-live="assertive">
+                Phone required
               </div>
               ${renderButtons(mode)}
             </form>
