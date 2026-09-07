@@ -1114,6 +1114,7 @@ input::placeholder {
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 16px;
+    color: var(--color-notices)
 }
 
 .task-card span {
@@ -1737,10 +1738,6 @@ input::placeholder {
 
     .board {
         padding: 0 5px;
-    }
-
-    .status-head {
-        width: 150px;
     }
 
     .task-card {
