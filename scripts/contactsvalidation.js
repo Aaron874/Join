@@ -54,8 +54,18 @@ function updateSubmitBtnState() {
     let emailValid = !validateContactEmail(contactElements.email.input.value);
     let phoneValid = !validateContactPhone(contactElements.phone.input.value);
     let allValid = nameValid && emailValid && phoneValid;
-    const submitButton = contactElements.name.input.closest('form').querySelector('#contact_btn_submit_id');
+    let submitButton = checkAddOrEditBtn();
     submitButton.disabled = !allValid;
+}
+
+function checkAddOrEditBtn() {
+    let submitButton = contactElements.name.input.closest('form').querySelector('#contact_btn_submit_id');
+    if (submitButton) {
+        return submitButton;
+    } if (!submitButton) {
+        submitButton = contactElements.name.input.closest('form').querySelector('#change_contact_btn_id');
+        return submitButton;
+    }
 }
 
 
