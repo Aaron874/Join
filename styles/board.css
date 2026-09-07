@@ -1001,10 +1001,14 @@ input::placeholder {
 }
 
 .highlight {
+    flex: 0 0 255px;
+    width: 255px;
+    height: 255px;
+    margin-top: 16px;
     background-color: var(--color-gray);
     border: 2px dashed var(--color-notices);
     border-radius: 24px;
-    height: 100%;
+    box-sizing: border-box;
 }
 
 .status-head {

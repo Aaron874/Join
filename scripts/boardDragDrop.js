@@ -13,7 +13,7 @@ function initDragAndDrop() {
 }
 
 /**
- * Handler for dragstart on a task card. Stores dragged task id.
+ * Store the dragged task ID and mark the task card as being dragged.
  * @param {DragEvent} event
  */
 function handleDragStart(event) {
@@ -23,39 +23,50 @@ function handleDragStart(event) {
 }
 
 /**
- * Handler for dragend on a task card. Clears drag state.
+ * Clear the drag state and remove all visual drag-and-drop indicators.
  * @param {DragEvent} event
  */
 function handleDragEnd(event) {
     event.currentTarget.classList.remove('dragging');
-    event.currentTarget.classList.remove('highlight');
+    removeAllDropHighlights();
     draggedTaskId = null;
 }
 
 /**
- * Handler for dragover to allow drop.
+ * Allow a drop and highlight the column when the task can change to its status.
  * @param {DragEvent} event
  */
 function handleDragOver(event) {
     event.preventDefault();
-    event.currentTarget.classList.add('highlight');
-
-}
-
-function handleDragLeave(event) {
+    const task = getTaskById(draggedTaskId);
     const column = event.currentTarget;
-    if (column.contains(event.relatedTarget)) return;
-    column.classList.remove('highlight');
+    if (!task || task.status === column.dataset.status) {
+        removeDropHighlight(column);
+        return;
+    }
+    addDropHighlight(column);
 }
 
 /**
- * Handler for drop event on a column. Updates task status and reloads board.
+ * Remove the drop highlight when the dragged task leaves a task column.
+ *
+ * The highlight is kept while moving between elements inside the same column.
+ * @param {DragEvent} event
+ */
+function handleDragLeave(event) {
+    const column = event.currentTarget;
+    if (column.contains(event.relatedTarget)) return;
+    removeDropHighlight(column);
+}
+
+/**
+ * Move the dragged task to the column's status and reload the board.
  * @param {DragEvent} event
  * @returns {Promise<void>}
  */
 async function handleDrop(event) {
     event.preventDefault();
-    event.currentTarget.classList.remove('highlight');
+    removeDropHighlight(event.currentTarget);
     const task = getTaskById(draggedTaskId);
     const newStatus = event.currentTarget.dataset.status;
     if (!task || task.status === newStatus) return;
@@ -67,8 +78,38 @@ async function handleDrop(event) {
     }
 }
 
+    /**
+     * Add a drop highlight to a task column if it does not already have one.
+     * @param {HTMLElement} column
+     * @returns {void}
+     */
+function addDropHighlight(column) {
+    if (column.querySelector('.highlight')) return;
+    const highlight = document.createElement('div');
+    highlight.classList.add('highlight');
+    column.appendChild(highlight);
+}
+
 /**
- * Get the previous status key in the workflow order, or null if none.
+ * Remove the drop highlight from a task column.
+ * @param {HTMLElement} column
+ * @returns {void}
+ */
+function removeDropHighlight(column) {
+    column.querySelector('.highlight')?.remove();
+}
+
+/**
+ * Remove all drop highlights from the board.
+ * @returns {void}
+ */
+function removeAllDropHighlights() {
+    document.querySelectorAll('.highlight')
+        .forEach(highlight => highlight.remove());
+}
+
+/**
+ * Return the status immediately before the current status in the workflow.
  * @param {string} currentStatus
  * @returns {string|null}
  */
@@ -81,7 +122,7 @@ function getPreviousStatus(currentStatus) {
 }
 
 /**
- * Get the next status key in the workflow order, or null if none.
+ * Return the status immediately after the current status in the workflow.
  * @param {string} currentStatus
  * @returns {string|null}
  */
@@ -97,8 +138,7 @@ function getNextStatus(currentStatus) {
 }
 
 /**
- * Handle click on a task card. If the click happened on the move menu wrapper
- * ignore it; otherwise open task details.
+ * Open task details unless the click originated inside the move-task menu.
  * @param {MouseEvent} event
  * @param {string} taskId
  */
@@ -110,8 +150,8 @@ function handleTaskCardClick(event, taskId) {
 }
 
 /**
- * Toggle the move-task menu visibility for a specific task card.
- * @param {Event} event
+ * Toggle the move-task menu for a specific task card.
+ * @param {MouseEvent} event
  * @param {string} taskId
  */
 function toggleMoveTaskMenu(event, taskId) {
@@ -126,8 +166,8 @@ function toggleMoveTaskMenu(event, taskId) {
 }
 
 /**
- * Move a task to a new status programmatically (used by move menu).
- * @param {Event} event
+ * Move a task to a new status through the move-task menu.
+ * @param {MouseEvent} event
  * @param {string} taskId
  * @param {string} newStatus
  * @returns {Promise<void>}
