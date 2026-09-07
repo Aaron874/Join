@@ -13,7 +13,7 @@ function createSubtask() {
     if (!title) return;
     window.subtasks.push({
         title,
-        completed: false
+        completed: false,
     });
     input.value = '';
     renderAddTaskSubtasks();
@@ -68,13 +68,17 @@ function deleteSubtask(index) {
     renderAddTaskSubtasks();
 }
 
+function resetEditingSubtaskIndex() {
+    editingSubtaskIndex = null;
+}
+
 /**
  * Enable edit mode for a subtask by replacing it with an input field.
  *
  * @param {number} index - The index of the subtask to edit.
  */
 function editSubtask(index) {
-if (editingSubtaskIndex !== null) {
+    if (editingSubtaskIndex !== null) {
         return;
     }
 
@@ -118,8 +122,7 @@ if (editingSubtaskIndex !== null) {
  * @param {number} index - The index of the subtask to save.
  */
 function saveSubtaskEdit(index) {
-    const input = document.querySelectorAll('.subtask-item')[index]
-        .querySelector('input');
+    const input = document.querySelectorAll('.subtask-item')[index].querySelector('input');
     if (!input.value.trim()) return;
     window.subtasks[index].title = input.value.trim();
     editingSubtaskIndex = null;
@@ -133,7 +136,7 @@ function saveSubtaskEdit(index) {
  */
 function setSubtasks(taskSubtasks) {
     if (Array.isArray(taskSubtasks)) {
-        window.subtasks = taskSubtasks.map(subtask => ({ ...subtask }));
+        window.subtasks = taskSubtasks.map((subtask) => ({ ...subtask }));
     } else if (typeof taskSubtasks === 'string' && taskSubtasks.trim()) {
         setSingleSubtask(taskSubtasks);
     } else {
@@ -173,3 +176,4 @@ window.saveSubtaskEdit = saveSubtaskEdit;
 window.deleteSubtask = deleteSubtask;
 window.deleteSubtaskInput = deleteSubtaskInput;
 window.createSubtask = createSubtask;
+window.resetEditingSubtaskIndex = resetEditingSubtaskIndex;

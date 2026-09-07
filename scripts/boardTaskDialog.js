@@ -1,5 +1,3 @@
-
-
 /**
  * Open task details dialog for a given task id.
  * @param {string} taskId
@@ -19,6 +17,7 @@ function openTaskDetails(taskId) {
  * @returns {void}
  */
 function closeTaskDialog() {
+    resetEditingSubtaskIndex();
     closeDialog('task-dialog');
 }
 
