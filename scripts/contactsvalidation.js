@@ -1,7 +1,7 @@
 
 
 
-const contactsInputController = new AbortController();
+let contactsInputController = new AbortController();
 const MAX_PHONE_LENGTH = 20;
 const MIN_PHONE_LENGTH = 6;
 const PHONE_REGEX = /^\+?[0-9 ]{6,20}$/;
@@ -10,13 +10,18 @@ const MAX_NAME_LENGTH = 30;
 const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[a-zA-Z]{2,}$/;
 const MAX_EMAIL_LENGTH = 254;
+let contactElements = {};
 
 
 
 export function startValidationContactInput(editContactInput) {
-    const contactElements = getContactsElements(editContactInput);
-    startListenerForContactInput(contactElements);
-    //Listener einbauen der das create Contact feld freigibt + signal listener in variable//
+    contactsInputController = new AbortController();
+    contactElements = getContactsElements(editContactInput);
+    startListenerForContactInput(contactElements, editContactInput);
+}
+
+export function stopValidationContactInput() {
+    contactsInputController.abort();
 }
     
 
@@ -41,20 +46,37 @@ function startListenerForContactInput(contactElements) {
     contactsValidationListener(contactElements.name.input, contactElements.name.error, validateContactName, 'Username required', contactsInputController.signal);
     contactsValidationListener(contactElements.email.input, contactElements.email.error, validateContactEmail, 'Email required', contactsInputController.signal);
     contactsValidationListener(contactElements.phone.input, contactElements.phone.error, validateContactPhone, 'Phone required', contactsInputController.signal);
-    console.log(contactsInputController);
-    
-}   
+    updateSubmitBtnState();    
+}
+
+function updateSubmitBtnState() {
+    let nameValid = !validateContactName(contactElements.name.input.value);
+    let emailValid = !validateContactEmail(contactElements.email.input.value);
+    let phoneValid = !validateContactPhone(contactElements.phone.input.value);
+    let allValid = nameValid && emailValid && phoneValid;
+    const submitButton = contactElements.name.input.closest('form').querySelector('#contact_btn_submit_id');
+    submitButton.disabled = !allValid;
+}
+
 
 function contactsValidationListener(input, errorEl, validateFn, emptyMessage, signal) {
     input.addEventListener('blur', () => {
-        if (input.disabled) return;
         if (!input.value) {
-            showErrorContacts(errorEl, emptyMessage);
+            showErrorContacts(errorEl, emptyMessage)
         }
+        const errorInput = validateFn(input.value);
+        if (errorInput) {
+            showErrorContacts(errorEl, errorInput);
+        }
+        updateSubmitBtnState()
     }, { signal });
 
     input.addEventListener('input', () => {
-        showErrorContacts(errorEl, validateFn(input.value));
+        const errorInput = validateFn(input.value);
+        if (!errorInput) {
+            showErrorContacts(errorEl, errorInput);
+        } 
+        updateSubmitBtnState();
     }, { signal });
 }
 
@@ -120,46 +142,5 @@ function validateContactEmail(value) {
 function showErrorContacts(errorEl, errorMessage) {
     errorEl.classList.toggle('hidden_errors', !errorMessage);
     errorEl.textContent = errorMessage;
-}
-
-// Submit Button diabled validation Start //
-
-/**
- * Checks whether all sign-up form fields currently pass validation, without displaying any error messages.
- *
- * @returns {boolean} True if name, email, password, confirm password, and terms are all valid.
- */
-function isSignUpFormValid() {
-    const nameMsg = validateName(signUpElements.username.input.value);
-    const emailMsg = validateEmail(signUpElements.email.input.value);
-    const passwordMsg = validatePassword(signUpElements.password.input.value);
-    const confirmMsg = validateConfirmPassword(
-        signUpElements.password.input.value,
-        signUpElements.confirmPassword.input.value
-    );
-    const termsMsg = validateTerms(signUpElements.privacyCheckbox.input.checked);
-
-    return !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
-}
-
-/**
- * Enables or disables the sign-up submit button based on whether the form is currently valid.
- *
- * @returns {void}
- */
-function updateSubmitButtonState() {
-    const submitButton = document.getElementById('sign_up_button_id');
-    submitButton.disabled = !isSignUpFormValid();
-}
-
-/**
- * Binds the input listener to the sign-up form that keeps the submit button's disabled state in sync with form validity.
- *
- * @returns {void}
- */
-function setupSignUpValidationListener() {
-    signUpForm = document.getElementById('sign_log_in_id');
-    signUpForm.addEventListener('input', updateSubmitButtonState);
-    updateSubmitButtonState();
 }
 

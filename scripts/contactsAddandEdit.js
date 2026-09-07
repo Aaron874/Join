@@ -16,6 +16,7 @@ import {
     listenerMobileEditMenu,
 } from './contactsListener.js';
 
+import { stopValidationContactInput } from './contactsvalidation.js';
 const contactDialog = document.getElementById('contact_dialog_id');
 const contactDialogHeader = document.getElementById('contact_dialog_header_id');
 const editContactInputContainer = document.getElementById('contact_form_section_id');
@@ -292,6 +293,7 @@ function openContactDialog() {
  */
 export function closeContactDialog() {
     contactDialog.classList.remove('open');
+    stopValidationContactInput();
     setTimeout(() => {
         contactDialog.close();
     }, 300);
