@@ -53,10 +53,10 @@ async function ensureSelfContactExists() {
     }
 }
 
-export function openSingleViewContact(id) {
+export function openSingleViewContact(id, mode) {
     contactListMarkedContact(id);
     const contactIndex = searchIndex(id);
-    switchListToSingleViewAndBack();
+    switchListToSingleViewAndBack(mode);
     const contact = contactsList[contactIndex];
     contactsSingleViewContainer.innerHTML = '';
     contactsSingleViewContainer.appendChild(
@@ -78,11 +78,13 @@ function contactListMarkedContact(id) {
     selectedContact.classList.add('selected');
 }
 
-export function switchListToSingleViewAndBack() {
+export function switchListToSingleViewAndBack(mode = 'single') {
     let width = window.innerWidth;
     if (width < MOBILE_BREAKPOINT) {
         const viewContainer = document.querySelector('.contacts_single_view_container');
         const listContainer = document.querySelector('.contacts_list_container');
+        if (mode === 'mobile') {
+            return;}
         viewContainer.classList.toggle('visible_flex');
         listContainer.classList.toggle('hidden');
     }
@@ -103,7 +105,7 @@ export async function updateContactInList(contactId, updatedContact) {
     contactsList[contactNumber] = changedContact;
     changeContactInDom(contactId, changedContact);
     closeAddContactDialog();
-    openSingleViewContact(contactId);
+    openSingleViewContact(contactId, 'mobile');
 }
 
 function changeContactInDom(contactId, changedContact) {

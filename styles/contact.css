@@ -771,6 +771,7 @@ dialog::backdrop {
         flex-direction: row;
         width: 100%;
         min-height: 280px;
+        padding-top: 0;
     }
 
     .add_contact_form_section {
@@ -816,7 +817,7 @@ dialog::backdrop {
     }
 
     .contact_form_container form {
-        margin-top: 70px;
+        margin-top: 100px;
     }
 
     .contact_btn_container {
