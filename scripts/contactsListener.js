@@ -15,7 +15,7 @@ import {
     switchListToSingleViewAndBack,
     openSingleViewContact,
     updateContactInList,
-    contactsList
+    contactsList,
 } from './contacts.js';
 import { resetListAndSingleViewVisibility } from './contactListBuilder.js';
 
@@ -105,31 +105,30 @@ export function startEventListenersAddContactDialog() {
 }
 
 /**
- * Registers a click event listener on the edit button of a contact's single view.
- * Selects either the mobile or desktop edit button depending on the current screen width,
- * and opens the edit dialog for the given contact when clicked.
+ * Attaches a click listener to both the desktop and mobile edit buttons within the given
+ * single contact view. Both buttons remain in the DOM at all times and are toggled via CSS
+ * (display: none) depending on the viewport width, so the listener is bound to both, and the
+ * actual screen width is checked at click time (not at setup time) to decide which action to
+ * trigger. This avoids stale state if the viewport is resized after the view was rendered.
  *
- * @param {HTMLElement} newSingleView - The DOM element of the single contact view in which the button is searched for.
- * @param {string|number} id - The ID of the contact to be opened in the edit dialog.
+ * @param {HTMLElement} newSingleView - The container element of the newly rendered single contact view, used to query the edit buttons.
+ * @param {string|number} id - The ID of the contact to edit.
  * @returns {void}
- *
- * @example
- * openEditDialogBtnListener(singleViewElement, contact.id);
  */
 export function openEditDialogBtnListener(newSingleView, id) {
-    let screenSize = window.innerWidth;
-    let editButton;
-    if (screenSize < MOBILE_BREAKPOINT) {
-        editButton = newSingleView.querySelector('#mobile_edit_btn_id');
-    } else {
-        editButton = newSingleView.querySelector('#edit_btn_id');
-    }
-    editButton.addEventListener('click', (e) => {
-        if (screenSize < MOBILE_BREAKPOINT) {
+    const desktopButton = newSingleView.querySelector('#edit_btn_id');
+    const mobileButton = newSingleView.querySelector('#mobile_edit_btn_id');
+
+    const handleClick = (e) => {
+        if (window.innerWidth < MOBILE_BREAKPOINT) {
             openEditOrDeleteMenuMobile(id, e);
         } else {
             openEditContactDialog(id);
         }
+    };
+
+    [desktopButton, mobileButton].forEach((btn) => {
+        if (btn) btn.addEventListener('click', handleClick);
     });
 }
 
@@ -164,32 +163,20 @@ export function listenerMobileEditMenu(id, mobileEditContainer) {
     }
 }
 
-
-
-
-
-
 /**
- * Registers a click listener on the delete button of the single contact view,
- * but only above the mobile breakpoint (button not available on mobile).
- * Opens the delete confirmation dialog for the contact when clicked.
+ * Attaches a click listener to the delete button within the given single contact view,
+ * opening the delete confirmation dialog for the specified contact when clicked.
  *
- * @param {HTMLElement} newSingleView - The single contact view element containing the button.
- * @param {string|number} id - The ID of the contact to be deleted.
- * @param {Object} person - The contact data passed to the delete dialog.
+ * @param {HTMLElement} newSingleView - The container element of the newly rendered single contact view, used to query the delete button.
+ * @param {string|number} id - The ID of the contact to delete.
+ * @param {string} person - The name of the contact to delete, shown in the confirmation dialog.
  * @returns {void}
- *
- * @example
- * openDeleteDialogBtnListener(singleViewElement, contact.id, contact);
  */
 export function openDeleteDialogBtnListener(newSingleView, id, person) {
-    let screenSize = window.innerWidth;
-    if (screenSize > MOBILE_BREAKPOINT) {
-        const deleteButton = newSingleView.querySelector('#delete_btn_id');
-        deleteButton.addEventListener('click', () => {
-            deleteContactDialog(id, person);
-        });
-    }
+    const deleteButton = newSingleView.querySelector('#delete_btn_id');
+    deleteButton.addEventListener('click', () => {
+        deleteContactDialog(id, person);
+    });
 }
 
 /**
