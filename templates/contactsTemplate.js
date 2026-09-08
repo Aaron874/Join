@@ -68,9 +68,9 @@ export function renderContactsListItems(shortName, person, email, color = '#BDBD
 export function renderAddOrEditContactDialog(isEditMode = false) {
     let addContactDialogContent = document.createElement('h3');
     if (isEditMode) {
-        addContactDialogContent.textContent = 'Edit Contact';
+        addContactDialogContent.textContent = 'Edit contact';
     } else {
-        addContactDialogContent.textContent = 'Add Contact';
+        addContactDialogContent.textContent = 'Add contact';
     }
     return addContactDialogContent;
 }

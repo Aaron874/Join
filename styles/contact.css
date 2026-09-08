@@ -279,6 +279,7 @@ body {
     border: none;
     padding: 0;
     border-radius: 20px;
+    box-shadow: 0px 0px 4px 0px #00000066;
     transform: translate(calc(-50% + 100vw), -50%);
     transition: transform 500ms ease-out;
 }
@@ -292,6 +293,10 @@ dialog::backdrop {
     backdrop-filter: blur(1px);
 }
 
+.contact_dialog_header {
+    margin-top: 16px;
+}
+
 .contact_logo_section {
     background-color: #2a3647;
     display: flex;
@@ -300,6 +305,7 @@ dialog::backdrop {
     justify-content: center;
     width: 45%;
     border-radius: 20px 0 0 20px;
+    padding-top: 35px;
 }
 
 .add_contact_text_left h3 {
@@ -451,7 +457,7 @@ dialog::backdrop {
 
 .edit_contact_btn_cancel {
     font-family: 'Inter', sans-serif;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 400;
     color: #2a3647;
     background-color: white;
@@ -764,7 +770,7 @@ dialog::backdrop {
         justify-content: unset;
         flex-direction: row;
         width: 100%;
-        min-height: 200px;
+        min-height: 280px;
     }
 
     .add_contact_form_section {
@@ -775,6 +781,7 @@ dialog::backdrop {
 
     .contact_dialog_header {
         margin-left: 16px;
+        margin-top: 0px;
     }
 
     .add_contact_text_left::after {
@@ -809,15 +816,16 @@ dialog::backdrop {
     }
 
     .contact_form_container form {
-        margin-top: 20px;
+        margin-top: 70px;
     }
 
     .contact_btn_container {
         justify-content: center;
+        margin-bottom: 30px;
     }
 
     .contact_input_wrapper {
-        width: 320px;
+        width: 364px;
     }
 
     .add_contact_btn_cancel {
@@ -975,6 +983,12 @@ dialog::backdrop {
     }
 }
 
+@media (max-width: 425px) {
+    .contact_input_wrapper {
+        width: 320px;
+    }
+}
+
 @media (max-width: 370px) {
     .contact_dialog_header {
         margin-left: 8px;
@@ -982,6 +996,7 @@ dialog::backdrop {
 
     .add_contact_text_left::after {
         margin-left: 8px;
+        width: 85px;
     }
 
     .contact_input_wrapper {
