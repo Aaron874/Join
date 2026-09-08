@@ -13,7 +13,7 @@ import {
     errorMessageDialog,
     contactSuccessfullyCreatedDialog,
     contactListInitials,
-    eventListenerDeleteContactDialog
+    eventListenerDeleteContactDialog,
 } from './contactsAddandEdit.js';
 export let contactsList = [];
 export const DEFAULT_CONTACT_COLOR = '#D1D1D1';
@@ -23,7 +23,6 @@ const contactsSingleViewContainer = document.querySelector('#contacts_single_vie
 window.result = await waitForAuthenticatedUser();
 
 loadContacts();
-
 
 /**
  * Loads all contacts from the backend, ensures the "self" contact (the currently logged-in
@@ -37,7 +36,6 @@ async function loadContacts() {
     await ensureSelfContactExists();
     getFirstLetterForSeperator();
 }
-
 
 /**
  * Ensures the currently logged-in user has a corresponding entry in the contact list.
@@ -99,7 +97,6 @@ export function openSingleViewContact(id, mode) {
     );
 }
 
-
 /**
  * Visually marks the contact with the given ID as selected in the contact list by removing
  * the "selected" class from all contact list items and adding it to the one matching the ID.
@@ -113,7 +110,6 @@ function contactListMarkedContact(id) {
     const selectedContact = document.getElementById('contact_id_' + id);
     selectedContact.classList.add('selected');
 }
-
 
 /**
  * Toggles between the contact list view and the single contact view on mobile viewports by
@@ -130,12 +126,12 @@ export function switchListToSingleViewAndBack(mode = 'single') {
         const viewContainer = document.querySelector('.contacts_single_view_container');
         const listContainer = document.querySelector('.contacts_list_container');
         if (mode === 'mobile') {
-            return;}
+            return;
+        }
         viewContainer.classList.toggle('visible_flex');
         listContainer.classList.toggle('hidden');
     }
 }
-
 
 /**
  * Finds the index of the contact with the given ID within contactsList.
@@ -150,7 +146,6 @@ export function searchIndex(contactId) {
         }
     }
 }
-
 
 /**
  * Updates a contact both on the backend and in the local contactsList, then refreshes the
@@ -193,7 +188,6 @@ function changeContactInDom(contactId, changedContact) {
         .style.setProperty('--contact-color', changedContact.color);
 }
 
-
 /**
  * Opens the delete confirmation dialog for the given contact, displaying the contact's name
  * and wiring up the delete/cancel buttons via eventListenerDeleteContactDialog.
@@ -212,7 +206,6 @@ export function deleteContactDialog(contactId, person) {
     const cancelButton = deleteDialog.querySelector('button:last-of-type');
     eventListenerDeleteContactDialog(contactId, deleteButton, cancelButton, deleteDialog);
 }
-
 
 /**
  * Removes a contact from the local contactsList and updates the UI accordingly: re-renders
@@ -235,7 +228,6 @@ export function removeContactFromDom(contactId) {
     }
     openSingleViewContact(firstContactListItem);
 }
-
 
 /**
  * Creates a new contact via the backend, refreshes the local contact list, and updates the UI:
@@ -265,7 +257,6 @@ export async function writeNewContact(contact) {
         errorMessageDialog('Error saving new Contact. Please try again.');
     }
 }
-
 
 /**
  * Reloads the full contact list from the backend into contactsList after a new contact has
