@@ -1,4 +1,11 @@
 /*global document */
+
+/**
+ * Adds sequential line-number IDs (e.g. "line1", "line2", ...) to each line of a
+ * syntax-highlighted source code block, and highlights the line matching the current URL hash
+ * (if any) by adding a "selected" class to it. Used for deep-linking to specific lines in
+ * generated documentation source views.
+ */
 (() => {
     const source = document.getElementsByClassName('prettyprint source linenums');
     let i = 0;
