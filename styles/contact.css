@@ -276,6 +276,7 @@ body {
     top: 50%;
     left: 50%;
     z-index: 5;
+    min-width: 288px;
     border: none;
     padding: 0;
     border-radius: 20px;
@@ -1005,10 +1006,6 @@ dialog::backdrop {
     }
     .contacts_single_view_name {
         font-size: 24px;
-    }
-
-    .add_contact_form_section {
-        width: calc(100% - 8px);
     }
     .add_contact_text_left p {
         font-size: 20px;

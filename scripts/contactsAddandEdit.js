@@ -223,6 +223,7 @@ export function openEditContactDialog(id) {
     contactDialogHeaderSwitch(true);
     openEditInput('edit', id);
     startEventListenerColorPicker();
+    startEventListenersAddContactDialog();
 }
 
 /**
