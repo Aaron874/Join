@@ -260,6 +260,7 @@ export function updateContactBtnListener(editContactInput, contactId) {
                 email: document.getElementById('contact_email_id').value,
                 phone: document.getElementById('contact_phone_id').value,
                 color: document.getElementById('contact_color_picker_id').value,
+                shortName: document.getElementById('person_initials_id').textContent,
             };
             updateContactInList(contactIdent, updatedContact);
         });
