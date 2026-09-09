@@ -64,6 +64,7 @@ function initDialogEvents(){
     const dialogIds = ['add-task-dialog', 'task-dialog'];
     dialogIds.forEach(id => {
         getElement(id)?.addEventListener('click', closeDialogOnBackdrop);
+        getElement(id)?.addEventListener('cancel', handleDialogCancel)
     });
 }
 
@@ -76,10 +77,23 @@ function closeDialog(id) {
     document.body.classList.remove('dialog-open');
 }
 
+
+/**
+ * Close a native dialog element by click on Backdrop.
+ * @param {string} event 
+ */
 function closeDialogOnBackdrop(event){
     if (event.target === event.currentTarget) {
         closeDialog(event.currentTarget.id)
     }
+}
+
+
+/**
+ * Close a native dialog element by Esc-key.
+ */
+function handleDialogCancel(){
+    document.body.classList.remove('dialog-open');
 }
 
 /**
