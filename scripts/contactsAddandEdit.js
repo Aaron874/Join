@@ -5,10 +5,13 @@ import {
     renderPersonInitialsForAddContact,
 } from '../templates/contactsTemplate.js';
 
-import { DEFAULT_CONTACT_COLOR, writeNewContact, searchIndex, removeContactFromDom,
+import {
+    DEFAULT_CONTACT_COLOR,
+    writeNewContact,
+    searchIndex,
+    removeContactFromDom,
 } from './contacts.js';
 import { deleteContact } from '../firebase/contacts.service.js';
-
 
 import {
     startEventListenerColorPicker,
@@ -287,6 +290,7 @@ function openContactDialog() {
         contactDialog.classList.add('open');
     });
 }
+
 /**
  * Closes the contact dialog, waiting for its exit animation to finish
  * before actually closing it.
@@ -299,12 +303,12 @@ export function closeContactDialog() {
         contactDialog.close();
     }, 300);
 }
+
 /**
  * Starts the contact dialog's close listeners (Escape key and backdrop click).
  * @returns {void}
  */
 startContactDialogCloseListeners();
-
 
 /**
  * Attaches close listeners to the contact dialog: intercepts the
@@ -339,12 +343,7 @@ function startContactDialogCloseListeners() {
  * @example
  * eventListenerDeleteContactDialog(contact.id, confirmBtn, cancelBtn, dialogElement);
  */
-export function eventListenerDeleteContactDialog(
-    contactId,
-    deleteButton,
-    cancelButton,
-    deleteDialog
-) {
+export function eventListenerDeleteContactDialog( contactId, deleteButton, cancelButton, deleteDialog ) {
     deleteButton.addEventListener('click', async () => {
         await deleteContact(contactId);
         removeContactFromDom(contactId);
