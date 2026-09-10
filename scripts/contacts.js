@@ -86,10 +86,7 @@ export function openSingleViewContact(id, mode) {
     const contact = contactsList[contactIndex];
     contactsSingleViewContainer.innerHTML = '';
     contactsSingleViewContainer.appendChild(
-        renderSingleContactView(
-            contact.shortName,
-            contact.name,
-            contact.email,
+        renderSingleContactView(contact.shortName, contact.name, contact.email,
             contact.color,
             contact.phone,
             contact.id
