@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', initAddTask);
 document.addEventListener('DOMContentLoaded', setDefaultPriority);
 document.addEventListener('DOMContentLoaded', setMinDate);
 
+/** Closes the category dropdown when clicking outside of it. */
 document.addEventListener('click', event => {
     if (!event.target.closest('#category-dropdown-wrapper')) {
         dropdownCategoryUp();
@@ -75,17 +76,10 @@ function dropdownCategoryUp() {
  * @param {HTMLElement} element - The selected category element.
  * @returns {void}
  */
-
-function selectedCatgeory(element) {
-    document.getElementById('selected_category_text').textContent =
-        element.innerText;
-
-    document.getElementById('category-dropdown-wrapper')
-        .classList.remove('error');
-
-    document.getElementById('categoryError')
-        ?.classList.remove('show');
-
+function selectedCategory(element) {
+    document.getElementById('selected_category_text').textContent = element.innerText;
+    document.getElementById('category-dropdown-wrapper').classList.remove('error');
+    document.getElementById('categoryError')?.classList.remove('show');
     dropdownCategoryUp();
 }
 
@@ -146,7 +140,7 @@ function setDefaultPriority() {
 /**
  * Collects the current form values and returns a task object.
  *
- * @param {*} element - The status value for the task.
+ * @param {string} element - The status value for the task.
  * @returns {Object} The task data.
  */
 function getTaskData(element) {
@@ -170,19 +164,15 @@ function getTaskData(element) {
  */
 function isTaskValid(task) {
     return task.title &&
-        // task.description &&
         task.date &&
-        // task.subtasks &&
-        // task.priority &&
         task.category !== "Select task category" &&
-        task.category 
-        // getSelectedContacts().length > 0;
+        task.category; 
 }
 
 /**
  * Creates and saves a task if all required values are valid.
  *
- * @param {*} element - The status value for the task.
+ * @param {string} element - The status value for the task.
  * @returns {Promise<void>}
  */
 async function createTask(element) {
@@ -270,6 +260,10 @@ const dateError = document.getElementById("dateError");
 
 dateDisplay.addEventListener("click", openDatePicker);
 
+/**
+ * Updates the displayed date when a new date is selected.
+ * Formats the date as DD/MM/YYYY.
+ */
 dateInput.addEventListener("change", () => {
     const selectedDate = new Date(dateInput.value);
     const day = String(selectedDate.getDate()).padStart(2, "0");
@@ -284,11 +278,7 @@ dateInput.addEventListener("change", () => {
  * @returns {void}
  */
 function openDatePicker() {
-    if (dateInput.showPicker) {
-        dateInput.showPicker();
-    } else {
-        dateInput.click();
-    }
+    dateInput.showPicker ? dateInput.showPicker() : dateInput.click();
 }
 
 /**
@@ -298,15 +288,9 @@ function openDatePicker() {
  */
 function formRequired() {
     let formIsValid = true;
-    if (!validateTitle()) {
-        formIsValid = false;
-    }
-    if (!validateDate()) {
-        formIsValid = false;
-    }
-    if (!validateCategory()) {
-        formIsValid = false;
-    }
+    if (!validateTitle()) formIsValid = false;
+    if (!validateDate()) formIsValid = false;
+    if (!validateCategory()) formIsValid = false;
     return formIsValid;
 }
 
@@ -342,6 +326,12 @@ function validateDate() {
     return true;
 }
 
+/**
+ * Sets the minimum selectable date of the date input to today's date.
+ * This prevents the user from selecting a date in the past.
+ *
+ * @returns {void}
+ */
 function setMinDate() {
     const today = new Date();
     const year = today.getFullYear();
@@ -350,6 +340,12 @@ function setMinDate() {
     dateInput.min = `${year}-${month}-${day}`;
 }
 
+/**
+ * Validates whether a task category has been selected.
+ * Displays an error message if the default category is still selected.
+ *
+ * @returns {boolean} True if a category is selected, otherwise false.
+ */
 function validateCategory() {
     const categoryInput = document.getElementById('category-dropdown-wrapper');
     const categoryText = document.getElementById('selected_category_text');
@@ -366,7 +362,7 @@ function validateCategory() {
 
 window.dropdownCategoryDown = dropdownCategoryDown;
 window.dropdownCategoryUp = dropdownCategoryUp;
-window.selectedCatgeory = selectedCatgeory;
+window.selectedCategory = selectedCategory;
 window.colorChangePriority = colorChangePriority;
 window.clearTaskform = clearTaskform;
 window.formRequired = formRequired;

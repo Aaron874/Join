@@ -5,7 +5,9 @@ let editingSubtaskIndex = null;
 document.getElementById('task-subtasks').addEventListener('keydown', addSubtask);
 
 /**
- * Create a new subtask from the current input value.
+ * Creates a new subtask from the current input value.
+ * 
+ * @returns {void}
  */
 function createSubtask() {
     const input = document.getElementById('task-subtasks');
@@ -20,9 +22,10 @@ function createSubtask() {
 }
 
 /**
- * Confirm the current subtask when the Enter key is pressed.
+ * Confirms the current subtask when the Enter key is pressed.
  *
  * @param {KeyboardEvent} event - The keyboard event triggered by the input.
+ * @returns {void}
  */
 function addSubtask(event) {
     if (event.key !== 'Enter') return;
@@ -31,7 +34,9 @@ function addSubtask(event) {
 }
 
 /**
- * Render the current subtask list inside the add task form.
+ * Renders the current subtask list inside the Add Task form.
+ * 
+ * @returns {void}
  */
 function renderAddTaskSubtasks() {
     const list = document.getElementById('subtasks-list');
@@ -45,9 +50,10 @@ function renderAddTaskSubtasks() {
 }
 
 /**
- * Set the current subtasks from provided data and refresh the UI.
+ * Sets the current subtasks from provided data and refreshes the UI.
  *
  * @param {Array<{title:string,completed:boolean}>|string} taskSubtasks - Subtasks data or a single subtask title.
+ * @returns {void}
  */
 window.setAddTaskSubtasks = function (taskSubtasks) {
     setSubtasks(taskSubtasks);
@@ -59,23 +65,30 @@ window.setAddTaskSubtasks = function (taskSubtasks) {
 };
 
 /**
- * Delete a subtask at the specified index and refresh the UI.
+ * Deletes a subtask at the specified index and refreshes the UI.
  *
  * @param {number} index - The index of the subtask to delete.
+ * @returns {void}
  */
 function deleteSubtask(index) {
     window.subtasks.splice(index, 1);
     renderAddTaskSubtasks();
 }
 
+/**
+ * Resets the currently edited subtask index.
+ *
+ * @returns {void}
+ */
 function resetEditingSubtaskIndex() {
     editingSubtaskIndex = null;
 }
 
 /**
- * Enable edit mode for a subtask by replacing it with an input field.
+ * Enables edit mode for the selected subtask.
  *
  * @param {number} index - The index of the subtask to edit.
+ * @returns {void}
  */
 function editSubtask(index) {
     if (editingSubtaskIndex !== null) {
@@ -86,40 +99,16 @@ function editSubtask(index) {
 
     const item = document.querySelectorAll('.subtask-item')[index];
     const title = window.subtasks[index].title;
-    item.innerHTML = `
-        <input
-            class="subtask-edit-input"
-            value="${title}"
-            onkeydown="if(event.key === 'Enter') saveSubtaskEdit(${index})">
-        <div class="subtask-edit-buttons">
-            <button class="subtask-edit-btn" type="button" onclick="deleteSubtask(${index})">
-                    ${getDeleteSubtaskIcon()}
-            </button>
-            <div class="subtask-action-separator"></div>
-            <button onclick="saveSubtaskEdit(${index})" class="subtask-edit-btn" type="button">
-                <svg
-                class="subtask-icon"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.5 12.5L10.2 16L17.5 8"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"/>
-                </svg>
-            </button>
-        <div/>
-    `;
+
+    item.innerHTML = getEditSubtaskTemplate(index, title);
     item.querySelector('input').focus();
 }
 
 /**
- * Save the edited subtask and refresh the UI.
+ * Saves the edited subtask and refreshes the UI.
  *
  * @param {number} index - The index of the subtask to save.
+ * @returns {void}
  */
 function saveSubtaskEdit(index) {
     const input = document.querySelectorAll('.subtask-item')[index].querySelector('input');
@@ -130,9 +119,10 @@ function saveSubtaskEdit(index) {
 }
 
 /**
- * Replace the current subtask list with the provided subtasks.
+ * Replaces the current subtask list with the provided subtasks.
  *
  * @param {Array<{title:string,completed:boolean}>|string} taskSubtasks - Array of subtasks or a single subtask title.
+ * @returns {void}
  */
 function setSubtasks(taskSubtasks) {
     if (Array.isArray(taskSubtasks)) {
@@ -145,22 +135,30 @@ function setSubtasks(taskSubtasks) {
 }
 
 /**
- * Set a single subtask as the current subtasks state.
+ * Sets a single subtask as the current subtasks state.
  *
  * @param {string} taskSubtasks - Title of the single subtask.
+ * @returns {void}
  */
 function setSingleSubtask(taskSubtasks) {
     window.subtasks = [{ title: taskSubtasks.trim(), completed: false }];
 }
 
 /**
- * Clear all subtasks from the current add task form.
+ * Clears all subtasks from the current Add Task form.
+ * 
+ * @returns {void}
  */
 function resetSubtasks() {
     window.subtasks = [];
     renderAddTaskSubtasks();
 }
 
+/**
+ * Clears the subtask input field.
+ *
+ * @returns {void}
+ */
 function deleteSubtaskInput() {
     const subtaskInput = document.getElementById('task-subtasks');
 

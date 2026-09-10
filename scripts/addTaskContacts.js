@@ -10,6 +10,12 @@ let selectedContacts = [];
 let contactsList = [];
 let currentUser = null;
 
+/**
+ * Closes the contacts dropdown when clicking outside of it.
+ *
+ * @param {MouseEvent} event - The click event.
+ * @returns {void}
+ */
 document.addEventListener('click', (event) => {
     if (!event.target.closest('#contacts-dropdown-wrapper')) {
         dropdownContactsUp();
@@ -28,12 +34,12 @@ export async function initContacts() {
     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
 }
 
-// export async function initContacts() {
-//     await waitForAuthenticatedUser();
-//     contactsList = await getAllContacts();
-//     document.getElementById('symbole_down_dropdown_contacts').style.display = 'flex';
-// }
-
+/**
+ * Checks whether the given contact is the currently logged-in user.
+ *
+ * @param {Object} contact - The contact to check.
+ * @returns {boolean} True if the contact is the logged-in user, otherwise false.
+ */
 function isLoggedInUser(contact) {
     return currentUser?.email?.toLowerCase() ===
         contact.email?.toLowerCase();
@@ -80,20 +86,6 @@ function renderSearchedContacts(searchedContacts, results) {
         );
     }
 }
-
-// function renderSearchedContacts(searchedContacts, results) {
-//     searchedContacts.style.display = 'flex';
-//     for (let index = 0; index < results.length; index++) {
-//         const shortName = contactListInitials(results[index].name);
-//         const contactName = results[index].name[0].toUpperCase() + results[index].name.slice(1);
-//         searchedContacts.innerHTML += contactsTemplate(
-//             contactName,
-//             results[index].color,
-//             shortName,
-//             selectedContacts
-//         );
-//     }
-// }
 
 /**
  * Creates initials from the first two words of a contact name.

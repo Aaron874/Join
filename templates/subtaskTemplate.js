@@ -74,3 +74,41 @@ function getSubtaskBulletIcon() {
         </svg>
     `;
 }
+
+/**
+ * Returns the HTML template for editing a subtask.
+ *
+ * @param {number} index - The index of the subtask.
+ * @param {string} title - The current title of the subtask.
+ * @returns {string} The HTML template for the subtask edit mode.
+ */
+function getEditSubtaskTemplate(index, title) {
+    return `
+        <input
+            class="subtask-edit-input"
+            value="${title}"
+            onkeydown="if(event.key === 'Enter') saveSubtaskEdit(${index})">
+        <div class="subtask-edit-buttons">
+            <button class="subtask-edit-btn" type="button" onclick="deleteSubtask(${index})">
+                ${getDeleteSubtaskIcon()}
+            </button>
+            <div class="subtask-action-separator"></div>
+            <button onclick="saveSubtaskEdit(${index})" class="subtask-edit-btn" type="button">
+                <svg
+                    class="subtask-icon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M6.5 12.5L10.2 16L17.5 8"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    `;
+}
