@@ -118,7 +118,6 @@ export function startEventListenersAddContactDialog() {
 export function openEditDialogBtnListener(newSingleView, id) {
     const desktopButton = newSingleView.querySelector('#edit_btn_id');
     const mobileButton = newSingleView.querySelector('#mobile_edit_btn_id');
-
     const handleClick = (e) => {
         if (window.innerWidth < MOBILE_BREAKPOINT) {
             openEditOrDeleteMenuMobile(id, e);
