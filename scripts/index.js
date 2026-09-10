@@ -1,20 +1,9 @@
 import { loginUser, registerUser, loginGuest } from './auth/auth.service.js';
 import { createUserProfile } from '../firebase/user.service.js';
 import { logout } from '../firebase/auth.js';
-import {
-    attachSignUpValidation,
-    attachLogInValidation,
-    signUpValidation,
-    validationBeforLogIn,
-    setupSignUpValidationListener,
-    stopSignUpValidationListener,
+import { attachSignUpValidation, attachLogInValidation, signUpValidation, validationBeforLogIn, setupSignUpValidationListener, stopSignUpValidationListener,
 } from '../scripts/validation.js';
-import {
-    errorDialogOpenClose,
-    showErrorGuestLogin,
-    showErrorLogIn,
-    getSignUpErrorElements,
-    getLogInErrorElements,
+import { errorDialogOpenClose, showErrorGuestLogin, showErrorLogIn, getSignUpErrorElements, getLogInErrorElements,
 } from './SignUpOrLogInErrors.js';
 
 const successDialog = document.getElementById('sign_up_success_dialog_id');
