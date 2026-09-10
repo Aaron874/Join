@@ -69,23 +69,17 @@ function getContactsElements(editContactInput) {
  * @returns {void}
  */
 function startListenerForContactInput(contactElements) {
-    contactsValidationListener(
-        contactElements.name.input,
-        contactElements.name.error,
+    contactsValidationListener( contactElements.name.input, contactElements.name.error,
         validateContactName,
         'Username required',
         contactsInputController.signal
     );
-    contactsValidationListener(
-        contactElements.email.input,
-        contactElements.email.error,
+    contactsValidationListener( contactElements.email.input, contactElements.email.error,
         validateContactEmail,
         'Email required',
         contactsInputController.signal
     );
-    contactsValidationListener(
-        contactElements.phone.input,
-        contactElements.phone.error,
+    contactsValidationListener( contactElements.phone.input, contactElements.phone.error,
         validateContactPhone,
         'Phone required',
         contactsInputController.signal
@@ -159,7 +153,6 @@ function contactsValidationListener(input, errorEl, validateFn, emptyMessage, si
         },
         { signal }
     );
-
     input.addEventListener(
         'input',
         () => {
