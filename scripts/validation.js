@@ -1,9 +1,5 @@
 import { signUpElements, logInElements } from './index.js';
-import {
-    showErrorAfterSubmitIfNeeded,
-    errorOrValidAfterSubmit,
-    showError,
-} from './SignUpOrLogInErrors.js';
+import { showErrorAfterSubmitIfNeeded, errorOrValidAfterSubmit, showError, } from './SignUpOrLogInErrors.js';
 
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 30;
@@ -13,7 +9,6 @@ const MIN_PASSWORD_LENGTH = 8;
 const MAX_EMAIL_LENGTH = 254;
 const PASSWORD_REQUIREMENTS_MSG = `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
 let signUpForm = null;
-
 let loginAttempted = false;
 
 /**
@@ -82,7 +77,6 @@ function isSignUpFormValid() {
         signUpElements.confirmPassword.input.value
     );
     const termsMsg = validateTerms(signUpElements.privacyCheckbox.input.checked);
-
     return !nameMsg && !emailMsg && !passwordMsg && !confirmMsg && !termsMsg;
 }
 
@@ -94,26 +88,18 @@ function isSignUpFormValid() {
  * @returns {void}
  */
 export function attachSignUpValidation(elements) {
-    enableValidationOnBlurOrInput(
-        elements.username.input,
-        elements.username.error,
+    enableValidationOnBlurOrInput( elements.username.input, elements.username.error,
         validateName,
         'Name must not be empty.'
     );
-    enableValidationOnBlurOrInput(
-        elements.email.input,
-        elements.email.error,
+    enableValidationOnBlurOrInput( elements.email.input, elements.email.error,
         validateEmail,
         'Email must not be empty.'
     );
-    enablePasswordValidationOnBlur(
-        elements.password.input,
-        elements.password.error,
+    enablePasswordValidationOnBlur( elements.password.input, elements.password.error,
         validatePassword
     );
-    enableValidationOnBlurOrInput(
-        elements.confirmPassword.input,
-        elements.confirmPassword.error,
+    enableValidationOnBlurOrInput( elements.confirmPassword.input, elements.confirmPassword.error,
         (value) => validateConfirmPassword(elements.password.input.value, value),
         'Confirm Pwd must not be empty.'
     );
